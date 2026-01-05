@@ -1,0 +1,5 @@
+C:/Users/Thomas/Desktop/desktop/pokerbots-2026/build/CMakeFiles/omp.dir
+C:/Users/Thomas/Desktop/desktop/pokerbots-2026/build/CMakeFiles/visualize_tree.dir
+C:/Users/Thomas/Desktop/desktop/pokerbots-2026/build/CMakeFiles/khun_trainer.dir
+C:/Users/Thomas/Desktop/desktop/pokerbots-2026/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Thomas/Desktop/desktop/pokerbots-2026/build/CMakeFiles/ZERO_CHECK.dir

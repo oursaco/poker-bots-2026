@@ -1,0 +1,10 @@
+^C:\USERS\THOMAS\DESKTOP\DESKTOP\POKERBOTS-2026\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Thomas/Desktop/desktop/pokerbots-2026 -BC:/Users/Thomas/Desktop/desktop/pokerbots-2026/build --check-stamp-file C:/Users/Thomas/Desktop/desktop/pokerbots-2026/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
