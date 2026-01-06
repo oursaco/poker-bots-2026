@@ -7,11 +7,13 @@
 #include <utility>
 #include <array>
 #include <cassert>
+#include "constants/constants.h"
 using namespace std;
 
 struct Action {
     virtual ~Action() = default;
     virtual string toString() = 0; // returns a string representation of the action
+    virtual bool isWorldAction() = 0;
 };
 
 struct GameState {
@@ -23,7 +25,7 @@ struct GameState {
 
 struct GameTree {
     virtual ~GameTree() = default;
-    virtual void updateUtility(array<float, 1000> &utility) = 0; // updates the leaf utility values
+    virtual void updateUtility(array<float, TRAINER_SZ> &utility) = 0; // updates the leaf utility values
     virtual void init() = 0; // initializes the game tree
     virtual void prepare(int seed) = 0; // prepares the game tree for an iteration of training
     virtual vector<int> getMovesPerInfoSet() = 0; // returns the number of moves per info set

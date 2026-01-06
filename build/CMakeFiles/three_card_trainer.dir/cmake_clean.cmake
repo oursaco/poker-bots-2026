@@ -1,0 +1,13 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj"
+  "CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj.d"
+  "libthree_card_trainer.dll.a"
+  "three_card_trainer.exe"
+  "three_card_trainer.exe.manifest"
+  "three_card_trainer.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/three_card_trainer.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

@@ -6,6 +6,8 @@
 #include <chrono>
 #include <iostream>
 #include <fstream>
+#include <cmath>
+#include "constants/constants.h"
 #include "game/GameTree.hpp"
 #include "external/omp/Random.h"
 using namespace std;
@@ -21,9 +23,6 @@ struct CFRTrainer {
     void updateRegrets();
     void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir);
 };
-
-const int POLICY_SZ = 1'000;
-const int TRAINER_SZ = 1'000;
 
 struct DCFRPolicy : CFRPolicy {
 
@@ -60,7 +59,7 @@ struct DCFRPolicy : CFRPolicy {
     }
 
     int getState(int info_set, int move_id){
-        return (info_set_utils[info_set] & state_mask) | move_id;
+        return (info_set_utils[info_set] & state_mask) + move_id;
     }
 
     int getMoveCount(int info_set){
@@ -69,6 +68,7 @@ struct DCFRPolicy : CFRPolicy {
 
     // returns probability of moving to node_id from the parent of node_id given info_set
     float getProb(int info_set, int move_id){
+        assert(info_set < info_set_count);
         float sum = 0.0;
         int st = getState(info_set, 0);
         int move_count = getMoveCount(info_set);
@@ -124,7 +124,7 @@ struct DCFRTrainer : CFRTrainer {
     DCFRPolicy players[2];
     GameTree* tree;
     array<float, TRAINER_SZ> utility;
-    array<float, TRAINER_SZ> reach_probability;
+    array<float, 2*TRAINER_SZ> reach_probability;
 
     void setTree(GameTree* tree_){
         tree = tree_;
@@ -194,6 +194,7 @@ struct DCFRTrainer : CFRTrainer {
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){
                 cout << "Finished iteration " << i << " of " << iterations << " in " << chrono::duration_cast<chrono::seconds>(cur_time - start_time).count() << " seconds" << endl;
+                cout << "Utility: " << utility[0] << endl;
                 last_log_time = cur_time;
             }
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_checkpoint_time).count() >= checkpoint_every_secs){

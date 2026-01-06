@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\three_card_trainer.dir/objects.a
+C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\three_card_trainer.dir/objects.a @CMakeFiles\three_card_trainer.dir\objects1.rsp
+C:\msys64\mingw64\bin\g++.exe -Wl,--stack,2147483648 -pthread -Wl,--whole-archive CMakeFiles\three_card_trainer.dir/objects.a -Wl,--no-whole-archive -o three_card_trainer.exe -Wl,--out-implib,libthree_card_trainer.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\three_card_trainer.dir\linkLibs.rsp

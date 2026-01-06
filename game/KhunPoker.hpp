@@ -9,6 +9,7 @@
 #include <utility>
 #include <cassert>
 #include <iostream>
+#include "constants/constants.h"
 using namespace std;
 
 struct KhunPokerAction : Action {
@@ -28,6 +29,10 @@ struct KhunPokerAction : Action {
         } else {
             return "world: " + action;
         }
+    }
+
+    bool isWorldAction(){
+        return turn == -1;
     }
 };
 
@@ -209,7 +214,7 @@ struct KhunPokerGameTree : GameTree {
     }
 
     // updates the leaf utility values for each trainer
-    void updateUtility(array<float, 1000> &utility){
+    void updateUtility(array<float, TRAINER_SZ> &utility){
         for(int i = 0; i < leaves.size(); i++){
             int node_id = leaves[i];
             int w = winner[i];

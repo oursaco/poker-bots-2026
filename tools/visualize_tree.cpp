@@ -1,30 +1,61 @@
 #include "game/GameTree.hpp"
 #include "game/KhunPoker.hpp"
+#include "game/Poker.hpp"
 #include <cstddef>
 #include <iostream>
 #include <string>
+using namespace std;
 
-void visualizeTree(GameState* state, const std::string& prefix){
+void visualizeTree(GameState* state, const string& prefix){
     auto actions = state->generateActions();
     if(actions.empty()){
-        std::cout << prefix << "(no actions)\n";
+        cout << prefix << "(no actions)\n";
         return;
     }
 
-    for(std::size_t i = 0; i < actions.size(); ++i){
+    for(int i = 0; i < actions.size(); ++i){
         bool is_last = (i + 1 == actions.size());
         auto* next_state = actions[i].first.get();
         auto& action = actions[i].second;
         bool is_terminal = next_state->isTerminal();
 
-        std::cout << prefix << (is_last ? "\\-- " : "|-- ") << action->toString();
+        cout << prefix << (is_last ? "\\-- " : "|-- ") << action->toString();
         if(is_terminal){
-            std::cout << " [terminal, winner: " << next_state->getWinner() << "]";
+            cout << " [terminal, winner: " << next_state->getWinner() << "]";
         }
-        std::cout << "\n";
+        cout << "\n";
 
         if(!is_terminal){
             visualizeTree(next_state, prefix + (is_last ? "    " : "|   "));
+        }
+    }
+}
+
+void visualizeTreeDepthLimited(GameState* state, const string& prefix, int depth){
+    auto actions = state->generateActions();
+    if(actions.empty()){
+        cout << prefix << "(no actions)\n";
+        return;
+    }
+    if(depth == 0){
+        cout << prefix << "(depth limited)\n";
+        return;
+    }
+
+    for(int i = 0; i < actions.size(); ++i){
+        bool is_last = (i + 1 == actions.size());
+        auto* next_state = actions[i].first.get();
+        auto& action = actions[i].second;
+        bool is_terminal = next_state->isTerminal();
+
+        cout << prefix << (is_last ? "\\-- " : "|-- ") << action->toString();
+        if(is_terminal){
+            cout << " [terminal, winner: " << next_state->getWinner() << "]";
+        }
+        cout << "\n";
+
+        if(!is_terminal){
+            visualizeTreeDepthLimited(next_state, prefix + (is_last ? "    " : "|   "), depth - 1);
         }
     }
 }
@@ -34,6 +65,11 @@ void visualizeKhunTree(){
     visualizeTree(&root, "");
 }
 
+void visualizePokerTree(){
+    PokerGameState root = PokerGameState();
+    visualizeTree(&root, "");
+}
+
 int main(){
-    visualizeKhunTree();
+    visualizePokerTree();
 }
