@@ -1,12 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/omp.dir/external/omp/CardRange.cpp.obj"
-  "CMakeFiles/omp.dir/external/omp/CardRange.cpp.obj.d"
-  "CMakeFiles/omp.dir/external/omp/CombinedRange.cpp.obj"
-  "CMakeFiles/omp.dir/external/omp/CombinedRange.cpp.obj.d"
-  "CMakeFiles/omp.dir/external/omp/EquityCalculator.cpp.obj"
-  "CMakeFiles/omp.dir/external/omp/EquityCalculator.cpp.obj.d"
-  "CMakeFiles/omp.dir/external/omp/HandEvaluator.cpp.obj"
-  "CMakeFiles/omp.dir/external/omp/HandEvaluator.cpp.obj.d"
+  "CMakeFiles/omp.dir/external/omp/CardRange.cpp.o"
+  "CMakeFiles/omp.dir/external/omp/CombinedRange.cpp.o"
+  "CMakeFiles/omp.dir/external/omp/EquityCalculator.cpp.o"
+  "CMakeFiles/omp.dir/external/omp/HandEvaluator.cpp.o"
   "libomp.a"
   "libomp.pdb"
 )

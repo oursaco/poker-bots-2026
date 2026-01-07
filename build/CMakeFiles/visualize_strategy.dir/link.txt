@@ -1,3 +1,1 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\visualize_strategy.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\visualize_strategy.dir/objects.a @CMakeFiles\visualize_strategy.dir\objects1.rsp
-C:\msys64\mingw64\bin\g++.exe -Wl,--stack,2147483648 -pthread -Wl,--whole-archive CMakeFiles\visualize_strategy.dir/objects.a -Wl,--no-whole-archive -o visualize_strategy.exe -Wl,--out-implib,libvisualize_strategy.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\visualize_strategy.dir\linkLibs.rsp
+/usr/bin/g++     CMakeFiles/visualize_strategy.dir/tools/visualize_strategy.cpp.o  -o visualize_strategy  libomp.a 

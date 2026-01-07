@@ -1,9 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/visualize_tree.dir/tools/visualize_tree.cpp.obj"
-  "CMakeFiles/visualize_tree.dir/tools/visualize_tree.cpp.obj.d"
-  "libvisualize_tree.dll.a"
-  "visualize_tree.exe"
-  "visualize_tree.exe.manifest"
+  "CMakeFiles/visualize_tree.dir/tools/visualize_tree.cpp.o"
+  "visualize_tree"
   "visualize_tree.pdb"
 )
 

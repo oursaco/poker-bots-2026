@@ -1,3 +1,1 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\poker_trainer.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\poker_trainer.dir/objects.a @CMakeFiles\poker_trainer.dir\objects1.rsp
-C:\msys64\mingw64\bin\g++.exe -Wl,--stack,2147483648 -pthread -Wl,--whole-archive CMakeFiles\poker_trainer.dir/objects.a -Wl,--no-whole-archive -o poker_trainer.exe -Wl,--out-implib,libpoker_trainer.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\poker_trainer.dir\linkLibs.rsp
+/usr/bin/g++     CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.o  -o poker_trainer  libomp.a 

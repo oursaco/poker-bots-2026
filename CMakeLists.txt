@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.16)
 
 # Prefer GCC/G++ unless a compiler is explicitly set by the user/toolchain.
 if(NOT DEFINED CMAKE_C_COMPILER AND NOT DEFINED CMAKE_CXX_COMPILER)
@@ -13,7 +13,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-O3 -std=c++17 -pthread -Wall -Wpedantic -march=native -ffast-math)
-add_link_options(-Wl,--stack,2147483648 -pthread)
 
 add_library(pokerbots_headers INTERFACE)
 target_include_directories(pokerbots_headers INTERFACE

@@ -1,9 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj"
-  "CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj.d"
-  "libthree_card_trainer.dll.a"
-  "three_card_trainer.exe"
-  "three_card_trainer.exe.manifest"
+  "CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.o"
+  "three_card_trainer"
   "three_card_trainer.pdb"
 )
 

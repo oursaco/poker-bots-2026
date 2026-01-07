@@ -1,2 +1,2 @@
-C:\msys64\mingw64\bin\ar.exe qc libomp.a CMakeFiles/omp.dir/external/omp/CardRange.cpp.obj CMakeFiles/omp.dir/external/omp/CombinedRange.cpp.obj CMakeFiles/omp.dir/external/omp/EquityCalculator.cpp.obj CMakeFiles/omp.dir/external/omp/HandEvaluator.cpp.obj
-C:\msys64\mingw64\bin\ranlib.exe libomp.a
+/usr/bin/ar qc libomp.a  CMakeFiles/omp.dir/external/omp/CardRange.cpp.o CMakeFiles/omp.dir/external/omp/CombinedRange.cpp.o CMakeFiles/omp.dir/external/omp/EquityCalculator.cpp.o CMakeFiles/omp.dir/external/omp/HandEvaluator.cpp.o
+/usr/bin/ranlib libomp.a

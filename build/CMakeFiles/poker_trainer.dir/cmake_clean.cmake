@@ -1,9 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj"
-  "CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj.d"
-  "libpoker_trainer.dll.a"
-  "poker_trainer.exe"
-  "poker_trainer.exe.manifest"
+  "CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.o"
+  "poker_trainer"
   "poker_trainer.pdb"
 )
 

@@ -1,9 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/visualize_utility.dir/tools/visualize_utility.cpp.obj"
-  "CMakeFiles/visualize_utility.dir/tools/visualize_utility.cpp.obj.d"
-  "libvisualize_utility.dll.a"
-  "visualize_utility.exe"
-  "visualize_utility.exe.manifest"
+  "CMakeFiles/visualize_utility.dir/tools/visualize_utility.cpp.o"
+  "visualize_utility"
   "visualize_utility.pdb"
 )
 

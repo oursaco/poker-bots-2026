@@ -23,10 +23,10 @@ struct TrainConfig {
 int main() {
     TrainConfig config;
     config.seed = 42;
-    config.player0_policy = "./three_card_models/player0_final.bin";
-    config.player1_policy = "./three_card_models/player1_final.bin";
+    config.player0_policy = "";
+    config.player1_policy = "";
     config.output_dir = "./three_card_models";
-    config.iterations = 1'000'000;
+    config.iterations = 10'000'000;
 
     ThreeCardGameTree tree;
     NaiveThreeCardBucket bucket;
