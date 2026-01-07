@@ -116,6 +116,7 @@ int getTurnBucket(uint64_t board, uint64_t hand){
 int evalStrength(uint64_t board, uint64_t hand){
     unsigned cards[8], suits[8];
     omp::Hand pre[8];
+    board |= hand;
     for(int i = 0; i < 8; i++){
         updateCard(board, suits[i], cards[i]);
         pre[i] = omp::Hand(4*cards[i] + suits[i]);

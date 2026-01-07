@@ -270,6 +270,18 @@ struct PokerGameTree : GameTree {
     vector<uint64_t> used_mask;
     vector<int> parent_board;
     omp::HandEvaluator hand_eval;
+    bool use_fixed_sb_hand = false;
+    bool use_fixed_bb_hand = false;
+    bool use_fixed_flop = false;
+    bool use_fixed_turn = false;
+    bool use_fixed_river = false;
+    uint64_t fixed_sb_hand = 0;
+    uint64_t fixed_bb_hand = 0;
+    uint64_t fixed_flop = 0;
+    uint64_t fixed_turn = 0;
+    uint64_t fixed_river = 0;
+    uint64_t last_sb_hand = 0;
+    uint64_t last_bb_hand = 0;
 
     int generateTree(PokerGameState* root, int par = -1, int par_move = -1, int prv_new_card = -1, int new_cards = 0){
         if(root->turn == -1){
@@ -334,23 +346,96 @@ struct PokerGameTree : GameTree {
         }
     }
 
+    void clearFixedCards(){
+        use_fixed_sb_hand = false;
+        use_fixed_bb_hand = false;
+        use_fixed_flop = false;
+        use_fixed_turn = false;
+        use_fixed_river = false;
+        fixed_sb_hand = 0;
+        fixed_bb_hand = 0;
+        fixed_flop = 0;
+        fixed_turn = 0;
+        fixed_river = 0;
+    }
+
+    void setFixedSbHand(uint64_t sb_hand){
+        use_fixed_sb_hand = true;
+        fixed_sb_hand = sb_hand;
+    }
+
+    void setFixedBbHand(uint64_t bb_hand){
+        use_fixed_bb_hand = true;
+        fixed_bb_hand = bb_hand;
+    }
+
+    void setFixedFlop(uint64_t flop){
+        use_fixed_flop = true;
+        fixed_flop = flop;
+    }
+
+    void setFixedTurn(uint64_t turn){
+        use_fixed_turn = true;
+        fixed_turn = turn;
+    }
+
+    void setFixedRiver(uint64_t river){
+        use_fixed_river = true;
+        fixed_river = river;
+    }
+
     // prepares the game tree for an iteration of training
     void prepare(int seed){
         omp::XoroShiro128Plus rng(seed);
         omp::FastUniformIntDistribution2<int> card_generator(0, 51);
         uint64_t initial_mask = 0;
+        uint64_t reserved_mask = 0;
+        if(use_fixed_flop) reserved_mask |= fixed_flop;
+        if(use_fixed_turn) reserved_mask |= fixed_turn;
+        if(use_fixed_river) reserved_mask |= fixed_river;
+        if(use_fixed_sb_hand) initial_mask |= fixed_sb_hand;
+        if(use_fixed_bb_hand) initial_mask |= fixed_bb_hand;
         auto generateCard = [&](uint64_t &used_mask){
             unsigned card;
             uint64_t card_mask;
             do {
                 card = card_generator(rng);
                 card_mask = 1ull << card;
-            } while (used_mask & card_mask);
+            } while ((used_mask & card_mask) || (reserved_mask & card_mask));
             used_mask |= card_mask;
             return card;
         };
-        omp::Hand sb_hand = omp::Hand(generateCard(initial_mask)) + omp::Hand(generateCard(initial_mask));
-        omp::Hand bb_hand = omp::Hand(generateCard(initial_mask)) + omp::Hand(generateCard(initial_mask));
+        auto addFixedCards = [&](omp::Hand &hand, uint64_t &used, uint64_t cards){
+            uint64_t remaining = cards;
+            while(remaining){
+                unsigned card = __builtin_ctzll(remaining);
+                hand += omp::Hand(card);
+                used |= 1ull << card;
+                remaining &= remaining - 1;
+            }
+        };
+        auto handFromMask = [&](uint64_t mask){
+            omp::Hand hand = omp::Hand::empty();
+            uint64_t remaining = mask;
+            while(remaining){
+                unsigned card = __builtin_ctzll(remaining);
+                hand += omp::Hand(card);
+                remaining &= remaining - 1;
+            }
+            return hand;
+        };
+        omp::Hand sb_hand = use_fixed_sb_hand ? handFromMask(fixed_sb_hand) : omp::Hand::empty();
+        omp::Hand bb_hand = use_fixed_bb_hand ? handFromMask(fixed_bb_hand) : omp::Hand::empty();
+        for(int i = 0; i < 2; ++i){
+            if(!use_fixed_sb_hand){
+                sb_hand += omp::Hand(generateCard(initial_mask));
+            }
+            if(!use_fixed_bb_hand){
+                bb_hand += omp::Hand(generateCard(initial_mask));
+            }
+        }
+        last_sb_hand = sb_hand.getMask();
+        last_bb_hand = bb_hand.getMask();
         for(int i : preflop){
             if(nodes[i].turn == 0){
                 nodes[i].info_set = hand_eval.evaluate(sb_hand)/4096*nodes.size() + i;
@@ -371,8 +456,17 @@ struct PokerGameTree : GameTree {
                 board[i] = board[p];
                 used_mask[i] = used_mask[p];
             }
-            for(int j = 0; j < nodes[l].new_cards; j++){
-                board[i] += omp::Hand(generateCard(used_mask[i]));
+            int board_count = board[i].count();
+            if(nodes[l].new_cards == 3 && board_count == 0 && use_fixed_flop){
+                addFixedCards(board[i], used_mask[i], fixed_flop);
+            } else if(nodes[l].new_cards == 1 && board_count == 3 && use_fixed_turn){
+                addFixedCards(board[i], used_mask[i], fixed_turn);
+            } else if(nodes[l].new_cards == 1 && board_count == 4 && use_fixed_river){
+                addFixedCards(board[i], used_mask[i], fixed_river);
+            } else {
+                for(int j = 0; j < nodes[l].new_cards; j++){
+                    board[i] += omp::Hand(generateCard(used_mask[i]));
+                }
             }
             int sb_bucket = hand_eval.evaluate(sb_hand + board[i]);
             int bb_bucket = hand_eval.evaluate(bb_hand + board[i]);

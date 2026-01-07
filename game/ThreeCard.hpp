@@ -47,6 +47,18 @@ struct ThreeCardGameTree : GameTree {
     vector<int> parent_board;
     omp::HandEvaluator hand_eval;
     int tree_index = 0;
+    bool use_fixed_sb_hand = false;
+    bool use_fixed_bb_hand = false;
+    bool use_fixed_flop = false;
+    bool use_fixed_turn = false;
+    bool use_fixed_river = false;
+    uint64_t fixed_sb_hand = 0;
+    uint64_t fixed_bb_hand = 0;
+    uint64_t fixed_flop = 0;
+    uint64_t fixed_turn = 0;
+    uint64_t fixed_river = 0;
+    uint64_t last_sb_hand = 0;
+    uint64_t last_bb_hand = 0;
 
     int generateTree(ThreeCardGameState* root, int par = -1, int par_move = -1, int prv_new_card = -1, int new_cards = 0){
         if(root->turn == -1){
@@ -126,20 +138,73 @@ struct ThreeCardGameTree : GameTree {
         bucket = bucket_;
     }
 
+    void clearFixedCards(){
+        use_fixed_sb_hand = false;
+        use_fixed_bb_hand = false;
+        use_fixed_flop = false;
+        use_fixed_turn = false;
+        use_fixed_river = false;
+        fixed_sb_hand = 0;
+        fixed_bb_hand = 0;
+        fixed_flop = 0;
+        fixed_turn = 0;
+        fixed_river = 0;
+    }
+
+    void setFixedSbHand(uint64_t sb_hand){
+        use_fixed_sb_hand = true;
+        fixed_sb_hand = sb_hand;
+    }
+
+    void setFixedBbHand(uint64_t bb_hand){
+        use_fixed_bb_hand = true;
+        fixed_bb_hand = bb_hand;
+    }
+
+    void setFixedFlop(uint64_t flop){
+        use_fixed_flop = true;
+        fixed_flop = flop;
+    }
+
+    void setFixedTurn(uint64_t turn){
+        use_fixed_turn = true;
+        fixed_turn = turn;
+    }
+
+    void setFixedRiver(uint64_t river){
+        use_fixed_river = true;
+        fixed_river = river;
+    }
+
     // prepares the game tree for an iteration of training
     void prepare(int seed){
         omp::XoroShiro128Plus rng(seed);
         omp::FastUniformIntDistribution2<int> card_generator(0, 51);
         uint64_t initial_mask = 0;
+        uint64_t reserved_mask = 0;
+        if(use_fixed_flop) reserved_mask |= fixed_flop;
+        if(use_fixed_turn) reserved_mask |= fixed_turn;
+        if(use_fixed_river) reserved_mask |= fixed_river;
+        if(use_fixed_sb_hand) initial_mask |= fixed_sb_hand;
+        if(use_fixed_bb_hand) initial_mask |= fixed_bb_hand;
         auto generateCard = [&](uint64_t &used_mask){
             unsigned card;
             uint64_t card_mask;
             do {
                 card = card_generator(rng);
                 card_mask = 1ull << card;
-            } while (used_mask & card_mask);
+            } while ((used_mask & card_mask) || (reserved_mask & card_mask));
             used_mask |= card_mask;
             return card;
+        };
+        auto addFixedCards = [&](uint64_t &board_mask, uint64_t &used, uint64_t cards){
+            uint64_t remaining = cards;
+            while(remaining){
+                uint64_t bit = remaining & -remaining;
+                board_mask |= bit;
+                used |= bit;
+                remaining &= remaining - 1;
+            }
         };
         auto chooseCard = [&](uint64_t hand){
             int num = 0;
@@ -151,14 +216,20 @@ struct ThreeCardGameTree : GameTree {
             }
             return __builtin_ctzll(hand);
         };
-        uint64_t sb_hand = 0;
-        uint64_t bb_hand = 0;
+        uint64_t sb_hand = use_fixed_sb_hand ? fixed_sb_hand : 0;
+        uint64_t bb_hand = use_fixed_bb_hand ? fixed_bb_hand : 0;
         uint64_t sb_extra_card = 0;
         uint64_t bb_extra_card = 0;
         for(int i = 0; i < 3; i++){
-            sb_hand |= 1ull << generateCard(initial_mask);
-            bb_hand |= 1ull << generateCard(initial_mask);
+            if(!use_fixed_sb_hand){
+                sb_hand |= 1ull << generateCard(initial_mask);
+            }
+            if(!use_fixed_bb_hand){
+                bb_hand |= 1ull << generateCard(initial_mask);
+            }
         }
+        last_sb_hand = sb_hand;
+        last_bb_hand = bb_hand;
         for(int i : preflop){
             assert(bucket->getPreflopBucket(sb_hand) < buckets[i]);
             if(nodes[i].turn == 0){
@@ -180,8 +251,17 @@ struct ThreeCardGameTree : GameTree {
                 board[i] = board[p];
                 used_mask[i] = used_mask[p];
             }
-            for(int j = 0; j < nodes[l].new_cards; j++){
-                board[i] |= 1ull << generateCard(used_mask[i]);
+            int board_count = __builtin_popcountll(board[i]);
+            if(nodes[l].new_cards == 2 && board_count == 0 && use_fixed_flop){
+                addFixedCards(board[i], used_mask[i], fixed_flop);
+            } else if(nodes[l].new_cards == 1 && board_count == 2 && use_fixed_turn){
+                addFixedCards(board[i], used_mask[i], fixed_turn);
+            } else if(nodes[l].new_cards == 1 && board_count == 3 && use_fixed_river){
+                addFixedCards(board[i], used_mask[i], fixed_river);
+            } else {
+                for(int j = 0; j < nodes[l].new_cards; j++){
+                    board[i] |= 1ull << generateCard(used_mask[i]);
+                }
             }
             // postflop state
             int sb_bucket, bb_bucket;
