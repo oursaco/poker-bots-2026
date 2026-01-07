@@ -226,6 +226,7 @@ CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj: \
  C:/msys64/mingw64/include/c++/13.1.0/bits/erase_if.h \
  C:/Users/Thomas/Desktop/desktop/pokerbots-2026/game/ThreeCardBucket.hpp \
  C:/Users/Thomas/Desktop/desktop/pokerbots-2026/external/omp/Hand.h \
+ C:/Users/Thomas/Desktop/desktop/pokerbots-2026/game/ThreeCardState.hpp \
  C:/msys64/mingw64/include/c++/13.1.0/filesystem \
  C:/msys64/mingw64/include/c++/13.1.0/bits/fs_fwd.h \
  C:/msys64/mingw64/include/c++/13.1.0/bits/fs_path.h \

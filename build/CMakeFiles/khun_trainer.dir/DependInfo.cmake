@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/Thomas/Desktop/desktop/pokerbots-2026/tools/khun_trainer.cpp" "CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj" "gcc" "CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj.d"
+  "C:/Users/Thomas/Desktop/desktop/pokerbots-2026/trainers/khun_trainer.cpp" "CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj" "gcc" "CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

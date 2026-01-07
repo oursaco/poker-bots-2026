@@ -26,7 +26,6 @@ struct CFRTrainer {
 
 struct DCFRPolicy : CFRPolicy {
 
-
     // regret of moving to node i from the parent of i
     // each index is encoded as move_count*info_set_count + info_set
     array<float, POLICY_SZ> regret_sum;
@@ -108,6 +107,7 @@ struct DCFRPolicy : CFRPolicy {
         int info_set_count_, state_count_;
         inf.read(reinterpret_cast<char*>(&info_set_count_), sizeof(int));
         inf.read(reinterpret_cast<char*>(&state_count_), sizeof(int));
+        cout << info_set_count_ << " " << info_set_count << endl;
         assert(info_set_count_ == info_set_count);
         assert(state_count_ == state_count);
         for(int i = 0; i < POLICY_SZ; i++){

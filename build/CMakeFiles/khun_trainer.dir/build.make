@@ -71,29 +71,29 @@ include CMakeFiles/khun_trainer.dir/flags.make
 CMakeFiles/khun_trainer.dir/codegen:
 .PHONY : CMakeFiles/khun_trainer.dir/codegen
 
-CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj: CMakeFiles/khun_trainer.dir/flags.make
-CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj: CMakeFiles/khun_trainer.dir/includes_CXX.rsp
-CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj: C:/Users/Thomas/Desktop/desktop/pokerbots-2026/tools/khun_trainer.cpp
-CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj: CMakeFiles/khun_trainer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj -MF CMakeFiles\khun_trainer.dir\tools\khun_trainer.cpp.obj.d -o CMakeFiles\khun_trainer.dir\tools\khun_trainer.cpp.obj -c C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\khun_trainer.cpp
+CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj: CMakeFiles/khun_trainer.dir/flags.make
+CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj: CMakeFiles/khun_trainer.dir/includes_CXX.rsp
+CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj: C:/Users/Thomas/Desktop/desktop/pokerbots-2026/trainers/khun_trainer.cpp
+CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj: CMakeFiles/khun_trainer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj -MF CMakeFiles\khun_trainer.dir\trainers\khun_trainer.cpp.obj.d -o CMakeFiles\khun_trainer.dir\trainers\khun_trainer.cpp.obj -c C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\khun_trainer.cpp
 
-CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.i"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\khun_trainer.cpp > CMakeFiles\khun_trainer.dir\tools\khun_trainer.cpp.i
+CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\khun_trainer.cpp > CMakeFiles\khun_trainer.dir\trainers\khun_trainer.cpp.i
 
-CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.s"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\khun_trainer.cpp -o CMakeFiles\khun_trainer.dir\tools\khun_trainer.cpp.s
+CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\khun_trainer.cpp -o CMakeFiles\khun_trainer.dir\trainers\khun_trainer.cpp.s
 
 # Object files for target khun_trainer
 khun_trainer_OBJECTS = \
-"CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj"
+"CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj"
 
 # External object files for target khun_trainer
 khun_trainer_EXTERNAL_OBJECTS =
 
-khun_trainer.exe: CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj
+khun_trainer.exe: CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj
 khun_trainer.exe: CMakeFiles/khun_trainer.dir/build.make
 khun_trainer.exe: CMakeFiles/khun_trainer.dir/linkLibs.rsp
 khun_trainer.exe: CMakeFiles/khun_trainer.dir/objects1.rsp

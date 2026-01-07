@@ -65,6 +65,7 @@ CMAKE_BINARY_DIR = C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build
 all: CMakeFiles/omp.dir/all
 all: CMakeFiles/visualize_tree.dir/all
 all: CMakeFiles/visualize_utility.dir/all
+all: CMakeFiles/visualize_strategy.dir/all
 all: CMakeFiles/khun_trainer.dir/all
 all: CMakeFiles/poker_trainer.dir/all
 all: CMakeFiles/three_card_trainer.dir/all
@@ -74,6 +75,7 @@ all: CMakeFiles/three_card_trainer.dir/all
 codegen: CMakeFiles/omp.dir/codegen
 codegen: CMakeFiles/visualize_tree.dir/codegen
 codegen: CMakeFiles/visualize_utility.dir/codegen
+codegen: CMakeFiles/visualize_strategy.dir/codegen
 codegen: CMakeFiles/khun_trainer.dir/codegen
 codegen: CMakeFiles/poker_trainer.dir/codegen
 codegen: CMakeFiles/three_card_trainer.dir/codegen
@@ -87,6 +89,7 @@ preinstall:
 clean: CMakeFiles/omp.dir/clean
 clean: CMakeFiles/visualize_tree.dir/clean
 clean: CMakeFiles/visualize_utility.dir/clean
+clean: CMakeFiles/visualize_strategy.dir/clean
 clean: CMakeFiles/khun_trainer.dir/clean
 clean: CMakeFiles/poker_trainer.dir/clean
 clean: CMakeFiles/three_card_trainer.dir/clean
@@ -131,7 +134,7 @@ CMakeFiles/omp.dir/clean:
 CMakeFiles/visualize_tree.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_tree.dir\build.make CMakeFiles/visualize_tree.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_tree.dir\build.make CMakeFiles/visualize_tree.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=12,13 "Built target visualize_tree"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=14,15 "Built target visualize_tree"
 .PHONY : CMakeFiles/visualize_tree.dir/all
 
 # Build rule for subdir invocation for target.
@@ -148,7 +151,7 @@ visualize_tree: CMakeFiles/visualize_tree.dir/rule
 # codegen rule for target.
 CMakeFiles/visualize_tree.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_tree.dir\build.make CMakeFiles/visualize_tree.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=12,13 "Finished codegen for target visualize_tree"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=14,15 "Finished codegen for target visualize_tree"
 .PHONY : CMakeFiles/visualize_tree.dir/codegen
 
 # clean rule for target.
@@ -163,7 +166,7 @@ CMakeFiles/visualize_tree.dir/clean:
 CMakeFiles/visualize_utility.dir/all: CMakeFiles/omp.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_utility.dir\build.make CMakeFiles/visualize_utility.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_utility.dir\build.make CMakeFiles/visualize_utility.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=14,15 "Built target visualize_utility"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=16,17 "Built target visualize_utility"
 .PHONY : CMakeFiles/visualize_utility.dir/all
 
 # Build rule for subdir invocation for target.
@@ -180,13 +183,45 @@ visualize_utility: CMakeFiles/visualize_utility.dir/rule
 # codegen rule for target.
 CMakeFiles/visualize_utility.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_utility.dir\build.make CMakeFiles/visualize_utility.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=14,15 "Finished codegen for target visualize_utility"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=16,17 "Finished codegen for target visualize_utility"
 .PHONY : CMakeFiles/visualize_utility.dir/codegen
 
 # clean rule for target.
 CMakeFiles/visualize_utility.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_utility.dir\build.make CMakeFiles/visualize_utility.dir/clean
 .PHONY : CMakeFiles/visualize_utility.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/visualize_strategy.dir
+
+# All Build rule for target.
+CMakeFiles/visualize_strategy.dir/all: CMakeFiles/omp.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=12,13 "Built target visualize_strategy"
+.PHONY : CMakeFiles/visualize_strategy.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/visualize_strategy.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles 7
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/visualize_strategy.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles 0
+.PHONY : CMakeFiles/visualize_strategy.dir/rule
+
+# Convenience name for target.
+visualize_strategy: CMakeFiles/visualize_strategy.dir/rule
+.PHONY : visualize_strategy
+
+# codegen rule for target.
+CMakeFiles/visualize_strategy.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=12,13 "Finished codegen for target visualize_strategy"
+.PHONY : CMakeFiles/visualize_strategy.dir/codegen
+
+# clean rule for target.
+CMakeFiles/visualize_strategy.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/clean
+.PHONY : CMakeFiles/visualize_strategy.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/khun_trainer.dir

@@ -71,29 +71,29 @@ include CMakeFiles/poker_trainer.dir/flags.make
 CMakeFiles/poker_trainer.dir/codegen:
 .PHONY : CMakeFiles/poker_trainer.dir/codegen
 
-CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj: CMakeFiles/poker_trainer.dir/flags.make
-CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj: CMakeFiles/poker_trainer.dir/includes_CXX.rsp
-CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj: C:/Users/Thomas/Desktop/desktop/pokerbots-2026/tools/poker_trainer.cpp
-CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj: CMakeFiles/poker_trainer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj -MF CMakeFiles\poker_trainer.dir\tools\poker_trainer.cpp.obj.d -o CMakeFiles\poker_trainer.dir\tools\poker_trainer.cpp.obj -c C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\poker_trainer.cpp
+CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj: CMakeFiles/poker_trainer.dir/flags.make
+CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj: CMakeFiles/poker_trainer.dir/includes_CXX.rsp
+CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj: C:/Users/Thomas/Desktop/desktop/pokerbots-2026/trainers/poker_trainer.cpp
+CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj: CMakeFiles/poker_trainer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj -MF CMakeFiles\poker_trainer.dir\trainers\poker_trainer.cpp.obj.d -o CMakeFiles\poker_trainer.dir\trainers\poker_trainer.cpp.obj -c C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\poker_trainer.cpp
 
-CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.i"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\poker_trainer.cpp > CMakeFiles\poker_trainer.dir\tools\poker_trainer.cpp.i
+CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\poker_trainer.cpp > CMakeFiles\poker_trainer.dir\trainers\poker_trainer.cpp.i
 
-CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.s"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\poker_trainer.cpp -o CMakeFiles\poker_trainer.dir\tools\poker_trainer.cpp.s
+CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\poker_trainer.cpp -o CMakeFiles\poker_trainer.dir\trainers\poker_trainer.cpp.s
 
 # Object files for target poker_trainer
 poker_trainer_OBJECTS = \
-"CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj"
+"CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj"
 
 # External object files for target poker_trainer
 poker_trainer_EXTERNAL_OBJECTS =
 
-poker_trainer.exe: CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj
+poker_trainer.exe: CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj
 poker_trainer.exe: CMakeFiles/poker_trainer.dir/build.make
 poker_trainer.exe: libomp.a
 poker_trainer.exe: CMakeFiles/poker_trainer.dir/linkLibs.rsp

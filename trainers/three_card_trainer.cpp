@@ -1,6 +1,7 @@
 #include "cfr/CFR.hpp"
 #include "game/ThreeCard.hpp"
 #include "constants/constants.h"
+#include "game/ThreeCardBucket.hpp"
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
@@ -28,6 +29,8 @@ int main() {
     config.iterations = 1'000'000;
 
     ThreeCardGameTree tree;
+    NaiveThreeCardBucket bucket;
+    tree.setBucket(&bucket);
     tree.init();
     tree.prepare(config.seed);
     DCFRTrainer trainer;

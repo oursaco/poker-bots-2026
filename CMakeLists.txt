@@ -37,11 +37,16 @@ target_link_libraries(visualize_tree PRIVATE pokerbots_headers)
 add_executable(visualize_utility tools/visualize_utility.cpp)
 target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp)
 
-add_executable(khun_trainer tools/khun_trainer.cpp)
+add_executable(visualize_strategy tools/visualize_strategy.cpp)
+target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
+
+add_executable(khun_trainer trainers/khun_trainer.cpp)
 target_link_libraries(khun_trainer PRIVATE pokerbots_headers)
 
-add_executable(poker_trainer tools/poker_trainer.cpp)
+add_executable(poker_trainer trainers/poker_trainer.cpp)
 target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp)
 
-add_executable(three_card_trainer tools/three_card_trainer.cpp)
+add_executable(three_card_trainer trainers/three_card_trainer.cpp)
 target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp)
+
+

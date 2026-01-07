@@ -7,9 +7,20 @@
 #include <algorithm>
 #include "external/omp/HandEvaluator.h"
 #include "external/omp/Hand.h"
+#include "game/ThreeCardState.hpp"
 using namespace std;
 
-namespace three_card {
+struct ThreeCardBucket {
+    virtual ~ThreeCardBucket() = default;
+    virtual int countBuckets(ThreeCardGameState* state) = 0;
+    virtual int getPreflopBucket(uint64_t hand) = 0;
+    virtual int getFlopBucket(uint64_t board, uint64_t hand) = 0;
+    virtual int getTurnBucket(uint64_t board, uint64_t hand) = 0;
+    virtual int getRiverBucket(uint64_t board, uint64_t hand) = 0;
+    virtual int evalStrength(uint64_t board, uint64_t hand) = 0;
+};
+
+struct NaiveThreeCardBucket : ThreeCardBucket {
 
 void updateCard(uint64_t &mask, unsigned &suit, unsigned &id){
     unsigned card = __builtin_ctzll(mask);
@@ -18,7 +29,7 @@ void updateCard(uint64_t &mask, unsigned &suit, unsigned &id){
     id = card/4;
 }
 
-int preflop_bucket(uint64_t hand){
+int getPreflopBucket(uint64_t hand){
     vector<pair<unsigned, unsigned>> cards;
     for(int i = 0; i < 3; i++){
         unsigned suit, id;
@@ -85,7 +96,7 @@ bool is_flush_draw(uint64_t mask){
     return false;
 }
 
-int flop_bucket(uint64_t board, uint64_t hand){
+int getFlopBucket(uint64_t board, uint64_t hand){
     uint64_t mask = board | hand;
     omp::Hand combined = omp::Hand::empty();
     while(mask){
@@ -98,11 +109,11 @@ int flop_bucket(uint64_t board, uint64_t hand){
     return strength*2*2 + is_flush_draw(mask)*2 + is_straight_draw(mask);
 }
 
-int turn_bucket(uint64_t board, uint64_t hand){
-    return flop_bucket(board, hand);
+int getTurnBucket(uint64_t board, uint64_t hand){
+    return getFlopBucket(board, hand);
 }
 
-int eval_strength(uint64_t board, uint64_t hand){
+int evalStrength(uint64_t board, uint64_t hand){
     unsigned cards[8], suits[8];
     omp::Hand pre[8];
     for(int i = 0; i < 8; i++){
@@ -120,27 +131,23 @@ int eval_strength(uint64_t board, uint64_t hand){
     return strength;
 }
 
-int river_bucket(uint64_t board, uint64_t hand){
-    int strength = eval_strength(board, hand);
+int getRiverBucket(uint64_t board, uint64_t hand){
+    int strength = evalStrength(board, hand);
     return (strength/4096)*4 + (strength%4096)/1024;
 }
 
-constexpr int count_preflop_buckets(){
-    return ((1 << 6) - 1)*13*13 + 12*13 + 12 + 1;
+int countBuckets(ThreeCardGameState* state){
+    if(state->street == 0){
+        return ((1 << 6) - 1)*13*13 + 12*13 + 12 + 1;
+    } else if(state->street == 1){
+        return 15*2*2 + 2 + 1 + 1;
+    } else if(state->street == 2){
+        return 15*2*2 + 2 + 1 + 1;
+    } else if(state->street == 3){
+        return 15*2*2 + 2 + 1 + 1;
+    }
 }
 
-constexpr int count_flop_buckets(){
-    return 15*2*2 + 2 + 1 + 1;
-}
-
-constexpr int count_turn_buckets(){
-    return count_flop_buckets();
-}
-
-constexpr int count_river_buckets(){
-    return count_flop_buckets();
-}
-
-}
+};
 
 #endif // TREECARDBUCKET_HPP

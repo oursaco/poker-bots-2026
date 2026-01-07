@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj"
-  "CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj.d"
+  "CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj"
+  "CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj.d"
   "khun_trainer.exe"
   "khun_trainer.exe.manifest"
   "khun_trainer.pdb"

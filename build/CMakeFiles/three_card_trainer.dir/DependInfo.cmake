@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/Thomas/Desktop/desktop/pokerbots-2026/tools/three_card_trainer.cpp" "CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj" "gcc" "CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj.d"
+  "C:/Users/Thomas/Desktop/desktop/pokerbots-2026/trainers/three_card_trainer.cpp" "CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj" "gcc" "CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

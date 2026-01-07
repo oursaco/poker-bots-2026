@@ -71,29 +71,29 @@ include CMakeFiles/three_card_trainer.dir/flags.make
 CMakeFiles/three_card_trainer.dir/codegen:
 .PHONY : CMakeFiles/three_card_trainer.dir/codegen
 
-CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj: CMakeFiles/three_card_trainer.dir/flags.make
-CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj: CMakeFiles/three_card_trainer.dir/includes_CXX.rsp
-CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj: C:/Users/Thomas/Desktop/desktop/pokerbots-2026/tools/three_card_trainer.cpp
-CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj: CMakeFiles/three_card_trainer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj -MF CMakeFiles\three_card_trainer.dir\tools\three_card_trainer.cpp.obj.d -o CMakeFiles\three_card_trainer.dir\tools\three_card_trainer.cpp.obj -c C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\three_card_trainer.cpp
+CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj: CMakeFiles/three_card_trainer.dir/flags.make
+CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj: CMakeFiles/three_card_trainer.dir/includes_CXX.rsp
+CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj: C:/Users/Thomas/Desktop/desktop/pokerbots-2026/trainers/three_card_trainer.cpp
+CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj: CMakeFiles/three_card_trainer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Thomas\Desktop\desktop\pokerbots-2026\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj -MF CMakeFiles\three_card_trainer.dir\trainers\three_card_trainer.cpp.obj.d -o CMakeFiles\three_card_trainer.dir\trainers\three_card_trainer.cpp.obj -c C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\three_card_trainer.cpp
 
-CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.i"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\three_card_trainer.cpp > CMakeFiles\three_card_trainer.dir\tools\three_card_trainer.cpp.i
+CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\three_card_trainer.cpp > CMakeFiles\three_card_trainer.dir\trainers\three_card_trainer.cpp.i
 
-CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.s"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Thomas\Desktop\desktop\pokerbots-2026\tools\three_card_trainer.cpp -o CMakeFiles\three_card_trainer.dir\tools\three_card_trainer.cpp.s
+CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Thomas\Desktop\desktop\pokerbots-2026\trainers\three_card_trainer.cpp -o CMakeFiles\three_card_trainer.dir\trainers\three_card_trainer.cpp.s
 
 # Object files for target three_card_trainer
 three_card_trainer_OBJECTS = \
-"CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj"
+"CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj"
 
 # External object files for target three_card_trainer
 three_card_trainer_EXTERNAL_OBJECTS =
 
-three_card_trainer.exe: CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj
+three_card_trainer.exe: CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj
 three_card_trainer.exe: CMakeFiles/three_card_trainer.dir/build.make
 three_card_trainer.exe: libomp.a
 three_card_trainer.exe: CMakeFiles/three_card_trainer.dir/linkLibs.rsp

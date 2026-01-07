@@ -155,6 +155,19 @@ visualize_utility/fast:
 .PHONY : visualize_utility/fast
 
 #=============================================================================
+# Target rules for targets named visualize_strategy
+
+# Build rule for target.
+visualize_strategy: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 visualize_strategy
+.PHONY : visualize_strategy
+
+# fast build rule for target.
+visualize_strategy/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/build
+.PHONY : visualize_strategy/fast
+
+#=============================================================================
 # Target rules for targets named khun_trainer
 
 # Build rule for target.
@@ -289,77 +302,29 @@ external/omp/HandEvaluator.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\omp.dir\build.make CMakeFiles/omp.dir/external/omp/HandEvaluator.cpp.s
 .PHONY : external/omp/HandEvaluator.cpp.s
 
-tools/khun_trainer.obj: tools/khun_trainer.cpp.obj
-.PHONY : tools/khun_trainer.obj
+tools/visualize_strategy.obj: tools/visualize_strategy.cpp.obj
+.PHONY : tools/visualize_strategy.obj
 
 # target to build an object file
-tools/khun_trainer.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\khun_trainer.dir\build.make CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.obj
-.PHONY : tools/khun_trainer.cpp.obj
+tools/visualize_strategy.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/tools/visualize_strategy.cpp.obj
+.PHONY : tools/visualize_strategy.cpp.obj
 
-tools/khun_trainer.i: tools/khun_trainer.cpp.i
-.PHONY : tools/khun_trainer.i
-
-# target to preprocess a source file
-tools/khun_trainer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\khun_trainer.dir\build.make CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.i
-.PHONY : tools/khun_trainer.cpp.i
-
-tools/khun_trainer.s: tools/khun_trainer.cpp.s
-.PHONY : tools/khun_trainer.s
-
-# target to generate assembly for a file
-tools/khun_trainer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\khun_trainer.dir\build.make CMakeFiles/khun_trainer.dir/tools/khun_trainer.cpp.s
-.PHONY : tools/khun_trainer.cpp.s
-
-tools/poker_trainer.obj: tools/poker_trainer.cpp.obj
-.PHONY : tools/poker_trainer.obj
-
-# target to build an object file
-tools/poker_trainer.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\poker_trainer.dir\build.make CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.obj
-.PHONY : tools/poker_trainer.cpp.obj
-
-tools/poker_trainer.i: tools/poker_trainer.cpp.i
-.PHONY : tools/poker_trainer.i
+tools/visualize_strategy.i: tools/visualize_strategy.cpp.i
+.PHONY : tools/visualize_strategy.i
 
 # target to preprocess a source file
-tools/poker_trainer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\poker_trainer.dir\build.make CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.i
-.PHONY : tools/poker_trainer.cpp.i
+tools/visualize_strategy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/tools/visualize_strategy.cpp.i
+.PHONY : tools/visualize_strategy.cpp.i
 
-tools/poker_trainer.s: tools/poker_trainer.cpp.s
-.PHONY : tools/poker_trainer.s
-
-# target to generate assembly for a file
-tools/poker_trainer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\poker_trainer.dir\build.make CMakeFiles/poker_trainer.dir/tools/poker_trainer.cpp.s
-.PHONY : tools/poker_trainer.cpp.s
-
-tools/three_card_trainer.obj: tools/three_card_trainer.cpp.obj
-.PHONY : tools/three_card_trainer.obj
-
-# target to build an object file
-tools/three_card_trainer.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\three_card_trainer.dir\build.make CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.obj
-.PHONY : tools/three_card_trainer.cpp.obj
-
-tools/three_card_trainer.i: tools/three_card_trainer.cpp.i
-.PHONY : tools/three_card_trainer.i
-
-# target to preprocess a source file
-tools/three_card_trainer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\three_card_trainer.dir\build.make CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.i
-.PHONY : tools/three_card_trainer.cpp.i
-
-tools/three_card_trainer.s: tools/three_card_trainer.cpp.s
-.PHONY : tools/three_card_trainer.s
+tools/visualize_strategy.s: tools/visualize_strategy.cpp.s
+.PHONY : tools/visualize_strategy.s
 
 # target to generate assembly for a file
-tools/three_card_trainer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\three_card_trainer.dir\build.make CMakeFiles/three_card_trainer.dir/tools/three_card_trainer.cpp.s
-.PHONY : tools/three_card_trainer.cpp.s
+tools/visualize_strategy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_strategy.dir\build.make CMakeFiles/visualize_strategy.dir/tools/visualize_strategy.cpp.s
+.PHONY : tools/visualize_strategy.cpp.s
 
 tools/visualize_tree.obj: tools/visualize_tree.cpp.obj
 .PHONY : tools/visualize_tree.obj
@@ -409,6 +374,78 @@ tools/visualize_utility.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\visualize_utility.dir\build.make CMakeFiles/visualize_utility.dir/tools/visualize_utility.cpp.s
 .PHONY : tools/visualize_utility.cpp.s
 
+trainers/khun_trainer.obj: trainers/khun_trainer.cpp.obj
+.PHONY : trainers/khun_trainer.obj
+
+# target to build an object file
+trainers/khun_trainer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\khun_trainer.dir\build.make CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.obj
+.PHONY : trainers/khun_trainer.cpp.obj
+
+trainers/khun_trainer.i: trainers/khun_trainer.cpp.i
+.PHONY : trainers/khun_trainer.i
+
+# target to preprocess a source file
+trainers/khun_trainer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\khun_trainer.dir\build.make CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.i
+.PHONY : trainers/khun_trainer.cpp.i
+
+trainers/khun_trainer.s: trainers/khun_trainer.cpp.s
+.PHONY : trainers/khun_trainer.s
+
+# target to generate assembly for a file
+trainers/khun_trainer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\khun_trainer.dir\build.make CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.s
+.PHONY : trainers/khun_trainer.cpp.s
+
+trainers/poker_trainer.obj: trainers/poker_trainer.cpp.obj
+.PHONY : trainers/poker_trainer.obj
+
+# target to build an object file
+trainers/poker_trainer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\poker_trainer.dir\build.make CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.obj
+.PHONY : trainers/poker_trainer.cpp.obj
+
+trainers/poker_trainer.i: trainers/poker_trainer.cpp.i
+.PHONY : trainers/poker_trainer.i
+
+# target to preprocess a source file
+trainers/poker_trainer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\poker_trainer.dir\build.make CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.i
+.PHONY : trainers/poker_trainer.cpp.i
+
+trainers/poker_trainer.s: trainers/poker_trainer.cpp.s
+.PHONY : trainers/poker_trainer.s
+
+# target to generate assembly for a file
+trainers/poker_trainer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\poker_trainer.dir\build.make CMakeFiles/poker_trainer.dir/trainers/poker_trainer.cpp.s
+.PHONY : trainers/poker_trainer.cpp.s
+
+trainers/three_card_trainer.obj: trainers/three_card_trainer.cpp.obj
+.PHONY : trainers/three_card_trainer.obj
+
+# target to build an object file
+trainers/three_card_trainer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\three_card_trainer.dir\build.make CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.obj
+.PHONY : trainers/three_card_trainer.cpp.obj
+
+trainers/three_card_trainer.i: trainers/three_card_trainer.cpp.i
+.PHONY : trainers/three_card_trainer.i
+
+# target to preprocess a source file
+trainers/three_card_trainer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\three_card_trainer.dir\build.make CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.i
+.PHONY : trainers/three_card_trainer.cpp.i
+
+trainers/three_card_trainer.s: trainers/three_card_trainer.cpp.s
+.PHONY : trainers/three_card_trainer.s
+
+# target to generate assembly for a file
+trainers/three_card_trainer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\three_card_trainer.dir\build.make CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.s
+.PHONY : trainers/three_card_trainer.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -421,6 +458,7 @@ help:
 	@echo ... omp
 	@echo ... poker_trainer
 	@echo ... three_card_trainer
+	@echo ... visualize_strategy
 	@echo ... visualize_tree
 	@echo ... visualize_utility
 	@echo ... external/omp/CardRange.obj
@@ -435,21 +473,24 @@ help:
 	@echo ... external/omp/HandEvaluator.obj
 	@echo ... external/omp/HandEvaluator.i
 	@echo ... external/omp/HandEvaluator.s
-	@echo ... tools/khun_trainer.obj
-	@echo ... tools/khun_trainer.i
-	@echo ... tools/khun_trainer.s
-	@echo ... tools/poker_trainer.obj
-	@echo ... tools/poker_trainer.i
-	@echo ... tools/poker_trainer.s
-	@echo ... tools/three_card_trainer.obj
-	@echo ... tools/three_card_trainer.i
-	@echo ... tools/three_card_trainer.s
+	@echo ... tools/visualize_strategy.obj
+	@echo ... tools/visualize_strategy.i
+	@echo ... tools/visualize_strategy.s
 	@echo ... tools/visualize_tree.obj
 	@echo ... tools/visualize_tree.i
 	@echo ... tools/visualize_tree.s
 	@echo ... tools/visualize_utility.obj
 	@echo ... tools/visualize_utility.i
 	@echo ... tools/visualize_utility.s
+	@echo ... trainers/khun_trainer.obj
+	@echo ... trainers/khun_trainer.i
+	@echo ... trainers/khun_trainer.s
+	@echo ... trainers/poker_trainer.obj
+	@echo ... trainers/poker_trainer.i
+	@echo ... trainers/poker_trainer.s
+	@echo ... trainers/three_card_trainer.obj
+	@echo ... trainers/three_card_trainer.i
+	@echo ... trainers/three_card_trainer.s
 .PHONY : help
 
 
