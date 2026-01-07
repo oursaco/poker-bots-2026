@@ -1,2 +1,0 @@
-/usr/bin/ar qc libomp.a  CMakeFiles/omp.dir/external/omp/CardRange.cpp.o CMakeFiles/omp.dir/external/omp/CombinedRange.cpp.o CMakeFiles/omp.dir/external/omp/EquityCalculator.cpp.o CMakeFiles/omp.dir/external/omp/HandEvaluator.cpp.o
-/usr/bin/ranlib libomp.a
