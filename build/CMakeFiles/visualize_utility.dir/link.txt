@@ -1,1 +1,0 @@
-/usr/bin/g++     CMakeFiles/visualize_utility.dir/tools/visualize_utility.cpp.o  -o visualize_utility  libomp.a 

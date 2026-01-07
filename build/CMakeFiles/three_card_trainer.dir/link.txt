@@ -1,1 +1,0 @@
-/usr/bin/g++     CMakeFiles/three_card_trainer.dir/trainers/three_card_trainer.cpp.o  -o three_card_trainer  libomp.a 

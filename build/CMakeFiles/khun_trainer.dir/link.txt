@@ -1,1 +1,0 @@
-/usr/bin/g++     CMakeFiles/khun_trainer.dir/trainers/khun_trainer.cpp.o  -o khun_trainer 
