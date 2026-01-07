@@ -95,10 +95,7 @@ struct ThreeCardGameState : GameState {
         int amount = call->bb_bet - call->sb_bet;
         call->pot += amount;
         call->sb_stack -= amount;
-        if(bb_bet == 0){
-            call->turn = 1;
-            call->action_depth++;
-        } else if(street == 3){
+        if(street == 3){
             call->winner = 0;
             call->showdown = true;
         } else {
@@ -116,7 +113,10 @@ struct ThreeCardGameState : GameState {
         int amount = call->sb_bet - call->bb_bet;
         call->pot += amount;
         call->bb_stack -= amount;
-        if(street == 3){
+        if(sb_bet == 0){
+            call->turn = 0;
+            call->action_depth++;
+        } else if(street == 3){
             call->winner = 0;
             call->showdown = true;
         } else {

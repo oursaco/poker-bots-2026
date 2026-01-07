@@ -78,7 +78,7 @@ void visualizePokerUtility(){
     trainer.players[1].initPolicy(tree.getMovesPerInfoSet());
     trainer.updateUtility();
     PokerGameState root = PokerGameState();
-    visualizeUtilityDepthLimited(&root, "", trainer.utility, 5);
+    visualizeUtilityDepthLimited(&root, "", trainer.utility, 6);
 }
 
 int main(){

@@ -12,7 +12,8 @@ CMakeFiles/visualize_strategy.dir/tools/visualize_strategy.cpp.obj
  C:/Users/Thomas/Desktop/desktop/pokerbots-2026/external/omp/Random.h
  C:/Users/Thomas/Desktop/desktop/pokerbots-2026/external/omp/Util.h
  C:/Users/Thomas/Desktop/desktop/pokerbots-2026/game/GameTree.hpp
- C:/Users/Thomas/Desktop/desktop/pokerbots-2026/game/Poker.hpp
+ C:/Users/Thomas/Desktop/desktop/pokerbots-2026/game/ThreeCard.hpp
+ C:/Users/Thomas/Desktop/desktop/pokerbots-2026/game/ThreeCardBucket.hpp
  C:/Users/Thomas/Desktop/desktop/pokerbots-2026/game/ThreeCardState.hpp
  C:/msys64/mingw64/include/_mingw.h
  C:/msys64/mingw64/include/_mingw_mac.h

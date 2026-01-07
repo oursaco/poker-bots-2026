@@ -106,10 +106,7 @@ struct PokerGameState : GameState {
         int amount = call->bb_bet - call->sb_bet;
         call->pot += amount;
         call->sb_stack -= amount;
-        if(bb_bet == 0){
-            call->turn = 1;
-            call->action_depth++;
-        } else if(street == 3){
+        if(street == 3){
             call->winner = 0;
             call->showdown = true;
         } else {
@@ -127,7 +124,10 @@ struct PokerGameState : GameState {
         int amount = call->sb_bet - call->bb_bet;
         call->pot += amount;
         call->bb_stack -= amount;
-        if(street == 3){
+        if(sb_bet == 0){
+            call->turn = 0;
+            call->action_depth++;
+        } else if(street == 3){
             call->winner = 0;
             call->showdown = true;
         } else {
@@ -221,7 +221,11 @@ struct PokerGameState : GameState {
             }
             auto action = make_unique<PokerAction>(action_name, -1, 0, sb_stack, bb_stack);
             auto next_state = make_unique<PokerGameState>(*this);
-            next_state->turn = 0;
+            if(street == 0){
+                next_state->turn = 0;
+            } else {
+                next_state->turn = 1;
+            }
             actions.push_back({std::move(next_state), std::move(action)});
             return actions;
         }

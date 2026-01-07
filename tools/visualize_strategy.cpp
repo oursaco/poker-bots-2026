@@ -5,12 +5,105 @@
 #include "constants/constants.h"
 #include "cfr/CFR.hpp"
 #include <cstddef>
+#include <cstdint>
 #include <iomanip>
 #include <iostream>
 #include <string>
 using namespace std;
 
 int node_id_counter = 0;
+
+string cardToString(unsigned card){
+    static const char* ranks = "23456789TJQKA";
+    static const char suits[] = {'s', 'h', 'd', 'c'};
+    string out;
+    out += ranks[card/4];
+    out += suits[card%4];
+    return out;
+}
+
+string maskToString(uint64_t mask){
+    string out;
+    bool first = true;
+    while(mask){
+        unsigned card = __builtin_ctzll(mask);
+        mask &= mask - 1;
+        if(!first){
+            out += " ";
+        }
+        out += cardToString(card);
+        first = false;
+    }
+    if(first){
+        return "(none)";
+    }
+    return out;
+}
+
+struct HoleCards {
+    uint64_t sb_hand;
+    uint64_t bb_hand;
+};
+
+HoleCards sampleHoleCards(int seed){
+    omp::XoroShiro128Plus rng(seed);
+    omp::FastUniformIntDistribution2<int> card_generator(0, 51);
+    uint64_t used_mask = 0;
+    auto generateCard = [&](uint64_t &mask){
+        unsigned card;
+        uint64_t card_mask;
+        do {
+            card = card_generator(rng);
+            card_mask = 1ull << card;
+        } while (mask & card_mask);
+        mask |= card_mask;
+        return card;
+    };
+    uint64_t sb_hand = 0;
+    uint64_t bb_hand = 0;
+    for(int i = 0; i < 3; ++i){
+        sb_hand |= 1ull << generateCard(used_mask);
+        bb_hand |= 1ull << generateCard(used_mask);
+    }
+    return {sb_hand, bb_hand};
+}
+
+struct RunoutCards {
+    uint64_t flop = 0;
+    uint64_t turn = 0;
+    uint64_t river = 0;
+    bool valid = false;
+};
+
+RunoutCards selectRunout(const ThreeCardGameTree& tree){
+    RunoutCards runout;
+    int river_index = -1;
+    for(size_t i = 0; i < tree.board.size(); ++i){
+        if(__builtin_popcountll(tree.board[i]) == 4){
+            river_index = static_cast<int>(i);
+            break;
+        }
+    }
+    if(river_index < 0){
+        return runout;
+    }
+    int turn_index = tree.parent_board[river_index];
+    if(turn_index < 0){
+        return runout;
+    }
+    int flop_index = tree.parent_board[turn_index];
+    if(flop_index < 0){
+        return runout;
+    }
+    uint64_t flop = tree.board[flop_index];
+    uint64_t turn = tree.board[turn_index] & ~flop;
+    uint64_t river = tree.board[river_index] & ~tree.board[turn_index];
+    runout.flop = flop;
+    runout.turn = turn;
+    runout.river = river;
+    runout.valid = true;
+    return runout;
+}
 
 float averageMoveProb(DCFRPolicy& policy, int info_set, int move_id){
     int move_count = policy.getMoveCount(info_set);
@@ -106,18 +199,30 @@ void visualizeThreeCardStrategy(){
     NaiveThreeCardBucket bucket;
     tree.setBucket(&bucket);
     tree.init();
-    tree.prepare(42);
+    int seed = 42;
+    tree.prepare(seed);
     DCFRTrainer trainer;
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(tree.getMovesPerInfoSet());
     trainer.players[1].initPolicy(tree.getMovesPerInfoSet());
-    trainer.players[0].loadPolicy("./three_card_models/player0_final.bin");
-    trainer.players[1].loadPolicy("./three_card_models/player1_final.bin");
+    trainer.players[0].loadPolicy("./trained_model/player1_3289197.bin");
+    trainer.players[1].loadPolicy("./trained_model/player1_3289197.bin");
 
     cout << fixed << setprecision(4);
+    HoleCards hole_cards = sampleHoleCards(seed);
+    RunoutCards runout = selectRunout(tree);
+    cout << "sb hole: " << maskToString(hole_cards.sb_hand) << "\n";
+    cout << "bb hole: " << maskToString(hole_cards.bb_hand) << "\n";
+    if(runout.valid){
+        cout << "runout: flop " << maskToString(runout.flop) << " | turn " << maskToString(runout.turn)
+             << " | river " << maskToString(runout.river) << "\n";
+    } else {
+        cout << "runout: (unavailable)\n";
+    }
+    cout << "\n";
     node_id_counter = 0;
     ThreeCardGameState root = ThreeCardGameState();
-    visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 5);
+    visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 8);
 }
 
 int main(){
