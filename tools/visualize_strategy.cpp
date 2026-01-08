@@ -396,6 +396,43 @@ void visualizeStrategyDepthLimited(GameState* state, GameTree* tree, DCFRPolicy*
     }
 }
 
+void visualizeStrategyHighProbability(GameState* state, GameTree* tree, DCFRPolicy* players, const string& prefix, int node_id, float cum_prob, bool skip){
+    auto actions = state->generateActions();
+    if(actions.empty()){
+        cout << prefix << "(no actions)\n";
+        return;
+    }
+    if(cum_prob < 0.01f && !skip){
+        cout << prefix << "(low probability)\n";
+        skip = true;
+    }
+    for(int i = 0; i < actions.size(); ++i){
+        bool is_last = (i + 1 == actions.size());
+        auto* next_state = actions[i].first.get();
+        auto& action = actions[i].second;
+        bool is_terminal = next_state->isTerminal();
+        int child_node_id = node_id;
+        float prob = 1.0f;
+        if(!action->isWorldAction()){
+            prob = getPolicyProb(tree, players, node_id, i);
+            node_id_counter++;
+            child_node_id = node_id_counter;
+        }
+
+        if (!skip){
+            cout << prefix << (is_last ? "\\-- " : "|-- ") << action->toString() << " | prob: " << prob;
+            if(is_terminal){
+                cout << " [terminal, winner: " << next_state->getWinner() << "]";
+            }
+            cout << "\n";
+        }
+
+        if(!is_terminal){
+            visualizeStrategyHighProbability(next_state, tree, players, prefix + (is_last ? "    " : "|   "), child_node_id, cum_prob * prob, skip);
+        }
+    }
+}
+
 void visualizeThreeCardStrategy(const StrategyOptions& options){
     ThreeCardGameTree tree;
     NaiveThreeCardBucket bucket;
@@ -439,7 +476,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     cout << "\n";
     node_id_counter = 0;
     ThreeCardGameState root = ThreeCardGameState();
-    visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
+    // visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
+    visualizeStrategyHighProbability(&root, &tree, trainer.players, "", 0, 1.0f, false);
 }
 
 int main(int argc, char* argv[]){

@@ -84,7 +84,7 @@ struct PokerGameState : GameState {
         return (winner == 1 ? "sb" : (winner == -1 ? "bb" : "none"));
     } 
 
-    pair<unique_ptr<GameState>, unique_ptr<Action>> sb_fold(){
+        pair<unique_ptr<GameState>, unique_ptr<Action>> sb_fold(){
         auto fold = make_unique<PokerGameState>(*this);  
         fold->winner = -1;
         fold->pot -= fold->bb_bet - fold->sb_bet;
@@ -106,7 +106,11 @@ struct PokerGameState : GameState {
         int amount = call->bb_bet - call->sb_bet;
         call->pot += amount;
         call->sb_stack -= amount;
-        if(street == 3){
+        if(street == 0 && sb_bet == 1){
+            call->sb_bet++;
+            call->action_depth++;
+            call->turn = 1;
+        } else if(street == 3){
             call->winner = 0;
             call->showdown = true;
         } else {
@@ -120,7 +124,7 @@ struct PokerGameState : GameState {
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> bb_call(){
         auto call = make_unique<PokerGameState>(*this);  
-        assert(call->bb_bet < call->sb_bet || call->sb_bet == 0);
+        assert(call->bb_bet < call->sb_bet || call->sb_bet == 0 || (street == 0 && call->sb_bet == 2));
         int amount = call->sb_bet - call->bb_bet;
         call->pot += amount;
         call->bb_stack -= amount;
@@ -154,7 +158,7 @@ struct PokerGameState : GameState {
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> bb_raise(int amount){
         auto raise = make_unique<PokerGameState>(*this);  
-        assert(raise->bb_bet < raise->sb_bet || raise->sb_bet == 0);
+        assert(raise->bb_bet < raise->sb_bet || raise->sb_bet == 0 || (street == 0 && raise->sb_bet == 2));
         assert(raise->bb_bet + amount > raise->sb_bet);
         assert(raise->bb_stack >= amount);
         raise->pot += amount;
@@ -191,7 +195,7 @@ struct PokerGameState : GameState {
                 actions.push_back(sb_raise(sb_stack));
             }
         } else if(turn == 1){
-            if(sb_bet > 0){
+            if(sb_bet > 0 && !(street == 0 && sb_bet == 2)){
                 actions.push_back(bb_fold());
             }
             actions.push_back(bb_call());

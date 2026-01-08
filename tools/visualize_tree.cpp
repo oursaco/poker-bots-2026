@@ -4,6 +4,8 @@
 #include <cstddef>
 #include <iostream>
 #include <string>
+#include "game/ThreeCard.hpp"
+#include "game/ThreeCardState.hpp"
 using namespace std;
 
 void visualizeTree(GameState* state, const string& prefix){
@@ -31,7 +33,10 @@ void visualizeTree(GameState* state, const string& prefix){
     }
 }
 
+int sz = 0;
+
 void visualizeTreeDepthLimited(GameState* state, const string& prefix, int depth){
+    sz++;
     auto actions = state->generateActions();
     if(actions.empty()){
         cout << prefix << "(no actions)\n";
@@ -70,6 +75,12 @@ void visualizePokerTree(){
     visualizeTree(&root, "");
 }
 
+void visualizeThreeCardTree(){
+    ThreeCardGameState root = ThreeCardGameState();
+    visualizeTreeDepthLimited(&root, "", 100);
+}
+
 int main(){
-    visualizePokerTree();
+    visualizeThreeCardTree();
+    cout << "total nodes: " << sz << endl;
 }
