@@ -259,6 +259,30 @@ struct KhunPokerGameTree : GameTree {
     int getTurn(int node_id){
         return turn[node_id];
     }
+
+    // For best response: returns number of unique deals (6 for Kuhn Poker)
+    int getNumDeals() override {
+        return 6;  // 3 cards, pick 2: 3 * 2 = 6 possible deals
+    }
+
+    // Prepares the tree for a specific deal index
+    // deal_idx in [0, 5] maps to (sb_card, bb_card) pairs:
+    // 0: (0,1), 1: (0,2), 2: (1,0), 3: (1,2), 4: (2,0), 5: (2,1)
+    void prepareDeal(int deal_idx) override {
+        int idx = 0;
+        for(int sb = 0; sb < 3; sb++){
+            for(int bb = 0; bb < 3; bb++){
+                if(sb != bb){
+                    if(idx == deal_idx){
+                        sb_card = sb;
+                        bb_card = bb;
+                        return;
+                    }
+                    idx++;
+                }
+            }
+        }
+    }
 };
 
 #endif // KHUNPOKER_HPP
