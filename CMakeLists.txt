@@ -12,9 +12,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_compile_options(-O3 -std=c++17 -pthread -Wall -Wpedantic -march=native -ffast-math)
-
-
+add_compile_options(-O3 -std=c++17 -Wall -Wpedantic -march=native -ffast-math)
 
 add_library(pokerbots_headers INTERFACE)
 target_include_directories(pokerbots_headers INTERFACE
@@ -31,6 +29,9 @@ target_include_directories(omp PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/external/omp
     ${CMAKE_CURRENT_SOURCE_DIR}/external/libdivide
 )
+
+add_executable(visualize_infosets tools/visualize_infosets.cpp)
+target_link_libraries(visualize_infosets PRIVATE pokerbots_headers omp)
 
 add_executable(visualize_tree tools/visualize_tree.cpp)
 target_link_libraries(visualize_tree PRIVATE pokerbots_headers)

@@ -1,6 +1,7 @@
 #include "game/GameTree.hpp"
 #include "game/ThreeCard.hpp"
 #include "game/Poker.hpp"
+#include "external/omp/Random.h"
 #include "constants/constants.h"
 #include "cfr/CFR.hpp"
 #include <cctype>
@@ -23,7 +24,6 @@ struct UtilityOptions {
     uint64_t flop = 0;
     uint64_t turn = 0;
     uint64_t river = 0;
-    bool use_three_card = false;
 };
 
 int rankFromChar(char c){
@@ -188,32 +188,14 @@ bool parseArgs(int argc, char* argv[], UtilityOptions& options, string& error){
             options.show_help = true;
             return true;
         }
-        if(arg == "--threecard"){
-            if(has_game){
-                error = "game specified multiple times";
-                return false;
-            }
-            options.use_three_card = true;
-            has_game = true;
-        } else if(arg == "--poker"){
-            if(has_game){
-                error = "game specified multiple times";
-                return false;
-            }
-            options.use_three_card = false;
-            has_game = true;
-        }
     }
-    int sb_count = options.use_three_card ? 3 : 2;
-    int flop_count = options.use_three_card ? 2 : 3;
+    int sb_count = 3;
+    int flop_count = 2;
     for(int i = 1; i < argc; ++i){
         string arg = argv[i];
         if(arg == "--help" || arg == "-h"){
             options.show_help = true;
             return true;
-        }
-        if(arg == "--threecard" || arg == "--poker"){
-            continue;
         }
         bool matched = false;
         if(!parseCardListForFlag("--sb", arg, i, argc, argv, sb_count, options.has_sb, options.sb_hand, matched, error)){
@@ -258,9 +240,8 @@ bool parseArgs(int argc, char* argv[], UtilityOptions& options, string& error){
 
 void printUsage(const char* exe){
     cout << "Usage: " << exe
-         << " [--poker|--threecard] [--sb \"As Kd\"] [--bb \"9c 8d\"] [--flop \"2s 3s 4d\"] [--turn \"5c\"] [--river \"6h\"]\n"
-         << "  poker: --sb \"As Kd\" --bb \"9c 8d\" --flop \"2s 3s 4d\" --turn \"5c\" --river \"6h\"\n"
-         << "  threecard: --threecard --sb \"As Kd Qh\" --bb \"9c 8d 7h\" --flop \"2s 3s\" --turn \"4d\" --river \"5c\"\n";
+         << " [--sb \"As Kd\"] [--bb \"9c 8d\"] [--flop \"2s 3s 4d\"] [--turn \"5c\"] [--river \"6h\"]\n"
+         << "  --sb \"As Kd Qh\" --bb \"9c 8d 7h\" --flop \"2s 3s\" --turn \"4d\" --river \"5c\"\n";
 }
 
 string cardToString(unsigned card){
@@ -294,73 +275,6 @@ struct HoleCards {
     uint64_t sb_hand;
     uint64_t bb_hand;
 };
-
-struct RunoutCards {
-    uint64_t flop = 0;
-    uint64_t turn = 0;
-    uint64_t river = 0;
-    bool valid = false;
-};
-
-RunoutCards selectRunout(const PokerGameTree& tree){
-    RunoutCards runout;
-    int river_index = -1;
-    for(size_t i = 0; i < tree.board.size(); ++i){
-        if(tree.board[i].count() == 5){
-            river_index = static_cast<int>(i);
-            break;
-        }
-    }
-    if(river_index < 0){
-        return runout;
-    }
-    int turn_index = tree.parent_board[river_index];
-    if(turn_index < 0){
-        return runout;
-    }
-    int flop_index = tree.parent_board[turn_index];
-    if(flop_index < 0){
-        return runout;
-    }
-    uint64_t flop = tree.board[flop_index].getMask();
-    uint64_t turn = tree.board[turn_index].getMask() & ~flop;
-    uint64_t river = tree.board[river_index].getMask() & ~tree.board[turn_index].getMask();
-    runout.flop = flop;
-    runout.turn = turn;
-    runout.river = river;
-    runout.valid = true;
-    return runout;
-}
-
-RunoutCards selectRunout(const ThreeCardGameTree& tree){
-    RunoutCards runout;
-    int river_index = -1;
-    for(size_t i = 0; i < tree.board.size(); ++i){
-        if(__builtin_popcountll(tree.board[i]) == 4){
-            river_index = static_cast<int>(i);
-            break;
-        }
-    }
-    if(river_index < 0){
-        return runout;
-    }
-    int turn_index = tree.parent_board[river_index];
-    if(turn_index < 0){
-        return runout;
-    }
-    int flop_index = tree.parent_board[turn_index];
-    if(flop_index < 0){
-        return runout;
-    }
-    uint64_t flop = tree.board[flop_index];
-    uint64_t turn = tree.board[turn_index] & ~flop;
-    uint64_t river = tree.board[river_index] & ~tree.board[turn_index];
-    runout.flop = flop;
-    runout.turn = turn;
-    runout.river = river;
-    runout.valid = true;
-    return runout;
-}
 
 int ind = 0;
 
@@ -423,65 +337,71 @@ void visualizeUtilityDepthLimited(GameState* state, const string& prefix, array<
     }
 }
 
-void visualizePokerUtility(const UtilityOptions& options){
-    PokerGameTree tree;
-    tree.init();
-    if(options.has_sb){
-        tree.setFixedSbHand(options.sb_hand);
-    }
-    if(options.has_bb){
-        tree.setFixedBbHand(options.bb_hand);
-    }
-    if(options.has_flop){
-        tree.setFixedFlop(options.flop);
-    }
-    if(options.has_turn){
-        tree.setFixedTurn(options.turn);
-    }
-    if(options.has_river){
-        tree.setFixedRiver(options.river);
-    }
-    tree.prepare(42);
-    DCFRTrainer trainer;
-    trainer.setTree(&tree);
-    trainer.players[0].initPolicy(tree.getMovesPerInfoSet());
-    trainer.players[1].initPolicy(tree.getMovesPerInfoSet());
-    trainer.updateUtility();
-    HoleCards hole_cards = {tree.last_sb_hand, tree.last_bb_hand};
-    RunoutCards runout = selectRunout(tree);
-    cout << "sb hole: " << maskToString(hole_cards.sb_hand) << "\n";
-    cout << "bb hole: " << maskToString(hole_cards.bb_hand) << "\n";
-    if(runout.valid){
-        cout << "runout: flop " << maskToString(runout.flop) << " | turn " << maskToString(runout.turn)
-             << " | river " << maskToString(runout.river) << "\n";
-    } else {
-        cout << "runout: (unavailable)\n";
-    }
-    cout << "\n";
-    PokerGameState root = PokerGameState();
-    ind = 0;
-    visualizeUtilityDepthLimited(&root, "", trainer.utility, 6);
-}
-
 void visualizeThreeCardUtility(const UtilityOptions& options){
     ThreeCardGameTree tree;
     NaiveThreeCardBucket bucket;
     tree.setBucket(&bucket);
     tree.init();
+    srand(NULL);
+    omp::XoroShiro128Plus rng(rand());
+    omp::FastUniformIntDistribution2<int> card_generator(0, 51);
+    uint64_t used_cards = 0;
+    auto generateCard = [&](uint64_t &used_mask){
+        unsigned card;
+        uint64_t card_mask;
+        do {
+            card = card_generator(rng);
+            card_mask = 1ull << card;
+        } while ((used_cards & card_mask));
+        used_mask |= card_mask;
+        return card;
+    };
     if(options.has_sb){
-        tree.setFixedSbHand(options.sb_hand);
+        uint64_t sb_hand = options.sb_hand;
+        while(__builtin_popcountll(sb_hand) < 3){
+            sb_hand |= 1ull << generateCard(used_cards);
+        }
+        tree.setFixedSbHand(sb_hand);
+        used_cards |= sb_hand;
     }
     if(options.has_bb){
-        tree.setFixedBbHand(options.bb_hand);
+        uint64_t bb_hand = options.bb_hand;
+        while(__builtin_popcountll(bb_hand) < 3){
+            bb_hand |= 1ull << generateCard(used_cards);
+        }
+        tree.setFixedBbHand(bb_hand);
+        used_cards |= bb_hand;
     }
     if(options.has_flop){
-        tree.setFixedFlop(options.flop);
+        uint64_t flop = options.flop;
+        while(__builtin_popcountll(flop) < 2){
+            flop |= 1ull << generateCard(used_cards);
+        }
+        tree.setFixedFlop(flop);
+        used_cards |= flop;
     }
     if(options.has_turn){
         tree.setFixedTurn(options.turn);
+        used_cards |= options.turn;
     }
     if(options.has_river){
         tree.setFixedRiver(options.river);
+        used_cards |= options.river;
+    }
+    if(!options.has_sb){
+        tree.setFixedSbHand(1ull << generateCard(used_cards) | 1ull << generateCard(used_cards) | 1ull << generateCard(used_cards));
+    }
+    if(!options.has_bb){
+        tree.setFixedBbHand(1ull << generateCard(used_cards) | 1ull << generateCard(used_cards) | 1ull << generateCard(used_cards));
+    }
+    if(!options.has_flop){
+        tree.setFixedFlop(1ull << generateCard(used_cards) | 1ull << generateCard(used_cards));
+    }
+    if(!options.has_turn){
+        tree.setFixedTurn(1ull << generateCard(used_cards));
+    }
+    if(!options.has_river){
+        tree.setFixedRiver(1ull << generateCard(used_cards));
     }
     tree.prepare(42);
     DCFRTrainer trainer;
@@ -489,20 +409,14 @@ void visualizeThreeCardUtility(const UtilityOptions& options){
     trainer.players[0].initPolicy(tree.getMovesPerInfoSet());
     trainer.players[1].initPolicy(tree.getMovesPerInfoSet());
     trainer.updateUtility();
-    HoleCards hole_cards = {tree.last_sb_hand, tree.last_bb_hand};
-    RunoutCards runout = selectRunout(tree);
+    HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
     cout << "sb hole: " << maskToString(hole_cards.sb_hand) << "\n";
     cout << "bb hole: " << maskToString(hole_cards.bb_hand) << "\n";
-    if(runout.valid){
-        cout << "runout: flop " << maskToString(runout.flop) << " | turn " << maskToString(runout.turn)
-             << " | river " << maskToString(runout.river) << "\n";
-    } else {
-        cout << "runout: (unavailable)\n";
-    }
+    cout << "runout: flop " << maskToString(tree.fixed_flop) << " | turn " << maskToString(tree.fixed_turn) << " | river " << maskToString(tree.fixed_river) << "\n";
     cout << "\n";
     ThreeCardGameState root = ThreeCardGameState();
     ind = 0;
-    visualizeUtilityDepthLimited(&root, "", trainer.utility, 6);
+    visualizeUtilityDepthLimited(&root, "", trainer.utility, 8);
 }
 
 int main(int argc, char* argv[]){
