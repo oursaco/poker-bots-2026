@@ -99,7 +99,7 @@ struct ThreeCardGameState : GameState {
             call->sb_bet++;
             call->action_depth++;
             call->turn = 1;
-        } else if(street == 3){
+        } else if(street == 6){
             call->winner = 0;
             call->showdown = true;
         } else {
@@ -120,7 +120,7 @@ struct ThreeCardGameState : GameState {
         if(sb_bet == 0){
             call->turn = 0;
             call->action_depth++;
-        } else if(street == 3){
+        } else if(street == 6){
             call->winner = 0;
             call->showdown = true;
         } else {
@@ -203,25 +203,45 @@ struct ThreeCardGameState : GameState {
         if(turn == -1){
             vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions;
             string action_name = "";
+            auto next_state = make_unique<ThreeCardGameState>(*this);
             if(street == 0){
                 action_name = "deal hole cards";
+                next_state->turn = 0;
             } else if(street == 1){
                 action_name = "deal flop";
-            } else if(street == 2){
+                next_state->turn = 1;
+                next_state->street++;
+            } else if(street == 5){
                 action_name = "deal turn";
-            } else if(street == 3){
+                next_state->turn = 1;
+            } else if(street == 6){
                 action_name = "deal river";
+                next_state->turn = 1;
             } else {
                 assert(false);
             }
             auto action = make_unique<ThreeCardAction>(action_name, -1, 0, sb_stack, bb_stack);
-            auto next_state = make_unique<ThreeCardGameState>(*this);
-            if(street == 0){
-                next_state->turn = 0;
-            } else {
-                next_state->turn = 1;
-            }
             actions.push_back({std::move(next_state), std::move(action)});
+            return actions;
+        }
+        if(street == 2){
+            vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions;
+            for(int i = 1; i <= 3; i++){
+                auto next_state = make_unique<ThreeCardGameState>(*this);
+                next_state->turn = 0;
+                next_state->street++;
+                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("bb discard " + to_string(i), 1, 0, sb_stack, bb_stack)});
+            }
+            return actions;
+        }
+        if(street == 3){
+            vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions;
+            for(int i = 1; i <= 3; i++){
+                auto next_state = make_unique<ThreeCardGameState>(*this);
+                next_state->turn = 1;
+                next_state->street++;
+                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("sb discard " + to_string(i), 0, 0, sb_stack, bb_stack)});
+            }
             return actions;
         }
         return generateStreetActions();

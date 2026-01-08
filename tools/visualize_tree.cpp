@@ -33,10 +33,7 @@ void visualizeTree(GameState* state, const string& prefix){
     }
 }
 
-int sz = 0;
-
 void visualizeTreeDepthLimited(GameState* state, const string& prefix, int depth){
-    sz++;
     auto actions = state->generateActions();
     if(actions.empty()){
         cout << prefix << "(no actions)\n";
@@ -77,10 +74,9 @@ void visualizePokerTree(){
 
 void visualizeThreeCardTree(){
     ThreeCardGameState root = ThreeCardGameState();
-    visualizeTreeDepthLimited(&root, "", 100);
+    visualizeTreeDepthLimited(&root, "", 8);
 }
 
 int main(){
     visualizeThreeCardTree();
-    cout << "total nodes: " << sz << endl;
 }
