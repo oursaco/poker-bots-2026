@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-O3 -std=c++17 -pthread -Wall -Wpedantic -march=native -ffast-math)
-add_link_options(-Wl,--stack,2147483648)
+
 
 
 add_library(pokerbots_headers INTERFACE)
