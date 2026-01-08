@@ -107,7 +107,6 @@ struct DCFRPolicy : CFRPolicy {
         int info_set_count_, state_count_;
         inf.read(reinterpret_cast<char*>(&info_set_count_), sizeof(int));
         inf.read(reinterpret_cast<char*>(&state_count_), sizeof(int));
-        cout << info_set_count_ << " " << info_set_count << endl;
         assert(info_set_count_ == info_set_count);
         assert(state_count_ == state_count);
         for(int i = 0; i < POLICY_SZ; i++){
@@ -168,7 +167,7 @@ struct DCFRTrainer : CFRTrainer {
         }
     }
 
-    void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir){
+    void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir, int previous_iteration = 0){
         omp::XoroShiro128Plus rng(seed);
         auto start_time = chrono::high_resolution_clock::now();
         auto last_log_time = start_time;
@@ -180,7 +179,7 @@ struct DCFRTrainer : CFRTrainer {
         float alpha = 1.5f;
         float beta = 0.0f;
         float gamma = 2.0f;
-        for(int i = 1; i <= iterations; i++){
+        for(int i = previous_iteration + 1; i <= iterations; i++){
             float t = i;
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
             float neg_mult = pow(t, beta);

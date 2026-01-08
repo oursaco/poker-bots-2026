@@ -12,7 +12,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_compile_options(-O3 -std=c++17 -Wall -Wpedantic -march=native -ffast-math)
+add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math)
+add_link_options(-Wl,--stack,2147483648)
+
+if(MSVC)
+    add_compile_options(/W0)
+else()
+    add_compile_options(-w)
+endif()
 
 add_library(pokerbots_headers INTERFACE)
 target_include_directories(pokerbots_headers INTERFACE
@@ -50,4 +57,5 @@ target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp)
 
 add_executable(three_card_trainer trainers/three_card_trainer.cpp)
 target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp)
+
 
