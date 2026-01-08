@@ -137,12 +137,12 @@ int eval_3_subsets(uint64_t board, uint64_t hand){
                 mask |= 1ull << (4*cards[j] + suits[j]);
             }
         }
-        int strength = eval_7(mask)/4096; // 0 ... 15
+        int strength = eval_7(mask); // 0 ... 15
         int flush = is_flush_draw(mask); // 0 ... 1
         int straight = is_straight_draw(mask); // 0 ... 1
-        best_subset = max(best_subset, {strength, (i - 1)*64 + strength*2*2 + flush*2 + straight});
+        best_subset = max(best_subset, {strength/4096, -((i - 1)*64 + strength/4096*2*2 + flush*2 + straight)});
     }
-    return best_subset.second;
+    return -best_subset.second;
 }
 
 int eval_2_subsets(uint64_t board, uint64_t hand){
@@ -161,12 +161,12 @@ int eval_2_subsets(uint64_t board, uint64_t hand){
                 mask |= 1ull << (4*cards[j] + suits[j]);
             }
         }
-        int strength = (__builtin_popcountll(mask) == 8 ? eval_8(mask) : eval_7(mask))/4096; // 0 ... 15
+        int strength = (__builtin_popcountll(mask) == 8 ? eval_8(mask) : eval_7(mask)); // 0 ... 15
         int flush = is_flush_draw(mask); // 0 ... 1
         int straight = is_straight_draw(mask); // 0 ... 1
-        best_subset = max(best_subset, {strength, (i - 1)*64 + strength*2*2 + flush*2 + straight});
+        best_subset = max(best_subset, {strength/4096, -((i - 1)*64 + strength/4096*2*2 + flush*2 + straight)});
     }
-    return best_subset.second;
+    return -best_subset.second;
 }
 
 int getFlopBucket(uint64_t board, uint64_t hand){
@@ -181,7 +181,7 @@ int getTurnBucket(uint64_t board, uint64_t hand){
 
 int getRiverBucket(uint64_t board, uint64_t hand){
     assert(__builtin_popcountll(board) == 6);
-    return eval_2_subsets(board, hand);
+    return eval_2_subsets(board, hand)/4;
 }
 
 int countBuckets(ThreeCardGameState* state){
@@ -194,7 +194,7 @@ int countBuckets(ThreeCardGameState* state){
     } else if(state->street == 5){
         return 3*64;
     } else if(state->street == 6){
-        return 3*64;
+        return 3*64/4;
     } else {
         assert(false);
     }
