@@ -356,10 +356,10 @@ void printSpecificEquities() {
     }
     
     // Print flush draw equity with AhKh
-    cout << "\nFLUSH DRAW with Ah Kh hole cards (Board: 2h 5h 8h K 9 3):\n";
+    cout << "\nFLUSH DRAW with Ah Kh hole cards (Board: 2c 5c 8d Kh 9h 3c):\n";
     cout << "Hole cards: Ah Kh (bucket " << flush_holecard << ")\n";
     int flush_encodings[] = {flush_3, flush_4, flush_5, flush_6};
-    string flush_stage_names[] = {"3 cards (2h5h8h)", "4 cards (2h5h8hK)", "5 cards (2h5h8hK9)", "6 cards (2h5h8hK93)"};
+    string flush_stage_names[] = {"3 cards (2c5c8d)", "4 cards (2c5c8dKh)", "5 cards (2c5c8dKh9h)", "6 cards (2c5c8dKh9h3c)"};
     for (int stage = 0; stage < 4; stage++) {
         int bucket_idx = map_to[flush_encodings[stage]] + 1;
         if (bucket_idx > 0 && bucket_idx <= len) {
