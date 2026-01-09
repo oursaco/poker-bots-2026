@@ -52,6 +52,9 @@ target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
 add_executable(generate_buckets bucket_gen/generate_buckets.cpp)
 target_link_libraries(generate_buckets PRIVATE pokerbots_headers omp)
 
+add_executable(test_buckets bucket_gen/test_buckets.cpp)
+target_link_libraries(test_buckets PRIVATE pokerbots_headers omp)
+
 add_executable(test_player tools/test_player.cpp)
 target_link_libraries(test_player PRIVATE pokerbots_headers omp)
 

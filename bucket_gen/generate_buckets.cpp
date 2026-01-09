@@ -173,12 +173,15 @@ float lose[4][170][100000];
 float bucket[4][169][100000];
 
 void writeMap(string tar_dir){
+    unsigned mx = 0;
     ofstream ouf(tar_dir, ios::binary);
     for(int i = 0; i < (1 << 20); i++){
         if(map_to[i]) map_to[i]--;
+        mx = max(mx, map_to[i]);
         ouf.write(reinterpret_cast<const char*>(&map_to[i]), sizeof(unsigned));
     }
     ouf.close();
+    cout << "mx: " << mx << endl;
 }
 
 void writeTable(string tar_dir, int ind){
@@ -312,10 +315,10 @@ void printSpecificEquities() {
     int trips_6 = encodeBoard(trips_board_6, 0);
     
     // Example 2: Flush draw (3 hearts on board) - using AhKh
-    Hand flush_draw_3 = Hand::empty() + Hand(getCardId("2h")) + Hand(getCardId("5h")) + Hand(getCardId("8h"));
-    Hand flush_draw_4 = flush_draw_3 + Hand(getCardId("Kc"));
-    Hand flush_draw_5 = flush_draw_4 + Hand(getCardId("9s"));
-    Hand flush_draw_6 = flush_draw_5 + Hand(getCardId("3d"));
+    Hand flush_draw_3 = Hand::empty() + Hand(getCardId("2c")) + Hand(getCardId("5c")) + Hand(getCardId("8d"));
+    Hand flush_draw_4 = flush_draw_3 + Hand(getCardId("Kh"));
+    Hand flush_draw_5 = flush_draw_4 + Hand(getCardId("9h"));
+    Hand flush_draw_6 = flush_draw_5 + Hand(getCardId("3c"));
     
     int flush_3 = encodeBoard(flush_draw_3, 1); // suited hole cards (AhKh - flush draw)
     int flush_4 = encodeBoard(flush_draw_4, 1);
@@ -402,7 +405,7 @@ int main(){
     generatePreflop();
     string dir = "./bucket_data";
     writePreflop(dir + "/preflop.bin");
-    int iterations = 100000000;
+    int iterations = 1000000;
     for(int a = 0; a < 13; a++){
         for(int b = 0; b < 13; b++){
             cout << a << " " << b << endl;
