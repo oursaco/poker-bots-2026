@@ -34,12 +34,6 @@ struct GameTree {
     virtual int getMove(int node_id) = 0; // returns the move used to reach node
     virtual int getInfoSet(int node_id) = 0; // returns info set of node
     virtual int getTurn(int node_id) = 0; // returns who's turn it is to move
-    
-    // For best response calculation: deal enumeration
-    // Returns number of unique deals (0 = use Monte Carlo sampling instead)
-    virtual int getNumDeals() { return 0; }
-    // Prepares the tree for a specific deal index (0 to getNumDeals()-1)
-    virtual void prepareDeal(int deal_idx) { (void)deal_idx; }
 };
 
 #endif // TREE_HPP
