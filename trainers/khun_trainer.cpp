@@ -117,7 +117,7 @@ int main() {
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./khun_poker";
-    config.iterations = 100'000;
+    config.iterations = 5'000;
 
     KhunPokerGameTree tree;
     tree.init();

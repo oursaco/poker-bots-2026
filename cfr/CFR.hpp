@@ -83,10 +83,10 @@ struct DCFRPolicy : CFRPolicy {
         regret_sum[st] += dif;
     }
 
-    void updateStrategy(int info_set, int move_id, float dif){
+    void updateStrategy(int info_set, int move_id, float prob){
         int st = getState(info_set, move_id);
         assert(move_id < getMoveCount(info_set));
-        strategy_sum[st] += dif;
+        strategy_sum[st] += prob;
     }
 
     void savePolicy(string path){
@@ -122,14 +122,14 @@ struct DCFRPolicy : CFRPolicy {
 struct DCFRTrainer : CFRTrainer {
     DCFRPolicy players[2];
     GameTree* tree;
-    array<float, TRAINER_SZ> utility;
+    array<float, POLICY_SZ> utility;
     array<float, 2*TRAINER_SZ> reach_probability;
 
     void setTree(GameTree* tree_){
         tree = tree_;
     }
 
-    void updateUtility(){
+    void updateUtility(int swap_players = 0){
         fill(utility.begin(), utility.end(), 0.0f);
         tree->updateUtility(utility);
         int num_nodes = tree->nodeCount();
@@ -138,10 +138,10 @@ struct DCFRTrainer : CFRTrainer {
             int par_player = tree->getTurn(parent);
             int info = tree->getInfoSet(parent);
             int move = tree->getMove(i);
-            float probability = players[par_player].getProb(info, move);
+            float probability = players[par_player ^ swap_players].getProb(info, move);
             utility[parent] += probability*utility[i];
-            reach_probability[i << 1 | (par_player ^ 1)] = probability;
-            reach_probability[i << 1 | par_player] = 1.0f;
+            reach_probability[i << 1 | par_player] = probability;
+            reach_probability[i << 1 | (par_player ^ 1)] = 1.0f;
         }
         reach_probability[0] = reach_probability[1] = 1.0f;
     }
@@ -155,15 +155,15 @@ struct DCFRTrainer : CFRTrainer {
             int par_player = tree->getTurn(parent);
             int info = tree->getInfoSet(parent);
             int move = tree->getMove(i);
-            if((par_player ^ swap_players) == target_player){
-                float utility_dif = (par_player ? -1 : 1)*reach_probability[parent << 1 | par_player]*(utility[i] - utility[parent]);
-                players[par_player ^ swap_players].updateRegret(info, move, utility_dif, alpha, beta);
-            } else {
-                float prob_dif = reach_probability[parent << 1 | par_player]*reach_probability[i << 1 | (par_player ^ 1)];
-                players[par_player ^ swap_players].updateStrategy(info, move, prob_dif*gamma);
-            }
             reach_probability[i << 1] *= reach_probability[parent << 1];
             reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
+            if((par_player ^ swap_players) == target_player){
+                float utility_dif = (target_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
+                players[par_player ^ swap_players].updateRegret(info, move, utility_dif, alpha, beta);
+            } else {
+                float prob_dif = reach_probability[i << 1 | par_player];
+                players[par_player ^ swap_players].updateStrategy(info, move, prob_dif*gamma);
+            }
         }
     }
 
@@ -185,10 +185,10 @@ struct DCFRTrainer : CFRTrainer {
             float neg_mult = pow(t, beta);
             float strat_mult = pow(t, gamma);
             tree->prepare(rng());
-            updateUtility();
+            updateUtility(i%2);
             updatePlayer(0, i%2, pos_mult, neg_mult, strat_mult);
             tree->prepare(rng());
-            updateUtility();
+            updateUtility(i%2);
             updatePlayer(1, i%2, pos_mult, neg_mult, strat_mult);
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){

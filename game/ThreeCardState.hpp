@@ -10,20 +10,22 @@ struct ThreeCardAction : Action {
     int amount;
     int sb_stack;
     int bb_stack;
+    float pot_size;
 
-    ThreeCardAction(string action_, int turn_, int amount_, int sb_stack_, int bb_stack_){
+    ThreeCardAction(string action_, int turn_, int amount_, int sb_stack_, int bb_stack_, float pot_size_){
         action = action_;
         turn = turn_;
         amount = amount_;
         sb_stack = sb_stack_;
+        pot_size = pot_size_;
         bb_stack = bb_stack_;
     }
 
     string toString(){
         if(turn == 0){
-            return "sb: " + action + " " + to_string(amount) + " | sb stack: " + to_string(sb_stack) + " | bb stack: " + to_string(bb_stack);
+            return "sb: " + action + " " + to_string(amount) + " (" + to_string(pot_size) + ")" + " | sb stack: " + to_string(sb_stack) + " | bb stack: " + to_string(bb_stack);
         } else if (turn == 1) {
-            return "bb: " + action + " " + to_string(amount) + " | sb stack: " + to_string(sb_stack) + " | bb stack: " + to_string(bb_stack);
+            return "bb: " + action + " " + to_string(amount) + " (" + to_string(pot_size) + ")" + " | sb stack: " + to_string(sb_stack) + " | bb stack: " + to_string(bb_stack);
         } else {
             return "world: " + action;
         }
@@ -78,7 +80,7 @@ struct ThreeCardGameState : GameState {
         fold->winner = -1;
         fold->pot -= fold->bb_bet - fold->sb_bet;
         assert(fold->sb_bet < fold->bb_bet);
-        return {std::move(fold), make_unique<ThreeCardAction>("sb fold", 0, 0, fold->sb_stack, fold->bb_stack)};
+        return {std::move(fold), make_unique<ThreeCardAction>("fold", 0, 0, fold->sb_stack, fold->bb_stack, 0.0f)};
     }
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> bb_fold(){
@@ -86,7 +88,7 @@ struct ThreeCardGameState : GameState {
         fold->winner = 1;
         fold->pot -= fold->sb_bet - fold->bb_bet;
         assert(fold->bb_bet < fold->sb_bet);
-        return {std::move(fold), make_unique<ThreeCardAction>("bb fold", 1, 0, fold->sb_stack, fold->bb_stack)};
+        return {std::move(fold), make_unique<ThreeCardAction>("fold", 1, 0, fold->sb_stack, fold->bb_stack, 0.0f)};
     }
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> sb_call(){
@@ -108,7 +110,7 @@ struct ThreeCardGameState : GameState {
             call->turn = -1;
             call->action_depth = 0;
         }
-        return {std::move(call), make_unique<ThreeCardAction>("sb call", 0, amount, call->sb_stack, call->bb_stack)};
+        return {std::move(call), make_unique<ThreeCardAction>("call", 0, amount, call->sb_stack, call->bb_stack, 0.0f)};
     }
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> bb_call(){
@@ -129,7 +131,12 @@ struct ThreeCardGameState : GameState {
             call->turn = -1;
             call->action_depth = 0;
         }
-        return {std::move(call), make_unique<ThreeCardAction>("bb call", 1, amount, call->sb_stack, call->bb_stack)};
+        return {std::move(call), make_unique<ThreeCardAction>("call", 1, amount, call->sb_stack, call->bb_stack, 0.0f)};
+    }
+
+    float raiseSizeRelativeToPot(int amount){
+        int bet_diff = max(sb_bet, bb_bet) - min(sb_bet, bb_bet);
+        return float(amount - bet_diff)/float(pot + bet_diff);
     }
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> sb_raise(int amount){
@@ -142,7 +149,7 @@ struct ThreeCardGameState : GameState {
         raise->sb_bet += amount;
         raise->turn = 1;
         raise->action_depth = action_depth + 1;
-        return {std::move(raise), make_unique<ThreeCardAction>("sb raise", 0, amount, raise->sb_stack, raise->bb_stack)};
+        return {std::move(raise), make_unique<ThreeCardAction>("raise", 0, amount, raise->sb_stack, raise->bb_stack, raiseSizeRelativeToPot(amount))};
     }
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> bb_raise(int amount){
@@ -155,7 +162,7 @@ struct ThreeCardGameState : GameState {
         raise->bb_bet += amount;
         raise->turn = 0;
         raise->action_depth = action_depth + 1;
-        return {std::move(raise), make_unique<ThreeCardAction>("bb raise", 1, amount, raise->sb_stack, raise->bb_stack)};
+        return {std::move(raise), make_unique<ThreeCardAction>("raise", 1, amount, raise->sb_stack, raise->bb_stack, raiseSizeRelativeToPot(amount))};
     }
 
     int pot_raise_size(){
@@ -220,7 +227,7 @@ struct ThreeCardGameState : GameState {
             } else {
                 assert(false);
             }
-            auto action = make_unique<ThreeCardAction>(action_name, -1, 0, sb_stack, bb_stack);
+            auto action = make_unique<ThreeCardAction>(action_name, -1, 0, sb_stack, bb_stack, 0.0f);
             actions.push_back({std::move(next_state), std::move(action)});
             return actions;
         }
@@ -230,7 +237,7 @@ struct ThreeCardGameState : GameState {
                 auto next_state = make_unique<ThreeCardGameState>(*this);
                 next_state->turn = 0;
                 next_state->street++;
-                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("bb discard " + to_string(i), 1, 0, sb_stack, bb_stack)});
+                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("discard", 1, 0, sb_stack, bb_stack, 0.0f)});
             }
             return actions;
         }
@@ -240,7 +247,7 @@ struct ThreeCardGameState : GameState {
                 auto next_state = make_unique<ThreeCardGameState>(*this);
                 next_state->turn = 1;
                 next_state->street++;
-                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("sb discard " + to_string(i), 0, 0, sb_stack, bb_stack)});
+                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("discard", 0, 0, sb_stack, bb_stack, 0.0f)});
             }
             return actions;
         }

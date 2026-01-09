@@ -455,6 +455,25 @@ struct ThreeCardGameTree : GameTree {
         return nodes[node_id].info_set;
     }
 
+    // calculates the info set of a node
+    int calcInfoSet(int node_id, uint64_t hand, uint64_t board){
+        if(nodes[node_id].street == 0){
+            return info_set_map[nodes[node_id].info_set_index] + bucket->getPreflopBucket(hand);
+        } else if(nodes[node_id].street == 1){
+            return info_set_map[nodes[node_id].info_set_index] + bucket->getBBDiscardBucket(board, hand);
+        } else if(nodes[node_id].street == 2){
+            return info_set_map[nodes[node_id].info_set_index] + bucket->getSBDiscardBucket(board, hand);
+        } else if(nodes[node_id].street == 3){
+            return info_set_map[nodes[node_id].info_set_index] + bucket->getFlopBucket(board, hand);
+        } else if(nodes[node_id].street == 4){
+            return info_set_map[nodes[node_id].info_set_index] + bucket->getTurnBucket(board, hand);
+        } else if(nodes[node_id].street == 5){
+            return info_set_map[nodes[node_id].info_set_index] + bucket->getRiverBucket(board, hand);
+        } else {
+            assert(false);
+        }
+    }
+
     // returns who's turn it is to move
     int getTurn(int node_id){
         return nodes[node_id].turn;
