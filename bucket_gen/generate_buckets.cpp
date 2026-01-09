@@ -167,9 +167,9 @@ inline unsigned getCardId(string x) {
 unsigned map_to[1 << 20];
 unsigned len = 1;
 
-int wins[4][170][100000];
-int ties[4][170][100000];
-int lose[4][170][100000];
+float wins[4][170][100000];
+float ties[4][170][100000];
+float lose[4][170][100000];
 float bucket[4][169][100000];
 
 void writeMap(string tar_dir){
@@ -188,7 +188,7 @@ void writeTable(string tar_dir, int ind){
             if(wins[ind][i][j] + ties[ind][i][j] + lose[ind][i][j] == 0){
                 bucket[ind][i][j] = -1.0;
             } else {
-                bucket[ind][i][j] = float((wins[ind][i][j] + ties[ind][i][j]/2)/float(wins[ind][i][j] + ties[ind][i][j] + lose[ind][i][j]));
+                bucket[ind][i][j] = (wins[ind][i][j] + ties[ind][i][j]/2.0)/(wins[ind][i][j] + ties[ind][i][j] + lose[ind][i][j]);
                 // cout << bucket[ind][i][j] << " " << wins[ind][i][j] << " " << ties[ind][i][j] << " " << lose[ind][i][j] << endl;
             }
         }
