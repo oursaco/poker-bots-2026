@@ -3,8 +3,8 @@
 
 #include <cstdlib>
 #include "Player.hpp"
-#include "game/ThreeCard.hpp"
-#include "cfr/CFR.hpp"
+#include "ThreeCard.hpp"
+#include "CFR.hpp"
 
 struct ThreeCardPlayer : Player {
 
@@ -14,7 +14,6 @@ struct ThreeCardPlayer : Player {
     DCFRPolicy policy;
     array<vector<int>, TREE_SZ> children;
     int node_id = 0;
-    bool initialized = false;
     int real_sb_stack = 0;
     int real_bb_stack = 0;
     int real_pot = 0;
@@ -29,6 +28,7 @@ struct ThreeCardPlayer : Player {
     bool all_in_next; // if their raise gets casted to an all in
     bool all_in; // if I am all in
     bool won_all_in; // they folded to all in
+    bool fold_until_win;
 
     void init(string policy_path){
         tree.setBucket(&bucket);
@@ -45,7 +45,7 @@ struct ThreeCardPlayer : Player {
         all_in = false;
         won_all_in = false;
         pnl = 0;
-        initialized = true;
+        fold_until_win = false;
     }
 
     void startRound(int player_id_, uint64_t hand_){
@@ -58,22 +58,31 @@ struct ThreeCardPlayer : Player {
         real_pot = 3;
         real_sb_bet = 1;
         real_bb_bet = 2;
+        state = ThreeCardGameState();
         round++;
         player_id = player_id_;
         node_id = 0;
         hand = hand_;
+        board = 0;
+        int loss = 0;
+        int turn = player_id;
+        for(int i = round; i <= 1000; i++){
+            if((turn + i - round)%2 == 0) loss++;
+            else loss += 2;
+        }
+        if(loss < pnl) fold_until_win = true;
     }
 
     void updateBoard(unsigned new_card){
         board |= 1ull << new_card;
     }
 
-    vector<ThreeCardAction> getActions(){
+    vector<pair<ThreeCardGameState, ThreeCardAction>> getActions(){
         auto actions = state.generateActions();
-        vector<ThreeCardAction> result;
+        vector<pair<ThreeCardGameState, ThreeCardAction>> result;
         result.reserve(actions.size());
         for(auto &entry : actions){
-            result.push_back(*dynamic_cast<ThreeCardAction*>(entry.second.get()));
+            result.push_back({*dynamic_cast<ThreeCardGameState*>(entry.first.get()), *dynamic_cast<ThreeCardAction*>(entry.second.get())});
         }
         return result;
     }
@@ -92,7 +101,6 @@ struct ThreeCardPlayer : Player {
         float sum = 0.0f;
         for(int move = 0; move < move_count; move++) sum += policy.strategy_sum[st + move];
         if(sum <= 0.0f){
-            cout << "ERROR: strategy not computed for info set " << info_set << " in round " << round << endl;
             float uniform = 1.0f/move_count;
             for(int i = 0; i < move_count; i++) probs[i] = uniform;
             return probs;
@@ -106,6 +114,7 @@ struct ThreeCardPlayer : Player {
         if(all_in){
             if(real_action.action == "fold"){
                 won_all_in = true;
+                all_in = false;
                 return;
             }
             if(real_action.action == "call"){
@@ -113,6 +122,7 @@ struct ThreeCardPlayer : Player {
                 if(player_id == 0) real_bb_stack -= real_action.amount;
                 real_pot += real_action.amount;
                 assert(real_sb_stack == 0 && real_bb_stack == 0);
+                real_sb_bet = real_bb_bet = 0;
                 all_in = false;
                 return;
             }
@@ -128,15 +138,10 @@ struct ThreeCardPlayer : Player {
         assert(state.turn == (player_id ^ 1));
         string type = real_action.action;
         if(type == "discard"){
-            for(int i = 0; i < actions.size(); i++){
-                auto action = dynamic_cast<ThreeCardAction*>(actions[i].second.get());
-                if(action->action == type){
-                    state = *dynamic_cast<ThreeCardGameState*>(actions[i].first.get());
-                    node_id = children[node_id][i];
-                    return;
-                }
-            }
-        } if(type == "fold"){
+            state = *dynamic_cast<ThreeCardGameState*>(actions[0].first.get());
+            node_id = children[node_id][0];
+            return;
+        } else if(type == "fold"){
             for(int i = 0; i < actions.size(); i++){
                 auto action = dynamic_cast<ThreeCardAction*>(actions[i].second.get());
                 if(action->action == type){
@@ -155,6 +160,7 @@ struct ThreeCardPlayer : Player {
                 real_bb_stack -= real_action.amount;
                 real_bb_bet += real_action.amount;
             }
+            real_pot += real_action.amount;
             int cur_street = state.street;
             for(int i = 0; i < actions.size(); i++){
                 auto action = dynamic_cast<ThreeCardAction*>(actions[i].second.get());
@@ -166,28 +172,43 @@ struct ThreeCardPlayer : Player {
                 }
             }
         } else if(type == "raise"){
-            real_sb_bet += real_action.amount;
-            real_pot += real_action.amount;
-            real_sb_stack -= real_action.amount;
+            if(player_id == 1){
+                real_sb_bet += real_action.amount;
+                real_pot += real_action.amount;
+                real_sb_stack -= real_action.amount;
+            } else {
+                real_bb_bet += real_action.amount;
+                real_pot += real_action.amount;
+                real_bb_stack -= real_action.amount;
+            }
             int lb = -1, ub = -1;
             vector<ThreeCardAction> aval_actions;
             for(int i = 0; i < actions.size(); i++){
                 aval_actions.push_back(*dynamic_cast<ThreeCardAction*>(actions[i].second.get()));
                 if(aval_actions[i].action == "call" || aval_actions[i].action == "raise"){
                     if(aval_actions[i].pot_size <= real_action.pot_size) lb = i;
+                }
+            }
+            for(int i = actions.size() - 1; i >= 0; i--){
+                if(aval_actions[i].action == "raise"){
                     if(aval_actions[i].pot_size >= real_action.pot_size) ub = i;
                 }
             }
-            assert(lb != -1 || ub != -1);
             int chosen = -1;
-            if(lb != ub){
-                float ub_dist = aval_actions[ub].pot_size - real_action.pot_size;
-                float gap = aval_actions[ub].pot_size - aval_actions[lb].pot_size;
-                float lb_prob = float(ub_dist*(1 + aval_actions[lb].pot_size))/float(gap*(1 + real_action.pot_size));
-                float roll = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-                chosen = (roll < lb_prob) ? lb : ub;
+            if(ub == -1 || real_sb_stack == 0 || real_bb_stack == 0){
+                chosen = actions.size() - 1;
             } else {
-                chosen = lb;
+                assert(lb != -1);
+                chosen = -1;
+                if(lb != ub){
+                    float ub_dist = aval_actions[ub].pot_size - real_action.pot_size;
+                    float gap = aval_actions[ub].pot_size - aval_actions[lb].pot_size;
+                    float lb_prob = float(ub_dist*(1 + aval_actions[lb].pot_size))/float(gap*(1 + real_action.pot_size));
+                    float roll = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+                    chosen = (roll < lb_prob) ? lb : ub;
+                } else {
+                    chosen = lb;
+                }
             }
             int cur_street = state.street;
             state = *dynamic_cast<ThreeCardGameState*>(actions[chosen].first.get());
@@ -208,24 +229,29 @@ struct ThreeCardPlayer : Player {
     }
 
     unique_ptr<Action> getResponseAction(){
+        if(fold_until_win){
+            return make_unique<ThreeCardAction>("fold", player_id, 0, real_sb_stack, real_bb_stack, 0.0f);
+        }
         if(call_next){
             call_next = false;
             int amount = max(real_sb_bet, real_bb_bet) - min(real_sb_bet, real_bb_bet);
             if(player_id == 0) real_sb_stack -= amount;
             if(player_id == 1) real_bb_stack -= amount;
+            real_pot += amount;
+            real_sb_bet = real_bb_bet = 0;
             return make_unique<ThreeCardAction>("call", player_id, amount, real_sb_stack, real_bb_stack, 0.0f);
         }
         assert(!state.isTerminal());
         assert(state.turn == player_id);
         if(state.street == 0) assert(__builtin_popcountll(board) == 0 && __builtin_popcountll(hand) == 3);
         if(state.street == 1) assert(__builtin_popcountll(board) == 2);
-        if(state.street == 2) assert(__builtin_popcountll(board) == 3);
-        if(state.street == 3) assert(__builtin_popcountll(board) == 4);
+        if(state.street == 2) assert(__builtin_popcountll(board) == 2);
+        if(state.street == 3) assert(__builtin_popcountll(board) == 3);
         if(state.street == 4) assert(__builtin_popcountll(board) == 4);
         if(state.street == 5) assert(__builtin_popcountll(board) == 5);
         if(state.street == 6) assert(__builtin_popcountll(board) == 6);
         int info_set = tree.calcInfoSet(node_id, hand, board);
-        vector<ThreeCardAction> actions = getActions();
+        vector<pair<ThreeCardGameState, ThreeCardAction>> actions = getActions();
         vector<float> probs = getActionProbabilities();
         float roll = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
         float cum_prob = 0.0f;
@@ -238,25 +264,36 @@ struct ThreeCardPlayer : Player {
             }
         }
         assert(chosen_action != -1);
-        if(actions[chosen_action].action == "discard"){
-            return make_unique<ThreeCardAction>("discard", player_id, 0, real_sb_stack, real_bb_stack, 0.0f);
-        } else if(actions[chosen_action].action == "fold"){
+        if(actions[chosen_action].second.action == "discard"){
+            node_id = children[node_id][chosen_action];
+            state = actions[chosen_action].first;
+            return make_unique<ThreeCardAction>("discard", player_id, chosen_action, real_sb_stack, real_bb_stack, 0.0f);
+        } else if(actions[chosen_action].second.action == "fold"){
             if(all_in_next) all_in_next = false;
+            real_pot -= max(real_sb_bet, real_bb_bet) - min(real_sb_bet, real_bb_bet);
+            node_id = children[node_id][chosen_action];
+            state = actions[chosen_action].first;
             return make_unique<ThreeCardAction>("fold", player_id, 0, real_sb_stack, real_bb_stack, 0.0f);
-        } else if(actions[chosen_action].action == "call"){
+        } else if(actions[chosen_action].second.action == "call"){
             if(all_in_next){
+                int amount = 0;
                 all_in_next = false;
+                all_in = true;
                 if(player_id == 0){
                     real_pot += real_sb_stack;
                     real_sb_bet += real_sb_stack;
+                    amount = real_sb_stack;
                     real_sb_stack = 0;
                 }
                 if(player_id == 1){
                     real_pot += real_bb_stack;
                     real_bb_bet += real_bb_stack;
+                    amount = real_bb_stack;
                     real_bb_stack = 0;
                 }
-                return make_unique<ThreeCardAction>("raise", player_id, real_bb_stack, real_sb_stack, real_bb_stack, 0.0f);
+                node_id = children[node_id][chosen_action];
+                state = actions[chosen_action].first;
+                return make_unique<ThreeCardAction>("raise", player_id, amount, real_sb_stack, real_bb_stack, 0.0f);
             }
             int amount = max(real_sb_bet, real_bb_bet) - min(real_sb_bet, real_bb_bet);
             real_pot += amount;
@@ -264,24 +301,33 @@ struct ThreeCardPlayer : Player {
             if(player_id == 1) real_bb_stack -= amount;
             // sb first to act preflop
             if(player_id == 0 && real_sb_bet == 1) real_sb_bet++;
+            node_id = children[node_id][chosen_action];
+            int cur_street = state.street;
+            state = actions[chosen_action].first;
+            if(state.street != cur_street) real_sb_bet = real_bb_bet = 0;
             return make_unique<ThreeCardAction>("call", player_id, amount, real_sb_stack, real_bb_stack, 0.0f);
-        } else if(actions[chosen_action].action == "raise"){
-            int amount = relativeRaiseSize(actions[chosen_action].pot_size);
+        } else if(actions[chosen_action].second.action == "raise"){
+            int amount = relativeRaiseSize(actions[chosen_action].second.pot_size);
             if(player_id == 0){
                 amount = min(amount, real_sb_stack);
                 real_sb_bet += amount;
+                real_sb_stack -= amount;
             }
             if(player_id == 1){
                 amount = min(amount, real_bb_stack);
                 real_bb_bet += amount;
+                real_bb_stack -= amount;
             }
             real_pot += amount;
-            return make_unique<ThreeCardAction>("raise", player_id, amount, real_sb_stack, real_bb_stack, actions[chosen_action].pot_size);
+            node_id = children[node_id][chosen_action];
+            state = actions[chosen_action].first;
+            return make_unique<ThreeCardAction>("raise", player_id, amount, real_sb_stack, real_bb_stack, actions[chosen_action].second.pot_size);
         }
         assert(false);
     }
 
     void verifyState(int sb_stack, int bb_stack, int pot){
+        if(state.isTerminal()) return;
         assert(real_sb_stack == sb_stack);
         assert(real_bb_stack == bb_stack);
         assert(real_pot == pot);
@@ -293,14 +339,8 @@ struct ThreeCardPlayer : Player {
         assert(player_id == player_id_);
     }
 
-    void endRound(int winner){
-        assert(all_in || state.isTerminal());
-        if(won_all_in){
-            pnl += (real_pot - (max(real_sb_bet, real_bb_bet) - min(real_sb_bet, real_bb_bet)))/2;
-        } else {
-            if(winner == player_id) pnl += real_pot/2;
-            else pnl -= real_pot/2;
-        }
+    void endRound(int delta){
+        pnl += delta;
     }
 
 };

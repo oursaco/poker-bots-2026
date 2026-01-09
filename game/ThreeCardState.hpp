@@ -237,7 +237,7 @@ struct ThreeCardGameState : GameState {
                 auto next_state = make_unique<ThreeCardGameState>(*this);
                 next_state->turn = 0;
                 next_state->street++;
-                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("discard", 1, 0, sb_stack, bb_stack, 0.0f)});
+                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("discard", 1, i - 1, sb_stack, bb_stack, 0.0f)});
             }
             return actions;
         }
@@ -247,7 +247,7 @@ struct ThreeCardGameState : GameState {
                 auto next_state = make_unique<ThreeCardGameState>(*this);
                 next_state->turn = 1;
                 next_state->street++;
-                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("discard", 0, 0, sb_stack, bb_stack, 0.0f)});
+                actions.push_back({std::move(next_state), make_unique<ThreeCardAction>("discard", 0, i - 1, sb_stack, bb_stack, 0.0f)});
             }
             return actions;
         }

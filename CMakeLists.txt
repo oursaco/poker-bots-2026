@@ -49,6 +49,12 @@ target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp)
 add_executable(visualize_strategy tools/visualize_strategy.cpp)
 target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
 
+add_executable(generate_buckets bucket_gen/generate_buckets.cpp)
+target_link_libraries(generate_buckets PRIVATE pokerbots_headers omp)
+
+add_executable(test_player tools/test_player.cpp)
+target_link_libraries(test_player PRIVATE pokerbots_headers omp)
+
 add_executable(khun_trainer trainers/khun_trainer.cpp)
 target_link_libraries(khun_trainer PRIVATE pokerbots_headers)
 
