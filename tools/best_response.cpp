@@ -26,7 +26,7 @@ struct BestResponseEvaluator {
     }
 
     // Monte Carlo best response: samples chance nodes instead of exact chance evaluation.
-    BestResponseResult computeSampled(
+    BestResponseResult computeBestResponse(
         const DCFRPolicy& opponent_policy,
         int opponent_player,
         int seed,

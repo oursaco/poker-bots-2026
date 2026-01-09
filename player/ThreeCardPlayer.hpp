@@ -2,9 +2,9 @@
 #define THREECARDPLAYER_HPP
 
 #include <cstdlib>
-#include "Player.hpp"
-#include "ThreeCard.hpp"
-#include "CFR.hpp"
+#include "player/Player.hpp"
+#include "game/ThreeCard.hpp"
+#include "cfr/CFR.hpp"
 
 struct ThreeCardPlayer : Player {
 

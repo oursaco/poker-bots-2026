@@ -206,6 +206,11 @@ struct ThreeCardGameTree : GameTree {
         cout << "distinct nodes: " << unique_indices << endl;
         cout << "total info sets: " << st << endl;
         cout << "total strategy size: " << strategy_sz << endl;
+        cout << "flop deals: " << deal_flop.size() << endl;
+        cout << "turn deals: " << deal_turn.size() << endl;
+        cout << "river deals: " << deal_river.size() << endl;
+        cout << "bb discard: " << bb_discard.size() << endl;
+        cout << "sb discard: " << sb_discard.size() << endl;
     }
 
     void setBucket(ThreeCardBucket* bucket_){

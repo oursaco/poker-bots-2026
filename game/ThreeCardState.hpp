@@ -169,6 +169,16 @@ struct ThreeCardGameState : GameState {
         return pot + 2*(max(sb_bet, bb_bet) - min(sb_bet, bb_bet));
     }
 
+    int half_pot_raise_size(){
+        int bet_diff = max(sb_bet, bb_bet) - min(sb_bet, bb_bet);
+        return (pot + bet_diff)/2 + bet_diff;
+    }
+
+    int double_pot_raise_size(){
+        int bet_diff = max(sb_bet, bb_bet) - min(sb_bet, bb_bet);
+        return (pot + bet_diff)*2 + bet_diff;
+    }
+
     bool valid_sb_raise(int amount){
         return amount < sb_stack && amount >= 2*bb_bet && amount + sb_bet - bb_bet < bb_stack;
     }
@@ -184,8 +194,16 @@ struct ThreeCardGameState : GameState {
                 actions.push_back(sb_fold());
             }
             actions.push_back(sb_call());
-            if(valid_sb_raise(pot_raise_size()) && action_depth < 4){
-                actions.push_back(sb_raise(pot_raise_size()));
+            vector<int> raise_sizes;
+            if(bb_bet > sb_bet){
+                raise_sizes = {pot_raise_size()};
+            } else if(street == 4){
+                raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};
+            }
+            for(int size : raise_sizes){
+                if(valid_sb_raise(size) && action_depth < 4){
+                    actions.push_back(sb_raise(size));
+                }
             }
             if(bb_stack > 0){
                 actions.push_back(sb_raise(sb_stack));
@@ -195,8 +213,16 @@ struct ThreeCardGameState : GameState {
                 actions.push_back(bb_fold());
             }
             actions.push_back(bb_call());
-            if(valid_bb_raise(pot_raise_size()) && action_depth < 4){
-                actions.push_back(bb_raise(pot_raise_size()));
+            vector<int> raise_sizes;
+            if(sb_bet > bb_bet){
+                raise_sizes = {pot_raise_size()};
+            } else {
+                raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};
+            }
+            for(int size : raise_sizes){
+                if(valid_bb_raise(size) && action_depth < 4){
+                    actions.push_back(bb_raise(size));
+                }
             }
             if(sb_stack > 0){
                 actions.push_back(bb_raise(bb_stack));

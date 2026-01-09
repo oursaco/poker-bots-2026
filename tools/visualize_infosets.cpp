@@ -8,6 +8,7 @@ using namespace std;
 
 struct SingleBucketThreeCard : ThreeCardBucket {
     int countBuckets(ThreeCardGameState* state){
+        if(state->street == 0) return 1755;
         return 1;
     }
 
@@ -127,7 +128,7 @@ void visualizeThreeCardInfoSets(){
 
     ThreeCardGameState root = ThreeCardGameState();
     node_id_counter = 0;
-    visualizeInfoSetsDepthLimited(&root, &tree, "", 0, 8);
+    visualizeInfoSetsDepthLimited(&root, &tree, "", 0, 5);
 }
 
 int main(){
