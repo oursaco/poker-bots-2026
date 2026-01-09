@@ -122,9 +122,10 @@ int main() {
     KhunPokerGameTree tree;
     tree.init();
 
-    DCFRTrainer trainer;
-    trainer.setTree(&tree);
-    trainer.train(
+    // Allocate on heap to avoid stack overflow (DCFRTrainer is ~36MB)
+    auto trainer = std::make_unique<DCFRTrainer>();
+    trainer->setTree(&tree);
+    trainer->train(
         config.seed,
         config.iterations,
         config.log_every_secs,
@@ -133,8 +134,8 @@ int main() {
         config.player1_policy,
         config.output_dir);
 
-    printSmallBlindOpeningStrategy(trainer);
-    printBigBlindStrategy(trainer);
+    printSmallBlindOpeningStrategy(*trainer);
+    printBigBlindStrategy(*trainer);
 
     return 0;
 }
