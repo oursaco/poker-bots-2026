@@ -64,4 +64,5 @@ target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp)
 add_executable(three_card_trainer trainers/three_card_trainer.cpp)
 target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp)
 
-
+add_executable(nash_distance tools/nash_distance.cpp)
+target_link_libraries(nash_distance PRIVATE pokerbots_headers omp)

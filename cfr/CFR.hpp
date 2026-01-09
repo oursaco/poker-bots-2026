@@ -7,6 +7,12 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <limits>
+#include <string>
+#include <vector>
+#include <cassert>
+#include <algorithm>
+#include <unordered_map>
 #include "constants/constants.h"
 #include "game/GameTree.hpp"
 #include "external/omp/Random.h"
@@ -15,7 +21,7 @@ using namespace std;
 struct CFRPolicy {
     void loadPolicy(string path);
     void savePolicy(string path);
-    float getProb(int node_id, int info_set); // returns probability of moving to state from the parent of state given info_set
+    float getProb(int node_id, int info_set) const; // returns probability of moving to state from the parent of state given info_set
 };
 
 struct CFRTrainer {
@@ -57,22 +63,32 @@ struct DCFRPolicy : CFRPolicy {
         }
     }
 
-    int getState(int info_set, int move_id){
+    int getState(int info_set, int move_id) const{
         return (info_set_utils[info_set] & state_mask) + move_id;
     }
 
-    int getMoveCount(int info_set){
+    int getMoveCount(int info_set) const{
         return info_set_utils[info_set] >> log_state_count;
     }
 
     // returns probability of moving to node_id from the parent of node_id given info_set
-    float getProb(int info_set, int move_id){
+    float getProb(int info_set, int move_id) const{
         assert(info_set < info_set_count);
         float sum = 0.0;
         int st = getState(info_set, 0);
         int move_count = getMoveCount(info_set);
         for(unsigned i = st; i < st + move_count; i++) sum += max(0.0f, regret_sum[i]);
         if(sum > 0.0f) return max(0.0f, regret_sum[st + move_id])/sum;
+        return 1.0f/move_count;
+    }
+
+    float getAvgProb(int info_set, int move_id) const{
+        assert(info_set < info_set_count);
+        float sum = 0.0f;
+        int st = getState(info_set, 0);
+        int move_count = getMoveCount(info_set);
+        for(unsigned i = st; i < st + move_count; i++) sum += strategy_sum[i];
+        if(sum > 0.0f) return strategy_sum[st + move_id]/sum;
         return 1.0f/move_count;
     }
 
