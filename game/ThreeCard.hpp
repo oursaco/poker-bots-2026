@@ -490,6 +490,11 @@ struct ThreeCardGameTree : GameTree {
         return nodes[node_id].turn;
     }
 
+    // returns the size of the node
+    int getSize(int node_id){
+        return nodes[node_id].size;
+    }
+
     string cardToString(unsigned card){
         static const char* ranks = "23456789TJQKA";
         static const char suits[] = {'s', 'h', 'd', 'c'};

@@ -493,6 +493,11 @@ struct PokerGameTree : GameTree {
     int getTurn(int node_id){
         return nodes[node_id].turn;
     }
+
+    // returns the size of the node
+    int getSize(int node_id){
+        assert(false);
+    }
 };
 
 #endif // POKER_HPP

@@ -29,11 +29,11 @@ int main() {
     config.iterations = 10'000'000;
 
     ThreeCardGameTree tree;
-    NaiveThreeCardBucket bucket;
+    EHSThreeCardBucket bucket;
     tree.setBucket(&bucket);
     tree.init();
     tree.prepare(config.seed);
-    DCFRTrainer trainer;
+    MultiDCFRTrainer trainer;
     trainer.setTree(&tree);
     trainer.train(
         config.seed,

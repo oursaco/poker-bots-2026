@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
 
+project(MyProj CXX)
+
 # Prefer GCC/G++ unless a compiler is explicitly set by the user/toolchain.
 if(NOT DEFINED CMAKE_C_COMPILER AND NOT DEFINED CMAKE_CXX_COMPILER)
     set(CMAKE_C_COMPILER gcc)
     set(CMAKE_CXX_COMPILER g++)
 endif()
+
+find_package(OpenMP REQUIRED)
 
 project(pokerbots_2026 LANGUAGES CXX)
 
@@ -65,7 +69,7 @@ add_executable(poker_trainer trainers/poker_trainer.cpp)
 target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp)
 
 add_executable(three_card_trainer trainers/three_card_trainer.cpp)
-target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp)
+target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
 add_executable(nash_distance tools/nash_distance.cpp)
 target_link_libraries(nash_distance PRIVATE pokerbots_headers omp)

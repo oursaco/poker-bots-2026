@@ -35,6 +35,7 @@ struct GameTree {
     virtual int getMove(int node_id) = 0; // returns the move used to reach node
     virtual int getInfoSet(int node_id) = 0; // returns info set of node
     virtual int getTurn(int node_id) = 0; // returns who's turn it is to move
+    virtual int getSize(int node_id) = 0; // returns the size of the node
 };
 
 #endif // TREE_HPP

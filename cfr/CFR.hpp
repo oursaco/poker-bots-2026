@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <cassert>
+#include <omp.h>
 #include <algorithm>
 #include <unordered_map>
 #include "constants/constants.h"
@@ -137,6 +138,158 @@ struct DCFRPolicy : CFRPolicy {
     }
 };
 
+struct MultiDCFRTrainer : CFRTrainer {
+    DCFRPolicy players[2];
+    GameTree* tree;
+    array<float, POLICY_SZ> utility;
+    array<float, 2*TRAINER_SZ> reach_probability;
+
+    void setTree(GameTree* tree_){
+        tree = tree_;
+    }
+
+    vector<pair<int, int>> thread_ranges;
+    vector<pair<int, int>> remaining_ranges;
+    array<vector<int>, TREE_SZ> children;
+    int len = 0;
+
+    bool dfs(unsigned x, int block_size){
+        bool split = false;
+        for(int i : children[x]){
+            split |= dfs(i, block_size);
+        }
+        if(!split && tree->getSize(x) > block_size){
+            cout << "new thread: " << x + 1 << " " << x + tree->getSize(x) << endl;
+            thread_ranges.push_back({x + 1, x + tree->getSize(x)});
+            len += tree->getSize(x);
+            return true;
+        }
+        return split;
+    }
+
+    void buildRanges(int block_size = 670){
+        int num_nodes = tree->nodeCount();
+        for(int i = 1; i < num_nodes; i++){
+            children[tree->getParentId(i)].push_back(i);
+        }
+        dfs(0, block_size);
+        cout << "number of threads: " << thread_ranges.size() << endl;
+        cout << "total coverage: " << len << endl;
+        if(thread_ranges[0].first > 1) remaining_ranges.push_back({1, thread_ranges[0].first - 1});
+        for(int i = 1; i < thread_ranges.size(); i++){
+            if(thread_ranges[i].first - 1 > thread_ranges[i - 1].second){
+                remaining_ranges.push_back({thread_ranges[i - 1].second + 1, thread_ranges[i].first - 1});
+            }
+        }
+        if(thread_ranges.back().second + 1 < num_nodes) remaining_ranges.push_back({thread_ranges.back().second + 1, num_nodes - 1});
+        cout << "number of remaining ranges: " << remaining_ranges.size() << endl;
+    }
+
+    void updateUtilityRange(int l, int r, int swap_players){
+        for(int i = r; i >= l; i--){
+            int parent = tree->getParentId(i);
+            int par_player = tree->getTurn(parent);
+            int info = tree->getInfoSet(parent);
+            int move = tree->getMove(i);
+            float probability = players[par_player ^ swap_players].getProb(info, move);
+            utility[parent] += probability*utility[i];
+            reach_probability[i << 1 | par_player] = probability;
+            reach_probability[i << 1 | (par_player ^ 1)] = 1.0f;
+        }
+    }
+
+    void updateUtility(int swap_players = 0){
+        fill(utility.begin(), utility.end(), 0.0f);
+        tree->updateUtility(utility);
+        int num_nodes = tree->nodeCount();
+        #pragma omp parallel for
+        for(unsigned i = thread_ranges.size(); i > 0; i--){
+            updateUtilityRange(thread_ranges[i - 1].first, thread_ranges[i - 1].second, swap_players);
+        }
+        for(unsigned i = remaining_ranges.size(); i > 0; i--){
+            updateUtilityRange(remaining_ranges[i - 1].first, remaining_ranges[i - 1].second, swap_players);
+        }
+        reach_probability[0] = reach_probability[1] = 1.0f;
+    }
+
+    void updatePlayerRange(int l, int r, int target_player, int swap_players, float alpha, float beta, float gamma){
+        for(int i = l; i <= r; i++){
+            int parent = tree->getParentId(i);
+            int par_player = tree->getTurn(parent);
+            int info = tree->getInfoSet(parent);
+            int move = tree->getMove(i);
+            reach_probability[i << 1] *= reach_probability[parent << 1];
+            reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
+            if((par_player ^ swap_players) == target_player){
+                float utility_dif = (target_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
+                players[par_player ^ swap_players].updateRegret(info, move, utility_dif, alpha, beta);
+            } else {
+                float prob_dif = reach_probability[i << 1 | par_player];
+                players[par_player ^ swap_players].updateStrategy(info, move, prob_dif*gamma);
+            }
+        }
+    }
+
+    // Updates target player regrets
+    // Updates other player's strategies
+    void updatePlayer(int target_player, int swap_players, float alpha, float beta, float gamma){
+        int num_nodes = tree->nodeCount();
+        for(unsigned i = 0; i < remaining_ranges.size(); i++){
+            updatePlayerRange(remaining_ranges[i].first, remaining_ranges[i].second, target_player, swap_players, alpha, beta, gamma);
+        }
+        #pragma omp parallel for
+        for(unsigned i = 0; i < thread_ranges.size(); i++){
+            updatePlayerRange(thread_ranges[i].first, thread_ranges[i].second, target_player, swap_players, alpha, beta, gamma);
+        }
+    }
+
+    void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir, int previous_iteration = 0){
+        omp::XoroShiro128Plus rng(seed);
+        auto start_time = chrono::high_resolution_clock::now();
+        auto last_log_time = start_time;
+        auto last_checkpoint_time = start_time;
+        players[0].initPolicy(tree);
+        players[1].initPolicy(tree);
+        if(player0_dir.size() > 0) players[0].loadPolicy(player0_dir);
+        if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
+        buildRanges();
+        cout << "available processors: " << omp_get_num_procs() << endl;
+        cout << "available threads: " << omp_get_max_threads() << endl;
+        cout << "number of threads: " << omp_get_num_threads() << endl;
+        cout << "dynamic: " << omp_get_dynamic() << endl;
+        float alpha = 1.5f;
+        float beta = 0.0f;
+        float gamma = 2.0f;
+        for(int i = previous_iteration + 1; i <= iterations; i++){
+            float t = i;
+            float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
+            float neg_mult = pow(t, beta);
+            float strat_mult = pow(t, gamma);
+            tree->prepare(rng());
+            updateUtility(i%2);
+            updatePlayer(0, i%2, pos_mult, neg_mult, strat_mult);
+            tree->prepare(rng());
+            updateUtility(i%2);
+            updatePlayer(1, i%2, pos_mult, neg_mult, strat_mult);
+            auto cur_time = chrono::high_resolution_clock::now();
+            if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){
+                cout << "Finished iteration " << i << " of " << iterations << " in " << chrono::duration_cast<chrono::seconds>(cur_time - start_time).count() << " seconds" << endl;
+                cout << "Utility: " << utility[0] << endl;
+                last_log_time = cur_time;
+            }
+            if(chrono::duration_cast<chrono::seconds>(cur_time - last_checkpoint_time).count() >= checkpoint_every_secs){
+                cout << "Saving checkpoint at iteration " << i << endl;
+                last_checkpoint_time = cur_time;
+                players[0].savePolicy(checkpoint_dir + "/player0_" + to_string(i) + ".bin");
+                players[1].savePolicy(checkpoint_dir + "/player1_" + to_string(i) + ".bin");
+            }
+        }
+        cout << "Finished training in " << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - start_time).count() << " seconds" << endl;
+        players[0].savePolicy(checkpoint_dir + "/player0_final.bin");
+        players[1].savePolicy(checkpoint_dir + "/player1_final.bin");
+    }
+};
+
 struct DCFRTrainer : CFRTrainer {
     DCFRPolicy players[2];
     GameTree* tree;
@@ -226,5 +379,6 @@ struct DCFRTrainer : CFRTrainer {
         players[1].savePolicy(checkpoint_dir + "/player1_final.bin");
     }
 };
+
 
 #endif // CFR_HPP

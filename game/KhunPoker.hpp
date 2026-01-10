@@ -262,6 +262,11 @@ struct KhunPokerGameTree : GameTree {
     int getTurn(int node_id){
         return turn[node_id];
     }
+
+    // returns the size of the node
+    int getSize(int node_id){
+        assert(false);
+    }
 };
 
 #endif // KHUNPOKER_HPP
