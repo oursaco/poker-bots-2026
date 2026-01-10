@@ -404,8 +404,9 @@ void visualizeThreeCardUtility(const UtilityOptions& options){
         tree.setFixedRiver(1ull << generateCard(used_cards));
     }
     tree.prepare(42);
-    DCFRTrainer trainer;
+    MultiDCFRTrainer trainer;
     trainer.setTree(&tree);
+    trainer.buildRanges();
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
     trainer.updateUtility();
@@ -416,7 +417,7 @@ void visualizeThreeCardUtility(const UtilityOptions& options){
     cout << "\n";
     ThreeCardGameState root = ThreeCardGameState();
     ind = 0;
-    visualizeUtilityDepthLimited(&root, "", trainer.utility, 8);
+    visualizeUtilityDepthLimited(&root, "", trainer.utility, 4);
 }
 
 int main(int argc, char* argv[]){
