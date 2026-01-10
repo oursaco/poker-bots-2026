@@ -468,8 +468,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("./final_model/player-30-min.bin");
-    trainer.players[1].loadPolicy("./final_model/player-30-min.bin");
+    trainer.players[0].loadPolicy("./final_model/plyer-5-hr.bin");
+    trainer.players[1].loadPolicy("./final_model/plyer-5-hr.bin");
 
     cout << fixed << setprecision(4);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
@@ -480,7 +480,7 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     node_id_counter = 0;
     ThreeCardGameState root = ThreeCardGameState();
     // visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
-    visualizeStrategyHighProbability(&root, &tree, trainer.players, "", 0, 1.0f, false);
+    visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
 }
 
 int main(int argc, char* argv[]){

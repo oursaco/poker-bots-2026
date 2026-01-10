@@ -16,7 +16,7 @@
 using namespace std;
 
 struct CliOptions {
-    string policy_path = "./final_model/player.bin";
+    string policy_path = "./final_model/player-3-hr.bin";
     string seat = "random";
     bool show_help = false;
     bool has_seed = false;
@@ -617,7 +617,7 @@ int choosePolicyActionIndex(ThreeCardPlayer& bot, std::mt19937& rng){
     return static_cast<int>(probs.size()) - 1;
 }
 
-bool playHand(ThreeCardPlayer& bot, NaiveThreeCardBucket& bucket, std::mt19937& rng, int human_id, int hand_number){
+bool playHand(ThreeCardPlayer& bot, EHSThreeCardBucket& bucket, std::mt19937& rng, int human_id, int hand_number){
     Deck deck(rng);
     uint64_t sb_hand = 0;
     uint64_t bb_hand = 0;
@@ -826,7 +826,8 @@ int main(int argc, char* argv[]){
 
     ThreeCardPlayer bot;
     bot.init(options.policy_path);
-    NaiveThreeCardBucket bucket;
+    EHSThreeCardBucket bucket;
+    bucket.init("./bucket_data");
 
     int hand_number = 1;
     while(options.max_hands == 0 || hand_number <= options.max_hands){
