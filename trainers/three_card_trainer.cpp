@@ -14,7 +14,7 @@ struct TrainConfig {
     int seed = 0;
     int iterations = 1'000;
     float log_every_secs = 5.0f;
-    float checkpoint_every_secs = 1800.0f;
+    float checkpoint_every_secs = 300.0f;
     std::string output_dir;
     std::string player0_policy;
     std::string player1_policy;
