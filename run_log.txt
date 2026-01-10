@@ -475,3 +475,892 @@ Finished iteration 18536 of 10000000 in 461 seconds
 Utility: 2
 Finished iteration 18743 of 10000000 in 466 seconds
 Utility: -4.157
+Finished iteration 18937 of 10000000 in 471 seconds
+Utility: 0.993365
+Finished iteration 19143 of 10000000 in 476 seconds
+Utility: 400
+Finished iteration 19349 of 10000000 in 481 seconds
+Utility: -70.5541
+Finished iteration 19555 of 10000000 in 486 seconds
+Utility: 65.0535
+Finished iteration 19759 of 10000000 in 491 seconds
+Utility: 17.1451
+Finished iteration 19946 of 10000000 in 496 seconds
+Utility: 7.82074
+Finished iteration 20145 of 10000000 in 501 seconds
+Utility: 52.1834
+Finished iteration 20349 of 10000000 in 506 seconds
+Utility: 367.888
+Finished iteration 20553 of 10000000 in 511 seconds
+Utility: 2
+Finished iteration 20756 of 10000000 in 516 seconds
+Utility: 15.7995
+Finished iteration 20960 of 10000000 in 521 seconds
+Utility: -109.454
+Finished iteration 21163 of 10000000 in 526 seconds
+Utility: -92.3404
+Finished iteration 21365 of 10000000 in 531 seconds
+Utility: 6.00005
+Finished iteration 21568 of 10000000 in 536 seconds
+Utility: 205.292
+Finished iteration 21773 of 10000000 in 541 seconds
+Utility: -191.294
+Finished iteration 21976 of 10000000 in 546 seconds
+Utility: 305.345
+Finished iteration 22184 of 10000000 in 551 seconds
+Utility: -237.219
+Finished iteration 22390 of 10000000 in 556 seconds
+Utility: 13.6037
+Finished iteration 22593 of 10000000 in 561 seconds
+Utility: 15.7758
+Finished iteration 22801 of 10000000 in 566 seconds
+Utility: -363.831
+Finished iteration 23009 of 10000000 in 571 seconds
+Utility: -223.854
+Finished iteration 23217 of 10000000 in 576 seconds
+Utility: 11.6773
+9 0 10 2
+Missing equity for: 1103 hand: 0 ind: 3
+Finished iteration 23425 of 10000000 in 581 seconds
+Utility: 30.0235
+Finished iteration 23633 of 10000000 in 586 seconds
+Utility: -0.237113
+Finished iteration 23841 of 10000000 in 591 seconds
+Utility: 55.9878
+Finished iteration 24047 of 10000000 in 596 seconds
+Utility: 9.95442
+Saving checkpoint at iteration 24199
+Finished iteration 24247 of 10000000 in 601 seconds
+Utility: 82.0999
+Finished iteration 24454 of 10000000 in 606 seconds
+Utility: -0.939619
+Finished iteration 24662 of 10000000 in 611 seconds
+Utility: -59.1569
+Finished iteration 24870 of 10000000 in 616 seconds
+Utility: -89.9466
+Finished iteration 25075 of 10000000 in 621 seconds
+Utility: -106.095
+Finished iteration 25283 of 10000000 in 626 seconds
+Utility: -53.4788
+Finished iteration 25491 of 10000000 in 631 seconds
+Utility: 20.8765
+Finished iteration 25698 of 10000000 in 636 seconds
+Utility: -58.4345
+Finished iteration 25905 of 10000000 in 641 seconds
+Utility: -1.47048
+Finished iteration 26112 of 10000000 in 646 seconds
+Utility: -37.197
+Finished iteration 26320 of 10000000 in 651 seconds
+Utility: -3.14015
+Finished iteration 26525 of 10000000 in 656 seconds
+Utility: -1
+Finished iteration 26732 of 10000000 in 661 seconds
+Utility: -255.252
+Finished iteration 26940 of 10000000 in 666 seconds
+Utility: 169.374
+Finished iteration 27149 of 10000000 in 671 seconds
+Utility: -53.2373
+Finished iteration 27357 of 10000000 in 676 seconds
+Utility: 49.4965
+Finished iteration 27563 of 10000000 in 681 seconds
+Utility: -3.37494
+Finished iteration 27779 of 10000000 in 686 seconds
+Utility: -0.331371
+Finished iteration 27996 of 10000000 in 691 seconds
+Utility: 85.2284
+Finished iteration 28213 of 10000000 in 696 seconds
+Utility: -5.11909
+Finished iteration 28431 of 10000000 in 701 seconds
+Utility: -2.17798
+Finished iteration 28648 of 10000000 in 706 seconds
+Utility: 1.4785
+Finished iteration 28865 of 10000000 in 711 seconds
+Utility: -1.41045
+Finished iteration 29082 of 10000000 in 716 seconds
+Utility: -2.56496
+Finished iteration 29297 of 10000000 in 721 seconds
+Utility: 11.9671
+Finished iteration 29514 of 10000000 in 726 seconds
+Utility: -89.9655
+Finished iteration 29731 of 10000000 in 731 seconds
+Utility: -17.5772
+Finished iteration 29948 of 10000000 in 736 seconds
+Utility: 2
+Finished iteration 30163 of 10000000 in 741 seconds
+Utility: 26.9158
+Finished iteration 30380 of 10000000 in 746 seconds
+Utility: 2
+Finished iteration 30597 of 10000000 in 751 seconds
+Utility: 325.253
+Finished iteration 30814 of 10000000 in 756 seconds
+Utility: -5.00325
+Finished iteration 31031 of 10000000 in 761 seconds
+Utility: -153.824
+Finished iteration 31248 of 10000000 in 766 seconds
+Utility: 5.074
+Finished iteration 31464 of 10000000 in 771 seconds
+Utility: 51.373
+Finished iteration 31680 of 10000000 in 776 seconds
+Utility: -400
+Finished iteration 31895 of 10000000 in 781 seconds
+Utility: 126.564
+Finished iteration 32110 of 10000000 in 786 seconds
+Utility: 175.07
+Finished iteration 32325 of 10000000 in 791 seconds
+Utility: -0.816628
+Finished iteration 32541 of 10000000 in 796 seconds
+Utility: -2.27885
+Finished iteration 32757 of 10000000 in 801 seconds
+Utility: -1
+Finished iteration 32974 of 10000000 in 806 seconds
+Utility: 32.7255
+Finished iteration 33190 of 10000000 in 811 seconds
+Utility: 2
+Finished iteration 33405 of 10000000 in 816 seconds
+Utility: -110.419
+Finished iteration 33621 of 10000000 in 821 seconds
+Utility: -361.66
+Finished iteration 33839 of 10000000 in 826 seconds
+Utility: -4.06069
+Finished iteration 34056 of 10000000 in 831 seconds
+Utility: -60.5473
+Finished iteration 34272 of 10000000 in 836 seconds
+Utility: 112.011
+Finished iteration 34488 of 10000000 in 841 seconds
+Utility: 17.7251
+Finished iteration 34703 of 10000000 in 846 seconds
+Utility: 113.172
+Finished iteration 34910 of 10000000 in 851 seconds
+Utility: -400
+Finished iteration 35117 of 10000000 in 856 seconds
+Utility: 133.058
+Finished iteration 35322 of 10000000 in 861 seconds
+Utility: -48.4959
+5 1 5 3
+Missing equity for: 584120795272 hand: 0 ind: 3
+5 1 5 3
+Missing equity for: 584120795272 hand: 0 ind: 3
+Finished iteration 35531 of 10000000 in 866 seconds
+Utility: 5.99057
+Finished iteration 35740 of 10000000 in 872 seconds
+Utility: -8.72079
+Finished iteration 35949 of 10000000 in 877 seconds
+Utility: -6.04111
+Finished iteration 36155 of 10000000 in 882 seconds
+Utility: 2
+Finished iteration 36361 of 10000000 in 887 seconds
+Utility: 1.49665
+Finished iteration 36568 of 10000000 in 892 seconds
+Utility: -12.8543
+Finished iteration 36775 of 10000000 in 897 seconds
+Utility: 2
+Saving checkpoint at iteration 36899
+Finished iteration 36973 of 10000000 in 902 seconds
+Utility: -136.224
+Finished iteration 37177 of 10000000 in 907 seconds
+Utility: 2.6429
+Finished iteration 37383 of 10000000 in 912 seconds
+Utility: -3.49734
+Finished iteration 37589 of 10000000 in 917 seconds
+Utility: 0
+Finished iteration 37791 of 10000000 in 922 seconds
+Utility: 400
+Finished iteration 37997 of 10000000 in 927 seconds
+Utility: 3.17338
+Finished iteration 38203 of 10000000 in 932 seconds
+Utility: -1
+Finished iteration 38409 of 10000000 in 937 seconds
+Utility: 1.82624
+Finished iteration 38614 of 10000000 in 942 seconds
+Utility: 111.602
+Finished iteration 38820 of 10000000 in 947 seconds
+Utility: 2
+5 0 5 3
+Missing equity for: 2251801967460488 hand: 0 ind: 3
+5 0 5 3
+Missing equity for: 2251801967460488 hand: 0 ind: 3
+5 0 5 3
+Missing equity for: 2251801967460488 hand: 0 ind: 3
+5 0 5 3
+Missing equity for: 2251801967460488 hand: 0 ind: 3
+Finished iteration 39025 of 10000000 in 952 seconds
+Utility: -6.08049
+Finished iteration 39231 of 10000000 in 957 seconds
+Utility: -121.335
+Finished iteration 39429 of 10000000 in 962 seconds
+Utility: -4.73333
+Finished iteration 39619 of 10000000 in 967 seconds
+Utility: 40.2348
+Finished iteration 39811 of 10000000 in 972 seconds
+Utility: 5.40125
+Finished iteration 40004 of 10000000 in 977 seconds
+Utility: 2
+Finished iteration 40192 of 10000000 in 982 seconds
+Utility: 1.64098
+Finished iteration 40386 of 10000000 in 987 seconds
+Utility: -1.23515
+Finished iteration 40580 of 10000000 in 992 seconds
+Utility: 400
+Finished iteration 40774 of 10000000 in 997 seconds
+Utility: 4.37408
+Finished iteration 40967 of 10000000 in 1002 seconds
+Utility: -111.906
+Finished iteration 41161 of 10000000 in 1007 seconds
+Utility: -20.6326
+Finished iteration 41355 of 10000000 in 1012 seconds
+Utility: 3.93236
+Finished iteration 41548 of 10000000 in 1017 seconds
+Utility: 1.10157
+Finished iteration 41741 of 10000000 in 1022 seconds
+Utility: 2
+Finished iteration 41933 of 10000000 in 1027 seconds
+Utility: 1.58552
+Finished iteration 42125 of 10000000 in 1032 seconds
+Utility: -1.23034
+Finished iteration 42319 of 10000000 in 1037 seconds
+Utility: -180.684
+Finished iteration 42511 of 10000000 in 1042 seconds
+Utility: 26.6837
+Finished iteration 42704 of 10000000 in 1047 seconds
+Utility: -2.9755
+Finished iteration 42898 of 10000000 in 1052 seconds
+Utility: -192.097
+Finished iteration 43092 of 10000000 in 1057 seconds
+Utility: -132.288
+Finished iteration 43285 of 10000000 in 1062 seconds
+Utility: 340.113
+Finished iteration 43480 of 10000000 in 1067 seconds
+Utility: 17.2734
+Finished iteration 43675 of 10000000 in 1072 seconds
+Utility: -3.83483
+Finished iteration 43870 of 10000000 in 1077 seconds
+Utility: 2
+Finished iteration 44065 of 10000000 in 1082 seconds
+Utility: -1
+Finished iteration 44258 of 10000000 in 1087 seconds
+Utility: 124.569
+Finished iteration 44451 of 10000000 in 1092 seconds
+Utility: 6.42065
+Finished iteration 44645 of 10000000 in 1097 seconds
+Utility: -89.7277
+Finished iteration 44836 of 10000000 in 1102 seconds
+Utility: -400
+Finished iteration 45030 of 10000000 in 1107 seconds
+Utility: -114.441
+Finished iteration 45225 of 10000000 in 1112 seconds
+Utility: 41.6776
+Finished iteration 45420 of 10000000 in 1117 seconds
+Utility: -14.0755
+Finished iteration 45614 of 10000000 in 1122 seconds
+Utility: 117.709
+Finished iteration 45808 of 10000000 in 1127 seconds
+Utility: 60.8503
+Finished iteration 46002 of 10000000 in 1132 seconds
+Utility: 124.039
+Finished iteration 46197 of 10000000 in 1137 seconds
+Utility: 400
+Finished iteration 46391 of 10000000 in 1142 seconds
+Utility: 12.6996
+Finished iteration 46584 of 10000000 in 1147 seconds
+Utility: 2
+Finished iteration 46779 of 10000000 in 1152 seconds
+Utility: -0.690775
+Finished iteration 46970 of 10000000 in 1157 seconds
+Utility: -7.3878
+Finished iteration 47161 of 10000000 in 1162 seconds
+Utility: -1.67331
+Finished iteration 47356 of 10000000 in 1167 seconds
+Utility: -2.29022
+Finished iteration 47550 of 10000000 in 1172 seconds
+Utility: -67.3813
+Finished iteration 47744 of 10000000 in 1177 seconds
+Utility: 3.98034
+Finished iteration 47939 of 10000000 in 1182 seconds
+Utility: -1.00084
+Finished iteration 48133 of 10000000 in 1187 seconds
+Utility: 28.3566
+Finished iteration 48327 of 10000000 in 1192 seconds
+Utility: -111.371
+Finished iteration 48522 of 10000000 in 1197 seconds
+Utility: -1
+Saving checkpoint at iteration 48606
+Finished iteration 48710 of 10000000 in 1202 seconds
+Utility: 185.593
+Finished iteration 48904 of 10000000 in 1207 seconds
+Utility: -14.6126
+Finished iteration 49097 of 10000000 in 1212 seconds
+Utility: 0.88124
+Finished iteration 49288 of 10000000 in 1217 seconds
+Utility: -89.1474
+Finished iteration 49479 of 10000000 in 1222 seconds
+Utility: -182.002
+Finished iteration 49674 of 10000000 in 1227 seconds
+Utility: -36.8212
+Finished iteration 49870 of 10000000 in 1232 seconds
+Utility: 344.442
+Finished iteration 50065 of 10000000 in 1237 seconds
+Utility: -0.719667
+Finished iteration 50260 of 10000000 in 1243 seconds
+Utility: -1
+Finished iteration 50460 of 10000000 in 1248 seconds
+Utility: -0.0779283
+Finished iteration 50667 of 10000000 in 1253 seconds
+Utility: -7.26647
+Finished iteration 50875 of 10000000 in 1258 seconds
+Utility: 2
+Finished iteration 51083 of 10000000 in 1263 seconds
+Utility: -4.99467
+Finished iteration 51289 of 10000000 in 1268 seconds
+Utility: 84.4674
+Finished iteration 51494 of 10000000 in 1273 seconds
+Utility: 2
+Finished iteration 51699 of 10000000 in 1278 seconds
+Utility: 1.42737
+Finished iteration 51904 of 10000000 in 1283 seconds
+Utility: 400
+Finished iteration 52110 of 10000000 in 1288 seconds
+Utility: 53.0451
+Finished iteration 52316 of 10000000 in 1293 seconds
+Utility: -1.99962
+Finished iteration 52523 of 10000000 in 1298 seconds
+Utility: -126.552
+Finished iteration 52729 of 10000000 in 1303 seconds
+Utility: -12.1981
+Finished iteration 52933 of 10000000 in 1308 seconds
+Utility: 400
+Finished iteration 53139 of 10000000 in 1313 seconds
+Utility: -144.25
+7 2 10 3
+Missing equity for: 2952792200 hand: 0 ind: 3
+Finished iteration 53345 of 10000000 in 1318 seconds
+Utility: 91.3234
+Finished iteration 53550 of 10000000 in 1323 seconds
+Utility: -126.909
+Finished iteration 53754 of 10000000 in 1328 seconds
+Utility: 6.45415
+Finished iteration 53958 of 10000000 in 1333 seconds
+Utility: 179.329
+Finished iteration 54163 of 10000000 in 1338 seconds
+Utility: 4.68654
+Finished iteration 54365 of 10000000 in 1343 seconds
+Utility: -225.575
+Finished iteration 54572 of 10000000 in 1348 seconds
+Utility: -109.789
+Finished iteration 54778 of 10000000 in 1353 seconds
+Utility: 33.7874
+7 0 10 3
+Missing equity for: 3758098568 hand: 0 ind: 3
+7 0 10 3
+Missing equity for: 3758098568 hand: 0 ind: 3
+Finished iteration 54984 of 10000000 in 1358 seconds
+Utility: -2.78721
+Finished iteration 55190 of 10000000 in 1363 seconds
+Utility: -90.487
+Finished iteration 55394 of 10000000 in 1368 seconds
+Utility: -155.569
+Finished iteration 55600 of 10000000 in 1373 seconds
+Utility: 49.1449
+Finished iteration 55806 of 10000000 in 1378 seconds
+Utility: 336.724
+Finished iteration 56012 of 10000000 in 1383 seconds
+Utility: -21.3548
+Finished iteration 56218 of 10000000 in 1388 seconds
+Utility: -37.3936
+Finished iteration 56423 of 10000000 in 1393 seconds
+Utility: 4.98422
+2 2 11 1
+Missing equity for: 4222124650659874 hand: 0 ind: 3
+Finished iteration 56629 of 10000000 in 1398 seconds
+Utility: -77.4836
+Finished iteration 56832 of 10000000 in 1403 seconds
+Utility: 2
+Finished iteration 57036 of 10000000 in 1408 seconds
+Utility: -18.3173
+Finished iteration 57242 of 10000000 in 1413 seconds
+Utility: 0.70253
+Finished iteration 57449 of 10000000 in 1418 seconds
+Utility: -125.287
+7 1 10 2
+Missing equity for: 3489662020 hand: 0 ind: 3
+Finished iteration 57656 of 10000000 in 1423 seconds
+Utility: 2
+Finished iteration 57863 of 10000000 in 1428 seconds
+Utility: -0.984159
+Finished iteration 58070 of 10000000 in 1433 seconds
+Utility: -21.7063
+Finished iteration 58277 of 10000000 in 1438 seconds
+Utility: 241.466
+Finished iteration 58483 of 10000000 in 1443 seconds
+Utility: 2
+Finished iteration 58688 of 10000000 in 1448 seconds
+Utility: -106.416
+Finished iteration 58892 of 10000000 in 1453 seconds
+Utility: -0.366059
+Finished iteration 59095 of 10000000 in 1458 seconds
+Utility: 13.8575
+7 0 10 3
+Missing equity for: 3758098568 hand: 0 ind: 3
+7 0 10 3
+Missing equity for: 3758098568 hand: 0 ind: 3
+Finished iteration 59297 of 10000000 in 1463 seconds
+Utility: -78.0871
+Finished iteration 59499 of 10000000 in 1468 seconds
+Utility: -0.802181
+Finished iteration 59703 of 10000000 in 1473 seconds
+Utility: 1.37968
+Finished iteration 59908 of 10000000 in 1478 seconds
+Utility: 242.237
+Finished iteration 60112 of 10000000 in 1483 seconds
+Utility: -3.10335
+Finished iteration 60316 of 10000000 in 1488 seconds
+Utility: 7.6974
+Finished iteration 60520 of 10000000 in 1493 seconds
+Utility: 11.1869
+Finished iteration 60724 of 10000000 in 1498 seconds
+Utility: 191.997
+Saving checkpoint at iteration 60787
+Finished iteration 60920 of 10000000 in 1503 seconds
+Utility: -65.4882
+Finished iteration 61125 of 10000000 in 1508 seconds
+Utility: 285.437
+Finished iteration 61332 of 10000000 in 1513 seconds
+Utility: -194.618
+Finished iteration 61537 of 10000000 in 1518 seconds
+Utility: 152.827
+Finished iteration 61741 of 10000000 in 1523 seconds
+Utility: -16.6434
+Finished iteration 61947 of 10000000 in 1528 seconds
+Utility: -333.618
+Finished iteration 62153 of 10000000 in 1533 seconds
+Utility: 236.967
+Finished iteration 62360 of 10000000 in 1538 seconds
+Utility: -6
+Finished iteration 62566 of 10000000 in 1543 seconds
+Utility: -96.1128
+Finished iteration 62773 of 10000000 in 1548 seconds
+Utility: -3.07396
+Finished iteration 62980 of 10000000 in 1553 seconds
+Utility: 400
+Finished iteration 63188 of 10000000 in 1558 seconds
+Utility: 103.117
+Finished iteration 63395 of 10000000 in 1563 seconds
+Utility: -1
+Finished iteration 63601 of 10000000 in 1568 seconds
+Utility: 4.499
+Finished iteration 63807 of 10000000 in 1573 seconds
+Utility: -1.43338
+Finished iteration 64010 of 10000000 in 1578 seconds
+Utility: 52.8824
+Finished iteration 64215 of 10000000 in 1583 seconds
+Utility: 80.5271
+Finished iteration 64422 of 10000000 in 1588 seconds
+Utility: -44.1151
+Finished iteration 64617 of 10000000 in 1593 seconds
+Utility: -178.064
+Finished iteration 64812 of 10000000 in 1598 seconds
+Utility: 61.6003
+Finished iteration 65006 of 10000000 in 1603 seconds
+Utility: 101.534
+Finished iteration 65201 of 10000000 in 1608 seconds
+Utility: 0.91186
+Finished iteration 65395 of 10000000 in 1613 seconds
+Utility: -1.80895
+Finished iteration 65590 of 10000000 in 1618 seconds
+Utility: 77.7096
+5 1 5 2
+Missing equity for: 292067213380 hand: 0 ind: 3
+5 1 5 2
+Missing equity for: 292067213380 hand: 0 ind: 3
+Finished iteration 65785 of 10000000 in 1623 seconds
+Utility: -0.0179894
+Finished iteration 65980 of 10000000 in 1628 seconds
+Utility: -2.92172
+Finished iteration 66176 of 10000000 in 1633 seconds
+Utility: 2
+Finished iteration 66370 of 10000000 in 1638 seconds
+Utility: 26.6418
+Finished iteration 66563 of 10000000 in 1643 seconds
+Utility: -44.4869
+Finished iteration 66756 of 10000000 in 1648 seconds
+Utility: -1.63742
+Finished iteration 66948 of 10000000 in 1653 seconds
+Utility: 22.8408
+Finished iteration 67143 of 10000000 in 1658 seconds
+Utility: 60.9993
+Finished iteration 67337 of 10000000 in 1663 seconds
+Utility: -0.34261
+Finished iteration 67531 of 10000000 in 1668 seconds
+Utility: 12.4006
+Finished iteration 67725 of 10000000 in 1673 seconds
+Utility: -2.21825
+Finished iteration 67920 of 10000000 in 1679 seconds
+Utility: -1
+Finished iteration 68115 of 10000000 in 1684 seconds
+Utility: 66.399
+Finished iteration 68309 of 10000000 in 1689 seconds
+Utility: -4.56432
+2 0 2 3
+Missing equity for: 551903299208 hand: 0 ind: 3
+Finished iteration 68503 of 10000000 in 1694 seconds
+Utility: 1.90105
+Finished iteration 68695 of 10000000 in 1699 seconds
+Utility: -1.89376
+Finished iteration 68888 of 10000000 in 1704 seconds
+Utility: -26.8536
+2 0 2 3
+Missing equity for: 551903299208 hand: 0 ind: 3
+Finished iteration 69083 of 10000000 in 1709 seconds
+Utility: 35.8809
+Finished iteration 69278 of 10000000 in 1714 seconds
+Utility: 7.46452
+Finished iteration 69470 of 10000000 in 1719 seconds
+Utility: -0.848733
+Finished iteration 69665 of 10000000 in 1724 seconds
+Utility: 101.66
+Finished iteration 69860 of 10000000 in 1729 seconds
+Utility: -10.8761
+Finished iteration 70054 of 10000000 in 1734 seconds
+Utility: -194.137
+Finished iteration 70249 of 10000000 in 1739 seconds
+Utility: 128.487
+Finished iteration 70444 of 10000000 in 1744 seconds
+Utility: 2
+Finished iteration 70647 of 10000000 in 1749 seconds
+Utility: -23.8513
+Finished iteration 70855 of 10000000 in 1754 seconds
+Utility: -255.236
+Finished iteration 71061 of 10000000 in 1759 seconds
+Utility: 2.81793
+Finished iteration 71266 of 10000000 in 1764 seconds
+Utility: 203.55
+7 1 11 3
+Missing equity for: 123145302343816 hand: 0 ind: 3
+Finished iteration 71473 of 10000000 in 1769 seconds
+Utility: 179.772
+Finished iteration 71681 of 10000000 in 1774 seconds
+Utility: -1.69308
+Finished iteration 71886 of 10000000 in 1779 seconds
+Utility: 91.4372
+Finished iteration 72093 of 10000000 in 1784 seconds
+Utility: -10.4648
+Finished iteration 72300 of 10000000 in 1789 seconds
+Utility: -0.166377
+Finished iteration 72507 of 10000000 in 1794 seconds
+Utility: 36.4423
+Finished iteration 72715 of 10000000 in 1799 seconds
+Utility: -53.2476
+Saving checkpoint at iteration 72747
+Finished iteration 72914 of 10000000 in 1804 seconds
+Utility: 68.0767
+Finished iteration 73127 of 10000000 in 1809 seconds
+Utility: -0.333133
+Finished iteration 73345 of 10000000 in 1814 seconds
+Utility: -1
+Finished iteration 73562 of 10000000 in 1819 seconds
+Utility: 82.0618
+Finished iteration 73779 of 10000000 in 1824 seconds
+Utility: -331.954
+Finished iteration 73998 of 10000000 in 1829 seconds
+Utility: -69.6885
+Finished iteration 74216 of 10000000 in 1834 seconds
+Utility: 107.168
+Finished iteration 74435 of 10000000 in 1839 seconds
+Utility: -0.543387
+Finished iteration 74652 of 10000000 in 1844 seconds
+Utility: 0.496435
+9 0 10 1
+Missing equity for: 559 hand: 0 ind: 3
+9 0 10 1
+Missing equity for: 559 hand: 0 ind: 3
+Finished iteration 74869 of 10000000 in 1849 seconds
+Utility: -2.39345
+Finished iteration 75086 of 10000000 in 1854 seconds
+Utility: -18.2529
+Finished iteration 75304 of 10000000 in 1859 seconds
+Utility: -90.0953
+Finished iteration 75521 of 10000000 in 1864 seconds
+Utility: 0
+Finished iteration 75737 of 10000000 in 1869 seconds
+Utility: -19.4854
+Finished iteration 75954 of 10000000 in 1874 seconds
+Utility: 26.1467
+Finished iteration 76173 of 10000000 in 1879 seconds
+Utility: 5.0446
+Finished iteration 76374 of 10000000 in 1884 seconds
+Utility: -128.134
+Finished iteration 76576 of 10000000 in 1889 seconds
+Utility: -198.1
+Finished iteration 76779 of 10000000 in 1894 seconds
+Utility: -120.036
+Finished iteration 76982 of 10000000 in 1899 seconds
+Utility: 205.62
+Finished iteration 77174 of 10000000 in 1904 seconds
+Utility: -17.5125
+Finished iteration 77367 of 10000000 in 1909 seconds
+Utility: -145.875
+Finished iteration 77560 of 10000000 in 1914 seconds
+Utility: 0.412747
+Finished iteration 77753 of 10000000 in 1919 seconds
+Utility: -51.9546
+Finished iteration 77947 of 10000000 in 1924 seconds
+Utility: 13.8561
+Finished iteration 78147 of 10000000 in 1929 seconds
+Utility: -56.4485
+Finished iteration 78350 of 10000000 in 1934 seconds
+Utility: 2.81444
+2 2 11 0
+Missing equity for: 4222124650659857 hand: 0 ind: 3
+Finished iteration 78551 of 10000000 in 1939 seconds
+Utility: 0.264866
+Finished iteration 78753 of 10000000 in 1944 seconds
+Utility: 24.8083
+Finished iteration 78956 of 10000000 in 1949 seconds
+Utility: 400
+Finished iteration 79160 of 10000000 in 1954 seconds
+Utility: 1.20114
+Finished iteration 79363 of 10000000 in 1959 seconds
+Utility: 1.26117
+Finished iteration 79566 of 10000000 in 1964 seconds
+Utility: -0.356996
+Finished iteration 79769 of 10000000 in 1969 seconds
+Utility: -6.78496
+Finished iteration 79972 of 10000000 in 1974 seconds
+Utility: 284.061
+Finished iteration 80175 of 10000000 in 1979 seconds
+Utility: -1.59442
+Finished iteration 80378 of 10000000 in 1984 seconds
+Utility: 5.48115
+Finished iteration 80581 of 10000000 in 1989 seconds
+Utility: 1.43421
+Finished iteration 80785 of 10000000 in 1994 seconds
+Utility: -20.076
+Finished iteration 80985 of 10000000 in 1999 seconds
+Utility: -3.7181
+Finished iteration 81188 of 10000000 in 2004 seconds
+Utility: -341.185
+Finished iteration 81391 of 10000000 in 2009 seconds
+Utility: 1.08647
+Finished iteration 81594 of 10000000 in 2014 seconds
+Utility: 400
+Finished iteration 81798 of 10000000 in 2019 seconds
+Utility: 2
+Finished iteration 82001 of 10000000 in 2024 seconds
+Utility: -19.122
+Finished iteration 82202 of 10000000 in 2029 seconds
+Utility: -135.28
+Finished iteration 82406 of 10000000 in 2034 seconds
+Utility: 3.83033
+Finished iteration 82614 of 10000000 in 2039 seconds
+Utility: -32.2831
+Finished iteration 82836 of 10000000 in 2044 seconds
+Utility: -224.877
+Finished iteration 83041 of 10000000 in 2049 seconds
+Utility: -239.935
+Finished iteration 83246 of 10000000 in 2054 seconds
+Utility: 2.85186
+Finished iteration 83446 of 10000000 in 2059 seconds
+Utility: 37.0152
+Finished iteration 83663 of 10000000 in 2064 seconds
+Utility: -0.598613
+Finished iteration 83881 of 10000000 in 2069 seconds
+Utility: 78.4286
+Finished iteration 84097 of 10000000 in 2074 seconds
+Utility: -0.552043
+Finished iteration 84314 of 10000000 in 2079 seconds
+Utility: -3.5432
+Finished iteration 84531 of 10000000 in 2084 seconds
+Utility: 0.772136
+Finished iteration 84747 of 10000000 in 2089 seconds
+Utility: -0.458076
+Finished iteration 84964 of 10000000 in 2094 seconds
+Utility: 87.4515
+Finished iteration 85173 of 10000000 in 2099 seconds
+Utility: 18.307
+Saving checkpoint at iteration 85177
+Finished iteration 85371 of 10000000 in 2104 seconds
+Utility: -0.388582
+Finished iteration 85576 of 10000000 in 2110 seconds
+Utility: 307.968
+Finished iteration 85781 of 10000000 in 2115 seconds
+Utility: -0.900767
+Finished iteration 85984 of 10000000 in 2120 seconds
+Utility: 5.64941
+Finished iteration 86186 of 10000000 in 2125 seconds
+Utility: -294.95
+Finished iteration 86388 of 10000000 in 2130 seconds
+Utility: -191.786
+Finished iteration 86593 of 10000000 in 2135 seconds
+Utility: -69.0039
+Finished iteration 86797 of 10000000 in 2140 seconds
+Utility: 1.06471
+Finished iteration 87001 of 10000000 in 2145 seconds
+Utility: -2.80607
+Finished iteration 87206 of 10000000 in 2150 seconds
+Utility: 27.5772
+Finished iteration 87409 of 10000000 in 2155 seconds
+Utility: 2
+Finished iteration 87613 of 10000000 in 2160 seconds
+Utility: 1.84128
+Finished iteration 87818 of 10000000 in 2165 seconds
+Utility: -46.443
+Finished iteration 88024 of 10000000 in 2170 seconds
+Utility: 6.34229
+Finished iteration 88228 of 10000000 in 2175 seconds
+Utility: 69.2648
+Finished iteration 88427 of 10000000 in 2180 seconds
+Utility: -20.5988
+Finished iteration 88628 of 10000000 in 2185 seconds
+Utility: -322.769
+Finished iteration 88830 of 10000000 in 2190 seconds
+Utility: -0.0739387
+Finished iteration 89031 of 10000000 in 2195 seconds
+Utility: 24.913
+Finished iteration 89233 of 10000000 in 2200 seconds
+Utility: 196.862
+Finished iteration 89436 of 10000000 in 2205 seconds
+Utility: 25.2955
+Finished iteration 89638 of 10000000 in 2210 seconds
+Utility: 339.945
+Finished iteration 89839 of 10000000 in 2215 seconds
+Utility: -0.685756
+Finished iteration 90041 of 10000000 in 2220 seconds
+Utility: -130.257
+Finished iteration 90243 of 10000000 in 2225 seconds
+Utility: 0
+Finished iteration 90445 of 10000000 in 2230 seconds
+Utility: -4.50996
+Finished iteration 90647 of 10000000 in 2235 seconds
+Utility: -400
+Finished iteration 90845 of 10000000 in 2240 seconds
+Utility: -3.28616
+Finished iteration 91047 of 10000000 in 2245 seconds
+Utility: 1.07841
+Finished iteration 91249 of 10000000 in 2250 seconds
+Utility: -59.1755
+Finished iteration 91450 of 10000000 in 2255 seconds
+Utility: 2.29364
+Finished iteration 91652 of 10000000 in 2260 seconds
+Utility: 400
+Finished iteration 91853 of 10000000 in 2265 seconds
+Utility: 20.6961
+Finished iteration 92054 of 10000000 in 2270 seconds
+Utility: 2
+Finished iteration 92255 of 10000000 in 2275 seconds
+Utility: -1.28529
+Finished iteration 92454 of 10000000 in 2280 seconds
+Utility: 3.09628
+Finished iteration 92655 of 10000000 in 2285 seconds
+Utility: 2
+Finished iteration 92857 of 10000000 in 2290 seconds
+Utility: -40.8956
+Finished iteration 93059 of 10000000 in 2295 seconds
+Utility: -0.990094
+Finished iteration 93258 of 10000000 in 2300 seconds
+Utility: -0.311883
+7 0 10 3
+Missing equity for: 3758098568 hand: 0 ind: 3
+Finished iteration 93460 of 10000000 in 2305 seconds
+Utility: -44.951
+Finished iteration 93662 of 10000000 in 2310 seconds
+Utility: 12.4348
+Finished iteration 93863 of 10000000 in 2315 seconds
+Utility: 140.351
+Finished iteration 94065 of 10000000 in 2320 seconds
+Utility: -1.5449
+Finished iteration 94266 of 10000000 in 2325 seconds
+Utility: -1.09021
+Finished iteration 94468 of 10000000 in 2330 seconds
+Utility: 5.07422
+Finished iteration 94669 of 10000000 in 2335 seconds
+Utility: 27.9068
+Finished iteration 94869 of 10000000 in 2340 seconds
+Utility: -1.36076
+Finished iteration 95071 of 10000000 in 2345 seconds
+Utility: -0.215506
+Finished iteration 95273 of 10000000 in 2350 seconds
+Utility: 81.0979
+Finished iteration 95475 of 10000000 in 2355 seconds
+Utility: -2.07259
+Finished iteration 95673 of 10000000 in 2360 seconds
+Utility: -20.4385
+2 1 2 2
+Missing equity for: 275951651140 hand: 0 ind: 3
+Finished iteration 95875 of 10000000 in 2365 seconds
+Utility: -2.86915
+Finished iteration 96077 of 10000000 in 2370 seconds
+Utility: 1.37873
+Finished iteration 96278 of 10000000 in 2375 seconds
+Utility: 400
+Finished iteration 96479 of 10000000 in 2380 seconds
+Utility: 6.12587
+Finished iteration 96681 of 10000000 in 2385 seconds
+Utility: -400
+Finished iteration 96883 of 10000000 in 2390 seconds
+Utility: -3.14229
+Finished iteration 97085 of 10000000 in 2395 seconds
+Utility: 2
+Saving checkpoint at iteration 97256
+Finished iteration 97277 of 10000000 in 2400 seconds
+Utility: 2
+Finished iteration 97477 of 10000000 in 2405 seconds
+Utility: -192.888
+Finished iteration 97678 of 10000000 in 2410 seconds
+Utility: 135.343
+Finished iteration 97879 of 10000000 in 2415 seconds
+Utility: 201.774
+Finished iteration 98078 of 10000000 in 2420 seconds
+Utility: -1.38304
+Finished iteration 98281 of 10000000 in 2425 seconds
+Utility: 140.796
+Finished iteration 98484 of 10000000 in 2430 seconds
+Utility: 79.5148
+Finished iteration 98686 of 10000000 in 2435 seconds
+Utility: 12.2495
+Finished iteration 98887 of 10000000 in 2440 seconds
+Utility: -12.8096
+Finished iteration 99089 of 10000000 in 2445 seconds
+Utility: -72.9451
+Finished iteration 99291 of 10000000 in 2450 seconds
+Utility: -16.517
+Finished iteration 99491 of 10000000 in 2455 seconds
+Utility: -1.19671
+Finished iteration 99693 of 10000000 in 2460 seconds
+Utility: 27.8734
+Finished iteration 99893 of 10000000 in 2465 seconds
+Utility: -145.3
+Finished iteration 100095 of 10000000 in 2470 seconds
+Utility: 1.94144
+Finished iteration 100296 of 10000000 in 2475 seconds
+Utility: -41.7252
+Finished iteration 100495 of 10000000 in 2480 seconds
+Utility: -400
+Finished iteration 100696 of 10000000 in 2485 seconds
+Utility: 297.89
+Finished iteration 100897 of 10000000 in 2490 seconds
+Utility: 2
+Finished iteration 101099 of 10000000 in 2495 seconds
+Utility: -1.68693
+Finished iteration 101300 of 10000000 in 2501 seconds
+Utility: 144.928
+Finished iteration 101502 of 10000000 in 2506 seconds
+Utility: -11.764
+Finished iteration 101705 of 10000000 in 2511 seconds
+Utility: -37.8785
+Finished iteration 101908 of 10000000 in 2516 seconds
+Utility: 89.7882
+Finished iteration 102110 of 10000000 in 2521 seconds
+Utility: -1.96389
+Finished iteration 102309 of 10000000 in 2526 seconds
+Utility: -239.451
+7 2 8 1
+Missing equity for: 35240206663714 hand: 0 ind: 3
+7 2 8 1
+Missing equity for: 35240206663714 hand: 0 ind: 3
+Finished iteration 102513 of 10000000 in 2531 seconds
+Utility: 400
+Finished iteration 102716 of 10000000 in 2536 seconds
+Utility: -3.30563
+Finished iteration 102917 of 10000000 in 2541 seconds
+Utility: 1.44864
+Finished iteration 103125 of 10000000 in 2546 seconds
+Utility: -0.354463
