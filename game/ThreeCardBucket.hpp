@@ -6,6 +6,7 @@
 #include <utility>
 #include <algorithm>
 #include <fstream>
+#include <iostream>
 #include "external/omp/HandEvaluator.h"
 #include "external/omp/Hand.h"
 #include "game/ThreeCardState.hpp"
@@ -498,7 +499,8 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         int board_encoded = encodeBoard(getHand(board), suits[0] == suits[1], suits[1]);
         int hole_id = getHoleId(cards[0], cards[1], suits[0], suits[1]);
         float e = eq[ind][hole_id][map_to[board_encoded] + 1];
-        if(e <= 0.0f){
+        if(e < 0.0f){
+            cout << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
             cout << "Missing equity for: " << board << " hand: " << hand << " ind: " << ind << endl;
             return 0.0f;
         }
