@@ -294,6 +294,10 @@ struct ThreeCardPlayer : Player {
                 }
                 node_id = children[node_id][chosen_action];
                 state = actions[chosen_action].first;
+                if(real_sb_stack == 0 && real_bb_stack == 0){
+                    all_in = false;
+                    return make_unique<ThreeCardAction>("call", player_id, amount, real_sb_stack, real_bb_stack, 0.0f);
+                }
                 return make_unique<ThreeCardAction>("raise", player_id, amount, real_sb_stack, real_bb_stack, 0.0f);
             }
             int amount = max(real_sb_bet, real_bb_bet) - min(real_sb_bet, real_bb_bet);
@@ -308,7 +312,8 @@ struct ThreeCardPlayer : Player {
             if(state.street != cur_street) real_sb_bet = real_bb_bet = 0;
             return make_unique<ThreeCardAction>("call", player_id, amount, real_sb_stack, real_bb_stack, 0.0f);
         } else if(actions[chosen_action].second.action == "raise"){
-            int amount = relativeRaiseSize(actions[chosen_action].second.pot_size);
+            int my_stack = (player_id == 0 ? actions[chosen_action].second.sb_stack : actions[chosen_action].second.bb_stack);
+            int amount = relativeRaiseSize((my_stack == 0 ? 100.0f : actions[chosen_action].second.pot_size));
             if(player_id == 0){
                 amount = min(amount, real_sb_stack);
                 real_sb_bet += amount;

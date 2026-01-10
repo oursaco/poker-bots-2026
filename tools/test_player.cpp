@@ -16,7 +16,7 @@
 using namespace std;
 
 struct CliOptions {
-    string policy_path = "./final_model/player-3-hr.bin";
+    string policy_path = "./final_model/player-2.bin";
     string seat = "random";
     bool show_help = false;
     bool has_seed = false;
