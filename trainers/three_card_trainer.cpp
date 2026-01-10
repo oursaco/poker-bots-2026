@@ -30,6 +30,7 @@ int main() {
 
     ThreeCardGameTree tree;
     EHSThreeCardBucket bucket;
+    bucket.init("./bucket_data");
     tree.setBucket(&bucket);
     tree.init();
     tree.prepare(config.seed);

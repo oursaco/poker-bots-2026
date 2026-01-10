@@ -398,7 +398,8 @@ void visualizeStrategyHighProbability(GameState* state, GameTree* tree, DCFRPoli
 
 void visualizeThreeCardStrategy(const StrategyOptions& options){
     ThreeCardGameTree tree;
-    NaiveThreeCardBucket bucket;
+    EHSThreeCardBucket bucket;
+    bucket.init("./bucket_data");
     tree.setBucket(&bucket);
     tree.init();
     srand(NULL);
@@ -467,8 +468,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("./final_model/player.bin");
-    trainer.players[1].loadPolicy("./final_model/player.bin");
+    trainer.players[0].loadPolicy("./final_model/player-30-min.bin");
+    trainer.players[1].loadPolicy("./final_model/player-30-min.bin");
 
     cout << fixed << setprecision(4);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
