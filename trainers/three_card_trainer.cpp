@@ -23,8 +23,8 @@ struct TrainConfig {
 int main() {
     TrainConfig config;
     config.seed = 42138757;
-    config.player0_policy = "./final_model/player-5-hr.bin";
-    config.player1_policy = "./final_model/player-5-hr.bin";
+    config.player0_policy = "./final_model/plyer-5-hr.bin";
+    config.player1_policy = "./final_model/plyer-5-hr.bin";
     config.output_dir = "./three_card_models";
     config.iterations = 10'000'000;
 
