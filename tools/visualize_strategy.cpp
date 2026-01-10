@@ -480,7 +480,7 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     node_id_counter = 0;
     ThreeCardGameState root = ThreeCardGameState();
     // visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
-    visualizeStrategyHighProbability(&root, &tree, trainer.players, "", 0, 1.0f, false);
+    visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
 }
 
 int main(int argc, char* argv[]){

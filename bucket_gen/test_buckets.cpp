@@ -214,9 +214,8 @@ int main(){
     readTable(dir + "/six.bin", 3);
     printSpecificEquities();
     uint64_t board = 10018;
-    uint64_t hand = 0;
     int str = eval.evaluate(getHand(board));
-    cout <<  bucket[3][0][map_to[encodeBoard(getHand(board), 0)] + 1] << endl;
+    cout <<  bucket[3][5*5][map_to[encodeBoard(getHand(board), 0)] + 1] << endl;
     
     return 0;
 }

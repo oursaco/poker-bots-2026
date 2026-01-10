@@ -8,7 +8,7 @@
 
 struct ThreeCardPlayer : Player {
 
-    NaiveThreeCardBucket bucket;
+    EHSThreeCardBucket bucket;
     ThreeCardGameTree tree;
     ThreeCardGameState state;
     DCFRPolicy policy;
@@ -31,6 +31,7 @@ struct ThreeCardPlayer : Player {
     bool fold_until_win;
 
     void init(string policy_path){
+        bucket.init("./bucket_data");
         tree.setBucket(&bucket);
         tree.init();
         for(int i = 1; i < tree.nodeCount(); i++){
