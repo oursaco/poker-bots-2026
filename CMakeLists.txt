@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math)
+add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -fopenmp)
 add_link_options(-Wl,--stack,2147483648)
 
 if(MSVC)
@@ -48,7 +48,7 @@ add_executable(visualize_tree tools/visualize_tree.cpp)
 target_link_libraries(visualize_tree PRIVATE pokerbots_headers)
 
 add_executable(visualize_utility tools/visualize_utility.cpp)
-target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp)
+target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
 add_executable(visualize_strategy tools/visualize_strategy.cpp)
 target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
