@@ -203,6 +203,11 @@ struct KhunPokerGameTree : GameTree {
         vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions = root.generateActions();
         assert(actions.size() == 1);
         generateTree(dynamic_cast<KhunPokerGameState*>(actions.front().first.get()));
+        for(int i = 0; i < children.size(); i++){
+            for(int j = 0; j < 3; j++){
+                moves_per_info_set[moves_per_info_set_index++] = children[i].size();
+            }
+        }
     }
 
     // prepares the game tree for an iteration of training

@@ -383,7 +383,7 @@ void visualizeStrategyHighProbability(GameState* state, GameTree* tree, DCFRPoli
         }
 
         if (!skip){
-            cout << prefix << (is_last ? "\\-- " : "|-- ") << action->toString() << " | prob: " << prob;
+            cout << prefix << (is_last ? "\\-- " : "|-- ") << action->toString() << " | prob: " << prob << " | info_set: " << tree->getInfoSet(node_id);
             if(is_terminal){
                 cout << " [terminal, winner: " << next_state->getWinner() << "]";
             }
@@ -468,8 +468,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("./final_model/player-30-min.bin");
-    trainer.players[1].loadPolicy("./final_model/player-30-min.bin");
+    trainer.players[0].loadPolicy("./final_model/player-10-hr.bin");
+    trainer.players[1].loadPolicy("./final_model/player-10-hr.bin");
 
     cout << fixed << setprecision(4);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};

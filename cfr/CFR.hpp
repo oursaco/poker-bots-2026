@@ -221,7 +221,7 @@ struct MultiDCFRTrainer : CFRTrainer {
             reach_probability[i << 1] *= reach_probability[parent << 1];
             reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
             if((par_player ^ swap_players) == target_player){
-                float utility_dif = (target_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
+                float utility_dif = (par_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
                 players[par_player ^ swap_players].updateRegret(info, move, utility_dif, alpha, beta);
             } else {
                 float prob_dif = reach_probability[i << 1 | par_player];
@@ -329,7 +329,7 @@ struct DCFRTrainer : CFRTrainer {
             reach_probability[i << 1] *= reach_probability[parent << 1];
             reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
             if((par_player ^ swap_players) == target_player){
-                float utility_dif = (target_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
+                float utility_dif = (par_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
                 players[par_player ^ swap_players].updateRegret(info, move, utility_dif, alpha, beta);
             } else {
                 float prob_dif = reach_probability[i << 1 | par_player];
