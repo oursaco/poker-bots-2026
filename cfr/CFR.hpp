@@ -253,6 +253,7 @@ struct MultiDCFRTrainer : CFRTrainer {
         if(player0_dir.size() > 0) players[0].loadPolicy(player0_dir);
         if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
         buildRanges();
+	omp_set_num_threads(8);
         cout << "available processors: " << omp_get_num_procs() << endl;
         cout << "available threads: " << omp_get_max_threads() << endl;
         cout << "number of threads: " << omp_get_num_threads() << endl;
