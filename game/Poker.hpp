@@ -268,7 +268,8 @@ struct PokerGameTree : GameTree {
     vector<int> winner;
     vector<int> new_card_states;
     vector<int> children;
-    vector<int> moves_per_info_set;
+    array<int, POLICY_SZ> moves_per_info_set;
+    int moves_per_info_set_index = 0;
     vector<int> preflop;
     vector<omp::Hand> board;
     vector<uint64_t> used_mask;
@@ -333,7 +334,7 @@ struct PokerGameTree : GameTree {
         }
         for(int j = 0; j < ((1 << 16))/4096; j++){
             for(int i = 0; i < children.size(); i++){
-                moves_per_info_set.push_back(children[i]);
+                moves_per_info_set[moves_per_info_set_index++] = children[i];
             }
         }
     }
@@ -457,8 +458,15 @@ struct PokerGameTree : GameTree {
         }
     }
 
-    vector<int> getMovesPerInfoSet(){
-        return moves_per_info_set;
+    void fillMovesPerInfoSet(array<int, POLICY_SZ> &moves_per_info_set_){
+        for(int i = 0; i < moves_per_info_set_index; i++){
+            moves_per_info_set_[i] = moves_per_info_set[i];
+        }
+    }
+
+    // returns the number of info sets
+    int infoSetCount(){
+        return moves_per_info_set_index;
     }
 
     // returns the number of nodes

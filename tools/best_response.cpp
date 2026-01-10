@@ -17,12 +17,12 @@ struct BestResponseEvaluator {
     GameTree* tree = nullptr;
     vector<vector<int>> children;
     vector<int> postorder;
-    vector<int> moves_per_info;
+    array<int, POLICY_SZ> moves_per_info_set;
 
     void setTree(GameTree* tree_){
         tree = tree_;
         buildIndex();
-        moves_per_info = tree->getMovesPerInfoSet();
+        tree->fillMovesPerInfoSet(moves_per_info_set);
     }
 
     // Monte Carlo best response: samples chance nodes instead of exact chance evaluation.
@@ -37,7 +37,7 @@ struct BestResponseEvaluator {
         const int br_player = opponent_player ^ 1;
     
         const int num_nodes = tree->nodeCount();
-        const int info_set_count = (int)moves_per_info.size();
+        const int info_set_count = tree->infoSetCount();
         // for(int i=0; i<moves_per_info.size(); i++)
         //     cout << moves_per_info[i] << " ";
         // cout << endl;
@@ -67,7 +67,7 @@ struct BestResponseEvaluator {
         // Initialize BR policy (per infoset): -1 = unseen/unused; default to 0 when needed.
         vector<int> best_action(info_set_count, -1);
         for(int I = 0; I < info_set_count; ++I){
-            if(moves_per_info[I] > 0) best_action[I] = 0;
+            if(moves_per_info_set[I] > 0) best_action[I] = 0;
         }
     
         auto better = [&](double a, double b){
@@ -83,7 +83,7 @@ struct BestResponseEvaluator {
         for(int iter = 0; iter < max_iters; ++iter){
             vector<vector<double>> Q(info_set_count);
             for(int I = 0; I < info_set_count; ++I){
-                Q[I].assign(moves_per_info[I], 0.0);
+                Q[I].assign(moves_per_info_set[I], 0.0);
             }
     
             // Collect Q over samples
@@ -190,7 +190,7 @@ struct BestResponseEvaluator {
             // Improve policy
             bool changed = false;
             for(int I = 0; I < info_set_count; ++I){
-                int A = moves_per_info[I];
+                int A = moves_per_info_set[I];
                 if(A <= 0) continue;
     
                 int best_a = 0;

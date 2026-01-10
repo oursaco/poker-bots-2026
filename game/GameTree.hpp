@@ -28,7 +28,8 @@ struct GameTree {
     virtual void updateUtility(array<float, TRAINER_SZ> &utility) = 0; // updates the leaf utility values
     virtual void init() = 0; // initializes the game tree
     virtual void prepare(int seed) = 0; // prepares the game tree for an iteration of training
-    virtual vector<int> getMovesPerInfoSet() = 0; // returns the number of moves per info set
+    virtual void fillMovesPerInfoSet(array<int, POLICY_SZ> &moves_per_info_set_) = 0; // returns the number of moves per info set
+    virtual int infoSetCount() = 0; // returns the number of info sets
     virtual int nodeCount() = 0; // returns the number of nodes
     virtual int getParentId(int node_id) = 0; // returns parent node id
     virtual int getMove(int node_id) = 0; // returns the move used to reach node

@@ -1,6 +1,7 @@
 #include "game/GameTree.hpp"
 #include "game/ThreeCard.hpp"
 #include "game/ThreeCardState.hpp"
+#include "game/ThreeCardBucket.hpp"
 #include <cstddef>
 #include <iostream>
 #include <string>
@@ -119,9 +120,12 @@ void visualizeInfoSetsDepthLimited(GameState* state, GameTree* tree, const strin
     }
 }
 
+static EHSThreeCardBucket bucket;
+
 void visualizeThreeCardInfoSets(){
     ThreeCardGameTree tree;
-    SingleBucketThreeCard bucket;
+    // SingleBucketThreeCard bucket;
+    bucket.init("./bucket_data");
     tree.setBucket(&bucket);
     tree.init();
     tree.prepare(42);

@@ -465,8 +465,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     tree.prepare(rand());
     DCFRTrainer trainer;
     trainer.setTree(&tree);
-    trainer.players[0].initPolicy(tree.getMovesPerInfoSet());
-    trainer.players[1].initPolicy(tree.getMovesPerInfoSet());
+    trainer.players[0].initPolicy(&tree);
+    trainer.players[1].initPolicy(&tree);
     trainer.players[0].loadPolicy("./final_model/player.bin");
     trainer.players[1].loadPolicy("./final_model/player.bin");
 

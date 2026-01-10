@@ -405,6 +405,7 @@ int main(){
     generatePreflop();
     string dir = "./bucket_data";
     writePreflop(dir + "/preflop.bin");
+    return 0;
     int iterations = 100000000;
     for(int a = 0; a < 13; a++){
         for(int b = 0; b < 13; b++){

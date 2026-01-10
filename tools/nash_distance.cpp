@@ -112,8 +112,8 @@ int main(int argc, char** argv) {
 
     auto player0 = std::make_unique<DCFRPolicy>();
     auto player1 = std::make_unique<DCFRPolicy>();
-    player0->initPolicy(tree->getMovesPerInfoSet());
-    player1->initPolicy(tree->getMovesPerInfoSet());
+    player0->initPolicy(tree.get());
+    player1->initPolicy(tree.get());
     player0->loadPolicy(config.player0_policy);
     player1->loadPolicy(config.player1_policy);
 

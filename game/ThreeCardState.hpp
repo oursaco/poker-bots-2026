@@ -197,8 +197,8 @@ struct ThreeCardGameState : GameState {
             vector<int> raise_sizes;
             if(bb_bet > sb_bet){
                 raise_sizes = {pot_raise_size()};
-            } else if(street == 4){
-                raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};
+            } else {
+                raise_sizes = {half_pot_raise_size(), double_pot_raise_size()};
             }
             for(int size : raise_sizes){
                 if(valid_sb_raise(size) && action_depth < 4){

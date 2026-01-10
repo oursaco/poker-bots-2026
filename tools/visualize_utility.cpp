@@ -406,8 +406,8 @@ void visualizeThreeCardUtility(const UtilityOptions& options){
     tree.prepare(42);
     DCFRTrainer trainer;
     trainer.setTree(&tree);
-    trainer.players[0].initPolicy(tree.getMovesPerInfoSet());
-    trainer.players[1].initPolicy(tree.getMovesPerInfoSet());
+    trainer.players[0].initPolicy(&tree);
+    trainer.players[1].initPolicy(&tree);
     trainer.updateUtility();
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
     cout << "sb hole: " << maskToString(hole_cards.sb_hand) << "\n";

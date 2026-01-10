@@ -37,17 +37,19 @@ struct DCFRPolicy : CFRPolicy {
     array<float, POLICY_SZ> regret_sum;
     array<int, POLICY_SZ> info_set_utils;
     array<float, POLICY_SZ> strategy_sum;
+    array<int, POLICY_SZ> moves_per_info_set;
     int info_set_count;
     int state_count;
     int log_state_count; // ceil log2 of state_count
     int state_mask; // mask of states (2^log_state_count - 1)
 
-    void initPolicy(vector<int> moves_per_info){
+    void initPolicy(GameTree* tree){
         state_count = 0;
-        info_set_count = moves_per_info.size();
+        info_set_count = tree->infoSetCount();
+        tree->fillMovesPerInfoSet(moves_per_info_set);
         for(int i = 0; i < info_set_count; i++){
             info_set_utils[i] = state_count;
-            for(int j = 0; j < moves_per_info[i]; j++){
+            for(int j = 0; j < moves_per_info_set[i]; j++){
                 regret_sum[state_count] = 0.0f;
                 strategy_sum[state_count] = 0.0f;
                 state_count++;
@@ -58,8 +60,8 @@ struct DCFRPolicy : CFRPolicy {
             log_state_count++;
         }
         state_mask = (1 << log_state_count) - 1;
-        for(int i = 0; i < moves_per_info.size(); i++){
-            info_set_utils[i] += moves_per_info[i] << log_state_count;
+        for(int i = 0; i < info_set_count; i++){
+            info_set_utils[i] += moves_per_info_set[i] << log_state_count;
         }
     }
 
@@ -188,8 +190,8 @@ struct DCFRTrainer : CFRTrainer {
         auto start_time = chrono::high_resolution_clock::now();
         auto last_log_time = start_time;
         auto last_checkpoint_time = start_time;
-        players[0].initPolicy(tree->getMovesPerInfoSet());
-        players[1].initPolicy(tree->getMovesPerInfoSet());
+        players[0].initPolicy(tree);
+        players[1].initPolicy(tree);
         if(player0_dir.size() > 0) players[0].loadPolicy(player0_dir);
         if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
         float alpha = 1.5f;

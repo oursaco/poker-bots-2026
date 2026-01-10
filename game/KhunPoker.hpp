@@ -172,6 +172,8 @@ struct KhunPokerGameTree : GameTree {
     vector<int> leaves;
     vector<int> winner;
     vector<int> pot;
+    array<int, POLICY_SZ> moves_per_info_set;
+    int moves_per_info_set_index = 0;
 
     int generateTree(KhunPokerGameState* root, int par = -1, int par_move = -1){
         int node_id = children.size();
@@ -225,14 +227,15 @@ struct KhunPokerGameTree : GameTree {
         }
     }
 
-    vector<int> getMovesPerInfoSet(){
-        vector<int> ret;
-        for(int i = 0; i < children.size(); i++){
-            for(int j = 0; j < 3; j++){
-                ret.push_back(children[i].size());
-            }
+    void fillMovesPerInfoSet(array<int, POLICY_SZ> &moves_per_info_set_){
+        for(int i = 0; i < moves_per_info_set_index; i++){
+            moves_per_info_set_[i] = moves_per_info_set[i];
         }
-        return ret;
+    }
+
+    // returns the number of info sets
+    int infoSetCount(){
+        return moves_per_info_set_index;
     }
 
     // returns the number of nodes

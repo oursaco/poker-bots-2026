@@ -38,7 +38,7 @@ struct ThreeCardPlayer : Player {
             children[tree.getParentId(i)].push_back(i);
         }
         state = ThreeCardGameState();
-        policy.initPolicy(tree.getMovesPerInfoSet());
+        policy.initPolicy(&tree);
         policy.loadPolicy(policy_path);
         call_next = false;
         all_in_next = false;

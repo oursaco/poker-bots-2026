@@ -60,7 +60,8 @@ struct ThreeCardGameTree : GameTree {
     array<uint64_t, TREE_SZ> board;
     array<uint64_t, TREE_SZ> used_mask;
 
-    vector<int> moves_per_info_set;
+    array<int, POLICY_SZ> moves_per_info_set;
+    int moves_per_info_set_index = 0;
     vector<Leaf> leaves;
     // first is node id, second is previous new card node id 
     vector<pair<int, int>> deal_flop;
@@ -195,7 +196,7 @@ struct ThreeCardGameTree : GameTree {
         for(int i = 0; i < unique_indices; i++){
             info_set_map[i] = st;
             for(int j = 0; j < info_set_buckets[i]; j++){
-                moves_per_info_set.push_back(info_set_children[i]);
+                moves_per_info_set[moves_per_info_set_index++] = info_set_children[i];
                 strategy_sz += info_set_children[i];
             }
             st += info_set_buckets[i];
@@ -322,7 +323,6 @@ struct ThreeCardGameTree : GameTree {
             assert(prv_new_card == 0);
             assert(__builtin_popcountll(board[node_id]) == 2);
             int bb_bucket = bucket->getBBDiscardBucket(board[node_id], bb_hand);
-            if(bb_bucket > buckets[node_id]) cout << "bb_bucket: " << bb_bucket << " buckets[node_id]: " << buckets[node_id] << endl;
             assert(bb_bucket < buckets[node_id]);
             nodes[node_id].info_set = info_set_map[nodes[node_id].info_set_index] + bb_bucket;
             int l = node_id, r = node_id + nodes[node_id].size;
@@ -436,8 +436,14 @@ struct ThreeCardGameTree : GameTree {
         }
     }
 
-    vector<int> getMovesPerInfoSet(){
-        return moves_per_info_set;
+    void fillMovesPerInfoSet(array<int, POLICY_SZ> &moves_per_info_set_){
+        for(int i = 0; i < moves_per_info_set_index; i++){
+            moves_per_info_set_[i] = moves_per_info_set[i];
+        }
+    }
+
+    int infoSetCount(){
+        return moves_per_info_set_index;
     }
 
     // returns the number of nodes
