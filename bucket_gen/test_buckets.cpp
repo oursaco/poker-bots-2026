@@ -72,6 +72,23 @@ int encodeBoard(Hand board, int suited){
     return str*16 + shared_suits*4 + non_shared_suits;
 }
 
+void updateCard(uint64_t &mask, unsigned &suit, unsigned &id){
+    unsigned card = __builtin_ctzll(mask);
+    mask ^= 1ull << card;
+    suit = card%4;
+    id = card/4;
+}
+
+omp::Hand getHand(uint64_t mask){
+    omp::Hand combined = omp::Hand::empty();
+    while(mask){
+        unsigned suit, id;
+        updateCard(mask, suit, id);
+        combined += omp::Hand(4*id + suit);
+    }
+    return combined;
+}
+
 void printSpecificEquities() {
     // Hand strengths for reference (from HandEvaluator):
     // 1=high card, 2=pair, 3=two pair, 4=trips, 5=straight, 6=flush, 7=full house, 8=quads, 9=straight flush
@@ -196,7 +213,10 @@ int main(){
     readTable(dir + "/five.bin", 2);
     readTable(dir + "/six.bin", 3);
     printSpecificEquities();
-    
+    uint64_t board = 10018;
+    uint64_t hand = 0;
+    int str = eval.evaluate(getHand(board));
+    cout <<  bucket[3][0][map_to[encodeBoard(getHand(board), 0)] + 1] << endl;
     
     return 0;
 }

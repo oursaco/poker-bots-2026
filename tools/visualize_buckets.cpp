@@ -249,7 +249,7 @@ int main(int argc, char* argv[]){
         return 0;
     }
     EHSThreeCardBucket bucket;
-    bucket.readPreflop("./bucket_data/preflop.bin");
+    bucket.init("./bucket_data");
     int bucket_id = bucket.getPreflopBucket(options.hand);
     cout << "hand: " << maskToString(options.hand) << "\n";
     cout << "preflop bucket: " << bucket_id << "\n";
