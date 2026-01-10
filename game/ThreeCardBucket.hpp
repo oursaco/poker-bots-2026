@@ -498,7 +498,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         int board_encoded = encodeBoard(getHand(board), suits[0] == suits[1], suits[1]);
         int hole_id = getHoleId(cards[0], cards[1], suits[0], suits[1]);
         float e = eq[ind][hole_id][map_to[board_encoded] + 1];
-        if(eq <= 0){
+        if(e <= 0.0f){
             cout << "Missing equity for: " << board << " hand: " << hand << " ind: " << ind << endl;
             return 0.0f;
         }
