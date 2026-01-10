@@ -304,7 +304,6 @@ struct MultiDCFRTrainer : CFRTrainer {
 // NOTE: This project uses `tools/best_response.cpp` as a header-style include (see tools/nash_distance.cpp).
 // We include it here (after DCFRPolicy is defined) so the trainer can run BR evaluations at checkpoints.
 #include "tools/best_response.cpp"
-
 struct DCFRTrainer : CFRTrainer {
     DCFRPolicy players[2];
     GameTree* tree;
@@ -367,7 +366,7 @@ struct DCFRTrainer : CFRTrainer {
         // Run best-response evaluation in parallel with training using a cloned tree,
         // so we don't mutate the training tree from a background thread.
         unique_ptr<GameTree> br_tree = tree->clone();
-        std::future<void> br_future;
+        future<void> br_future;
         bool br_in_flight = false;
         static std::mutex br_cout_mutex;
 
