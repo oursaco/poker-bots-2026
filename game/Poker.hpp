@@ -276,6 +276,13 @@ struct PokerGameTree : GameTree {
     vector<int> parent_board;
     omp::HandEvaluator hand_eval;
 
+    unique_ptr<GameTree> clone() const override {
+        // Avoid copying any indeterminate runtime state; rebuild deterministically.
+        auto t = make_unique<PokerGameTree>();
+        t->init();
+        return t;
+    }
+
     int generateTree(PokerGameState* root, int par = -1, int par_move = -1, int prv_new_card = -1, int new_cards = 0){
         if(root->turn == -1){
             vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions = root->generateActions();

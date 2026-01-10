@@ -1,3 +1,6 @@
+#ifndef BEST_RESPONSE_HPP
+#define BEST_RESPONSE_HPP
+
 #include <array>
 #include <cassert>
 #include <limits>
@@ -9,8 +12,8 @@
 using namespace std;
 
 struct BestResponseResult {
-    float value = 0.0f;          // value from the best-response player's perspective
-    vector<int> best_action;     // best_action[info_set] = action index, or -1 if never reached
+    float value = 0.0f; // value from the best-response player's perspective
+    vector<int> best_action; // best_action[info_set] = action index, or -1 if never reached
 };
 
 struct BestResponseEvaluator {
@@ -38,12 +41,10 @@ struct BestResponseEvaluator {
     
         const int num_nodes = tree->nodeCount();
         const int info_set_count = tree->infoSetCount();
-        // for(int i=0; i<moves_per_info.size(); i++)
-        //     cout << moves_per_info[i] << " ";
-        // cout << endl;
     
         // Build a forward order (root -> leaves) once, for reach-prob propagation.
         // (postorder already exists for bottom-up DP)
+        
         vector<int> forward_order;
         forward_order.reserve(num_nodes);
         {
@@ -63,6 +64,7 @@ struct BestResponseEvaluator {
             }
             assert((int)forward_order.size() == num_nodes && "Tree not fully reachable from root.");
         }
+
     
         // Initialize BR policy (per infoset): -1 = unseen/unused; default to 0 when needed.
         vector<int> best_action(info_set_count, -1);
@@ -75,6 +77,7 @@ struct BestResponseEvaluator {
             // BR player chooses max if br_player==0 else min (zero-sum).
             return (br_player == 0) ? (a > b) : (a < b);
         };
+
     
         omp::XoroShiro128Plus rng(seed);
     
@@ -89,17 +92,9 @@ struct BestResponseEvaluator {
             // Collect Q over samples
             rng = omp::XoroShiro128Plus(seed); // reset for determinism / variance reduction
             for(int sample = 0; sample < num_samples; ++sample){
+                // cout << "Iter " << sample << endl;
                 const int sample_seed = (int)rng();
                 tree->prepare(sample_seed);
-    
-                // Sample chance outcomes for this scenario.
-                vector<int> chance_child(num_nodes, -1);
-                omp::XoroShiro128Plus chance_rng(sample_seed);
-                for(int node = 0; node < num_nodes; ++node){
-                    if(tree->getTurn(node) == -1 && !children[node].empty()){
-                        chance_child[node] = (int)(chance_rng() % children[node].size());
-                    }
-                }
     
                 array<float, TRAINER_SZ> utility;
                 fill(utility.begin(), utility.end(), 0.0f);
@@ -114,13 +109,7 @@ struct BestResponseEvaluator {
                     if(children[node].empty()) continue;
     
                     int turn = tree->getTurn(node);
-                    if(turn == -1){
-                        int k = chance_child[node];
-                        if(k >= 0){
-                            int c = children[node][k];
-                            w[c] += w[node];
-                        }
-                    } else if(turn == opponent_player){
+                    if(turn == opponent_player){
                         int I = tree->getInfoSet(node);
                         assert(I >= 0 && I < info_set_count);
                         for(int c : children[node]){
@@ -146,18 +135,20 @@ struct BestResponseEvaluator {
                         continue;
                     }
                     int turn = tree->getTurn(node);
-                    if(turn == -1){
-                        int k = chance_child[node];
-                        V[node] = (k >= 0) ? V[children[node][k]] : 0.0;
-                        continue;
-                    }
                     if(turn == br_player){
                         int I = tree->getInfoSet(node);
                         assert(I >= 0 && I < info_set_count);
-                        int a = best_action[I];
-                        if(a < 0) a = 0;
-                        assert(a >= 0 && a < (int)children[node].size());
-                        V[node] = V[children[node][a]];
+                        // int a = best_action[I];
+                        // if(a < 0) a = 0;
+                        // assert(a >= 0 && a < (int)children[node].size());
+                        // V[node] = V[children[node][a]];
+                        int chosen_move = best_action[I]; // move id in [0, moves_per_info[I])
+                        int chosen_child = -1;
+                        for (int c : children[node]) {
+                            if (tree->getMove(c) == chosen_move) { chosen_child = c; break; }
+                        }
+                        assert(chosen_child != -1);
+                        V[node] = V[chosen_child];
                         continue;
                     }
                     // opponent node
@@ -180,9 +171,13 @@ struct BestResponseEvaluator {
     
                     int I = tree->getInfoSet(node);
                     assert(I >= 0 && I < info_set_count);
-                    int A = (int)children[node].size();
-                    for(int a = 0; a < A; ++a){
-                        Q[I][a] += wn * V[children[node][a]];
+                    // int A = (int)children[node].size();
+                    // for(int a = 0; a < A; ++a){
+                    //     Q[I][a] += wn * V[children[node][a]];
+                    // }
+                    for (int c : children[node]) {
+                        int move = tree->getMove(c);
+                        Q[I][move] += wn * V[c];
                     }
                 }
             }
@@ -216,14 +211,6 @@ struct BestResponseEvaluator {
             int sample_seed = (int)rng();
             tree->prepare(sample_seed);
     
-            vector<int> chance_child(num_nodes, -1);
-            omp::XoroShiro128Plus chance_rng(sample_seed);
-            for(int node = 0; node < num_nodes; ++node){
-                if(tree->getTurn(node) == -1 && !children[node].empty()){
-                    chance_child[node] = (int)(chance_rng() % children[node].size());
-                }
-            }
-    
             array<float, TRAINER_SZ> utility;
             fill(utility.begin(), utility.end(), 0.0f);
             tree->updateUtility(utility);
@@ -235,16 +222,18 @@ struct BestResponseEvaluator {
                     continue;
                 }
                 int turn = tree->getTurn(node);
-                if(turn == -1){
-                    int k = chance_child[node];
-                    V[node] = (k >= 0) ? V[children[node][k]] : 0.0;
-                    continue;
-                }
                 if(turn == br_player){
                     int I = tree->getInfoSet(node);
-                    int a = best_action[I];
-                    if(a < 0) a = 0;
-                    V[node] = V[children[node][a]];
+                    // int a = best_action[I];
+                    // if(a < 0) a = 0;
+                    // V[node] = V[children[node][a]];
+                    int chosen_move = best_action[I]; // move id in [0, moves_per_info[I])
+                    int chosen_child = -1;
+                    for (int c : children[node]) {
+                        if (tree->getMove(c) == chosen_move) { chosen_child = c; break; }
+                    }
+                    assert(chosen_child != -1);
+                    V[node] = V[chosen_child];
                     continue;
                 }
                 int I = tree->getInfoSet(node);
@@ -294,3 +283,5 @@ struct BestResponseEvaluator {
         }
     }
 };
+
+#endif // BEST_RESPONSE_HPP

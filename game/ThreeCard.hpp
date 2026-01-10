@@ -220,6 +220,24 @@ struct ThreeCardGameTree : GameTree {
     uint64_t fixed_turn = 0;
     uint64_t fixed_river = 0;
 
+    unique_ptr<GameTree> clone() const override {
+        // Rebuild deterministically (avoid copying large arrays / transient runtime state).
+        auto t = make_unique<ThreeCardGameTree>();
+        t->setBucket(bucket);
+        t->use_fixed_sb_hand = use_fixed_sb_hand;
+        t->use_fixed_bb_hand = use_fixed_bb_hand;
+        t->use_fixed_flop = use_fixed_flop;
+        t->use_fixed_turn = use_fixed_turn;
+        t->use_fixed_river = use_fixed_river;
+        t->fixed_sb_hand = fixed_sb_hand;
+        t->fixed_bb_hand = fixed_bb_hand;
+        t->fixed_flop = fixed_flop;
+        t->fixed_turn = fixed_turn;
+        t->fixed_river = fixed_river;
+        t->init();
+        return t;
+    }
+
     int generateTree(ThreeCardGameState* root, int& sb_info_set_index, int& bb_info_set_index, int prv_new_card, bool new_cards){
         if(root->turn == -1){
             vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions = root->generateActions();

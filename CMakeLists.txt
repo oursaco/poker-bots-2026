@@ -8,7 +8,7 @@ if(NOT DEFINED CMAKE_C_COMPILER AND NOT DEFINED CMAKE_CXX_COMPILER)
     set(CMAKE_CXX_COMPILER g++)
 endif()
 
-find_package(OpenMP REQUIRED)
+find_package(OpenMP)
 
 project(pokerbots_2026 LANGUAGES CXX)
 
@@ -16,8 +16,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -fopenmp)
-add_link_options(-Wl,--stack,2147483648)
+add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math)
+# Increase stack size on Windows (MSVC) only.
+# The GNU ld flag `--stack` is not supported by the macOS linker.
+if(MSVC)
+    add_link_options(/STACK:2147483648)
+endif()
 
 if(MSVC)
     add_compile_options(/W0)
@@ -48,7 +52,10 @@ add_executable(visualize_tree tools/visualize_tree.cpp)
 target_link_libraries(visualize_tree PRIVATE pokerbots_headers)
 
 add_executable(visualize_utility tools/visualize_utility.cpp)
-target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(visualize_utility PRIVATE OpenMP::OpenMP_CXX)
+endif()
 
 add_executable(visualize_strategy tools/visualize_strategy.cpp)
 target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
@@ -72,7 +79,10 @@ add_executable(poker_trainer trainers/poker_trainer.cpp)
 target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp)
 
 add_executable(three_card_trainer trainers/three_card_trainer.cpp)
-target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(three_card_trainer PRIVATE OpenMP::OpenMP_CXX)
+endif()
 
 add_executable(nash_distance tools/nash_distance.cpp)
 target_link_libraries(nash_distance PRIVATE pokerbots_headers omp)

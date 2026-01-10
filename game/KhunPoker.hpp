@@ -175,6 +175,13 @@ struct KhunPokerGameTree : GameTree {
     array<int, POLICY_SZ> moves_per_info_set;
     int moves_per_info_set_index = 0;
 
+    unique_ptr<GameTree> clone() const override {
+        // Avoid copying uninitialized runtime state (e.g., current dealt cards).
+        auto t = make_unique<KhunPokerGameTree>();
+        t->init();
+        return t;
+    }
+
     int generateTree(KhunPokerGameState* root, int par = -1, int par_move = -1){
         int node_id = children.size();
         parent.push_back(par);
