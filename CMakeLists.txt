@@ -8,7 +8,7 @@ if(NOT DEFINED CMAKE_C_COMPILER AND NOT DEFINED CMAKE_CXX_COMPILER)
     set(CMAKE_CXX_COMPILER g++)
 endif()
 
-find_package(OpenMP)
+find_package(OpenMP REQUIRED)
 
 project(pokerbots_2026 LANGUAGES CXX)
 
@@ -52,10 +52,7 @@ add_executable(visualize_tree tools/visualize_tree.cpp)
 target_link_libraries(visualize_tree PRIVATE pokerbots_headers)
 
 add_executable(visualize_utility tools/visualize_utility.cpp)
-target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(visualize_utility PRIVATE OpenMP::OpenMP_CXX)
-endif()
+target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
 add_executable(visualize_strategy tools/visualize_strategy.cpp)
 target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
@@ -79,10 +76,7 @@ add_executable(poker_trainer trainers/poker_trainer.cpp)
 target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp)
 
 add_executable(three_card_trainer trainers/three_card_trainer.cpp)
-target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(three_card_trainer PRIVATE OpenMP::OpenMP_CXX)
-endif()
+target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
 add_executable(nash_distance tools/nash_distance.cpp)
 target_link_libraries(nash_distance PRIVATE pokerbots_headers omp)
