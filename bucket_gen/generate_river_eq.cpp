@@ -199,6 +199,8 @@ int main(){
     saveEncodingMap("./emd_bucket_data/encoding_map.bin");
     #pragma omp parallel for
     for(int t = 0; t < 169; t++){
+        int st = 0;
+        int tot = cards[t].size() * 50;
         for(pair<int, int> p : cards[t]){
             int i = p.first;
             int j = p.second;
@@ -209,7 +211,7 @@ int main(){
                     auto start = chrono::high_resolution_clock::now();
                     solve(i, j, k, l);
                 }
-                cout << "Finished processing " << i << " " << j << " " << k << endl;
+                cout << "Finished " << st << " / " << tot << endl;
             }
         }
     }
