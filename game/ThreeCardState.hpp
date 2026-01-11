@@ -214,7 +214,7 @@ struct ThreeCardGameState : GameState {
             }
             actions.push_back(bb_call());
             vector<int> raise_sizes;
-            if(sb_bet > bb_bet){
+            if(sb_bet > bb_bet || (street == 0 && sb_bet == 2)){
                 raise_sizes = {pot_raise_size()};
             } else {
                 raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};

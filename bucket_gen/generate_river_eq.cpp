@@ -32,15 +32,16 @@ int encodeBoard(Hand board, int s1, int s2){
     if(s1 == s2){
         // no shared suits, we check if there are 2 suits with 3 cards each
         if(board.suitCount(s1) == 0){
-            int mx_suit = max({board.suitCount(0), board.suitCount(1), board.suitCount(2), board.suitCount(3)});
-            int mn_suit = min({board.suitCount((s1 + 1) % 4), board.suitCount((s1 + 2) % 4), board.suitCount((s1 + 3) % 4)});
-            if(mx_suit == 3 && mn_suit == 3){
+            int cnt = 0;
+            for(int i = 0; i < 4; i++) if(i != s1) cnt += board.suitCount(i) == 3;
+            if(cnt == 2){
                 suited_state = 0;
                 assert(suited_state >= 0 && suited_state <= 0);
                 // suited state is 0
             } else { // only need to check max suit because there can only be one flush draw
                 // 0 ... 6
                 // we dont care about 0, 1, or 2
+                int mx_suit = max({board.suitCount(0), board.suitCount(1), board.suitCount(2), board.suitCount(3)});
                 mx_suit = min(4, max(0, mx_suit - 2));
                 suited_state = 1 + mx_suit;
                 assert(suited_state >= 1 && suited_state <= 5);
@@ -62,14 +63,14 @@ int encodeBoard(Hand board, int s1, int s2){
         int same2 = board.suitCount(s2);
         // no shared suits, we check if there are 2 suits with 3 cards each
         if(same1 == 0 && same2 == 0){
-            int mx_suit = max({board.suitCount(0), board.suitCount(1), board.suitCount(2), board.suitCount(3)});
-            int mn_suit = 6;
-            for(int i = 0; i < 4; i++) if(i != s1 && i != s2) mn_suit = min(mn_suit, (int)board.suitCount(i));
-            if(mx_suit == 3 && mn_suit == 3){
+            int cnt = 0;
+            for(int i = 0; i < 4; i++) if(i != s1 && i != s2) cnt += board.suitCount(i) == 3;
+            if(cnt == 2){
                 suited_state = 31;
                 assert(suited_state >= 31 && suited_state <= 31);
                 // suited state is 31
             } else { // only need to check max suit because there can only be one flush draw
+                int mx_suit = max({board.suitCount(0), board.suitCount(1), board.suitCount(2), board.suitCount(3)});
                 mx_suit = min(4, max(0, mx_suit - 2));
                 suited_state = 32 + mx_suit;
                 assert(suited_state >= 32 && suited_state <= 36);

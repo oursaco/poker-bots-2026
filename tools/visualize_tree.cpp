@@ -74,7 +74,7 @@ void visualizePokerTree(){
 
 void visualizeThreeCardTree(){
     ThreeCardGameState root = ThreeCardGameState();
-    visualizeTreeDepthLimited(&root, "", 8);
+    visualizeTreeDepthLimited(&root, "", 5);
 }
 
 int main(){

@@ -34,7 +34,7 @@ int main() {
     tree.setBucket(&bucket);
     tree.init();
     tree.prepare(config.seed);
-    MultiDCFRTrainer trainer;
+    DCFRTrainer trainer;
     trainer.setTree(&tree);
     trainer.train(
         config.seed,

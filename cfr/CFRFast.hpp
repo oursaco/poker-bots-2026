@@ -1,5 +1,5 @@
-#ifndef CFR_HPP
-#define CFR_HPP
+#ifndef CFRFAST_HPP
+#define CFRFAST_HPP
 
 #include <array>
 #include <utility>
@@ -15,26 +15,16 @@
 #include <vector>
 #include <cassert>
 #include <omp.h>
+#include <set>
 #include <algorithm>
 #include <unordered_map>
 #include "constants/constants.h"
 #include "game/GameTree.hpp"
 #include "external/omp/Random.h"
+#include "game/ThreeCardInference.hpp"
 using namespace std;
 
-struct CFRPolicy {
-    void loadPolicy(string path);
-    void savePolicy(string path);
-    float getProb(int node_id, int info_set) const; // returns probability of moving to state from the parent of state given info_set
-};
-
-struct CFRTrainer {
-    void updateUtility();
-    void updateRegrets();
-    void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir);
-};
-
-struct DCFRPolicy : CFRPolicy {
+struct FastPolicy {
 
     // regret of moving to node i from the parent of i
     // each index is encoded as move_count*info_set_count + info_set
@@ -47,7 +37,7 @@ struct DCFRPolicy : CFRPolicy {
     int log_state_count; // ceil log2 of state_count
     int state_mask; // mask of states (2^log_state_count - 1)
 
-    void initPolicy(GameTree* tree){
+    void initPolicy(ThreeCardInferenceTree* tree){
         state_count = 0;
         info_set_count = tree->infoSetCount();
         tree->fillMovesPerInfoSet(moves_per_info_set);
@@ -77,15 +67,8 @@ struct DCFRPolicy : CFRPolicy {
         return info_set_utils[info_set] >> log_state_count;
     }
 
-    void decayRegret(float alpha, float beta){
-        for(int i = 0; i < info_set_count; i++){
-            regret_sum[i] *= (regret_sum[i] > 0.0f ? alpha : beta);
-        }
-    }
-
     // returns probability of moving to node_id from the parent of node_id given info_set
     float getProb(int info_set, int move_id) const{
-        assert(info_set < info_set_count);
         float sum = 0.0;
         int st = getState(info_set, 0);
         int move_count = getMoveCount(info_set);
@@ -95,25 +78,12 @@ struct DCFRPolicy : CFRPolicy {
     }
 
     float getAvgProb(int info_set, int move_id) const{
-        assert(info_set < info_set_count);
         float sum = 0.0f;
         int st = getState(info_set, 0);
         int move_count = getMoveCount(info_set);
         for(unsigned i = st; i < st + move_count; i++) sum += strategy_sum[i];
         if(sum > 0.0f) return strategy_sum[st + move_id]/sum;
         return 1.0f/move_count;
-    }
-
-    void updateRegret(int info_set, int move_id, float dif){
-        int st = getState(info_set, move_id);
-        assert(move_id < getMoveCount(info_set));
-        regret_sum[st] += dif;
-    }
-
-    void updateStrategy(int info_set, int move_id, float prob){
-        int st = getState(info_set, move_id);
-        assert(move_id < getMoveCount(info_set));
-        strategy_sum[st] += prob;
     }
 
     void savePolicy(string path){
@@ -146,41 +116,107 @@ struct DCFRPolicy : CFRPolicy {
     }
 };
 
-#include "nash/best_response.hpp"
 // NOTE: This project uses `tools/best_response.cpp` as a header-style include (see tools/nash_distance.cpp).
 // We include it here (after DCFRPolicy is defined) so the trainer can run BR evaluations at checkpoints.
-struct DCFRTrainer : CFRTrainer {
-    DCFRPolicy players[2];
-    GameTree* tree;
-    array<float, POLICY_SZ> utility;
+struct FastTrainer {
+    FastPolicy players[2];
+    ThreeCardInferenceTree *tree;
+    array<float, TRAINER_SZ> utility;
     array<float, 2*TRAINER_SZ> reach_probability;
+    array<int, TREE_SZ> compressed_children;
+    array<int, TREE_SZ> children_map;
+    array<vector<int>, TREE_SZ> children_list;
+    array<int, TREE_SZ> depth_to_node;
+    vector<pair<int, int>> depth_ranges;
 
-    void setTree(GameTree* tree_){
+    void buildChildren(){
+        int num_nodes = tree->nodeCount();
+        for(int i = 1; i < num_nodes; i++){
+            int parent = tree->getParentId(i);
+            children_list[parent].push_back(i);
+        }
+        int children_index = 0;
+        for(int i = 0; i < num_nodes; i++){
+            children_map[i] = children_index;
+            compressed_children[children_index++] = children_list[i].size();
+            for(int j = 0; j < children_list[i].size(); j++){
+                compressed_children[children_index++] = children_list[i][j];
+            }
+        }
+    }
+
+    void setTree(ThreeCardInferenceTree* tree_){
         tree = tree_;
+        buildChildren();
+        int cur_index = 0;
+        for(int i = 0; i < 100; i++){
+            int l = cur_index;
+            for(int j : tree->nodes_per_depth[i]){
+                depth_to_node[cur_index++] = j;
+            }
+            int r = cur_index - 1;
+            if(l <= r) depth_ranges.emplace_back(l, r);
+        }
+    }
+
+    void updateUtilityRangeFast(int l, int r, int swap_players = 0){
+        #pragma omp parallel for schedule(static)
+        for(int x = r; x >= l; x--){
+            int i = depth_to_node[x];
+            int children_index = children_map[i];
+            for(int j = 0; j < compressed_children[children_index]; j++){
+                int child = compressed_children[children_index + j + 1];
+                int player = tree->getTurn(i);
+                int info = tree->getInfoSet(i);
+                int move = tree->getMove(child);
+                float probability = players[player ^ swap_players].getProb(info, move);
+                utility[i] += probability*utility[child];
+                reach_probability[child << 1 | player] = probability;
+                reach_probability[child << 1 | (player ^ 1)] = 1.0f;
+            }
+        }
+    }
+
+    void updateUtilityRangeSlow(int l, int r, int swap_players = 0){
+        for(int x = r; x >= l; x--){
+            int i = depth_to_node[x];
+            int children_index = children_map[i];
+            for(int j = 0; j < compressed_children[children_index]; j++){
+                int child = compressed_children[children_index + j + 1];
+                int player = tree->getTurn(i);
+                int info = tree->getInfoSet(i);
+                int move = tree->getMove(child);
+                float probability = players[player ^ swap_players].getProb(info, move);
+                utility[i] += probability*utility[child];
+                reach_probability[child << 1 | player] = probability;
+                reach_probability[child << 1 | (player ^ 1)] = 1.0f;
+            }
+        }
     }
 
     void updateUtility(int swap_players = 0){
-        fill(utility.begin(), utility.end(), 0.0f);
-        tree->updateUtility(utility);
         int num_nodes = tree->nodeCount();
-        for(int i = num_nodes - 1; i > 0; i--){
-            int parent = tree->getParentId(i);
-            int par_player = tree->getTurn(parent);
-            int info = tree->getInfoSet(parent);
-            int move = tree->getMove(i);
-            float probability = players[par_player ^ swap_players].getProb(info, move);
-            utility[parent] += probability*utility[i];
-            reach_probability[i << 1 | par_player] = probability;
-            reach_probability[i << 1 | (par_player ^ 1)] = 1.0f;
+        #pragma omp parallel for schedule(static)
+        for(int i = 0; i < num_nodes; i++){
+            utility[i] = 0.0f;
+        }
+        tree->updateUtility(utility);
+        for(int t = depth_ranges.size() - 1; t >= 0; t--){
+            int l = depth_ranges[t].first;
+            int r = depth_ranges[t].second;
+            if(r - l + 1 >= 10000){
+                updateUtilityRangeFast(l, r, swap_players);
+            } else {
+                updateUtilityRangeSlow(l, r, swap_players);
+            }
         }
         reach_probability[0] = reach_probability[1] = 1.0f;
     }
 
-    // Updates target player regrets
-    // Updates other player's strategies
-    void updatePlayer(int target_player, int swap_players, float alpha, float beta, float gamma){
-        int num_nodes = tree->nodeCount();
-        for(int i = 1; i < num_nodes; i++){
+    void updatePlayerRangeFast(int l, int r, int target_player, int swap_players, float alpha, float beta, float gamma){
+        #pragma omp parallel for schedule(static)
+        for(int x = l; x <= r; x++){
+            int i = depth_to_node[x];
             int parent = tree->getParentId(i);
             int par_player = tree->getTurn(parent);
             int info = tree->getInfoSet(parent);
@@ -189,11 +225,58 @@ struct DCFRTrainer : CFRTrainer {
             reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
             if((par_player ^ swap_players) == target_player){
                 float utility_dif = (par_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
-                players[par_player ^ swap_players].updateRegret(info, move, utility_dif);
+                int st = players[par_player ^ swap_players].getState(info, move);
+                #pragma omp atomic update
+                players[par_player ^ swap_players].regret_sum[st] += utility_dif;
             } else {
                 float prob_dif = reach_probability[i << 1 | par_player];
-                players[par_player ^ swap_players].updateStrategy(info, move, prob_dif*gamma);
+                int st = players[par_player ^ swap_players].getState(info, move);
+                #pragma omp atomic update
+                players[par_player ^ swap_players].strategy_sum[st] += prob_dif*gamma;
             }
+        }
+    }
+
+    void updatePlayerRangeSlow(int l, int r, int target_player, int swap_players, float alpha, float beta, float gamma){
+        for(int x = l; x <= r; x++){
+            int i = depth_to_node[x];
+            int parent = tree->getParentId(i);
+            int par_player = tree->getTurn(parent);
+            int info = tree->getInfoSet(parent);
+            int move = tree->getMove(i);
+            reach_probability[i << 1] *= reach_probability[parent << 1];
+            reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
+            if((par_player ^ swap_players) == target_player){
+                float utility_dif = (par_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
+                int st = players[par_player ^ swap_players].getState(info, move);
+                players[par_player ^ swap_players].regret_sum[st] += utility_dif;
+            } else {
+                float prob_dif = reach_probability[i << 1 | par_player];
+                int st = players[par_player ^ swap_players].getState(info, move);
+                players[par_player ^ swap_players].strategy_sum[st] += prob_dif*gamma;
+            }
+        }
+    }
+
+    // Updates target player regrets
+    // Updates other player's strategies
+    void updatePlayer(int target_player, int swap_players, float alpha, float beta, float gamma){
+        for(int t = 1; t < depth_ranges.size(); t++){
+            int l = depth_ranges[t].first;
+            int r = depth_ranges[t].second;
+            if(r - l + 1 >= 20000){
+                updatePlayerRangeFast(l, r, target_player, swap_players, alpha, beta, gamma);
+            } else {
+                updatePlayerRangeSlow(l, r, target_player, swap_players, alpha, beta, gamma);
+            }
+        }
+    }
+
+    void decayRegret(float alpha, float beta){
+        #pragma omp parallel for schedule(static)
+        for(int i = 0; i < players[0].info_set_count; i++){
+            players[0].regret_sum[i] *= (players[0].regret_sum[i] > 0.0f ? alpha : beta);
+            players[1].regret_sum[i] *= (players[1].regret_sum[i] > 0.0f ? alpha : beta);
         }
     }
 
@@ -208,13 +291,6 @@ struct DCFRTrainer : CFRTrainer {
         if(player0_dir.size() > 0) players[0].loadPolicy(player0_dir);
         if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
 
-        // Run best-response evaluation in parallel with training using a cloned tree,
-        // so we don't mutate the training tree from a background thread.
-        unique_ptr<GameTree> br_tree = tree->clone();
-        future<void> br_future;
-        bool br_in_flight = false;
-        static std::mutex br_cout_mutex;
-
         float alpha = 1.5f;
         float beta = 0.0f;
         float gamma = 2.0f;
@@ -225,13 +301,11 @@ struct DCFRTrainer : CFRTrainer {
             float strat_mult = pow(t, gamma);
             tree->prepare(rng());
             updateUtility(i%2);
-            players[0].decayRegret(pos_mult, neg_mult);
-            players[1].decayRegret(pos_mult, neg_mult);
+            decayRegret(pos_mult, neg_mult);
             updatePlayer(0, i%2, pos_mult, neg_mult, strat_mult);
             tree->prepare(rng());
             updateUtility(i%2);
-            players[0].decayRegret(pos_mult, neg_mult);
-            players[1].decayRegret(pos_mult, neg_mult);
+            decayRegret(pos_mult, neg_mult);
             updatePlayer(1, i%2, pos_mult, neg_mult, strat_mult);
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){
@@ -244,66 +318,15 @@ struct DCFRTrainer : CFRTrainer {
                 last_checkpoint_time = cur_time;
                 players[0].savePolicy(checkpoint_dir + "/player0_" + to_string(i) + ".bin");
                 players[1].savePolicy(checkpoint_dir + "/player1_" + to_string(i) + ".bin");
-
-                // If an evaluation is still running, don't start another one.
-                if(br_in_flight){
-                    if(br_future.valid() && br_future.wait_for(std::chrono::seconds(0)) == std::future_status::ready){
-                        br_future.get();
-                        br_in_flight = false;
-                    } else {
-                        cout << "Skipping BR eval at iteration " << i << " (previous eval still running)" << endl;
-                    }
-                }
-
-                if(!br_in_flight){
-                    // Snapshot policies so BR thread reads an immutable copy.
-                    DCFRPolicy p0_snapshot = players[0];
-                    DCFRPolicy p1_snapshot = players[1];
-                    GameTree* br_tree_ptr = br_tree.get();
-                    const int eval_iter = i;
-                    const int eval_seed = seed ^ (int)((uint32_t)i * 0x9E3779B9u);
-                    const int eval_samples = 100000;
-
-                    br_future = std::async(std::launch::async, [=]() mutable {
-                        auto t0 = chrono::high_resolution_clock::now();
-                        BestResponseEvaluator evaluator;
-                        evaluator.setTree(br_tree_ptr);
-
-                        // BR vs player0 (SB) strategy -> value from player1 (BB) perspective
-                        BestResponseResult br_bb = evaluator.computeBestResponse(p0_snapshot, 0, eval_seed, eval_samples);
-                        // BR vs player1 (BB) strategy -> value from player0 (SB) perspective
-                        BestResponseResult br_sb = evaluator.computeBestResponse(p1_snapshot, 1, eval_seed + 1, eval_samples);
-
-                        float nashconv = br_sb.value + br_bb.value;
-                        float exploitability = 0.5f * nashconv;
-                        auto secs = chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - t0).count();
-
-                        lock_guard<std::mutex> lock(br_cout_mutex);
-                        cout.setf(std::ios::fixed);
-                        cout.precision(6);
-                        cout << "[BR @ iter " << eval_iter << "] "
-                             << "BR(SB)=" << br_sb.value << " "
-                             << "BR(BB)=" << br_bb.value << " "
-                             << "NashConv=" << nashconv << " "
-                             << "Exploitability=" << exploitability << " "
-                             << "(" << secs << "s)" << endl;
-                    });
-                    br_in_flight = true;
-                }
             }
         }
 
-        // Ensure background BR evaluation finishes before we return (so br_tree stays alive).
-        if(br_in_flight && br_future.valid()){
-            br_future.get();
-            br_in_flight = false;
-        }
-
         cout << "Finished training in " << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - start_time).count() << " seconds" << endl;
-        players[0].savePolicy(checkpoint_dir + "/player0_final.bin");
-        players[1].savePolicy(checkpoint_dir + "/player1_final.bin");
+        if(checkpoint_dir.size() > 0){
+            players[0].savePolicy(checkpoint_dir + "/player.bin");
+        }
     }
 };
 
 
-#endif // CFR_HPP
+#endif // CFRFAST_HPP

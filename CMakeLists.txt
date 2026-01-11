@@ -37,6 +37,9 @@ target_include_directories(omp PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/external/libdivide
 )
 
+add_executable(three_card_stats tools/three_card_stats.cpp)
+target_link_libraries(three_card_stats PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+
 add_executable(visualize_infosets tools/visualize_infosets.cpp)
 target_link_libraries(visualize_infosets PRIVATE pokerbots_headers omp)
 
