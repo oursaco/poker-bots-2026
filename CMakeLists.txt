@@ -62,7 +62,7 @@ add_executable(test_player tools/test_player.cpp)
 target_link_libraries(test_player PRIVATE pokerbots_headers omp)
 
 add_executable(generate_river_eq bucket_gen/generate_river_eq.cpp)
-target_link_libraries(generate_river_eq PRIVATE pokerbots_headers omp)
+target_link_libraries(generate_river_eq PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
 add_executable(khun_trainer trainers/khun_trainer.cpp)
 target_link_libraries(khun_trainer PRIVATE pokerbots_headers Threads::Threads)
