@@ -10,9 +10,9 @@
 
 struct TrainConfig {
     int seed = 0;
-    int iterations = 1'000;
+    int iterations = 1'000'000;
     float log_every_secs = 1.0f;
-    float checkpoint_every_secs = 30.0f;
+    float checkpoint_every_secs = 0.1f;
     std::string output_dir;
     std::string player0_policy;
     std::string player1_policy;
@@ -117,7 +117,7 @@ int main() {
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./khun_poker";
-    config.iterations = 5'000;
+    config.iterations = 1'000'000;
 
     KhunPokerGameTree tree;
     tree.init();

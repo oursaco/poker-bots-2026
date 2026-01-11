@@ -25,6 +25,9 @@ struct GameState {
 
 struct GameTree {
     virtual ~GameTree() = default;
+    // Creates an independent copy of the concrete tree instance.
+    // Used to run evaluations in parallel without mutating the training tree.
+    virtual unique_ptr<GameTree> clone() const = 0;
     virtual void updateUtility(array<float, TRAINER_SZ> &utility) = 0; // updates the leaf utility values
     virtual void init() = 0; // initializes the game tree
     virtual void prepare(int seed) = 0; // prepares the game tree for an iteration of training
