@@ -1,4 +1,6 @@
 #include "cfr/CFR.hpp"
+#include "cfr/CFRFast.hpp"
+#include "game/ThreeCardInference.hpp"
 #include "game/ThreeCard.hpp"
 #include "constants/constants.h"
 #include "game/ThreeCardBucket.hpp"
@@ -22,19 +24,19 @@ struct TrainConfig {
 
 int main() {
     TrainConfig config;
-    config.seed = 238762931;
+    config.seed = 1324132;
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./three_card_models";
     config.iterations = 10'000'000;
 
-    ThreeCardGameTree tree;
+    ThreeCardInferenceTree tree;
     EHSThreeCardBucket bucket;
     bucket.init("./bucket_data");
     tree.setBucket(&bucket);
     tree.init();
     tree.prepare(config.seed);
-    DCFRTrainer trainer;
+    FastTrainer trainer;
     trainer.setTree(&tree);
     trainer.train(
         config.seed,
