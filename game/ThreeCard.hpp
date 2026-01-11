@@ -43,62 +43,62 @@ struct ThreeCardGameTree : GameTree {
             setWinner(0);
         }
 
-        int getParent() const{
+        inline int getParent() const{
             return static_cast<int>((packed0 >> kParentShift) & kParentMask) - 1;
         }
 
-        void setParent(int parent_){
+        inline void setParent(int parent_){
             assert(parent_ >= -1 && parent_ <= 1000000);
             uint64_t value = static_cast<uint64_t>(parent_ + 1);
             packed0 = (packed0 & ~(kParentMask << kParentShift)) | (value << kParentShift);
         }
 
-        int getMove() const{
+        inline int getMove() const{
             return static_cast<int>((packed0 >> kMoveShift) & kMoveMask);
         }
 
-        void setMove(int move_){
+        inline void setMove(int move_){
             assert(move_ >= 0 && move_ < (1 << kMoveBits));
             packed0 = (packed0 & ~(kMoveMask << kMoveShift)) | (static_cast<uint64_t>(move_) << kMoveShift);
         }
 
-        int getTurn() const{
+        inline int getTurn() const{
             return static_cast<int>((packed0 >> kTurnShift) & kTurnMask);
         }
 
-        void setTurn(int turn_){
+        inline void setTurn(int turn_){
             assert(turn_ == 0 || turn_ == 1);
             packed0 = (packed0 & ~(kTurnMask << kTurnShift)) | (static_cast<uint64_t>(turn_) << kTurnShift);
         }
 
-        int getPot() const{
+        inline int getPot() const{
             return static_cast<int>((packed0 >> kPotShift) & kPotMask);
         }
 
-        void setPot(int pot_){
+        inline void setPot(int pot_){
             assert(pot_ >= 0 && pot_ <= 800);
             packed0 = (packed0 & ~(kPotMask << kPotShift)) | (static_cast<uint64_t>(pot_) << kPotShift);
         }
 
-        int getSize() const{
+        inline int getSize() const{
             return static_cast<int>((packed0 >> kSizeShift) & kSizeMask);
         }
 
-        void setSize(int size_){
+        inline void setSize(int size_){
             assert(size_ >= 0 && size_ <= 1000000);
             packed0 = (packed0 & ~(kSizeMask << kSizeShift)) | (static_cast<uint64_t>(size_) << kSizeShift);
         }
 
-        int getStreet() const{
+        inline int getStreet() const{
             return static_cast<int>((packed0 >> kStreetShift) & kStreetMask);
         }
 
-        void setStreet(int street_){
+        inline void setStreet(int street_){
             assert(street_ >= 0 && street_ <= 6);
             packed0 = (packed0 & ~(kStreetMask << kStreetShift)) | (static_cast<uint64_t>(street_) << kStreetShift);
         }
 
-        int getWinner() const{
+        inline int getWinner() const{
             uint64_t raw = (packed0 >> kWinnerShift) & kWinnerMask;
             if(raw & (1ull << (kWinnerBits - 1))){
                 return static_cast<int>(raw | ~kWinnerMask);
@@ -106,36 +106,36 @@ struct ThreeCardGameTree : GameTree {
             return static_cast<int>(raw);
         }
 
-        void setWinner(int winner_){
+        inline void setWinner(int winner_){
             assert(winner_ >= -1 && winner_ <= 1);
             uint64_t raw = static_cast<uint64_t>(winner_) & kWinnerMask;
             packed0 = (packed0 & ~(kWinnerMask << kWinnerShift)) | (raw << kWinnerShift);
         }
 
-        bool hasNewCards() const{
+        inline bool hasNewCards() const{
             return ((packed0 >> kNewCardsShift) & kNewCardsMask) != 0;
         }
 
-        void setNewCards(bool new_cards_){
+        inline void setNewCards(bool new_cards_){
             uint64_t value = new_cards_ ? 1ull : 0ull;
             packed0 = (packed0 & ~(kNewCardsMask << kNewCardsShift)) | (value << kNewCardsShift);
         }
 
-        int getInfoSet() const{
+        inline int getInfoSet() const{
             return static_cast<int>(packed1 & kInfoSetMask);
         }
 
-        void setInfoSet(int info_set_){
+        inline void setInfoSet(int info_set_){
             assert(info_set_ >= 0);
             uint64_t value = static_cast<uint64_t>(static_cast<uint32_t>(info_set_));
             packed1 = (packed1 & (kInfoSetMask << kInfoSetIndexShift)) | value;
         }
 
-        int getInfoSetIndex() const{
+        inline int getInfoSetIndex() const{
             return static_cast<int>((packed1 >> kInfoSetIndexShift) & kInfoSetMask);
         }
 
-        void setInfoSetIndex(int info_set_index_){
+        inline void setInfoSetIndex(int info_set_index_){
             assert(info_set_index_ >= 0);
             uint64_t value = static_cast<uint64_t>(static_cast<uint32_t>(info_set_index_));
             packed1 = (packed1 & kInfoSetMask) | (value << kInfoSetIndexShift);

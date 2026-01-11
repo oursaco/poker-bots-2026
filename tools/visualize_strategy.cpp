@@ -468,8 +468,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("./final_model/player-2.bin");
-    trainer.players[1].loadPolicy("./final_model/player-2.bin");
+    trainer.players[0].loadPolicy("./final_model/player-3.bin");
+    trainer.players[1].loadPolicy("./final_model/player-3.bin");
 
     cout << fixed << setprecision(4);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};

@@ -211,7 +211,7 @@ struct MultiDCFRTrainer : CFRTrainer {
         for(int i = 0; i < thread_ranges.size(); i++){
             updateUtilityRange(thread_ranges[thread_ranges.size() - i - 1].first, thread_ranges[thread_ranges.size() - i - 1].second, swap_players);
         }
-        for(unsigned i = remaining_ranges.size(); i > 0; i--){
+        for(int i = remaining_ranges.size(); i > 0; i--){
             updateUtilityRange(remaining_ranges[i - 1].first, remaining_ranges[i - 1].second, swap_players);
         }
         reach_probability[0] = reach_probability[1] = 1.0f;
