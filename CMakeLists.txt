@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math)
+add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -lpthread)
 # Increase stack size on Windows (MSVC) only.
 # The GNU ld flag `--stack` is not supported by the macOS linker.
 if(MSVC)
