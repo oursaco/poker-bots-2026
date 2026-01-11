@@ -212,6 +212,7 @@ int main(){
                     solve(i, j, k, l);
                 }
                 cout << "Finished " << st << " / " << tot << endl;
+                st++;
             }
         }
     }
