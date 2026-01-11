@@ -9,6 +9,7 @@ if(NOT DEFINED CMAKE_C_COMPILER AND NOT DEFINED CMAKE_CXX_COMPILER)
 endif()
 
 find_package(OpenMP REQUIRED)
+find_package(Threads REQUIRED)
 
 project(pokerbots_2026 LANGUAGES CXX)
 
@@ -16,18 +17,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -lpthread)
-# Increase stack size on Windows (MSVC) only.
-# The GNU ld flag `--stack` is not supported by the macOS linker.
-if(MSVC)
-    add_link_options(/STACK:2147483648)
-endif()
-
-if(MSVC)
-    add_compile_options(/W0)
-else()
-    add_compile_options(-w)
-endif()
+add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -fopenmp)
+add_link_options(-Wl,--stack,2147483648)
+add_compile_options(-w)
 
 add_library(pokerbots_headers INTERFACE)
 target_include_directories(pokerbots_headers INTERFACE
@@ -73,13 +65,13 @@ add_executable(generate_river_eq bucket_gen/generate_river_eq.cpp)
 target_link_libraries(generate_river_eq PRIVATE pokerbots_headers omp)
 
 add_executable(khun_trainer trainers/khun_trainer.cpp)
-target_link_libraries(khun_trainer PRIVATE pokerbots_headers)
+target_link_libraries(khun_trainer PRIVATE pokerbots_headers Threads::Threads)
 
 add_executable(poker_trainer trainers/poker_trainer.cpp)
-target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp)
+target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp Threads::Threads)
 
 add_executable(three_card_trainer trainers/three_card_trainer.cpp)
-target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX Threads::Threads)
 
 add_executable(nash_distance tools/nash_distance.cpp)
 target_link_libraries(nash_distance PRIVATE pokerbots_headers omp)
