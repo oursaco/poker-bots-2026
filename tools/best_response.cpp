@@ -201,7 +201,8 @@ struct BestResponseEvaluator {
                     changed = true;
                 }
             }
-            if(!changed) { cout << "Converged in " << iter << " iterations" << endl; break;} // converged
+            // if(!changed) { cout << "Converged in " << iter << " iterations" << endl; break;} // converged
+            if(!changed) {break;}
         }
     
         // Final evaluation under converged best_action (using same sampling scheme)

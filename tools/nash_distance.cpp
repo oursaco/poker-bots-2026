@@ -1,5 +1,4 @@
 #include "cfr/CFR.hpp"
-#include "tools/best_response.cpp"
 #include "game/KhunPoker.hpp"
 #include "game/Poker.hpp"
 #include "game/ThreeCard.hpp"

@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <future>
 #include <limits>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <vector>
@@ -408,8 +409,11 @@ struct DCFRTrainer : CFRTrainer {
 
                 if(!br_in_flight){
                     // Snapshot policies so BR thread reads an immutable copy.
-                    DCFRPolicy p0_snapshot = players[0];
-                    DCFRPolicy p1_snapshot = players[1];
+                    //
+                    // IMPORTANT: DCFRPolicy is ~12MB (arrays of size POLICY_SZ). Copying it onto the
+                    // stack can overflow the default thread stack and segfault. Snapshot on the heap.
+                    auto p0_snapshot = std::make_shared<DCFRPolicy>(players[0]);
+                    auto p1_snapshot = std::make_shared<DCFRPolicy>(players[1]);
                     GameTree* br_tree_ptr = br_tree.get();
                     const int eval_iter = i;
                     const int eval_seed = seed ^ (int)((uint32_t)i * 0x9E3779B9u);
@@ -421,9 +425,9 @@ struct DCFRTrainer : CFRTrainer {
                         evaluator.setTree(br_tree_ptr);
 
                         // BR vs player0 (SB) strategy -> value from player1 (BB) perspective
-                        BestResponseResult br_bb = evaluator.computeBestResponse(p0_snapshot, 0, eval_seed, eval_samples);
+                        BestResponseResult br_bb = evaluator.computeBestResponse(*p0_snapshot, 0, eval_seed, eval_samples);
                         // BR vs player1 (BB) strategy -> value from player0 (SB) perspective
-                        BestResponseResult br_sb = evaluator.computeBestResponse(p1_snapshot, 1, eval_seed + 1, eval_samples);
+                        BestResponseResult br_sb = evaluator.computeBestResponse(*p1_snapshot, 1, eval_seed + 1, eval_samples);
 
                         float nashconv = br_sb.value + br_bb.value;
                         float exploitability = 0.5f * nashconv;
