@@ -141,6 +141,8 @@ struct DCFRPolicy : CFRPolicy {
     }
 };
 
+#include "nash/best_response.hpp"
+
 struct MultiDCFRTrainer : CFRTrainer {
     DCFRPolicy players[2];
     GameTree* tree;
@@ -206,8 +208,8 @@ struct MultiDCFRTrainer : CFRTrainer {
         tree->updateUtility(utility);
         int num_nodes = tree->nodeCount();
         #pragma omp parallel for
-        for(unsigned i = thread_ranges.size(); i > 0; i--){
-            updateUtilityRange(thread_ranges[i - 1].first, thread_ranges[i - 1].second, swap_players);
+        for(int i = 0; i < thread_ranges.size(); i++){
+            updateUtilityRange(thread_ranges[thread_ranges.size() - i - 1].first, thread_ranges[thread_ranges.size() - i - 1].second, swap_players);
         }
         for(unsigned i = remaining_ranges.size(); i > 0; i--){
             updateUtilityRange(remaining_ranges[i - 1].first, remaining_ranges[i - 1].second, swap_players);
@@ -295,7 +297,6 @@ struct MultiDCFRTrainer : CFRTrainer {
 
 // NOTE: This project uses `tools/best_response.cpp` as a header-style include (see tools/nash_distance.cpp).
 // We include it here (after DCFRPolicy is defined) so the trainer can run BR evaluations at checkpoints.
-#include "tools/best_response.cpp"
 struct DCFRTrainer : CFRTrainer {
     DCFRPolicy players[2];
     GameTree* tree;

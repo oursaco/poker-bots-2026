@@ -207,7 +207,6 @@ struct ThreeCardGameTree : GameTree {
     vector<pair<int, int>> sb_discard;
     vector<pair<int, int>> bb_discard;
 
-    omp::HandEvaluator hand_eval;
     int tree_index = 0;
     bool use_fixed_sb_hand = false;
     bool use_fixed_bb_hand = false;

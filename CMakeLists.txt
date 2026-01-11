@@ -41,7 +41,7 @@ add_executable(visualize_infosets tools/visualize_infosets.cpp)
 target_link_libraries(visualize_infosets PRIVATE pokerbots_headers omp)
 
 add_executable(visualize_tree tools/visualize_tree.cpp)
-target_link_libraries(visualize_tree PRIVATE pokerbots_headers)
+target_link_libraries(visualize_tree PRIVATE pokerbots_headers omp)
 
 add_executable(visualize_utility tools/visualize_utility.cpp)
 target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
