@@ -418,7 +418,7 @@ int main(){
     string dir = "./bucket_data";
     writePreflop(dir + "/preflop.bin");
     //return 0;
-    int iterations = 10000000;
+    int iterations = 100000000;
     vector<pair<int, int>> cards;
     readEHSMap(dir + "/ehs_map.bin");
     for(int i = 0; i < 13; i++){
