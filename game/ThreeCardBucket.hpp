@@ -247,6 +247,8 @@ struct EHSThreeCardBucket : ThreeCardBucket {
     int countBuckets(ThreeCardGameState* state){
         if(state->street == 0){
             return 1755;
+        } else if(state->street == 1){
+            return 6*6*6*8;
         } else if(state->street == 2){
             return 6*6*6*8;
         } else if(state->street == 3){
@@ -317,7 +319,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         return e;
     }
 
-    array<float, 5> discard_eq = {20.0f, 40.0f, 60.0f, 80.0f, 90.0f};
+    array<float, 5> discard_eq = {0.20f, 0.40f, 0.60f, 0.80f, 0.90f};
 
     int getBBDiscardBucket(uint64_t board, uint64_t hand){
         assert(__builtin_popcountll(board) == 2);
@@ -396,7 +398,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
             st *= 6;
             st += str;
         }
-        return st;
+        return st*8 + card_match;
     }
 
     const array<float, 11> flop_eq_thresholds = {0.10f, 0.20f, 0.30f, 0.40f, 0.50f, 0.60f, 0.70f, 0.80f, 0.88f, 0.94f, 0.98f};
@@ -405,7 +407,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         assert(__builtin_popcountll(board) == 4);
         assert(__builtin_popcountll(hand) == 3);
         hand ^= hand & board;
-        int discard_encoded = encodeDiscard(board, hand, discard);
+        int discard_encoded = encodeDiscard(getHand(board), board, discard);
         float eq = getEquity(getHand(board), hand, 1);
         int str_bucket = 0;
         for(int i = 0; i < flop_eq_thresholds.size(); i++){

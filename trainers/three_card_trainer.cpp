@@ -30,14 +30,16 @@ int main() {
     config.output_dir = "./three_card_models";
     config.iterations = 10'000'000;
 
-    ThreeCardInferenceTree tree;
+    ThreeCardInferenceTree tree1;
+    ThreeCardInferenceTree tree2;
     EHSThreeCardBucket bucket;
     bucket.init("./bucket_data");
-    tree.setBucket(&bucket);
-    tree.init();
-    tree.prepare(config.seed);
+    tree1.setBucket(&bucket);
+    tree1.init();
+    tree2.setBucket(&bucket);
+    tree2.init();
     FastTrainer trainer;
-    trainer.setTree(&tree);
+    trainer.setTree(&tree1, &tree2);
     trainer.train(
         config.seed,
         config.iterations,
