@@ -299,13 +299,13 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         for(int i = 0; i < 4; i++){
             pairs += board_mask >> (4*card + i) & 1;
         }
-        pairs = min(1, pairs);
+        assert(pairs > 0);
+        pairs = min(2, pairs) - 1;
         return pairs;
     }
 
     float getEquity(omp::Hand board, uint64_t hand, int ind){
         assert(__builtin_popcountll(hand) == 2);
-
         unsigned cards[2], suits[2];
         for(int i = 0; i < 2; i++){
             updateCard(hand, suits[i], cards[i]);
@@ -318,7 +318,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         }
         float e = eq[ind][hole_id][map_to[board_encoded]];
         if(e < 0.0f){
-            // cout << "Missing equity: " << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
+            cout << "Missing equity: " << cards[1] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
             return 0.0f;
         }
         return e;

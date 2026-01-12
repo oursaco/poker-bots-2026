@@ -92,19 +92,24 @@ int encodeBoard(Hand board, int s1, int s2){
     return eval.evaluate(board)*162 + suited_state;
 }
 
-void solve(int p1, int p2, int o1, int o2){
+void solve(int p1, int p2){
+    int ps1 = p1%4;
+    int ps2 = p2%4;
     for(int b1 = 0; b1 < 52; b1++){
-        if(b1 == p1 || b1 == p2 || b1 == o1 || b1 == o2) continue;
+        if(b1 == p1 || b1 == p2) continue;
         for(int b2 = b1 + 1; b2 < 52; b2++){
-            if(b2 == p1 || b2 == p2 || b2 == o1 || b2 == o2) continue;
+            if(b2 == p1 || b2 == p2) continue;
             for(int b3 = b2 + 1; b3 < 52; b3++){
-                if(b3 == p1 || b3 == p2 || b3 == o1 || b3 == o2) continue;
+                if(b3 == p1 || b3 == p2) continue;
                 for(int b4 = b3 + 1; b4 < 52; b4++){
-                    if(b4 == p1 || b4 == p2 || b4 == o1 || b4 == o2) continue;
+                    if(b4 == p1 || b4 == p2) continue;
                     for(int b5 = b4 + 1; b5 < 52; b5++){
-                        if(b5 == p1 || b5 == p2 || b5 == o1 || b5 == o2) continue;
+                        if(b5 == p1 || b5 == p2) continue;
                         for(int b6 = b5 + 1; b6 < 52; b6++){
-                            if(b6 == p1 || b6 == p2 || b6 == o1 || b6 == o2) continue;
+                            if(b6 == p1 || b6 == p2) continue;
+                            int w = 0;
+                            int t = 0;
+                            int l = 0;
                             Hand board1 = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5) + Hand(b6);
                             Hand board2 = Hand::empty() + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5) + Hand(b6);
                             Hand board3 = Hand::empty() + Hand(b1) + Hand(b3) + Hand(b4) + Hand(b5) + Hand(b6);
@@ -113,30 +118,38 @@ void solve(int p1, int p2, int o1, int o2){
                             Hand board6 = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b6);
                             Hand board7 = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5);
                             Hand player = Hand(p1) + Hand(p2);
-                            Hand opp = Hand(o1) + Hand(o2);
                             int player_str = max({eval.evaluate(board1 + Hand(p1)), 
-                                                  eval.evaluate(board1 + Hand(p2)), 
-                                                  eval.evaluate(board2 + player), 
-                                                  eval.evaluate(board3 + player), 
-                                                  eval.evaluate(board4 + player), 
-                                                  eval.evaluate(board5 + player), 
-                                                  eval.evaluate(board6 + player), 
-                                                  eval.evaluate(board7 + player)});
-                            int opp_str = max({eval.evaluate(board1 + Hand(o1)), 
-                                               eval.evaluate(board1 + Hand(o2)), 
-                                               eval.evaluate(board2 + opp), 
-                                               eval.evaluate(board3 + opp), 
-                                               eval.evaluate(board4 + opp), 
-                                               eval.evaluate(board5 + opp), 
-                                               eval.evaluate(board6 + opp), 
-                                               eval.evaluate(board7 + opp)});
-                            int diff = player_str - opp_str;
-                            int ps1 = p1%4;
-                            int ps2 = p2%4;
+                                                eval.evaluate(board1 + Hand(p2)), 
+                                                eval.evaluate(board2 + player), 
+                                                eval.evaluate(board3 + player), 
+                                                eval.evaluate(board4 + player), 
+                                                eval.evaluate(board5 + player), 
+                                                eval.evaluate(board6 + player), 
+                                                eval.evaluate(board7 + player)});
+                            for(int o1 = 0; o1 < 52; o1++){
+                                if(o1 == p1 || o1 == p2 || o1 == b1 || o1 == b2 || o1 == b3 || o1 == b4 || o1 == b5 || o1 == b6) continue;
+                                for(int o2 = o1 + 1; o2 < 52; o2++){
+                                    if(o2 == p1 || o2 == p2 || o2 == b1 || o2 == b2 || o2 == b3 || o2 == b4 || o2 == b5 || o2 == b6) continue; 
+                                    Hand opp = Hand(o1) + Hand(o2);
+                                    int opp_str = max({eval.evaluate(board1 + Hand(o1)), 
+                                                    eval.evaluate(board1 + Hand(o2)), 
+                                                    eval.evaluate(board2 + opp), 
+                                                    eval.evaluate(board3 + opp), 
+                                                    eval.evaluate(board4 + opp), 
+                                                    eval.evaluate(board5 + opp), 
+                                                    eval.evaluate(board6 + opp), 
+                                                    eval.evaluate(board7 + opp)});
+                                    int diff = player_str - opp_str;
+                                    if(diff > 0) w++;
+                                    else if(diff < 0) l++;
+                                    else t++;
+                                }
+                            }
                             int player_id = getHoleId(p1/4, p2/4, ps1, ps2);
-                            if(diff > 0) wins[player_id][encoding_map[encodeBoard(board1, ps1, ps2)]]++;
-                            else if(diff < 0) loses[player_id][encoding_map[encodeBoard(board1, ps1, ps2)]]++;
-                            else ties[player_id][encoding_map[encodeBoard(board1, ps1, ps2)]]++;
+                            int encoded = encoding_map[encodeBoard(board1, ps1, ps2)];
+                            wins[player_id][encoded] += w;
+                            loses[player_id][encoded] += l;
+                            ties[player_id][encoded] += t;
                         }
                     }
                 }
@@ -180,13 +193,16 @@ void saveEncodingMap(string dir){
 
 void saveEquity(string dir){
     ofstream ouf(dir, ios::binary);
+    int visited = 0;
     for(int i = 0; i < 169; i++){
         for(int j = 0; j < encoding_index; j++){
-            assert(wins[i][j] + loses[i][j] + ties[i][j] > 0);
+            if(wins[i][j] + loses[i][j] + ties[i][j] == 0) continue;
+            visited++;
             float eq = float(wins[i][j])/float(wins[i][j] + loses[i][j] + ties[i][j]);
             ouf.write(reinterpret_cast<const char*>(&eq), sizeof(float));
         }
     }
+    cout << "visited nodes: " << visited << endl;
     ouf.close();
 }
 
@@ -202,19 +218,11 @@ int main(){
     #pragma omp parallel for schedule(static)
     for(int t = 0; t < 169; t++){
         int st = 0;
-        int tot = cards[t].size() * 50;
+        cout << "Generating equity for hand class " << t << endl;
         for(pair<int, int> p : cards[t]){
             int i = p.first;
             int j = p.second;
-            for(int k = 0; k < 52; k++){
-                if(k == i || k == j) continue;
-                for(int l = k + 1; l < 52; l++){
-                    if(l == i || l == j) continue;
-                    solve(i, j, k, l);
-                }
-                cout << "Finished " << st << " / " << tot << endl;
-                st++;
-            }
+            solve(i, j);
         }
     }
     saveEquity("./emd_bucket_data/river_equity.bin");
