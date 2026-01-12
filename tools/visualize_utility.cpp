@@ -410,7 +410,6 @@ void visualizeThreeCardUtility(const UtilityOptions& options){
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
     trainer.updateUtility();
-    trainer.updatePlayer(0, 0, 0.0f, 0.0f, 0.0f);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
     cout << "sb hole: " << maskToString(hole_cards.sb_hand) << "\n";
     cout << "bb hole: " << maskToString(hole_cards.bb_hand) << "\n";

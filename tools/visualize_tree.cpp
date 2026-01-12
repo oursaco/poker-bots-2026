@@ -6,6 +6,7 @@
 #include <string>
 #include "game/ThreeCard.hpp"
 #include "game/ThreeCardState.hpp"
+#include "game/FakePoker.hpp"
 using namespace std;
 
 void visualizeTree(GameState* state, const string& prefix){
@@ -77,6 +78,11 @@ void visualizeThreeCardTree(){
     visualizeTreeDepthLimited(&root, "", 5);
 }
 
+void visualizeFakePokerTree(){
+    FakePokerGameState root = FakePokerGameState();
+    visualizeTreeDepthLimited(&root, "", 5);
+}
+
 int main(){
-    visualizeThreeCardTree();
+    visualizeFakePokerTree();
 }
