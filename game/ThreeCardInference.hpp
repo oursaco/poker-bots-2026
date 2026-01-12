@@ -351,65 +351,111 @@ struct ThreeCardInferenceTree {
         bucket = bucket_;
     }
 
+    uint64_t sb_hand = 0;
+    uint64_t bb_hand = 0;
+
     // prepares the game tree for an iteration of training
     void prepare(int seed){
-        #pragma omp parallel for schedule(static)
+        #pragma omp for schedule(static)
         for(int i = 0; i < tree_index; i++){
             board[i] = used_mask[i] = 0;
         }
-        omp::XoroShiro128Plus rng(seed);
-        omp::FastUniformIntDistribution2<int> card_generator(0, 51);
-        uint64_t used_cards = 0;
-        auto generateCard = [&](uint64_t &used_mask){
-            unsigned card;
-            uint64_t card_mask;
-            do {
-                card = card_generator(rng);
-                card_mask = 1ull << card;
-            } while (used_mask & card_mask);
-            used_mask |= card_mask;
-            return card;
-        };
-        auto getDiscard = [&](uint64_t hand, int n){
-            for(int i = 0; i < n; i++){
-                hand ^= 1ull << __builtin_ctzll(hand);
-            }
-            return __builtin_ctzll(hand);
-        };
+        #pragma omp single
+        {
+            omp::XoroShiro128Plus rng(seed);
+            omp::FastUniformIntDistribution2<int> card_generator(0, 51);
+            uint64_t used_cards = 0;
+            auto generateCard = [&](uint64_t &used_mask){
+                unsigned card;
+                uint64_t card_mask;
+                do {
+                    card = card_generator(rng);
+                    card_mask = 1ull << card;
+                } while (used_mask & card_mask);
+                used_mask |= card_mask;
+                return card;
+            };
+            auto getDiscard = [&](uint64_t hand, int n){
+                for(int i = 0; i < n; i++){
+                    hand ^= 1ull << __builtin_ctzll(hand);
+                }
+                return __builtin_ctzll(hand);
+            };
 
-        // generate initial hands
-        uint64_t sb_hand = 0;
-        uint64_t bb_hand = 0;
-        for(int i = 0; i < 3; i++){
-            sb_hand |= 1ull << generateCard(used_cards);
-            bb_hand |= 1ull << generateCard(used_cards);
-        }
-        // fill in preflop buckets
-        // no need to parallelize since preflop buckets are the same for all nodes
-        int preflop_sb_bucket = bucket->getPreflopBucket(sb_hand);
-        int preflop_bb_bucket = bucket->getPreflopBucket(bb_hand);
-        for(int i = 0; i < tree_index; i++){
-            if(nodes[i].getStreet() > 0){
-                i += nodes[i].getSize();
-                continue;
+            // generate initial hands
+            sb_hand = 0;
+            bb_hand = 0;
+            for(int i = 0; i < 3; i++){
+                sb_hand |= 1ull << generateCard(used_cards);
+                bb_hand |= 1ull << generateCard(used_cards);
             }
-            int info_set_index = nodes[i].getInfoSetIndex();
-            int turn = nodes[i].getTurn();
-            if(turn == 0){
-                nodes[i].setInfoSet(info_set_map[info_set_index] + preflop_sb_bucket);
-            } else if(turn == 1){
-                nodes[i].setInfoSet(info_set_map[info_set_index] + preflop_bb_bucket);
-            } else {
-                assert(false);
+            // fill in preflop buckets
+            // no need to parallelize since preflop buckets are the same for all nodes
+            int preflop_sb_bucket = bucket->getPreflopBucket(sb_hand);
+            int preflop_bb_bucket = bucket->getPreflopBucket(bb_hand);
+            for(int i = 0; i < tree_index; i++){
+                if(nodes[i].getStreet() > 0){
+                    i += nodes[i].getSize();
+                    continue;
+                }
+                int info_set_index = nodes[i].getInfoSetIndex();
+                int turn = nodes[i].getTurn();
+                if(turn == 0){
+                    nodes[i].setInfoSet(info_set_map[info_set_index] + preflop_sb_bucket);
+                } else if(turn == 1){
+                    nodes[i].setInfoSet(info_set_map[info_set_index] + preflop_bb_bucket);
+                } else {
+                    assert(false);
+                }
+            }
+            // fill in flop buckets
+            for(auto [node_id, prv_new_card] : deal_flop){
+                used_mask[node_id] = used_cards;
+                board[node_id] |= 1ull << generateCard(used_mask[node_id]);
+                board[node_id] |= 1ull << generateCard(used_mask[node_id]);
+            }
+            // big blind discard
+            // no need to parallelize since sb discards right after
+            for(auto [node_id, prv_new_card] : bb_discard){
+                bb_discard_card[node_id] = getDiscard(bb_hand, nodes[node_id].getMove());
+                board[node_id] = board[prv_new_card] | 1ull << bb_discard_card[node_id];
+                used_mask[node_id] = used_mask[prv_new_card];
+                int sb_bucket = bucket->getSBDiscardBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
+                nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + sb_bucket);
+                int l = node_id, r = node_id + nodes[node_id].getSize();
+                for(int i = l + 1; i <= r; i++){
+                    if(nodes[i].hasNewCards()){
+                        i += nodes[i].getSize();
+                        continue;
+                    }
+                    nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + sb_bucket);
+                }
+            }
+            // small blind discard
+            for(auto [node_id, prv_new_card] : sb_discard){
+                sb_discard_card[node_id] = getDiscard(sb_hand, nodes[node_id].getMove());
+                bb_discard_card[node_id] = bb_discard_card[prv_new_card];
+                board[node_id] = board[prv_new_card] | 1ull << sb_discard_card[node_id];
+                used_mask[node_id] = used_mask[prv_new_card];
+            }
+            // fill in turn buckets
+            for(auto [node_id, prv_new_card] : deal_turn){
+                sb_discard_card[node_id] = sb_discard_card[prv_new_card];
+                bb_discard_card[node_id] = bb_discard_card[prv_new_card];
+                board[node_id] = board[prv_new_card];
+                used_mask[node_id] = used_mask[prv_new_card];
+                board[node_id] |= 1ull << generateCard(used_mask[node_id]);
+            }
+            // deal river
+            for(auto [node_id, prv_new_card] : deal_river){
+                sb_discard_card[node_id] = sb_discard_card[prv_new_card];
+                bb_discard_card[node_id] = bb_discard_card[prv_new_card];
+                board[node_id] = board[prv_new_card];
+                used_mask[node_id] = used_mask[prv_new_card];
+                board[node_id] |= 1ull << generateCard(used_mask[node_id]);
             }
         }
-        // fill in flop buckets
-        for(auto [node_id, prv_new_card] : deal_flop){
-            used_mask[node_id] = used_cards;
-            board[node_id] |= 1ull << generateCard(used_mask[node_id]);
-            board[node_id] |= 1ull << generateCard(used_mask[node_id]);
-        }
-        #pragma omp parallel for
+        #pragma omp for
         for(int t = 0; t < deal_flop.size(); t++){
             int node_id = deal_flop[t].first;
             int prv_new_card = deal_flop[t].second;
@@ -424,31 +470,7 @@ struct ThreeCardInferenceTree {
                 nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + bb_bucket);
             }
         }
-        // big blind discard
-        // no need to parallelize since sb discards right after
-        for(auto [node_id, prv_new_card] : bb_discard){
-            bb_discard_card[node_id] = getDiscard(bb_hand, nodes[node_id].getMove());
-            board[node_id] = board[prv_new_card] | 1ull << bb_discard_card[node_id];
-            used_mask[node_id] = used_mask[prv_new_card];
-            int sb_bucket = bucket->getSBDiscardBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
-            nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + sb_bucket);
-            int l = node_id, r = node_id + nodes[node_id].getSize();
-            for(int i = l + 1; i <= r; i++){
-                if(nodes[i].hasNewCards()){
-                    i += nodes[i].getSize();
-                    continue;
-                }
-                nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + sb_bucket);
-            }
-        }
-         // small blind discard
-        for(auto [node_id, prv_new_card] : sb_discard){
-            sb_discard_card[node_id] = getDiscard(sb_hand, nodes[node_id].getMove());
-            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
-            board[node_id] = board[prv_new_card] | 1ull << sb_discard_card[node_id];
-            used_mask[node_id] = used_mask[prv_new_card];
-        }
-        #pragma omp parallel for
+        #pragma omp for
         for(int t = 0; t < sb_discard.size(); t++){
             int node_id = sb_discard[t].first;
             int prv_new_card = sb_discard[t].second;
@@ -465,15 +487,8 @@ struct ThreeCardInferenceTree {
                 nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + (turn == 0 ? sb_bucket : bb_bucket));
             }
         }
-        // fill in turn buckets
-        for(auto [node_id, prv_new_card] : deal_turn){
-            sb_discard_card[node_id] = sb_discard_card[prv_new_card];
-            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
-            board[node_id] = board[prv_new_card];
-            used_mask[node_id] = used_mask[prv_new_card];
-            board[node_id] |= 1ull << generateCard(used_mask[node_id]);
-        }
-        #pragma omp parallel for
+
+        #pragma omp for
         for(int t = 0; t < deal_turn.size(); t++){
             int node_id = deal_turn[t].first;
             int prv_new_card = deal_turn[t].second;
@@ -491,15 +506,8 @@ struct ThreeCardInferenceTree {
                 nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + (child_turn == 0 ? sb_bucket : bb_bucket));
             }
         }
-        // deal river
-        for(auto [node_id, prv_new_card] : deal_river){
-            sb_discard_card[node_id] = sb_discard_card[prv_new_card];
-            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
-            board[node_id] = board[prv_new_card];
-            used_mask[node_id] = used_mask[prv_new_card];
-            board[node_id] |= 1ull << generateCard(used_mask[node_id]);
-        }
-        #pragma omp parallel for
+
+        #pragma omp for
         for(int t = 0; t < deal_river.size(); t++){
             int node_id = deal_river[t].first;
             int prv_new_card = deal_river[t].second;

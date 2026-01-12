@@ -83,6 +83,7 @@ int encodeBoard(Hand board, int s1, int s2){
             // we need to check max suit outside of the same suit since there can only be one flush draw other than ours
             int mx_suit = 0;
             for(int i = 0; i < 4; i++) if(i != s1 && i != s2) mx_suit = max(mx_suit, (int)board.suitCount(i));
+            mx_suit = min(4, max(0, mx_suit - 2));
             suited_state = 37 + same1*5*5 + same2*5 + mx_suit;
             assert(suited_state >= 37 && suited_state <= 161);
             // suited state is 37 ... 161
