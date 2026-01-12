@@ -77,9 +77,10 @@ struct DCFRPolicy : CFRPolicy {
         return info_set_utils[info_set] >> log_state_count;
     }
 
-    void decayRegret(float alpha, float beta){
+    void decayRegret(float alpha, float beta, float gamma){
         for(int i = 0; i < state_count; i++){
             regret_sum[i] *= (regret_sum[i] > 0.0f ? alpha : beta);
+            strategy_sum[i] *= gamma;
         }
     }
 
@@ -178,7 +179,7 @@ struct DCFRTrainer : CFRTrainer {
 
     // Updates target player regrets
     // Updates other player's strategies
-    void updatePlayer(int target_player, int swap_players, float alpha, float beta, float gamma){
+    void updatePlayer(int target_player, int swap_players){
         int num_nodes = tree->nodeCount();
         for(int i = 1; i < num_nodes; i++){
             int parent = tree->getParentId(i);
@@ -192,7 +193,7 @@ struct DCFRTrainer : CFRTrainer {
                 players[par_player ^ swap_players].updateRegret(info, move, utility_dif);
             } else {
                 float prob_dif = reach_probability[i << 1 | par_player];
-                players[par_player ^ swap_players].updateStrategy(info, move, prob_dif*gamma);
+                players[par_player ^ swap_players].updateStrategy(info, move, prob_dif);
             }
         }
     }
@@ -222,15 +223,15 @@ struct DCFRTrainer : CFRTrainer {
             float t = i;
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
             float neg_mult = pow(t, beta);
-            float strat_mult = pow(t, gamma);
-            players[0].decayRegret(pos_mult, neg_mult);
-            players[1].decayRegret(pos_mult, neg_mult);
+            float strat_mult = pow(float(t)/float(t + 1), gamma);
+            players[0].decayRegret(pos_mult, neg_mult, strat_mult);
+            players[1].decayRegret(pos_mult, neg_mult, strat_mult);
             tree->prepare(rng());
             updateUtility(i%2);
-            updatePlayer(0, i%2, pos_mult, neg_mult, strat_mult);
+            updatePlayer(0, i%2);
             tree->prepare(rng());
             updateUtility(i%2);
-            updatePlayer(1, i%2, pos_mult, neg_mult, strat_mult);
+            updatePlayer(1, i%2);
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){
                 cout << "Finished iteration " << i << " of " << iterations << " in " << chrono::duration_cast<chrono::seconds>(cur_time - start_time).count() << " seconds" << endl;

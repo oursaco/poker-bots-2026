@@ -468,8 +468,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("./final_model/player-3.bin");
-    trainer.players[1].loadPolicy("./final_model/player-3.bin");
+    trainer.players[0].loadPolicy("./checkpoints/player0_3005284.bin");
+    trainer.players[1].loadPolicy("./checkpoints/player0_3005284.bin");
 
     cout << fixed << setprecision(4);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
@@ -481,6 +481,10 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     ThreeCardGameState root = ThreeCardGameState();
     // visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
     visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 5);
+    for(int i = 0; i < 10; i++) cout << trainer.players[0].strategy_sum[i] << " ";
+    cout << endl;
+    for(int i = 0; i < 10; i++) cout << trainer.players[0].regret_sum[i] << " ";
+    cout << endl;
 }
 
 int main(int argc, char* argv[]){
