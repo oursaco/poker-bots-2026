@@ -26,15 +26,15 @@ struct ThreeCardBucket {
 
 struct EHSThreeCardBucket : ThreeCardBucket {
     unsigned preflop_buckets[52][52][52];
-    unsigned map_to[1 << 20];
+    int map_to[1 << 20];
     float eq[4][169][78294];
-    unsigned len = 1;
+    int len = 0;
     omp::HandEvaluator hand_eval;
 
     void readMap(string tar_dir){
         ifstream inf(tar_dir, ios::binary);
         for(int i = 0; i < (1 << 20); i++){
-            inf.read(reinterpret_cast<char*>(&map_to[i]), sizeof(unsigned));
+            inf.read(reinterpret_cast<char*>(&map_to[i]), sizeof(int));
             len = max(len, map_to[i]);
         }
         inf.close();
@@ -270,6 +270,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
     }
 
     inline unsigned getHoleId(unsigned p1, unsigned p2, unsigned ps1, unsigned ps2){
+        assert(p1 <= p2);
         if(ps1 == ps2) return p1*13 + p2;
         return p2*13 + p1;
     }
@@ -311,9 +312,13 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         }
         int board_encoded = encodeBoard(board, suits[0] == suits[1], suits[1]);
         int hole_id = getHoleId(cards[0], cards[1], suits[0], suits[1]);
+        if(map_to[board_encoded] == -1){
+            cout << "Missing board: " << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
+            return 0.0f;
+        }
         float e = eq[ind][hole_id][map_to[board_encoded]];
         if(e < 0.0f){
-            cout << "Missing equity: " << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
+            // cout << "Missing equity: " << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
             return 0.0f;
         }
         return e;

@@ -184,7 +184,7 @@ void writeMap(string tar_dir){
 void writeTable(string tar_dir, int ind){
     int cnt = 0;
     for(int i = 0; i < 169; i++){
-        for(int j = 0; j < len; j++){
+        for(int j = 0; j <= len; j++){
             if(wins[ind][i][j] + ties[ind][i][j] + lose[ind][i][j] == 0){
                 bucket[ind][i][j] = -1.0;
             } else {
@@ -195,7 +195,7 @@ void writeTable(string tar_dir, int ind){
     }
     ofstream ouf(tar_dir, ios::binary);
     for(int i = 0; i < 169; i++){
-        for(int j = 0; j < len; j++){
+        for(int j = 0; j <= len; j++){
             ouf.write(reinterpret_cast<const char*>(&bucket[ind][i][j]), sizeof(float));
         }
     }
@@ -418,7 +418,7 @@ int main(){
     string dir = "./bucket_data";
     writePreflop(dir + "/preflop.bin");
     //return 0;
-    int iterations = 1000000000;
+    int iterations = 10000000;
     vector<pair<int, int>> cards;
     readEHSMap(dir + "/ehs_map.bin");
     for(int i = 0; i < 13; i++){
