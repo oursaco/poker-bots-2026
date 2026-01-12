@@ -159,6 +159,7 @@ void solve(int p1, int p2){
 }
 
 void generateEncodingMap(){
+    for(int i = 0; i < (1 << 16)*162; i++) encoding_map[i] = -1;
     for(int b1 = 0; b1 < 52; b1++){
         for(int b2 = b1 + 1; b2 < 52; b2++){
             for(int b3 = b2 + 1; b3 < 52; b3++){
@@ -169,7 +170,7 @@ void generateEncodingMap(){
                             for(int s1 = 0; s1 < 4; s1++){
                                 for(int s2 = 0; s2 < 4; s2++){
                                     int encoded = encodeBoard(board, s1, s2);
-                                    if(encoding_map[encoded] != 0) continue;
+                                    if(encoding_map[encoded] != -1) continue;
                                     encoding_map[encoded] = encoding_index++;
                                 }
                             }
@@ -185,7 +186,7 @@ void generateEncodingMap(){
 void saveEncodingMap(string dir){
     ofstream ouf(dir, ios::binary);
     ouf.write(reinterpret_cast<const char*>(&encoding_index), sizeof(int));
-    for(int i = 0; i < encoding_index; i++){
+    for(int i = 0; i < (1 << 16)*162; i++){
         ouf.write(reinterpret_cast<const char*>(&encoding_map[i]), sizeof(int));
     }
     ouf.close();
@@ -196,9 +197,10 @@ void saveEquity(string dir){
     int visited = 0;
     for(int i = 0; i < 169; i++){
         for(int j = 0; j < encoding_index; j++){
-            if(wins[i][j] + loses[i][j] + ties[i][j] == 0) continue;
-            visited++;
-            float eq = float(wins[i][j])/float(wins[i][j] + loses[i][j] + ties[i][j]);
+            float eq = -1.0f;
+            if(wins[i][j] + loses[i][j] + ties[i][j] > 0){
+                eq = float(wins[i][j] + ties[i][j]/2.0f)/float(wins[i][j] + loses[i][j] + ties[i][j]);
+            }
             ouf.write(reinterpret_cast<const char*>(&eq), sizeof(float));
         }
     }
