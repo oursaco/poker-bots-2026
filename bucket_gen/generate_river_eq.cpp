@@ -198,7 +198,7 @@ int main(){
         }
     }
     saveEncodingMap("./emd_bucket_data/encoding_map.bin");
-    #pragma omp parallel for
+    #pragma omp parallel for schedule(static)
     for(int t = 0; t < 169; t++){
         int st = 0;
         int tot = cards[t].size() * 50;
@@ -209,7 +209,6 @@ int main(){
                 if(k == i || k == j) continue;
                 for(int l = k + 1; l < 52; l++){
                     if(l == i || l == j) continue;
-                    auto start = chrono::high_resolution_clock::now();
                     solve(i, j, k, l);
                 }
                 cout << "Finished " << st << " / " << tot << endl;
@@ -217,7 +216,7 @@ int main(){
             }
         }
     }
-    saveEquity("./emd_bucket_data/equity.bin");
+    saveEquity("./emd_bucket_data/river_equity.bin");
     
     return 0;
 }

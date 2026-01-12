@@ -196,6 +196,8 @@ struct ThreeCardGameTree : GameTree {
     array<int, TREE_SZ> info_set_map;
     array<uint64_t, TREE_SZ> board;
     array<uint64_t, TREE_SZ> used_mask;
+    array<int, TREE_SZ> sb_discard_card;
+    array<int, TREE_SZ> bb_discard_card;
 
     array<int, POLICY_SZ> moves_per_info_set;
     int moves_per_info_set_index = 0;
@@ -497,11 +499,13 @@ struct ThreeCardGameTree : GameTree {
             }
         }
         // big blind discard
+        int bb_discard_nodes = 0;
         for(auto [node_id, prv_new_card] : bb_discard){
             assert(__builtin_popcountll(board[prv_new_card]) == 2);
-            board[node_id] = board[prv_new_card] | 1ull << getDiscard(bb_hand, nodes[node_id].getMove());
+            bb_discard_card[node_id] = getDiscard(bb_hand, nodes[node_id].getMove());
+            board[node_id] = board[prv_new_card] | 1ull << bb_discard_card[node_id];
             used_mask[node_id] = used_mask[prv_new_card];
-            int sb_bucket = bucket->getSBDiscardBucket(board[node_id], sb_hand);
+            int sb_bucket = bucket->getSBDiscardBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
             assert(sb_bucket < buckets[node_id]);
             assert(nodes[node_id].getTurn() == 0);
             nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + sb_bucket);
@@ -511,18 +515,22 @@ struct ThreeCardGameTree : GameTree {
                     i += nodes[i].getSize();
                     continue;
                 }
+                bb_discard_nodes++;
                 assert(nodes[i].getTurn() == 0);
                 assert(sb_bucket < buckets[i]);
                 nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + sb_bucket);
             }
         }
          // small blind discard
+         int sb_discard_nodes = 0;
         for(auto [node_id, prv_new_card] : sb_discard){
             assert(__builtin_popcountll(board[prv_new_card]) == 3);
-            board[node_id] = board[prv_new_card] | 1ull << getDiscard(sb_hand, nodes[node_id].getMove());
+            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
+            sb_discard_card[node_id] = getDiscard(sb_hand, nodes[node_id].getMove());
+            board[node_id] = board[prv_new_card] | 1ull << sb_discard_card[node_id];
             used_mask[node_id] = used_mask[prv_new_card];
-            int bb_bucket = bucket->getFlopBucket(board[node_id], bb_hand);
-            int sb_bucket = bucket->getFlopBucket(board[node_id], sb_hand);
+            int bb_bucket = bucket->getFlopBucket(board[node_id], bb_hand, sb_discard_card[node_id]);
+            int sb_bucket = bucket->getFlopBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
             assert(bb_bucket < buckets[node_id]);
             assert(nodes[node_id].getStreet() == 4);
             assert(nodes[node_id].getTurn() == 1);
@@ -533,6 +541,7 @@ struct ThreeCardGameTree : GameTree {
                     i += nodes[i].getSize();
                     continue;
                 }
+                sb_discard_nodes++;
                 int turn = nodes[i].getTurn();
                 assert((turn == 0 && sb_bucket < buckets[i]) || (turn == 1 && bb_bucket < buckets[i]));
                 nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + (turn == 0 ? sb_bucket : bb_bucket));
@@ -541,13 +550,15 @@ struct ThreeCardGameTree : GameTree {
         // fill in turn buckets
         for(auto [node_id, prv_new_card] : deal_turn){
             assert(__builtin_popcountll(board[prv_new_card]) == 4);
+            sb_discard_card[node_id] = sb_discard_card[prv_new_card];
+            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
             board[node_id] = board[prv_new_card];
             used_mask[node_id] = used_mask[prv_new_card];
             if(use_fixed_turn) board[node_id] |= fixed_turn;
             else board[node_id] |= 1ull << generateCard(used_mask[node_id]);
             assert(__builtin_popcountll(board[node_id]) == 5);
-            int sb_bucket = bucket->getTurnBucket(board[node_id], sb_hand);
-            int bb_bucket = bucket->getTurnBucket(board[node_id], bb_hand);
+            int sb_bucket = bucket->getTurnBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
+            int bb_bucket = bucket->getTurnBucket(board[node_id], bb_hand, sb_discard_card[node_id]);
             assert(sb_bucket < buckets[node_id] && bb_bucket < buckets[node_id]);
             int turn = nodes[node_id].getTurn();
             nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + (turn == 0 ? sb_bucket : bb_bucket));
@@ -565,13 +576,15 @@ struct ThreeCardGameTree : GameTree {
         // deal river
         for(auto [node_id, prv_new_card] : deal_river){
             assert(__builtin_popcountll(board[prv_new_card]) == 5);
+            sb_discard_card[node_id] = sb_discard_card[prv_new_card];
+            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
             board[node_id] = board[prv_new_card];
             used_mask[node_id] = used_mask[prv_new_card];
             if(use_fixed_river) board[node_id] |= fixed_river;
             else board[node_id] |= 1ull << generateCard(used_mask[node_id]);
             assert(__builtin_popcountll(board[node_id]) == 6);
-            int sb_bucket = bucket->getRiverBucket(board[node_id], sb_hand);
-            int bb_bucket = bucket->getRiverBucket(board[node_id], bb_hand);
+            int sb_bucket = bucket->getRiverBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
+            int bb_bucket = bucket->getRiverBucket(board[node_id], bb_hand, sb_discard_card[node_id]);
             assert(sb_bucket < buckets[node_id] && bb_bucket < buckets[node_id]);
             int winner = bucket->getWinner(board[node_id], sb_hand, bb_hand);
             int turn = nodes[node_id].getTurn();
@@ -591,7 +604,7 @@ struct ThreeCardGameTree : GameTree {
     }
 
     // updates the leaf utility values for each trainer
-    void updateUtility(array<float, TRAINER_SZ> &utility){
+    void updateUtility(array<float, TREE_SZ> &utility){
         for(int i = 0; i < leaves.size(); i++){
             int node_id = leaves[i].node_id;
             int w = leaves[i].winner;
@@ -631,21 +644,27 @@ struct ThreeCardGameTree : GameTree {
     }
 
     // calculates the info set of a node
-    int calcInfoSet(int node_id, uint64_t hand, uint64_t board){
+    int calcInfoSet(int node_id, uint64_t hand, uint64_t board_mask, int discard){
         int street = nodes[node_id].getStreet();
         int info_set_index = nodes[node_id].getInfoSetIndex();
+        assert(board_mask == board[node_id]);
+        if(nodes[node_id].getTurn() == 1 && street > 2){
+            assert(discard == sb_discard_card[node_id]);
+        } else {
+            assert(discard == bb_discard_card[node_id]);
+        }
         if(street == 0){
             return info_set_map[info_set_index] + bucket->getPreflopBucket(hand);
         } else if(street == 2){
-            return info_set_map[info_set_index] + bucket->getBBDiscardBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getBBDiscardBucket(board_mask, hand);
         } else if(street == 3){
-            return info_set_map[info_set_index] + bucket->getSBDiscardBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getSBDiscardBucket(board_mask, hand, discard);
         } else if(street == 4){
-            return info_set_map[info_set_index] + bucket->getFlopBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getFlopBucket(board_mask, hand, discard);
         } else if(street == 5){
-            return info_set_map[info_set_index] + bucket->getTurnBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getTurnBucket(board_mask, hand, discard);
         } else if(street == 6){
-            return info_set_map[info_set_index] + bucket->getRiverBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getRiverBucket(board_mask, hand, discard);
         } else {
             assert(false);
         }

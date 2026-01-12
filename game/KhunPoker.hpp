@@ -228,7 +228,7 @@ struct KhunPokerGameTree : GameTree {
     }
 
     // updates the leaf utility values for each trainer
-    void updateUtility(array<float, TRAINER_SZ> &utility){
+    void updateUtility(array<float, TREE_SZ> &utility){
         for(int i = 0; i < leaves.size(); i++){
             int node_id = leaves[i];
             int w = winner[i];

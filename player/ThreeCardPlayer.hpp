@@ -22,6 +22,7 @@ struct ThreeCardPlayer : Player {
     int round = 0;
     int player_id = 0; // 0: sb, 1: bb
     int pnl = 0;
+    int discard = -1;
     uint64_t hand;
     uint64_t board;
     bool call_next; // if their raise gets casted to a check back
@@ -47,6 +48,10 @@ struct ThreeCardPlayer : Player {
         won_all_in = false;
         pnl = 0;
         fold_until_win = false;
+    }
+
+    void setDiscard(int discard_){
+        discard = discard_;
     }
 
     void startRound(int player_id_, uint64_t hand_){
@@ -95,7 +100,7 @@ struct ThreeCardPlayer : Player {
         assert(!actions.empty());
         probs.assign(actions.size(), 0.0f);
         assert(state.turn == player_id);
-        int info_set = tree.calcInfoSet(node_id, hand, board);
+        int info_set = tree.calcInfoSet(node_id, hand, board, discard);
         int move_count = policy.getMoveCount(info_set);
         assert(move_count == actions.size());
         int st = policy.getState(info_set, 0);
@@ -251,7 +256,7 @@ struct ThreeCardPlayer : Player {
         if(state.street == 4) assert(__builtin_popcountll(board) == 4);
         if(state.street == 5) assert(__builtin_popcountll(board) == 5);
         if(state.street == 6) assert(__builtin_popcountll(board) == 6);
-        int info_set = tree.calcInfoSet(node_id, hand, board);
+        int info_set = tree.calcInfoSet(node_id, hand, board, discard);
         vector<pair<ThreeCardGameState, ThreeCardAction>> actions = getActions();
         vector<float> probs = getActionProbabilities();
         float roll = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);

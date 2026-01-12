@@ -152,8 +152,8 @@ struct DCFRPolicy : CFRPolicy {
 struct DCFRTrainer : CFRTrainer {
     DCFRPolicy players[2];
     GameTree* tree;
-    array<float, POLICY_SZ> utility;
-    array<float, 2*TRAINER_SZ> reach_probability;
+    array<float, TREE_SZ> utility;
+    array<float, 2*TREE_SZ> reach_probability;
 
     void setTree(GameTree* tree_){
         tree = tree_;
@@ -223,15 +223,13 @@ struct DCFRTrainer : CFRTrainer {
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
             float neg_mult = pow(t, beta);
             float strat_mult = pow(t, gamma);
-            tree->prepare(rng());
-            updateUtility(i%2);
             players[0].decayRegret(pos_mult, neg_mult);
             players[1].decayRegret(pos_mult, neg_mult);
+            tree->prepare(rng());
+            updateUtility(i%2);
             updatePlayer(0, i%2, pos_mult, neg_mult, strat_mult);
             tree->prepare(rng());
             updateUtility(i%2);
-            players[0].decayRegret(pos_mult, neg_mult);
-            players[1].decayRegret(pos_mult, neg_mult);
             updatePlayer(1, i%2, pos_mult, neg_mult, strat_mult);
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){

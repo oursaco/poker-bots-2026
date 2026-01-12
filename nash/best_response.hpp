@@ -96,7 +96,7 @@ struct BestResponseEvaluator {
                 const int sample_seed = (int)rng();
                 tree->prepare(sample_seed);
     
-                array<float, TRAINER_SZ> utility;
+                array<float, TREE_SZ> utility;
                 fill(utility.begin(), utility.end(), 0.0f);
                 tree->updateUtility(utility);
     
@@ -212,7 +212,7 @@ struct BestResponseEvaluator {
             int sample_seed = (int)rng();
             tree->prepare(sample_seed);
     
-            array<float, TRAINER_SZ> utility;
+            array<float, TREE_SZ> utility;
             fill(utility.begin(), utility.end(), 0.0f);
             tree->updateUtility(utility);
     

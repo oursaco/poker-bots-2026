@@ -521,7 +521,7 @@ vector<float> getPolicyActionProbabilities(ThreeCardPlayer& bot,
     if(actions.empty()){
         return probs;
     }
-    int info_set = bot.tree.calcInfoSet(node_id, hand, board);
+    int info_set = bot.tree.calcInfoSet(node_id, hand, board, bot.discard);
     int move_count = bot.policy.getMoveCount(info_set);
     probs.assign(actions.size(), 0.0f);
     if(move_count != static_cast<int>(actions.size())){
@@ -708,6 +708,7 @@ bool playHand(ThreeCardPlayer& bot, EHSThreeCardBucket& bucket, std::mt19937& rn
                 board |= 1ull << discarded;
                 bot.updateBoard(discarded);
                 cout << "You discard " << cardToString(discarded) << "\n";
+                bot.setDiscard(discarded);
                 state = *dynamic_cast<ThreeCardGameState*>(actions[action_index].first.get());
                 bot.receiveAction(std::move(actions[action_index].second));
             } else {

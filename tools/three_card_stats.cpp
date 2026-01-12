@@ -23,8 +23,6 @@ void test_inference(){
 }
 
 int main() {
-    test_inference();
-    return 0;
     ThreeCardInferenceTree tree1;
     ThreeCardGameTree tree2;
     EHSThreeCardBucket bucket;

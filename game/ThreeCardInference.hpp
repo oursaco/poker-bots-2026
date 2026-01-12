@@ -197,7 +197,8 @@ struct ThreeCardInferenceTree {
     array<int, TREE_SZ> info_set_map;
     array<uint64_t, TREE_SZ> board;
     array<uint64_t, TREE_SZ> used_mask;
-
+    array<int, TREE_SZ> sb_discard_card;
+    array<int, TREE_SZ> bb_discard_card;
     array<int, POLICY_SZ> moves_per_info_set;
     int moves_per_info_set_index = 0;
     vector<Leaf> leaves;
@@ -426,9 +427,10 @@ struct ThreeCardInferenceTree {
         // big blind discard
         // no need to parallelize since sb discards right after
         for(auto [node_id, prv_new_card] : bb_discard){
-            board[node_id] = board[prv_new_card] | 1ull << getDiscard(bb_hand, nodes[node_id].getMove());
+            bb_discard_card[node_id] = getDiscard(bb_hand, nodes[node_id].getMove());
+            board[node_id] = board[prv_new_card] | 1ull << bb_discard_card[node_id];
             used_mask[node_id] = used_mask[prv_new_card];
-            int sb_bucket = bucket->getSBDiscardBucket(board[node_id], sb_hand);
+            int sb_bucket = bucket->getSBDiscardBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
             nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + sb_bucket);
             int l = node_id, r = node_id + nodes[node_id].getSize();
             for(int i = l + 1; i <= r; i++){
@@ -441,15 +443,17 @@ struct ThreeCardInferenceTree {
         }
          // small blind discard
         for(auto [node_id, prv_new_card] : sb_discard){
-            board[node_id] = board[prv_new_card] | 1ull << getDiscard(sb_hand, nodes[node_id].getMove());
+            sb_discard_card[node_id] = getDiscard(sb_hand, nodes[node_id].getMove());
+            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
+            board[node_id] = board[prv_new_card] | 1ull << sb_discard_card[node_id];
             used_mask[node_id] = used_mask[prv_new_card];
         }
         #pragma omp parallel for
         for(int t = 0; t < sb_discard.size(); t++){
             int node_id = sb_discard[t].first;
             int prv_new_card = sb_discard[t].second;
-            int bb_bucket = bucket->getFlopBucket(board[node_id], bb_hand);
-            int sb_bucket = bucket->getFlopBucket(board[node_id], sb_hand);
+            int bb_bucket = bucket->getFlopBucket(board[node_id], bb_hand, sb_discard_card[node_id]);
+            int sb_bucket = bucket->getFlopBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
             nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + bb_bucket);
             int l = node_id, r = node_id + nodes[node_id].getSize();
             for(int i = l + 1; i <= r; i++){
@@ -463,6 +467,8 @@ struct ThreeCardInferenceTree {
         }
         // fill in turn buckets
         for(auto [node_id, prv_new_card] : deal_turn){
+            sb_discard_card[node_id] = sb_discard_card[prv_new_card];
+            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
             board[node_id] = board[prv_new_card];
             used_mask[node_id] = used_mask[prv_new_card];
             board[node_id] |= 1ull << generateCard(used_mask[node_id]);
@@ -471,8 +477,8 @@ struct ThreeCardInferenceTree {
         for(int t = 0; t < deal_turn.size(); t++){
             int node_id = deal_turn[t].first;
             int prv_new_card = deal_turn[t].second;
-            int sb_bucket = bucket->getTurnBucket(board[node_id], sb_hand);
-            int bb_bucket = bucket->getTurnBucket(board[node_id], bb_hand);
+            int sb_bucket = bucket->getTurnBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
+            int bb_bucket = bucket->getTurnBucket(board[node_id], bb_hand, sb_discard_card[node_id]);
             int turn = nodes[node_id].getTurn();
             nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + (turn == 0 ? sb_bucket : bb_bucket));
             int l = node_id, r = node_id + nodes[node_id].getSize();
@@ -487,6 +493,8 @@ struct ThreeCardInferenceTree {
         }
         // deal river
         for(auto [node_id, prv_new_card] : deal_river){
+            sb_discard_card[node_id] = sb_discard_card[prv_new_card];
+            bb_discard_card[node_id] = bb_discard_card[prv_new_card];
             board[node_id] = board[prv_new_card];
             used_mask[node_id] = used_mask[prv_new_card];
             board[node_id] |= 1ull << generateCard(used_mask[node_id]);
@@ -495,8 +503,8 @@ struct ThreeCardInferenceTree {
         for(int t = 0; t < deal_river.size(); t++){
             int node_id = deal_river[t].first;
             int prv_new_card = deal_river[t].second;
-            int sb_bucket = bucket->getRiverBucket(board[node_id], sb_hand);
-            int bb_bucket = bucket->getRiverBucket(board[node_id], bb_hand);
+            int sb_bucket = bucket->getRiverBucket(board[node_id], sb_hand, bb_discard_card[node_id]);
+            int bb_bucket = bucket->getRiverBucket(board[node_id], bb_hand, sb_discard_card[node_id]);
             int winner = bucket->getWinner(board[node_id], sb_hand, bb_hand);
             int turn = nodes[node_id].getTurn();
             nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + (turn == 0 ? sb_bucket : bb_bucket));
@@ -515,7 +523,7 @@ struct ThreeCardInferenceTree {
     }
 
     // updates the leaf utility values for each trainer
-    void updateUtility(array<float, TRAINER_SZ> &utility){
+    void updateUtility(array<float, TREE_SZ> &utility){
         #pragma omp parallel for
         for(int i = 0; i < leaves.size(); i++){
             int node_id = leaves[i].node_id;
@@ -556,21 +564,29 @@ struct ThreeCardInferenceTree {
     }
 
     // calculates the info set of a node
-    int calcInfoSet(int node_id, uint64_t hand, uint64_t board){
+    int calcInfoSet(int node_id, uint64_t hand, uint64_t board_mask, int discard){
         int street = nodes[node_id].getStreet();
         int info_set_index = nodes[node_id].getInfoSetIndex();
+        assert(board_mask == board[node_id]);
+        if(street > 2){
+            if(nodes[node_id].getTurn() == 1){
+                assert(discard == sb_discard_card[node_id]);
+            } else {
+                assert(discard == bb_discard_card[node_id]);
+            }
+        }
         if(street == 0){
             return info_set_map[info_set_index] + bucket->getPreflopBucket(hand);
         } else if(street == 2){
-            return info_set_map[info_set_index] + bucket->getBBDiscardBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getBBDiscardBucket(board_mask, hand);
         } else if(street == 3){
-            return info_set_map[info_set_index] + bucket->getSBDiscardBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getSBDiscardBucket(board_mask, hand, discard);
         } else if(street == 4){
-            return info_set_map[info_set_index] + bucket->getFlopBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getFlopBucket(board_mask, hand, discard);
         } else if(street == 5){
-            return info_set_map[info_set_index] + bucket->getTurnBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getTurnBucket(board_mask, hand, discard);
         } else if(street == 6){
-            return info_set_map[info_set_index] + bucket->getRiverBucket(board, hand);
+            return info_set_map[info_set_index] + bucket->getRiverBucket(board_mask, hand, discard);
         } else {
             assert(false);
         }

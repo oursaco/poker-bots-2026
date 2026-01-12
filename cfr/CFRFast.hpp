@@ -121,8 +121,8 @@ struct FastPolicy {
 struct FastTrainer {
     FastPolicy players[2];
     ThreeCardInferenceTree *tree;
-    array<float, TRAINER_SZ> utility;
-    array<float, 2*TRAINER_SZ> reach_probability;
+    array<float, TREE_SZ> utility;
+    array<float, 2*TREE_SZ> reach_probability;
     array<int, TREE_SZ> compressed_children;
     array<int, TREE_SZ> children_map;
     array<vector<int>, TREE_SZ> children_list;

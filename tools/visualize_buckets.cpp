@@ -14,6 +14,7 @@ struct BucketOptions {
     uint64_t board = 0;
     int hand_count = 0;
     int board_count = 0;
+    int discard = 0;
 };
 
 int rankFromChar(char c){
@@ -174,6 +175,7 @@ bool parseArgs(int argc, char* argv[], BucketOptions& options, string& error){
     vector<string> hand_tokens;
     vector<string> board_tokens;
     vector<string> loose_tokens;
+    vector<string> discard_tokens;
     for(int i = 1; i < argc; ++i){
         string arg = argv[i];
         if(arg == "--help" || arg == "-h"){
@@ -188,6 +190,12 @@ bool parseArgs(int argc, char* argv[], BucketOptions& options, string& error){
             continue;
         }
         if(!parseFlagTokens("--board", arg, i, argc, argv, board_tokens, matched, error)){
+            return false;
+        }
+        if(matched){
+            continue;
+        }
+        if(!parseFlagTokens("--discard", arg, i, argc, argv, discard_tokens, matched, error)){
             return false;
         }
         if(matched){
@@ -338,16 +346,16 @@ int main(int argc, char* argv[]){
         bucket_id = bucket.getBBDiscardBucket(options.board, hand_for_bucket);
     } else if(options.board_count == 3){
         bucket_label = "sb_discard";
-        bucket_id = bucket.getSBDiscardBucket(options.board, hand_for_bucket);
+        bucket_id = bucket.getSBDiscardBucket(options.board, hand_for_bucket, options.discard);
     } else if(options.board_count == 4){
         bucket_label = "flop";
-        bucket_id = bucket.getFlopBucket(options.board, hand_for_bucket);
+        bucket_id = bucket.getFlopBucket(options.board, hand_for_bucket, options.discard);
     } else if(options.board_count == 5){
         bucket_label = "turn";
-        bucket_id = bucket.getTurnBucket(options.board, hand_for_bucket);
+        bucket_id = bucket.getTurnBucket(options.board, hand_for_bucket, options.discard);
     } else if(options.board_count == 6){
         bucket_label = "river";
-        bucket_id = bucket.getRiverBucket(options.board, hand_for_bucket);
+        bucket_id = bucket.getRiverBucket(options.board, hand_for_bucket, options.discard);
     }
     cout << "hand: " << maskToString(options.hand) << "\n";
     cout << "board: " << maskToString(options.board) << "\n";

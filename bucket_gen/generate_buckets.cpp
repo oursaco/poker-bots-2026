@@ -164,8 +164,8 @@ inline unsigned getCardId(string x) {
     return rank*4 + suit;
 }
 
-unsigned map_to[1 << 20];
-unsigned len = 1;
+int map_to[1 << 20];
+int len = 0;
 
 float wins[4][170][100000];
 float ties[4][170][100000];
@@ -176,18 +176,15 @@ void writeMap(string tar_dir){
     unsigned mx = 0;
     ofstream ouf(tar_dir, ios::binary);
     for(int i = 0; i < (1 << 20); i++){
-        if(map_to[i]) map_to[i]--;
-        mx = max(mx, map_to[i]);
-        ouf.write(reinterpret_cast<const char*>(&map_to[i]), sizeof(unsigned));
+        ouf.write(reinterpret_cast<const char*>(&map_to[i]), sizeof(int));
     }
     ouf.close();
-    cout << "mx: " << mx << endl;
 }
 
 void writeTable(string tar_dir, int ind){
     int cnt = 0;
     for(int i = 0; i < 169; i++){
-        for(int j = 1; j <= len; j++){
+        for(int j = 0; j < len; j++){
             if(wins[ind][i][j] + ties[ind][i][j] + lose[ind][i][j] == 0){
                 bucket[ind][i][j] = -1.0;
             } else {
@@ -198,7 +195,7 @@ void writeTable(string tar_dir, int ind){
     }
     ofstream ouf(tar_dir, ios::binary);
     for(int i = 0; i < 169; i++){
-        for(int j = 1; j <= len; j++){
+        for(int j = 0; j < len; j++){
             ouf.write(reinterpret_cast<const char*>(&bucket[ind][i][j]), sizeof(float));
         }
     }
@@ -234,25 +231,29 @@ void generateRandomGame(int a, int b, int st, int st2){
         if(i != 2) boards[i] += card3;
     }
     int three = encodeBoard(boards[3], suited);
-    if(map_to[three] == 0) map_to[three] = len++;
+    assert(map_to[three] != -1);
+    if(map_to[three] == -1) map_to[three] = len++;
     generateNewCard(used_mask, card4);
     for(int i = 0; i < 7; i++){
         if(i != 3) boards[i] += card4;
     }
     int four = encodeBoard(boards[4], suited);
-    if(map_to[four] == 0) map_to[four] = len++;
+    assert(map_to[four] != -1);
+    if(map_to[four] == -1) map_to[four] = len++;
     generateNewCard(used_mask, card5);
     for(int i = 0; i < 7; i++){
         if(i != 4) boards[i] += card5;
     }
     int five = encodeBoard(boards[5], suited);
-    if(map_to[five] == 0) map_to[five] = len++;
+    assert(map_to[five] != -1);
+    if(map_to[five] == -1) map_to[five] = len++;
     generateNewCard(used_mask, card6);
     for(int i = 0; i < 7; i++){
         if(i != 5) boards[i] += card6;
     }
     int six = encodeBoard(boards[6], suited);
-    if(map_to[six] == 0) map_to[six] = len++;
+    assert(map_to[six] != -1);
+    if(map_to[six] == -1) map_to[six] = len++;
     Hand opp1, opp2;
     generateNewCard(used_mask, opp1);
     generateNewCard(used_mask, opp2);
@@ -342,8 +343,8 @@ void printSpecificEquities() {
     int trips_encodings[] = {trips_3, trips_4, trips_5, trips_6};
     string stage_names[] = {"3 cards (222)", "4 cards (2227)", "5 cards (22279)", "6 cards (22279T)"};
     for (int stage = 0; stage < 4; stage++) {
-        int bucket_idx = map_to[trips_encodings[stage]] + 1;
-        if (bucket_idx > 0 && bucket_idx <= len) {
+        int bucket_idx = map_to[trips_encodings[stage]];
+        if (bucket_idx >= 0 && bucket_idx <= len) {
             float equity = bucket[stage][trips_holecard][bucket_idx];
             if (equity >= 0) {
                 cout << "  " << stage_names[stage] << ": " << (equity * 100) << "%" << endl;
@@ -361,8 +362,8 @@ void printSpecificEquities() {
     int flush_encodings[] = {flush_3, flush_4, flush_5, flush_6};
     string flush_stage_names[] = {"3 cards (2c5c8d)", "4 cards (2c5c8dKh)", "5 cards (2c5c8dKh9h)", "6 cards (2c5c8dKh9h3c)"};
     for (int stage = 0; stage < 4; stage++) {
-        int bucket_idx = map_to[flush_encodings[stage]] + 1;
-        if (bucket_idx > 0 && bucket_idx <= len) {
+        int bucket_idx = map_to[flush_encodings[stage]];
+        if (bucket_idx >= 0 && bucket_idx <= len) {
             float equity = bucket[stage][flush_holecard][bucket_idx];
             if (equity >= 0) {
                 cout << "  " << flush_stage_names[stage] << ": " << (equity * 100) << "%" << endl;
@@ -380,8 +381,8 @@ void printSpecificEquities() {
     int straight_encodings[] = {straight_3, straight_4, straight_5, straight_6};
     string straight_stage_names[] = {"3 cards (789)", "4 cards (7892)", "5 cards (78924)", "6 cards (78924Q)"};
     for (int stage = 0; stage < 4; stage++) {
-        int bucket_idx = map_to[straight_encodings[stage]] + 1;
-        if (bucket_idx > 0 && bucket_idx <= len) {
+        int bucket_idx = map_to[straight_encodings[stage]];
+        if (bucket_idx >= 0 && bucket_idx <= len) {
             float equity = bucket[stage][straight_holecard][bucket_idx];
             if (equity >= 0) {
                 cout << "  " << straight_stage_names[stage] << ": " << (equity * 100) << "%" << endl;
@@ -401,30 +402,48 @@ void printSpecificEquities() {
     cout << "  - non_shared_suits: 3=flush, 2=flush draw, 1=backdoor flush draw" << endl;
 }
 
+void readEHSMap(string tar_dir){
+    ifstream inf(tar_dir, ios::binary);
+    for(int i = 0; i < (1 << 20); i++){
+        inf.read(reinterpret_cast<char*>(&map_to[i]), sizeof(int));
+        if(map_to[i] != -1) len = max(len, map_to[i]);
+    }
+    inf.close();
+    cout << "len: " << len << endl;
+}
+
 int main(){
+    for(int i = 0; i < (1 << 20); i++) map_to[i] = -1;
     generatePreflop();
     string dir = "./bucket_data";
     writePreflop(dir + "/preflop.bin");
-    return 0;
-    int iterations = 100000000;
-    for(int a = 0; a < 13; a++){
-        for(int b = 0; b < 13; b++){
-            cout << a << " " << b << endl;
-            if(a < b){
-                for(int t = 0; t < iterations; t++){
-                    generateRandomGame(b*4, a*4, a*13 + b, a*13 + b);
-                }
-            } else {
-                for(int t = 0; t < iterations; t++){
-                    generateRandomGame(a*4, b*4 + 1, a*13 + b, a*13 + b);
-                }
+    //return 0;
+    int iterations = 1000000000;
+    vector<pair<int, int>> cards;
+    readEHSMap(dir + "/ehs_map.bin");
+    for(int i = 0; i < 13; i++){
+        for(int j = 0; j < 13; j++){
+            cards.push_back(make_pair(i, j));
+        }
+    }
+    #pragma omp parallel for schedule(static)
+    for(pair<int, int> p : cards){
+        int a = p.first;
+        int b = p.second;
+        cout << a << " " << b << endl;
+        if(a < b){
+            for(int t = 0; t < iterations; t++){
+                generateRandomGame(b*4, a*4, a*13 + b, a*13 + b);
+            }
+        } else {
+            for(int t = 0; t < iterations; t++){
+                generateRandomGame(a*4, b*4 + 1, a*13 + b, a*13 + b);
             }
         }
     }
     len--;
     cout << "len: " << len << endl;
     // Print specific hand equities
-    writeMap(dir + "/ehs_map.bin");
     writeTable(dir + "/three.bin", 0);
     writeTable(dir + "/four.bin", 1);
     writeTable(dir + "/five.bin", 2);

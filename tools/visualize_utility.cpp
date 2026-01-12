@@ -278,7 +278,7 @@ struct HoleCards {
 
 int ind = 0;
 
-void visualizeUtility(GameState* state, const string& prefix, array<float, TRAINER_SZ> &utility){
+void visualizeUtility(GameState* state, const string& prefix, array<float, TREE_SZ> &utility){
     auto actions = state->generateActions();
     if(actions.empty()){
         cout << prefix << "(no actions)\n";
@@ -305,7 +305,7 @@ void visualizeUtility(GameState* state, const string& prefix, array<float, TRAIN
     }
 }
 
-void visualizeUtilityDepthLimited(GameState* state, const string& prefix, array<float, TRAINER_SZ> &utility, int depth){
+void visualizeUtilityDepthLimited(GameState* state, const string& prefix, array<float, TREE_SZ> &utility, int depth){
     auto actions = state->generateActions();
     if(actions.empty()){
         cout << prefix << "(no actions)\n";

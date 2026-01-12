@@ -16,210 +16,12 @@ struct ThreeCardBucket {
     virtual ~ThreeCardBucket() = default;
     virtual int countBuckets(ThreeCardGameState* state) = 0;
     virtual int getPreflopBucket(uint64_t hand) = 0;
-    virtual int getFlopBucket(uint64_t board, uint64_t hand) = 0;
-    virtual int getTurnBucket(uint64_t board, uint64_t hand) = 0;
-    virtual int getRiverBucket(uint64_t board, uint64_t hand) = 0;
+    virtual int getFlopBucket(uint64_t board, uint64_t hand, int discard) = 0;
+    virtual int getTurnBucket(uint64_t board, uint64_t hand, int discard) = 0;
+    virtual int getRiverBucket(uint64_t board, uint64_t hand, int discard) = 0;
     virtual int getWinner(uint64_t board, uint64_t hand1, uint64_t hand2) = 0;
     virtual int getBBDiscardBucket(uint64_t board, uint64_t hand) = 0;
-    virtual int getSBDiscardBucket(uint64_t board, uint64_t hand) = 0;
-};
-
-struct NaiveThreeCardBucket : ThreeCardBucket {
-
-void updateCard(uint64_t &mask, unsigned &suit, unsigned &id){
-    unsigned card = __builtin_ctzll(mask);
-    mask ^= 1ull << card;
-    suit = card%4;
-    id = card/4;
-}
-
-int getPreflopBucket(uint64_t hand){
-    vector<pair<unsigned, unsigned>> cards;
-    for(int i = 0; i < 3; i++){
-        unsigned suit, id;
-        updateCard(hand, suit, id);
-        cards.emplace_back(id, suit);
-    }
-    sort(cards.begin(), cards.end());
-    int suited = cards[0].second == cards[1].second || cards[1].second == cards[2].second || cards[0].second == cards[2].second;
-    int triple_suit = cards[0].second == cards[1].second && cards[1].second == cards[2].second;
-    int connected = cards[0].first + 1 == cards[1].first || cards[1].first + 1 == cards[2].first;
-    int triple_connected = cards[0].first + 1 == cards[1].first && cards[1].first + 1 == cards[2].first;
-    int pair = cards[0].first == cards[1].first || cards[1].first == cards[2].first || cards[0].first == cards[2].first;
-    int triple = cards[0].first == cards[1].first && cards[1].first == cards[2].first;
-    vector<int> states = {suited, triple_suit, connected, triple_connected, pair, triple};
-    int ret = 0;
-    for(int i = 0; i < states.size(); i++){
-        ret <<= 1;
-        ret += states[i];
-    }
-    int hi = cards[2].first;
-    int lo = cards[0].first;
-    return ret*13*13 + hi*13 + lo;
-}
-
-omp::HandEvaluator hand_eval;
-
-bool is_straight_draw(uint64_t mask){
-    vector<bool> has_rank(13, false);
-    while(mask){
-        unsigned suit, id;
-        updateCard(mask, suit, id);
-        has_rank[id] = true;
-    }
-    bool straight_draw = false;
-    for(int start = 1; start <= 8; ++start){
-        int present = 0;
-        int missing = 0;
-        for(int k = 0; k < 4; ++k) {
-            if(has_rank[start + k]) present++;
-        }
-        if(present == 4){
-            straight_draw = true;
-            break;
-        }
-    }
-    return straight_draw;
-}
-
-bool is_flush_draw(uint64_t mask){
-    vector<int32_t> suits(4, 0);
-    while(mask){
-        unsigned suit, id;
-        updateCard(mask, suit, id);
-        suits[suit]++;
-    }
-    for(int i = 0; i < 4; i++){
-        if(suits[i] == 4){
-            return true;
-        }
-    }
-    return false;
-}
-
-int eval_7(uint64_t mask){
-    omp::Hand combined = omp::Hand::empty();
-    while(mask){
-        unsigned suit, id;
-        updateCard(mask, suit, id);
-        combined += omp::Hand(4*id + suit);
-    }
-    return hand_eval.evaluate(combined);
-}
-
-int eval_8(uint64_t mask){
-    if(__builtin_popcountll(mask) < 8) return eval_7(mask);
-    unsigned cards[8], suits[8];
-    omp::Hand pre[8];
-    for(int i = 0; i < 8; i++){
-        updateCard(mask, suits[i], cards[i]);
-        pre[i] = omp::Hand(4*cards[i] + suits[i]);
-        if(i > 0) pre[i] += pre[i-1];
-    }
-    omp::Hand suf = omp::Hand::empty();
-    int strength = 0;
-    for(int i = 7; i >= 1; i--){
-        strength = max(strength, (int)hand_eval.evaluate(pre[i-1] + suf));
-        suf += omp::Hand(4*cards[i] + suits[i]);
-    }
-    strength = max(strength, (int)hand_eval.evaluate(suf));
-    return strength;
-}
-
-int eval_3_subsets(uint64_t board, uint64_t hand){
-    unsigned cards[3], suits[3];
-    for(int i = 0; i < 3; i++){
-        updateCard(hand, suits[i], cards[i]);
-    }
-    // try every subset
-    pair<int, int> best_subset = {0, 0};
-    for(int i = 1; i < (1 << 3); i++){
-        uint64_t mask = board;
-        for(int j = 0; j < 3; j++){
-            if(j >> i & 1){
-                mask |= 1ull << (4*cards[j] + suits[j]);
-            }
-        }
-        int strength = eval_7(mask); // 0 ... 15
-        int flush = is_flush_draw(mask); // 0 ... 1
-        int straight = is_straight_draw(mask); // 0 ... 1
-        best_subset = max(best_subset, {strength/4096, -((i - 1)*64 + strength/4096*2*2 + flush*2 + straight)});
-    }
-    return -best_subset.second;
-}
-
-int eval_2_subsets(uint64_t board, uint64_t hand){
-    hand ^= hand & board;
-    assert(__builtin_popcountll(hand) == 2);
-    unsigned cards[2], suits[2];
-    for(int i = 0; i < 2; i++){
-        updateCard(hand, suits[i], cards[i]);
-    }
-    // try every subset
-    pair<int, int> best_subset = {0, 0};
-    for(int i = 1; i < (1 << 2); i++){
-        uint64_t mask = board;
-        for(int j = 0; j < 2; j++){
-            if(j >> i & 1){
-                mask |= 1ull << (4*cards[j] + suits[j]);
-            }
-        }
-        int strength = (__builtin_popcountll(mask) == 8 ? eval_8(mask) : eval_7(mask)); // 0 ... 15
-        int flush = is_flush_draw(mask); // 0 ... 1
-        int straight = is_straight_draw(mask); // 0 ... 1
-        best_subset = max(best_subset, {strength/4096, -((i - 1)*64 + strength/4096*2*2 + flush*2 + straight)});
-    }
-    return -best_subset.second;
-}
-
-int getFlopBucket(uint64_t board, uint64_t hand){
-    assert(__builtin_popcountll(board) == 4);
-    return eval_2_subsets(board, hand);
-}
-
-int getTurnBucket(uint64_t board, uint64_t hand){
-    assert(__builtin_popcountll(board) == 5);
-    return eval_2_subsets(board, hand);
-}
-
-int getRiverBucket(uint64_t board, uint64_t hand){
-    assert(__builtin_popcountll(board) == 6);
-    return eval_2_subsets(board, hand)/4;
-}
-
-int countBuckets(ThreeCardGameState* state){
-    if(state->street == 0){
-        return (1 << 6)*13*13;
-    } else if(state->street == 2 || state->street == 3){
-        return 7*64;
-    } else if(state->street == 4){
-        return 3*64;
-    } else if(state->street == 5){
-        return 3*64;
-    } else if(state->street == 6){
-        return 3*64/4;
-    } else {
-        assert(false);
-    }
-}
-
-int getWinner(uint64_t board, uint64_t hand1, uint64_t hand2){
-    int dif = eval_8(board | hand1) - eval_8(board | hand2);
-    if(dif > 0) return 1;
-    else if(dif < 0) return -1;
-    else return 0;
-}
-
-int getBBDiscardBucket(uint64_t board, uint64_t hand){
-    assert(__builtin_popcountll(board) == 2);
-    return eval_3_subsets(board, hand);
-}
-
-int getSBDiscardBucket(uint64_t board, uint64_t hand){
-    assert(__builtin_popcountll(board) == 3);
-    return eval_3_subsets(board, hand);
-}
-
+    virtual int getSBDiscardBucket(uint64_t board, uint64_t hand, int discard) = 0;
 };
 
 struct EHSThreeCardBucket : ThreeCardBucket {
@@ -386,7 +188,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         cout << "  - shared_suits: 3=flush, 2=flush draw, 1=backdoor flush draw" << endl;
         cout << "  - non_shared_suits: 3=flush, 2=flush draw, 1=backdoor flush draw" << endl;
     }
-
+    
     void init(string tar_dir){
         readPreflop(tar_dir + "/preflop.bin");
         readMap(tar_dir + "/ehs_map.bin");
@@ -445,14 +247,16 @@ struct EHSThreeCardBucket : ThreeCardBucket {
     int countBuckets(ThreeCardGameState* state){
         if(state->street == 0){
             return 1755;
-        } else if(state->street == 2 || state->street == 3){
-            return 6*6*6;
+        } else if(state->street == 2){
+            return 6*6*6*8;
+        } else if(state->street == 3){
+            return 6*6*6*8;
         } else if(state->street == 4){
-            return 50;
+            return 12*2;
         } else if(state->street == 5){
-            return 50;
+            return 12*2;
         } else if(state->street == 6){
-            return 50;
+            return 12*2;
         }
     }
 
@@ -485,27 +289,35 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         return str*16 + shared_suits*4 + non_shared_suits;
     }
 
-    float getEquity(uint64_t board, uint64_t hand, int ind){
+    int encodeDiscard(omp::Hand board, uint64_t board_mask, int discard){
+        assert(discard >= 0 && discard < 52);
+        int card = discard/4, suit = discard%4;
+        int pairs = 0;
+        for(int i = 0; i < 4; i++){
+            pairs += board_mask >> (4*card + i) & 1;
+        }
+        pairs = min(1, pairs);
+        return pairs;
+    }
+
+    float getEquity(omp::Hand board, uint64_t hand, int ind){
         assert(__builtin_popcountll(hand) == 2);
-        if(ind == 0) assert(__builtin_popcountll(board) == 3);
-        if(ind == 1) assert(__builtin_popcountll(board) == 4);
-        if(ind == 2) assert(__builtin_popcountll(board) == 5);
-        if(ind == 3) assert(__builtin_popcountll(board) == 6);
 
         unsigned cards[2], suits[2];
         for(int i = 0; i < 2; i++){
             updateCard(hand, suits[i], cards[i]);
         }
-        int board_encoded = encodeBoard(getHand(board), suits[0] == suits[1], suits[1]);
+        int board_encoded = encodeBoard(board, suits[0] == suits[1], suits[1]);
         int hole_id = getHoleId(cards[0], cards[1], suits[0], suits[1]);
         float e = eq[ind][hole_id][map_to[board_encoded] + 1];
         if(e < 0.0f){
-            cout << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
-            cout << "Missing equity for: " << board << " hand: " << hand << " ind: " << ind << endl;
+            cout << "Missing equity: " << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
             return 0.0f;
         }
         return e;
     }
+
+    array<float, 5> discard_eq = {20.0f, 40.0f, 60.0f, 80.0f, 90.0f};
 
     int getBBDiscardBucket(uint64_t board, uint64_t hand){
         assert(__builtin_popcountll(board) == 2);
@@ -514,6 +326,16 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         for(int i = 0; i < 3; i++){
             updateCard(hand, suits[i], cards[i]);
         }
+        int card_match = 0;
+        for(int i = 0; i < 3; i++){
+            int match = 0;
+            for(int j = 0; j < 4; j++){
+                if(board >> (4*cards[i] + j) & 1){
+                    match = 1;
+                }
+            }
+            card_match |= match << i;
+        }
         int st = 0;
         for(int i = 0; i < 3; i++){
             uint64_t hand_mask = 0;
@@ -525,22 +347,35 @@ struct EHSThreeCardBucket : ThreeCardBucket {
                     board_mask |= 1ull << (4*cards[j] + suits[j]);
                 }
             }
-            float eq = getEquity(board_mask, hand_mask, 0);
-            int str = int(eq*6);
-            if(str == 6) str = 5;
+            float eq = getEquity(getHand(board_mask), hand_mask, 0);
+            int str = 0;
+            for(int j = 0; j < discard_eq.size(); j++){
+                if(eq >= discard_eq[j]) str = j + 1;
+                else break;
+            }
             st *= 6;
             st += str;
         }
-        return st;
+        return st*8 + card_match;
     }
 
-    int getSBDiscardBucket(uint64_t board, uint64_t hand){
+    int getSBDiscardBucket(uint64_t board, uint64_t hand, int discard){
         assert(__builtin_popcountll(board) == 3);
         assert(__builtin_popcountll(hand) == 3);
         unsigned cards[3], suits[3];
         for(int i = 0; i < 3; i++){
             updateCard(hand, suits[i], cards[i]);
         }
+        int card_match = 0;
+        for(int i = 0; i < 3; i++){
+            int match = 0;
+            for(int j = 0; j < 4; j++){
+                if(board >> (4*cards[i] + j) & 1){
+                    match = 1;
+                }
+            }
+            card_match |= match << i;
+        }
         int st = 0;
         for(int i = 0; i < 3; i++){
             uint64_t hand_mask = 0;
@@ -552,41 +387,67 @@ struct EHSThreeCardBucket : ThreeCardBucket {
                     board_mask |= 1ull << (4*cards[j] + suits[j]);
                 }
             }
-            float eq = getEquity(board_mask, hand_mask, 1);
-            int str = int(eq*6);
-            if(str == 6) str = 5;
+            float eq = getEquity(getHand(board_mask), hand_mask, 1);
+            int str = 0;
+            for(int j = 0; j < discard_eq.size(); j++){
+                if(eq >= discard_eq[j]) str = j + 1;
+                else break;
+            }
             st *= 6;
             st += str;
         }
         return st;
     }
 
-    int getFlopBucket(uint64_t board, uint64_t hand){
+    const array<float, 11> flop_eq_thresholds = {0.10f, 0.20f, 0.30f, 0.40f, 0.50f, 0.60f, 0.70f, 0.80f, 0.88f, 0.94f, 0.98f};
+
+    int getFlopBucket(uint64_t board, uint64_t hand, int discard){
         assert(__builtin_popcountll(board) == 4);
         assert(__builtin_popcountll(hand) == 3);
         hand ^= hand & board;
-        float eq = getEquity(board, hand, 1);
-        int str = int(eq*50);
-        if(str == 50) str = 49;
-        return str;
+        int discard_encoded = encodeDiscard(board, hand, discard);
+        float eq = getEquity(getHand(board), hand, 1);
+        int str_bucket = 0;
+        for(int i = 0; i < flop_eq_thresholds.size(); i++){
+            if(eq >= flop_eq_thresholds[i]) str_bucket = i + 1;
+            else break;
+        }
+        assert(str_bucket <= 11);
+        return str_bucket*2 + discard_encoded;
     }
 
-    int getTurnBucket(uint64_t board, uint64_t hand){
+    const array<float, 11> turn_eq_thresholds = {0.10f, 0.20f, 0.30f, 0.40f, 0.50f, 0.60f, 0.70f, 0.80f, 0.88f, 0.94f, 0.98f};
+
+    int getTurnBucket(uint64_t board, uint64_t hand, int discard){
         assert(__builtin_popcountll(board) == 5);
         hand ^= hand & board;
-        float eq = getEquity(board, hand, 2);
-        int str = int(eq*50);
-        if(str == 50) str = 49;
-        return str;
+        omp::Hand board_hand = getHand(board);
+        int discard_encoded = encodeDiscard(board_hand, board, discard);
+        float eq = getEquity(board_hand, hand, 2);
+        int str_bucket = 0;
+        for(int i = 0; i < turn_eq_thresholds.size(); i++){
+            if(eq >= turn_eq_thresholds[i]) str_bucket = i + 1;
+            else break;
+        }
+        assert(str_bucket <= 11);
+        return str_bucket*2 + discard_encoded;
     }
 
-    int getRiverBucket(uint64_t board, uint64_t hand){
+    const array<float, 11> river_eq_thresholds = {0.10f, 0.20f, 0.30f, 0.40f, 0.50f, 0.60f, 0.70f, 0.80f, 0.88f, 0.94f, 0.98f};
+
+    int getRiverBucket(uint64_t board, uint64_t hand, int discard){
         assert(__builtin_popcountll(board) == 6);
         hand ^= hand & board;
-        float eq = getEquity(board, hand, 3);
-        int str = int(eq*50);
-        if(str == 50) str = 49;
-        return str;
+        omp::Hand board_hand = getHand(board);
+        int discard_encoded = encodeDiscard(board_hand, board, discard);
+        float eq = getEquity(board_hand, hand, 3);
+        int str_bucket = 0;
+        for(int i = 0; i < river_eq_thresholds.size(); i++){
+            if(eq >= river_eq_thresholds[i]) str_bucket = i + 1;
+            else break;
+        }
+        assert(str_bucket <= 11);
+        return str_bucket*2 + discard_encoded;
     }
 };
 

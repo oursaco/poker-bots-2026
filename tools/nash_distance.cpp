@@ -13,9 +13,6 @@
 
 using namespace std;
 
-// Global bucket that must outlive the tree (ThreeCardGameTree stores a raw pointer).
-static unique_ptr<NaiveThreeCardBucket> g_three_card_bucket;
-
 struct EvalConfig {
     string game;
     string player0_policy;
@@ -77,9 +74,10 @@ static unique_ptr<GameTree> createTree(const string& game) {
     if (game == "khun") return make_unique<KhunPokerGameTree>();
     if (game == "poker") return make_unique<PokerGameTree>();
     if (game == "three_card") {
-        g_three_card_bucket = make_unique<NaiveThreeCardBucket>();
+        EHSThreeCardBucket bucket;
+        bucket.init("./bucket_data");
         auto tree = make_unique<ThreeCardGameTree>();
-        tree->setBucket(g_three_card_bucket.get());
+        tree->setBucket(&bucket);
         return tree;
     }
     return nullptr;
