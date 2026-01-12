@@ -35,16 +35,16 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         ifstream inf(tar_dir, ios::binary);
         for(int i = 0; i < (1 << 20); i++){
             inf.read(reinterpret_cast<char*>(&map_to[i]), sizeof(unsigned));
-            len = max(len, map_to[i] + 1);
+            len = max(len, map_to[i]);
         }
         inf.close();
-        assert(len == 78293);
+        assert(len == 78292);
     }
 
     void readTable(string tar_dir, int ind){
         ifstream inf(tar_dir, ios::binary);
         for(int i = 0; i < 169; i++){
-            for(int j = 1; j <= len; j++){
+            for(int j = 0; j <= len; j++){
                 inf.read(reinterpret_cast<char*>(&eq[ind][i][j]), sizeof(float));
             }
         }
@@ -130,8 +130,8 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         int trips_encodings[] = {trips_3, trips_4, trips_5, trips_6};
         string stage_names[] = {"3 cards (222)", "4 cards (2227)", "5 cards (22279)", "6 cards (22279T)"};
         for (int stage = 0; stage < 4; stage++) {
-            int bucket_idx = map_to[trips_encodings[stage]] + 1;
-            if (bucket_idx > 0 && bucket_idx <= len) {
+            int bucket_idx = map_to[trips_encodings[stage]];
+            if (bucket_idx >= 0 && bucket_idx <= len) {
                 float equity = eq[stage][trips_holecard][bucket_idx];
                 if (equity >= 0) {
                     cout << "  " << stage_names[stage] << ": " << (equity * 100) << "%" << endl;
@@ -149,8 +149,8 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         int flush_encodings[] = {flush_3, flush_4, flush_5, flush_6};
         string flush_stage_names[] = {"3 cards (2c5c8d)", "4 cards (2c5c8dKh)", "5 cards (2c5c8dKh9h)", "6 cards (2c5c8dKh9h3c)"};
         for (int stage = 0; stage < 4; stage++) {
-            int bucket_idx = map_to[flush_encodings[stage]] + 1;
-            if (bucket_idx > 0 && bucket_idx <= len) {
+            int bucket_idx = map_to[flush_encodings[stage]];
+            if (bucket_idx >= 0 && bucket_idx <= len) {
                 float equity = eq[stage][flush_holecard][bucket_idx];
                 if (equity >= 0) {
                     cout << "  " << flush_stage_names[stage] << ": " << (equity * 100) << "%" << endl;
@@ -168,8 +168,8 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         int straight_encodings[] = {straight_3, straight_4, straight_5, straight_6};
         string straight_stage_names[] = {"3 cards (789)", "4 cards (7892)", "5 cards (78924)", "6 cards (78924Q)"};
         for (int stage = 0; stage < 4; stage++) {
-            int bucket_idx = map_to[straight_encodings[stage]] + 1;
-            if (bucket_idx > 0 && bucket_idx <= len) {
+            int bucket_idx = map_to[straight_encodings[stage]];
+            if (bucket_idx >= 0 && bucket_idx <= len) {
                 float equity = eq[stage][straight_holecard][bucket_idx];
                 if (equity >= 0) {
                     cout << "  " << straight_stage_names[stage] << ": " << (equity * 100) << "%" << endl;
@@ -309,7 +309,7 @@ struct EHSThreeCardBucket : ThreeCardBucket {
         }
         int board_encoded = encodeBoard(board, suits[0] == suits[1], suits[1]);
         int hole_id = getHoleId(cards[0], cards[1], suits[0], suits[1]);
-        float e = eq[ind][hole_id][map_to[board_encoded] + 1];
+        float e = eq[ind][hole_id][map_to[board_encoded]];
         if(e < 0.0f){
             cout << "Missing equity: " << cards[0] << " " << suits[0] << " " << cards[1] << " " << suits[1] << endl;
             return 0.0f;
