@@ -13600,3 +13600,15 @@ Finished iteration 5548381 of 10000000 in 33781 seconds
 Utility: 0.84349 -13.4579
 Finished iteration 5549232 of 10000000 in 33786 seconds
 Utility: -0.577953 3.85773
+Finished iteration 5550077 of 10000000 in 33791 seconds
+Utility: -0.697312 -0.364602
+Finished iteration 5550861 of 10000000 in 33796 seconds
+Utility: 1.25397 -0.690726
+Finished iteration 5551707 of 10000000 in 33801 seconds
+Utility: 0.997055 2
+Finished iteration 5552552 of 10000000 in 33806 seconds
+Utility: 1.0076 -0.630862
+Finished iteration 5553401 of 10000000 in 33811 seconds
+Utility: 0.0733362 -0.310979
+Finished iteration 5554249 of 10000000 in 33816 seconds
+Utility: 0.339973 3.30745
