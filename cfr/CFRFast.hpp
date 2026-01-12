@@ -373,3 +373,4 @@ struct FastTrainer {
 
 
 #endif // CFRFAST_HPP
+
