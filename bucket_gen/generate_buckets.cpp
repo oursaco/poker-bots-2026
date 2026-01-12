@@ -441,7 +441,6 @@ int main(){
             }
         }
     }
-    len--;
     cout << "len: " << len << endl;
     // Print specific hand equities
     writeTable(dir + "/three.bin", 0);
