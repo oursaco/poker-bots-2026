@@ -18,6 +18,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -fopenmp)
+add_compile_definitions(TRAINER_SZ=TREE_SZ)
 # GNU ld (and some MinGW toolchains) support `--stack`, but Apple ld does not.
 # On macOS this breaks linking with: `ld: unknown options: --stack`.
 if(NOT APPLE)
@@ -87,4 +88,4 @@ add_executable(three_card_trainer trainers/three_card_trainer.cpp)
 target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX Threads::Threads)
 
 add_executable(nash_distance tools/nash_distance.cpp)
-target_link_libraries(nash_distance PRIVATE pokerbots_headers omp)
+target_link_libraries(nash_distance PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)

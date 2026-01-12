@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cstdint>
 #include <set>
+#include <omp.h>
 
 #include "constants/constants.h"
 #include <algorithm>
