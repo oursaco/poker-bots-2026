@@ -343,10 +343,10 @@ struct FastTrainer {
                 #pragma omp barrier
                 tree[0]->prepare(seed[0]);
                 tree[1]->prepare(seed[1]);
-                #pragma omp barrier
+		#pragma omp barrier
                 updateUtility(i%2, 0);
                 updateUtility(i%2, 1);
-                #pragma omp barrier
+		#pragma omp barrier
                 updatePlayer(0, i%2, pos_mult, neg_mult, strat_mult, 0);
                 updatePlayer(1, i%2, pos_mult, neg_mult, strat_mult, 1);
             }
