@@ -123,7 +123,7 @@ struct FastTrainer {
     ThreeCardInferenceTree *tree[2];
     array<float, TREE_SZ> utility[2];
     array<float, 2*TREE_SZ> reach_probability[2];
-    array<int, TREE_SZ> compressed_children;
+    array<int, 2*TREE_SZ> compressed_children;
     array<int, TREE_SZ> children_map;
     array<vector<int>, TREE_SZ> children_list;
     array<int, TREE_SZ> depth_to_node;
@@ -311,7 +311,7 @@ struct FastTrainer {
 
     void decayRegret(float alpha, float beta){
         #pragma omp for schedule(static)
-        for(int i = 0; i < players[0].info_set_count; i++){
+        for(int i = 0; i < players[0].state_count; i++){
             players[0].regret_sum[i] *= (players[0].regret_sum[i] > 0.0f ? alpha : beta);
             players[1].regret_sum[i] *= (players[1].regret_sum[i] > 0.0f ? alpha : beta);
         }
@@ -336,13 +336,13 @@ struct FastTrainer {
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
             float neg_mult = pow(t, beta);
             float strat_mult = pow(t, gamma);
-            int seed[2] = {rng(), rng()};
+            int seeds[2] = {rng(), rng()};
             #pragma omp parallel
             {
                 decayRegret(pos_mult, neg_mult);
                 #pragma omp barrier
-                tree[0]->prepare(seed[0]);
-                tree[1]->prepare(seed[1]);
+                tree[0]->prepare(seeds[0]);
+                tree[1]->prepare(seeds[1]);
                 #pragma omp barrier
                 updateUtility(i%2, 0);
                 updateUtility(i%2, 1);
@@ -373,3 +373,4 @@ struct FastTrainer {
 
 
 #endif // CFRFAST_HPP
+

@@ -78,7 +78,7 @@ struct DCFRPolicy : CFRPolicy {
     }
 
     void decayRegret(float alpha, float beta){
-        for(int i = 0; i < info_set_count; i++){
+        for(int i = 0; i < state_count; i++){
             regret_sum[i] *= (regret_sum[i] > 0.0f ? alpha : beta);
         }
     }

@@ -532,7 +532,7 @@ struct ThreeCardInferenceTree {
 
     // updates the leaf utility values for each trainer
     void updateUtility(array<float, TREE_SZ> &utility){
-        #pragma omp parallel for
+        #pragma omp for
         for(int i = 0; i < leaves.size(); i++){
             int node_id = leaves[i].node_id;
             int w = leaves[i].winner;
