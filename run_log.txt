@@ -13612,3 +13612,19 @@ Finished iteration 5553401 of 10000000 in 33811 seconds
 Utility: 0.0733362 -0.310979
 Finished iteration 5554249 of 10000000 in 33816 seconds
 Utility: 0.339973 3.30745
+Finished iteration 5555074 of 10000000 in 33821 seconds
+Utility: 5.16799 0.952016
+Finished iteration 5555888 of 10000000 in 33826 seconds
+Utility: 4.23988 -0.910238
+Finished iteration 5556731 of 10000000 in 33831 seconds
+Utility: 1.98278 -1
+Finished iteration 5557581 of 10000000 in 33836 seconds
+Utility: 0.168212 1.05504
+Finished iteration 5558428 of 10000000 in 33841 seconds
+Utility: 3.32783 -1.22282
+Finished iteration 5559271 of 10000000 in 33846 seconds
+Utility: 11.434 0.989623
+Finished iteration 5560113 of 10000000 in 33851 seconds
+Utility: -1 0.320728
+Finished iteration 5560964 of 10000000 in 33856 seconds
+Utility: 1.39097 -11.4861
