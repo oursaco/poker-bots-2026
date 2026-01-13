@@ -76,11 +76,13 @@ struct BestResponseFastEvaluator {
         // Policy iteration: evaluate current best_action, then improve.
         const int max_iters = 1;
         for (int iter = 0; iter < max_iters; ++iter) {
+            cout << "Iter " << iter << endl;
             std::vector<double> Q_state(opponent_policy.state_count, 0.0);
 
-            rng = omp::XoroShiro128Plus(seed);
+            // rng = omp::XoroShiro128Plus(seed);
             for (int sample = 0; sample < num_samples; ++sample) {
                 const int sample_seed = (int)rng();
+                cout << sample_seed << endl;
                 prepareAndUtility(sample_seed, *utility);
 
                 std::fill(w.begin(), w.end(), 0.0);
@@ -176,7 +178,7 @@ struct BestResponseFastEvaluator {
 
         // Final evaluation under converged best_action (using same sampling scheme)
         double total_value = 0.0;
-        rng = omp::XoroShiro128Plus(seed);
+        // rng = omp::XoroShiro128Plus(seed);
         for (int sample = 0; sample < num_samples; ++sample) {
             const int sample_seed = (int)rng();
             prepareAndUtility(sample_seed, *utility);
