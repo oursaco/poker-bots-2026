@@ -55,6 +55,9 @@ target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
 add_executable(visualize_buckets tools/visualize_buckets.cpp)
 target_link_libraries(visualize_buckets PRIVATE pokerbots_headers omp)
 
+add_executable(convert_strategy_sum tools/convert_strategy_sum.cpp)
+target_link_libraries(convert_strategy_sum PRIVATE pokerbots_headers omp)
+
 add_executable(generate_buckets bucket_gen/generate_buckets.cpp)
 target_link_libraries(generate_buckets PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
