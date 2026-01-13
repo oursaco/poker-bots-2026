@@ -25,10 +25,10 @@ struct TrainConfig {
 int main() {
     TrainConfig config;
     config.seed = 1324132;
-    config.player0_policy = "";
-    config.player1_policy = "";
+    config.player0_policy = "./three_card_models/player.bin";
+    config.player1_policy = "./three_card_models/player.bin";
     config.output_dir = "./three_card_models";
-    config.iterations = 10'000'000;
+    config.iterations = 20'000'000;
 
     ThreeCardInferenceTree tree1;
     ThreeCardInferenceTree tree2;
@@ -47,7 +47,8 @@ int main() {
         config.checkpoint_every_secs,
         config.player0_policy,
         config.player1_policy,
-        config.output_dir);
+        config.output_dir,
+	10'000'000);
 
     return 0;
 }
