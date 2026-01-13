@@ -70,11 +70,12 @@ static bool parseArgs(int argc, char** argv, EvalConfig& config) {
     return !config.game.empty() && !config.player0_policy.empty() && !config.player1_policy.empty();
 }
 
+EHSThreeCardBucket bucket;
+
 static unique_ptr<GameTree> createTree(const string& game) {
     if (game == "khun") return make_unique<KhunPokerGameTree>();
     if (game == "poker") return make_unique<PokerGameTree>();
     if (game == "three_card") {
-        EHSThreeCardBucket bucket;
         bucket.init("./bucket_data");
         auto tree = make_unique<ThreeCardGameTree>();
         tree->setBucket(&bucket);

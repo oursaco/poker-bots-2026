@@ -82,15 +82,15 @@ struct BestResponseEvaluator {
         omp::XoroShiro128Plus rng(seed);
     
         // Policy iteration: evaluate current best_action, then improve.
-        const int max_iters = 100; // usually converges much earlier
+        const int max_iters = 3; // usually converges much earlier
         for(int iter = 0; iter < max_iters; ++iter){
-            vector<vector<double>> Q(info_set_count);
-            for(int I = 0; I < info_set_count; ++I){
+            cout << "Iteration " << iter << endl;
+            vector<vector<double>> Q(opponent_policy.info_set_count);
+            for(int I = 0; I < opponent_policy.info_set_count; ++I){
                 Q[I].assign(moves_per_info_set[I], 0.0);
             }
     
             // Collect Q over samples
-            rng = omp::XoroShiro128Plus(seed); // reset for determinism / variance reduction
             for(int sample = 0; sample < num_samples; ++sample){
                 // cout << "Iter " << sample << endl;
                 const int sample_seed = (int)rng();
@@ -207,7 +207,6 @@ struct BestResponseEvaluator {
     
         // Final evaluation under converged best_action (using same sampling scheme)
         double total_value = 0.0;
-        rng = omp::XoroShiro128Plus(seed);
         for(int sample = 0; sample < num_samples; ++sample){
             int sample_seed = (int)rng();
             tree->prepare(sample_seed);
