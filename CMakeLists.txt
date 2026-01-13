@@ -43,6 +43,9 @@ target_link_libraries(three_card_stats PRIVATE pokerbots_headers omp OpenMP::Ope
 add_executable(visualize_infosets tools/visualize_infosets.cpp)
 target_link_libraries(visualize_infosets PRIVATE pokerbots_headers omp)
 
+add_executable(tree_stats tools/tree_stats.cpp)
+target_link_libraries(tree_stats PRIVATE pokerbots_headers omp)
+
 add_executable(visualize_tree tools/visualize_tree.cpp)
 target_link_libraries(visualize_tree PRIVATE pokerbots_headers omp)
 

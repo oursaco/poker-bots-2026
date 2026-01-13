@@ -26,8 +26,6 @@ void test_inference(){
 }
 
 int main() {
-    test_inference();
-    return 0;
     ThreeCardInferenceTree tree1;
     ThreeCardInferenceTree tree3;
     ThreeCardGameTree tree2;
