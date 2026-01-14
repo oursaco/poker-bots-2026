@@ -458,4 +458,156 @@ struct EHSThreeCardBucket : ThreeCardBucket {
     }
 };
 
+struct DynamicThreeCardBucket : ThreeCardBucket {
+
+    int countBuckets(ThreeCardGameState* state){
+        int spr_bucket = 0;
+        if(state->turn == 0) spr_bucket = (state->sb_stack + state->pot - 1)/ state->pot;
+        else spr_bucket = (state->bb_stack + state->pot - 1)/ state->pot;
+        int spr_scale = 0;
+        int cur_buckets = 0;
+        if(state->turn == 0){
+            if(state->sb_stack == 0){
+                assert(state->street != 0);
+                cur_buckets = 1;
+            } else {
+                if(state->street == 0){
+                    cur_buckets = 1755;
+                } else if(state->street == 3){
+                    cur_buckets = 1250;
+                } else if(state->street == 4){
+                    assert(spr_scale > 0);
+                    cur_buckets = 10*spr_scale;
+                } else if(state->street == 5){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                } else if(state->street == 6){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                }
+            }
+        } else {
+            if(state->bb_stack == 0){
+                assert(state->street != 0);
+                cur_buckets = 1;
+            } else {
+                if(state->street == 0){
+                    cur_buckets = 1755;
+                } else if(state->street == 2){
+                    cur_buckets = 250;
+                } else if(state->street == 4){
+                    assert(spr_scale > 0);
+                    cur_buckets = 10*spr_scale;
+                } else if(state->street == 5){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                } else if(state->street == 6){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                }
+            }
+        }
+        return cur_buckets;
+    }
+
+    float river_eq[169][135991];
+    int preflop_buckets[52][52][52];
+    int encoding_map[(1 << 16)*162];
+    omp::HandEvaluator hand_eval;
+
+    int getHoleId(int p1, int p2, int ps1, int ps2){
+        if(ps1 == ps2) return p1*13 + p2;
+        return p2*13 + p1;
+    }
+
+    int encodeBoard(omp::Hand board, int s1, int s2){
+        int str = hand_eval.evaluate(board);
+        int suited_state = -1;
+        if(s1 == s2){
+            // no shared suits, we check if there are 2 suits with 3 cards each
+            if(board.suitCount(s1) == 0){
+                int cnt = 0;
+                for(int i = 0; i < 4; i++) if(i != s1) cnt += board.suitCount(i) == 3;
+                if(cnt == 2){
+                    suited_state = 0;
+                    assert(suited_state >= 0 && suited_state <= 0);
+                    // suited state is 0
+                } else { // only need to check max suit because there can only be one flush draw
+                    // 0 ... 6
+                    // we dont care about 0, 1, or 2
+                    int mx_suit = max({board.suitCount(0), board.suitCount(1), board.suitCount(2), board.suitCount(3)});
+                    mx_suit = min(4, max(0, mx_suit - 2));
+                    suited_state = 1 + mx_suit;
+                    assert(suited_state >= 1 && suited_state <= 5);
+                    //suited state is 1 ... 5
+                }
+            } else {
+                // we need to check max suit outside of the same suit since there can only be one flush draw other than ours
+                int mx_suit = max({board.suitCount((s1 + 1) % 4), board.suitCount((s1 + 2) % 4), board.suitCount((s1 + 3) % 4)});
+                int same_suit = board.suitCount(s1);
+                // we don't care about 0, 1, or 2
+                mx_suit = min(4, max(0, mx_suit - 2));
+                same_suit = min(4, max(0, same_suit - 2));
+                suited_state = 6 + same_suit*5 + mx_suit;
+                assert(suited_state >= 6 && suited_state <= 30);
+                // suited state is 6 ... 30
+            }
+        } else {
+            int same1 = board.suitCount(s1);
+            int same2 = board.suitCount(s2);
+            // no shared suits, we check if there are 2 suits with 3 cards each
+            if(same1 == 0 && same2 == 0){
+                int cnt = 0;
+                for(int i = 0; i < 4; i++) if(i != s1 && i != s2) cnt += board.suitCount(i) == 3;
+                if(cnt == 2){
+                    suited_state = 31;
+                    assert(suited_state >= 31 && suited_state <= 31);
+                    // suited state is 31
+                } else { // only need to check max suit because there can only be one flush draw
+                    int mx_suit = max({board.suitCount(0), board.suitCount(1), board.suitCount(2), board.suitCount(3)});
+                    mx_suit = min(4, max(0, mx_suit - 2));
+                    suited_state = 32 + mx_suit;
+                    assert(suited_state >= 32 && suited_state <= 36);
+                    // suited state is 32 ... 36
+                }
+            } else {
+                // we don't care about 0, 1, or 2
+                same1 = min(4, max(0, same1 - 2));
+                same2 = min(4, max(0, same2 - 2));
+                // we need to check max suit outside of the same suit since there can only be one flush draw other than ours
+                int mx_suit = 0;
+                for(int i = 0; i < 4; i++) if(i != s1 && i != s2) mx_suit = max(mx_suit, (int)board.suitCount(i));
+                mx_suit = min(4, max(0, mx_suit - 2));
+                suited_state = 37 + same1*5*5 + same2*5 + mx_suit;
+                assert(suited_state >= 37 && suited_state <= 161);
+                // suited state is 37 ... 161
+            }
+        }
+        return hand_eval.evaluate(board)*162 + suited_state;
+    }
+
+    void readPreflop(string tar_dir){
+        ifstream inf(tar_dir, ios::binary);
+        int num_buckets;
+        inf.read(reinterpret_cast<char*>(&num_buckets), sizeof(int));
+        assert(num_buckets == 1755);
+        for(int i = 0; i < 52; i++){
+            for(int j = i + 1; j < 52; j++){
+                for(int k = j + 1; k < 52; k++){
+                    inf.read(reinterpret_cast<char*>(&preflop_buckets[i][j][k]), sizeof(unsigned));
+                }
+            }
+        }
+        inf.close();
+    }
+
+    float calcEquity(uint64_t board, uint64_t hand){
+        assert(__builtin_popcountll(hand) == 2);
+    }
+
+    int getPreflopBucket(uint64_t hand){
+
+    }
+};
+
 #endif // TREECARDBUCKET_HPP

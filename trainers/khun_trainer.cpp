@@ -59,6 +59,49 @@ void printSmallBlindOpeningStrategy(DCFRTrainer& trainer) {
     }
 }
 
+void printSmallBlindResponseStrategy(DCFRTrainer& trainer) {
+    DCFRPolicy& sb_policy = trainer.players[0];
+    GameTree* tree = trainer.tree;
+    const char* response_to_raise[] = {"sb fold", "sb call"};
+
+    std::cout << std::fixed << std::setprecision(4);
+    std::cout << "Small blind response to big blind raise (average):\n";
+
+    int num_nodes = tree->nodeCount();
+    for (int node = 0; node < num_nodes; ++node) {
+        if (tree->getTurn(node) != 0) {
+            continue;
+        }
+        int parent = tree->getParentId(node);
+        if (parent < 0 || tree->getTurn(parent) != 1) {
+            continue;  // Not responding to BB
+        }
+        int parent_move = tree->getMove(node);
+        if (parent_move != 0) {
+            continue;  // Only interested in response after BB raise (move 0)
+        }
+
+        std::cout << "  after sb check, bb raise:\n";
+        for (int card = 0; card < 3; ++card) {
+            int info_set = node * 3 + card;
+            int move_count = sb_policy.getMoveCount(info_set);
+            std::cout << "    card " << card << ": ";
+            for (int move = 0; move < move_count; ++move) {
+                float prob = averageMoveProb(sb_policy, info_set, move);
+                if (move < 2) {
+                    std::cout << response_to_raise[move] << "=" << prob;
+                } else {
+                    std::cout << "move " << move << "=" << prob;
+                }
+                if (move + 1 < move_count) {
+                    std::cout << ", ";
+                }
+            }
+            std::cout << "\n";
+        }
+    }
+}
+
 void printBigBlindStrategy(DCFRTrainer& trainer) {
     DCFRPolicy& bb_policy = trainer.players[1];
     GameTree* tree = trainer.tree;
@@ -117,7 +160,7 @@ int main() {
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./khun_poker";
-    config.iterations = 1'000'000;
+    config.iterations = 10'000'000;
 
     KhunPokerGameTree tree;
     tree.init();
@@ -135,6 +178,7 @@ int main() {
         config.output_dir);
 
     printSmallBlindOpeningStrategy(*trainer);
+    printSmallBlindResponseStrategy(*trainer);
     printBigBlindStrategy(*trainer);
 
     return 0;

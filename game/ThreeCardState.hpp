@@ -51,6 +51,7 @@ struct ThreeCardGameState : GameState {
     // change in pnl is winner * pot, so sb is positive bb is negative
     int winner;
     bool showdown;
+    int agressor;
 
     ThreeCardGameState(){
         pot = 3;
@@ -63,6 +64,7 @@ struct ThreeCardGameState : GameState {
         turn = -1;
         action_depth = 0;
         street = 0;
+        agressor = 1;
     }
 
     ThreeCardGameState(const ThreeCardGameState& other) = default;
@@ -74,6 +76,11 @@ struct ThreeCardGameState : GameState {
     string getWinner(){
         return (winner == 1 ? "sb" : (winner == -1 ? "bb" : "none"));
     } 
+
+    float spr_after_raise(int amount, int stack){
+        int new_pot = amount + pot;
+        return float(stack)/new_pot;
+    }
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> sb_fold(){
         auto fold = make_unique<ThreeCardGameState>(*this);  
@@ -149,6 +156,7 @@ struct ThreeCardGameState : GameState {
         raise->sb_bet += amount;
         raise->turn = 1;
         raise->action_depth = action_depth + 1;
+        raise->agressor = 0;
         return {std::move(raise), make_unique<ThreeCardAction>("raise", 0, amount, raise->sb_stack, raise->bb_stack, raiseSizeRelativeToPot(amount))};
     }
 
@@ -162,6 +170,7 @@ struct ThreeCardGameState : GameState {
         raise->bb_bet += amount;
         raise->turn = 0;
         raise->action_depth = action_depth + 1;
+        raise->agressor = 1;
         return {std::move(raise), make_unique<ThreeCardAction>("raise", 1, amount, raise->sb_stack, raise->bb_stack, raiseSizeRelativeToPot(amount))};
     }
 
@@ -179,12 +188,17 @@ struct ThreeCardGameState : GameState {
         return (pot + bet_diff)*2 + bet_diff;
     }
 
+    int min_click_size(){
+        int bet_diff = max(sb_bet, bb_bet) - min(sb_bet, bb_bet);
+        return bet_diff + max(sb_bet, bb_bet);
+    }
+
     bool valid_sb_raise(int amount){
-        return amount < sb_stack && amount >= 2*bb_bet && amount + sb_bet - bb_bet < bb_stack;
+        return amount < sb_stack && amount >= 2*bb_bet && amount + sb_bet - bb_bet < bb_stack && spr_after_raise(amount, sb_stack) >= 0.5f;
     }
 
     bool valid_bb_raise(int amount){
-        return amount < bb_stack && amount >= 2*sb_bet && amount + bb_bet - sb_bet < sb_stack;
+        return amount < bb_stack && amount >= 2*sb_bet && amount + bb_bet - sb_bet < sb_stack && spr_after_raise(amount, bb_stack) >= 0.5f;
     }
 
     vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> generateStreetActions() {
@@ -197,8 +211,13 @@ struct ThreeCardGameState : GameState {
             vector<int> raise_sizes;
             if(bb_bet > sb_bet){
                 raise_sizes = {pot_raise_size()};
+                if(action_depth == 1 && street != 0 && min_click_size() < pot_raise_size()/2) raise_sizes.push_back(min_click_size());
             } else {
-                raise_sizes = {half_pot_raise_size(), double_pot_raise_size()};
+                if(agressor == 1){
+                    raise_sizes = {pot_raise_size()};
+                } else {
+                    raise_sizes = {half_pot_raise_size()};
+                }
             }
             for(int size : raise_sizes){
                 if(valid_sb_raise(size) && action_depth < 4){
@@ -217,7 +236,10 @@ struct ThreeCardGameState : GameState {
             if(sb_bet > bb_bet || (street == 0 && sb_bet == 2)){
                 raise_sizes = {pot_raise_size()};
             } else {
-                raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};
+                raise_sizes = {half_pot_raise_size(), pot_raise_size()};
+                if(agressor == 0){
+                    raise_sizes.push_back(double_pot_raise_size());
+                }
             }
             for(int size : raise_sizes){
                 if(valid_bb_raise(size) && action_depth < 4){

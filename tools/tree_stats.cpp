@@ -35,6 +35,7 @@ struct TestState : GameState {
     // change in pnl is winner * pot, so sb is positive bb is negative
     int winner;
     bool showdown;
+    int agressor;
 
     TestState(){
         pot = 3;
@@ -47,6 +48,7 @@ struct TestState : GameState {
         turn = -1;
         action_depth = 0;
         street = 0;
+        agressor = 1;
     }
 
     TestState(const TestState& other) = default;
@@ -58,6 +60,11 @@ struct TestState : GameState {
     string getWinner(){
         return (winner == 1 ? "sb" : (winner == -1 ? "bb" : "none"));
     } 
+
+    float spr_after_raise(int amount, int stack){
+        int new_pot = amount + pot;
+        return float(stack)/new_pot;
+    }
 
     pair<unique_ptr<GameState>, unique_ptr<Action>> sb_fold(){
         auto fold = make_unique<TestState>(*this);  
@@ -133,6 +140,7 @@ struct TestState : GameState {
         raise->sb_bet += amount;
         raise->turn = 1;
         raise->action_depth = action_depth + 1;
+        raise->agressor = 0;
         return {std::move(raise), make_unique<ThreeCardAction>("raise", 0, amount, raise->sb_stack, raise->bb_stack, raiseSizeRelativeToPot(amount))};
     }
 
@@ -146,6 +154,7 @@ struct TestState : GameState {
         raise->bb_bet += amount;
         raise->turn = 0;
         raise->action_depth = action_depth + 1;
+        raise->agressor = 1;
         return {std::move(raise), make_unique<ThreeCardAction>("raise", 1, amount, raise->sb_stack, raise->bb_stack, raiseSizeRelativeToPot(amount))};
     }
 
@@ -169,11 +178,11 @@ struct TestState : GameState {
     }
 
     bool valid_sb_raise(int amount){
-        return amount < sb_stack && amount >= 2*bb_bet && amount + sb_bet - bb_bet < bb_stack;
+        return amount < sb_stack && amount >= 2*bb_bet && amount + sb_bet - bb_bet < bb_stack && spr_after_raise(amount, sb_stack) >= 0.5f;
     }
 
     bool valid_bb_raise(int amount){
-        return amount < bb_stack && amount >= 2*sb_bet && amount + bb_bet - sb_bet < sb_stack;
+        return amount < bb_stack && amount >= 2*sb_bet && amount + bb_bet - sb_bet < sb_stack && spr_after_raise(amount, bb_stack) >= 0.5f;
     }
 
     vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> generateStreetActions() {
@@ -186,9 +195,13 @@ struct TestState : GameState {
             vector<int> raise_sizes;
             if(bb_bet > sb_bet){
                 raise_sizes = {pot_raise_size()};
-                if(action_depth == 1 && street != 0) raise_sizes.push_back(min_click_size());
+                if(action_depth == 1 && street != 0 && min_click_size() < pot_raise_size()/2) raise_sizes.push_back(min_click_size());
             } else {
-                raise_sizes = {half_pot_raise_size(), double_pot_raise_size()};
+                if(agressor == 1){
+                    raise_sizes = {pot_raise_size()};
+                } else {
+                    raise_sizes = {half_pot_raise_size()};
+                }
             }
             for(int size : raise_sizes){
                 if(valid_sb_raise(size) && action_depth < 4){
@@ -206,9 +219,11 @@ struct TestState : GameState {
             vector<int> raise_sizes;
             if(sb_bet > bb_bet || (street == 0 && sb_bet == 2)){
                 raise_sizes = {pot_raise_size()};
-                if(action_depth == 1 && street != 0) raise_sizes.push_back(min_click_size());
             } else {
-                raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};
+                raise_sizes = {half_pot_raise_size(), pot_raise_size()};
+                if(agressor == 0){
+                    raise_sizes.push_back(double_pot_raise_size());
+                }
             }
             for(int size : raise_sizes){
                 if(valid_bb_raise(size) && action_depth < 4){
@@ -272,18 +287,93 @@ struct TestState : GameState {
     }
 };
 
+int buckets = 0;
 
 void generateTreeRecursive(TestState& state, TreeStats& stats, size_t depth) {
     stats.total_nodes++;
     stats.max_depth = max(stats.max_depth, depth);
     stats.nodes_per_street[state.street]++;
-
     // Calculate SPR (stack-to-pot ratio) using effective stack
     int effective_stack = min(state.sb_stack, state.bb_stack);
-    int spr_bucket = (state.pot > 0) ? ((effective_stack  + state.pot - 1)/ state.pot) : 0;
+    int spr_bucket = 0;
+    if(state.turn == 0) spr_bucket = (state.sb_stack + state.pot - 1)/ state.pot;
+    else spr_bucket = (state.bb_stack + state.pot - 1)/ state.pot;
     stats.spr_histogram[spr_bucket]++;
     stats.spr_histogram_per_street[state.street][spr_bucket]++;
 
+    int cur_buckets = 0;
+    int spr_scale = 0;
+    if(state.street == 4){
+        if(1 <= spr_bucket && spr_bucket <= 3){
+            spr_scale = 10;
+        } else if(4 <= spr_bucket && spr_bucket <= 13){
+            spr_scale = 64;
+        } else {
+            spr_scale = 32;
+        }
+    } else if(state.street == 5){
+        if(1 <= spr_bucket && spr_bucket <= 3){
+            spr_scale = 10;
+        } else if(4 <= spr_bucket && spr_bucket <= 6){
+            spr_scale = 64;
+        } else {
+            spr_scale = 32;
+        }
+    } else if(state.street == 6){
+        if(1 <= spr_bucket && spr_bucket <= 2){
+            spr_scale = 5;
+        } else if(3 <= spr_bucket && spr_bucket <= 5){
+            spr_scale = 10;
+        } else {
+            spr_scale = 20;
+        }
+    }
+    if(state.turn != -1){
+        if(state.turn == 0){
+            if(state.sb_stack == 0){
+                assert(state.street != 0);
+                cur_buckets = 1;
+            } else {
+                if(state.street == 0){
+                    cur_buckets = 1755;
+                } else if(state.street == 3){
+                    cur_buckets = 1250;
+                } else if(state.street == 4){
+                    assert(spr_scale > 0);
+                    cur_buckets = 10*spr_scale;
+                } else if(state.street == 5){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                } else if(state.street == 6){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                }
+            }
+        } else {
+            if(state.bb_stack == 0){
+                assert(state.street != 0);
+                cur_buckets = 1;
+            } else {
+                if(state.street == 0){
+                    cur_buckets = 1755;
+                } else if(state.street == 2){
+                    cur_buckets = 250;
+                } else if(state.street == 4){
+                    assert(spr_scale > 0);
+                    cur_buckets = 10*spr_scale;
+                } else if(state.street == 5){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                } else if(state.street == 6){
+                    assert(spr_scale > 0);
+                    cur_buckets = 2*8*spr_scale;
+                }
+            }
+        }
+    } else {
+        cur_buckets = 0;
+    }
+    buckets += cur_buckets;
     if (state.isTerminal()) {
         stats.terminal_nodes++;
         if (state.showdown) {
@@ -383,6 +473,7 @@ int main() {
     
     cout << endl;
     printStats(stats);
+    cout << "Total buckets: " << buckets << endl;
     
     return 0;
 }

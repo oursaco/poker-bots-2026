@@ -82,7 +82,7 @@ struct BestResponseEvaluator {
         omp::XoroShiro128Plus rng(seed);
     
         // Policy iteration: evaluate current best_action, then improve.
-        const int max_iters = 3; // usually converges much earlier
+        const int max_iters = 10; // usually converges much earlier
         for(int iter = 0; iter < max_iters; ++iter){
             cout << "Iteration " << iter << endl;
             vector<vector<double>> Q(opponent_policy.info_set_count);
