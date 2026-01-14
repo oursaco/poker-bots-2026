@@ -4,6 +4,7 @@
 #include <array>
 #include <cassert>
 #include <limits>
+#include <memory>
 #include <vector>
 #include "cfr/CFR.hpp"
 #include "external/omp/Random.h"
@@ -20,12 +21,14 @@ struct BestResponseEvaluator {
     GameTree* tree = nullptr;
     vector<vector<int>> children;
     vector<int> postorder;
-    array<int, POLICY_SZ> moves_per_info_set;
+    // Huge; must live on heap to avoid stack overflow in tools (e.g. nash_distance).
+    unique_ptr<array<int, POLICY_SZ>> moves_per_info_set;
 
     void setTree(GameTree* tree_){
         tree = tree_;
         buildIndex();
-        tree->fillMovesPerInfoSet(moves_per_info_set);
+        moves_per_info_set = make_unique<array<int, POLICY_SZ>>();
+        tree->fillMovesPerInfoSet(*moves_per_info_set);
     }
 
     // Monte Carlo best response: samples chance nodes instead of exact chance evaluation.
@@ -66,10 +69,15 @@ struct BestResponseEvaluator {
         }
 
     
+        // Working buffers (heap-allocated to avoid stack overflow on large games).
+        auto utility = make_unique<array<float, TRAINER_SZ>>();
+        vector<double> w(num_nodes, 0.0);
+        vector<double> V(num_nodes, 0.0);
+
         // Initialize BR policy (per infoset): -1 = unseen/unused; default to 0 when needed.
         vector<int> best_action(info_set_count, -1);
         for(int I = 0; I < info_set_count; ++I){
-            if(moves_per_info_set[I] > 0) best_action[I] = 0;
+            if((*moves_per_info_set)[I] > 0) best_action[I] = 0;
         }
     
         auto better = [&](double a, double b){
@@ -96,13 +104,12 @@ struct BestResponseEvaluator {
                 const int sample_seed = (int)rng();
                 tree->prepare(sample_seed);
     
-                array<float, TREE_SZ> utility;
-                fill(utility.begin(), utility.end(), 0.0f);
-                tree->updateUtility(utility);
+                std::fill(utility->begin(), utility->begin() + num_nodes, 0.0f);
+                tree->updateUtility(*utility);
     
                 // Counterfactual reach weights w[node] = pi_{-br}(node) under opponent + sampled chance.
                 // Since chance is sampled from its distribution, we propagate with prob 1 along sampled branch.
-                vector<double> w(num_nodes, 0.0);
+                std::fill(w.begin(), w.end(), 0.0);
                 w[0] = 1.0 / (double)num_samples;
     
                 for(int node : forward_order){
@@ -128,10 +135,10 @@ struct BestResponseEvaluator {
                 }
     
                 // Bottom-up value under current best_action policy (and opponent expectations).
-                vector<double> V(num_nodes, 0.0);
+                std::fill(V.begin(), V.end(), 0.0);
                 for(int node : postorder){
                     if(children[node].empty()){
-                        V[node] = (double)utility[node];
+                        V[node] = (double)(*utility)[node];
                         continue;
                     }
                     int turn = tree->getTurn(node);
@@ -171,13 +178,11 @@ struct BestResponseEvaluator {
     
                     int I = tree->getInfoSet(node);
                     assert(I >= 0 && I < info_set_count);
-                    // int A = (int)children[node].size();
-                    // for(int a = 0; a < A; ++a){
-                    //     Q[I][a] += wn * V[children[node][a]];
-                    // }
                     for (int c : children[node]) {
                         int move = tree->getMove(c);
-                        Q[I][move] += wn * V[c];
+                        // Move ids are expected to be 0..A-1, matching DCFRPolicy indexing.
+                        const int st = opponent_policy.getState(I, move);
+                        Q_state[st] += wn * V[c];
                     }
                 }
             }
@@ -185,14 +190,15 @@ struct BestResponseEvaluator {
             // Improve policy
             bool changed = false;
             for(int I = 0; I < info_set_count; ++I){
-                int A = moves_per_info_set[I];
+                int A = (*moves_per_info_set)[I];
                 if(A <= 0) continue;
     
                 int best_a = 0;
-                double best_q = Q[I][0];
+                double best_q = Q_state[opponent_policy.getState(I, 0)];
                 for(int a = 1; a < A; ++a){
-                    if(better(Q[I][a], best_q)){
-                        best_q = Q[I][a];
+                    double qa = Q_state[opponent_policy.getState(I, a)];
+                    if(better(qa, best_q)){
+                        best_q = qa;
                         best_a = a;
                     }
                 }
@@ -211,14 +217,13 @@ struct BestResponseEvaluator {
             int sample_seed = (int)rng();
             tree->prepare(sample_seed);
     
-            array<float, TREE_SZ> utility;
-            fill(utility.begin(), utility.end(), 0.0f);
-            tree->updateUtility(utility);
+            std::fill(utility->begin(), utility->begin() + num_nodes, 0.0f);
+            tree->updateUtility(*utility);
     
-            vector<double> V(num_nodes, 0.0);
+            std::fill(V.begin(), V.end(), 0.0);
             for(int node : postorder){
                 if(children[node].empty()){
-                    V[node] = (double)utility[node];
+                    V[node] = (double)(*utility)[node];
                     continue;
                 }
                 int turn = tree->getTurn(node);

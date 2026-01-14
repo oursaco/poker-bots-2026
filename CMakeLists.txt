@@ -18,7 +18,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -fopenmp)
-# add_link_options(-Wl,--stack,2147483648)
+# GNU ld (and some MinGW toolchains) support `--stack`, but Apple ld does not.
+# On macOS this breaks linking with: `ld: unknown options: --stack`.
+if(NOT APPLE)
+    add_link_options(-Wl,--stack,2147483648)
+endif()
 add_compile_options(-w)
 
 add_library(pokerbots_headers INTERFACE)

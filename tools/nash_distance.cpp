@@ -13,6 +13,9 @@
 
 using namespace std;
 
+// Global bucket that must outlive the tree (ThreeCardGameTree stores a raw pointer).
+static unique_ptr<EHSThreeCardBucket> g_three_card_bucket;
+
 struct EvalConfig {
     string game;
     string player0_policy;
@@ -76,7 +79,9 @@ static unique_ptr<GameTree> createTree(const string& game) {
     if (game == "khun") return make_unique<KhunPokerGameTree>();
     if (game == "poker") return make_unique<PokerGameTree>();
     if (game == "three_card") {
-        bucket.init("./bucket_data");
+        // Match the bucket used by `trainers/three_card_trainer.cpp` so policies load correctly.
+        g_three_card_bucket = make_unique<EHSThreeCardBucket>();
+        g_three_card_bucket->init("./bucket_data");
         auto tree = make_unique<ThreeCardGameTree>();
         tree->setBucket(&bucket);
         return tree;
