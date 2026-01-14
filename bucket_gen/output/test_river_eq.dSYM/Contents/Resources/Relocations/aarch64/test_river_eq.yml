@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/raymondluo/Desktop/Undergrad/poker-bots-2026/bucket_gen/output/test_river_eq'
+relocations:     []
+...

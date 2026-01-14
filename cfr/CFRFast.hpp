@@ -337,8 +337,13 @@ struct FastTrainer {
             float t = i;
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
             float neg_mult = pow(t, beta);
+<<<<<<< HEAD
+            float strat_mult = pow(t, gamma);
+            // `rng()` returns uint64_t; cast to avoid C++11 narrowing in list-init (clang -Wc++11-narrowing).
+=======
             float strat_mult = pow(float(t)/float(t + 1), gamma);
-            int seeds[2] = {rng(), rng()};
+>>>>>>> 6206934 (temp changes)
+            int seeds[2] = {static_cast<int>(rng()), static_cast<int>(rng())};
             #pragma omp parallel
             {
                 decayRegret(pos_mult, neg_mult, strat_mult);

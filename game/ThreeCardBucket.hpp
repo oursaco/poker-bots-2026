@@ -855,6 +855,8 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return equity_bucket*8 + opp_type*2 + my_type;
     }
 
+    
+
 };
 
 #endif // TREECARDBUCKET_HPP
