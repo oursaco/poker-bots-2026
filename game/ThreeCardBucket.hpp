@@ -510,10 +510,32 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return cur_buckets;
     }
 
-    float river_eq[169][135991];
+    float river_eq[169][108345];
     int preflop_buckets[52][52][52];
-    int encoding_map[(1 << 16)*162];
+    int river_encoding_map[(1 << 16)*162];
     omp::HandEvaluator hand_eval;
+    vector<uint64_t> three_card_straight_masks;
+    vector<uint64_t> four_card_straight_masks;
+
+    void init(string tar_dir){
+        readPreflop(tar_dir + "/preflop.bin");
+        readRiverEncodingMap(tar_dir + "/ehs_map.bin");
+        readRiverEquity(tar_dir + "/river_equity.bin");
+        for(int i = 1; i + 3 < 12; i++){
+            uint64_t mask = 0;
+            for(int j = i; j < i + 3; j++){
+                mask |= 1ull << j;
+            }
+            three_card_straight_masks.push_back(mask);
+        }
+        for(int i = 0; i + 4 < 13; i++){
+            uint64_t mask = 0;
+            for(int j = i; j < i + 4; j++){
+                mask |= 1ull << j;
+            }
+            four_card_straight_masks.push_back(mask);
+        }
+    }
 
     int getHoleId(int p1, int p2, int ps1, int ps2){
         if(ps1 == ps2) return p1*13 + p2;
@@ -601,13 +623,238 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         inf.close();
     }
 
-    float calcEquity(uint64_t board, uint64_t hand){
+    void readRiverEncodingMap(string dir){
+        ifstream inf(dir, ios::binary);
+        int num_river_buckets;
+        inf.read(reinterpret_cast<char*>(&num_river_buckets), sizeof(int));
+        assert(num_river_buckets == 108345);
+        for(int i = 0; i < (1 << 16)*162; i++){
+            inf.read(reinterpret_cast<char*>(&river_encoding_map[i]), sizeof(int));
+        }
+        inf.close();
+    }
+
+    void readRiverEquity(string dir){
+        ifstream inf(dir, ios::binary);
+        for(int i = 0; i < 169; i++){
+            for(int j = 0; j < 108345; j++){
+                inf.read(reinterpret_cast<char*>(&river_eq[i][j]), sizeof(float));
+            }
+        }
+        inf.close();
+    }
+
+    void updateCard(uint64_t &mask, int &suit, int &id){
+        int card = __builtin_ctzll(mask);
+        mask ^= 1ull << card;
+        suit = card%4;
+        id = card/4;
+    }
+
+    float calcEquity( omp::Hand board, uint64_t hand){
         assert(__builtin_popcountll(hand) == 2);
+        int p1, p2, ps1, ps2;
+        updateCard(hand, p1, ps1);
+        updateCard(hand, p2, ps2);
+        if(board.count() == 6){
+            int id = getHoleId(p1, p2, ps1, ps2);
+            int river_state = encodeBoard(board, ps1, ps2);
+            return river_eq[id][river_state];
+        } else if(board.count() == 5){
+        } else if(board.count() == 4){
+        } else if(board.count() == 3){
+        } else {
+            assert(false);
+        }
+    }
+
+    omp::Hand getHand(uint64_t mask){
+        omp::Hand hand = omp::Hand::empty();
+        while(mask){
+            int card = __builtin_ctzll(mask);
+            mask ^= 1ull << card;
+            hand += omp::Hand(card);
+        }
+        return hand;
+    }
+
+    uint64_t getRankMask(uint64_t mask){
+        uint64_t rank_mask = 0;
+        while(mask){
+            int card = __builtin_ctzll(mask);
+            rank_mask |= 1ull << (card/4);
+            mask ^= 1ull << card;
+        }
+        return rank_mask;
+    }
+
+    // rank mask + card makes a 3 card
+    // doesn't count if rank_mask contains card
+    int checkThreeCardStraight(uint64_t rank_mask, uint64_t card_mask){
+        for(uint64_t mask : three_card_straight_masks){
+            int exists_before = 0;
+            if((rank_mask & mask) == mask) exists_before = 1;
+            int exists_after = 0;
+            if(((rank_mask | card_mask) & mask) == mask) exists_after = 1;
+            if(!exists_before && exists_after) return 1;
+        }
+        return 0;
+    }
+
+    // rank_mask + card makes a 4 card
+    // doesn't count if rank_mask contains card
+    int checkFourCardStraight(uint64_t rank_mask, uint64_t card_mask){
+        for(uint64_t mask : four_card_straight_masks){
+            int exists_before = 0;
+            if((rank_mask & mask) == mask) exists_before = 1;
+            int exists_after = 0;
+            if(((rank_mask | card_mask) & mask) == mask) exists_after = 1;
+            if(!exists_before && exists_after) return 1;
+        }
+        return 0;
     }
 
     int getPreflopBucket(uint64_t hand){
-
+        assert(__builtin_popcountll(hand) == 3);
+        int cards[3];
+        for(int i = 0; i < 3; i++){
+            cards[i] = __builtin_ctzll(hand);
+            hand ^= 1ull << cards[i];
+        }
+        return preflop_buckets[cards[0]][cards[1]][cards[2]];
     }
+
+    array<float, 4> discard_eq = {0.30f, 0.50f, 0.60f, 0.80f};
+
+    // rank_mask should not include discard_card
+    // board_hand should not include discard_card
+    int getDiscardType(omp::Hand board_hand, uint64_t rank_mask, int discard_card, int discard_suit){
+        assert(2 <= board_hand.count() && board_hand.count() <= 3);
+        int suit_match = board_hand.suitCount(discard_suit);
+        int straight_match = checkThreeCardStraight(rank_mask, 1ull << discard_card);
+        int pair_match = rank_mask >> discard_card & 1;
+        int ret = 0;
+        if(suit_match + straight_match + pair_match >= 2) ret += 4;
+        else {
+            if(suit_match == 1) ret += 1;
+            else if(straight_match == 1) ret += 2;
+            else if(pair_match == 1) ret += 3;
+        }
+        return ret;
+    }
+
+    int getDiscardBucket(uint64_t board, uint64_t hand, array<int, 3> order){
+        int ranks[3], suits[3];
+        for(int i = 0; i < 3; i++){
+            updateCard(hand, suits[order[i]], ranks[order[i]]);
+        }
+        int state = 0;
+        omp::Hand board_hand = getHand(board);
+        uint64_t rank_mask = getRankMask(board);
+        int discard_mask = 0;
+        int equity_mask = 0;
+        for(int i = 0; i < 3; i++){
+            discard_mask *= 5;
+            discard_mask += getDiscardType(board_hand, rank_mask, ranks[i], suits[i]);
+            int discard_card = 4*ranks[i] + suits[i];
+            float equity = calcEquity(board_hand + omp::Hand(discard_card), hand ^ (1ull << discard_card));
+            equity_mask *= 5;
+            equity_mask += lower_bound(discard_eq.begin(), discard_eq.end(), equity) - discard_eq.begin();
+        }
+        if(discard_mask == 0) return equity_mask;
+        return discard_mask + 5*5*5;
+    }
+
+    int getBBDiscardBucket(uint64_t board, uint64_t hand, array<int, 3> order){
+        assert(__builtin_popcountll(board) == 2);
+        assert(__builtin_popcountll(hand) == 3);
+        return getDiscardBucket(board, hand, order);
+    }
+
+    int getSBDiscardBucket(uint64_t board, uint64_t hand, int discard, array<int, 3> order){
+        assert(__builtin_popcountll(board) == 3);
+        assert(__builtin_popcountll(hand) == 3);
+        int my_type = getDiscardBucket(board, hand, order);
+        omp::Hand board_hand = getHand(board);
+        uint64_t rank_mask = getRankMask(board ^ (1ull << discard));
+        int opp_type = getDiscardType(board_hand, rank_mask, discard/4, discard%4);
+        return my_type*5 + opp_type;
+    }
+
+    int countDraws(omp::Hand board_hand, uint64_t rank_mask){
+        int ret = 0;
+        for(int i = 0; i < 4; i++){
+            if(board_hand.suitCount(i) == 2) ret += 1;
+            else if(board_hand.suitCount(i) == 3) ret += 2;
+        }
+        return ret;
+    }
+
+    // rank_mask should not contain your hole cards
+    int checkMyDraws(omp::Hand board_hand, uint64_t rank_mask, uint64_t hand_mask){
+        int p1, p2, ps1, ps2;
+        updateCard(hand_mask, p1, ps1);
+        updateCard(hand_mask, p2, ps2);
+        int flush_match = (ps1 == ps2 && board_hand.suitCount(ps1) == 2);
+        int straight_match = checkFourCardStraight(rank_mask, (1ull << p1) | (1ull << p2));
+        return min(straight_match + flush_match, 1);
+    }
+
+    array<float, 9> flop_eq_thresholds_10 = {0.40f, 0.50f, 0.55f, 0.60f, 0.65f, 0.70f, 0.75f, 0.80f, 0.85f};
+
+    int getFlopBucket10(uint64_t board, uint64_t hand){
+        float equity = calcEquity(getHand(board), hand);
+        int equity_bucket = lower_bound(flop_eq_thresholds_10.begin(), flop_eq_thresholds_10.end(), equity) - flop_eq_thresholds_10.begin();
+        return equity_bucket;
+    }
+
+    array<float, 3> flop_eq_thresholds_4 = {0.40f, 0.55f, 0.70f};
+
+    int getFlopBucket32(uint64_t board, uint64_t hand, int opp_discard, int my_discard){
+        omp::Hand board_hand = getHand(board);
+        uint64_t rank_mask = getRankMask(board);
+        int board_draws = countDraws(board_hand, rank_mask);
+        assert(board_draws < 4);
+        int my_draws = checkMyDraws(board_hand, rank_mask, hand);
+        assert(my_draws < 2);
+        float equity = calcEquity(getHand(board), hand);
+        int equity_bucket = lower_bound(flop_eq_thresholds_4.begin(), flop_eq_thresholds_4.end(), equity) - flop_eq_thresholds_4.begin();
+        assert(equity_bucket < 4);
+        return equity_bucket*8 + board_draws*2 + my_draws;
+    }
+
+    array<float, 7> flop_eq_thresholds_8 = {0.40f, 0.50f, 0.55f, 0.60f, 0.65f, 0.70f, 0.75f};
+
+    int getFlopBucket64(uint64_t board, uint64_t hand, int opp_discard, int my_discard){
+        omp::Hand board_hand = getHand(board);
+        uint64_t rank_mask = getRankMask(board);
+        int board_draws = countDraws(board_hand, rank_mask);
+        assert(board_draws < 4);
+        int my_draws = checkMyDraws(board_hand, rank_mask, hand);
+        assert(my_draws < 2);
+        float equity = calcEquity(getHand(board), hand);
+        int equity_bucket = lower_bound(flop_eq_thresholds_8.begin(), flop_eq_thresholds_8.end(), equity) - flop_eq_thresholds_8.begin();
+        assert(equity_bucket < 8);
+        return equity_bucket*8 + board_draws*2 + my_draws;
+    }
+
+    int getFlopBucket(uint64_t board, uint64_t hand, int opp_discard, int my_discard, int turn, int equity_buckets){
+        assert(__builtin_popcountll(board) == 4);
+        hand ^= hand & board;
+        assert(__builtin_popcountll(hand) == 2);
+        uint64_t board_mask1 = board ^ (1ull << opp_discard);
+        uint64_t board_mask2 = board_mask1 ^ (1ull << my_discard);
+        if(turn == 0) board_mask1 ^= 1ull << my_discard;
+        int opp_type = getDiscardType(getHand(board_mask1), getRankMask(board_mask1), opp_discard/4, opp_discard%4);
+        int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
+        my_type = min(my_type, 1);
+        int equity_bucket = 0;
+        if(equity_buckets == 10) equity_bucket = getFlopBucket10(board, hand);
+        else if(equity_buckets == 32) equity_bucket = getFlopBucket32(board, hand, opp_discard, my_discard);
+        else assert(false);
+        return equity_bucket*8 + opp_type*2 + my_type;
+    }
+
 };
 
 #endif // TREECARDBUCKET_HPP
