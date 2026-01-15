@@ -212,7 +212,7 @@ void solve(int p1, int p2)
                         Hand turn = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5);
                         int s1 = (p1 < p2) ? (p1 % 4) : (p2 % 4); // s1 is the suit of the first player
                         int s2 = (p1 < p2) ? (p2 % 4) : (p1 % 4); // s2 is the suit of the second player
-                        int turn_id = encodeTurnBoard(turn, s1, s2);
+                        int turn_id = encoding_map[encodeTurnBoard(turn, s1, s2)];
                         assert(turn_id >= 0);
                         for (int b6 = 0; b6 < 52; b6++){
                             if (b6 == p1 || b6 == p2 || b6 == b1 || b6 == b2 || b6 == b3 || b6 == b4 || b6 == b5)
@@ -286,7 +286,7 @@ void saveEquity(string dir)
         for (int j = 0; j < encoding_index; j++)
         {
             float eq = -1.0f;
-            if (turn_equity[i][j] > 0)
+            if (num_rivers[i][j] > 0)
             {
                 eq = turn_equity[i][j] / (float)num_rivers[i][j];
             }
@@ -334,7 +334,6 @@ int main(){
             solve(i, j);
         }
     }
-    // solve(0,1);
     saveEquity("./emd_bucket_data/turn_equity.bin");
     return 0;
 }
