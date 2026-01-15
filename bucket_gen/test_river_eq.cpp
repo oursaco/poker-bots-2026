@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
+#include <utility>
 #include "external/omp/HandEvaluator.h"
 #include "external/omp/Hand.h"
 using namespace omp;

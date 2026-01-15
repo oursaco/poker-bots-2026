@@ -86,10 +86,10 @@ static unique_ptr<GameTree> createTree(const string& game) {
     if (game == "poker") return make_unique<PokerGameTree>();
     if (game == "three_card") {
         // Match the bucket used by `trainers/three_card_trainer.cpp` so policies load correctly.
-        g_three_card_bucket = make_unique<EHSThreeCardBucket>();
+        auto g_three_card_bucket = make_unique<EHSThreeCardBucket>();
         g_three_card_bucket->init("./bucket_data");
         auto tree = make_unique<ThreeCardGameTree>();
-        tree->setBucket(&bucket);
+        tree->setBucket(g_three_card_bucket.get());
         return tree;
     }
     return nullptr;

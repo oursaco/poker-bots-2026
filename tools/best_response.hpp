@@ -70,7 +70,7 @@ struct BestResponseEvaluator {
 
     
         // Working buffers (heap-allocated to avoid stack overflow on large games).
-        auto utility = make_unique<array<float, TRAINER_SZ>>();
+        auto utility = make_unique<array<float, TREE_SZ>>();
         vector<double> w(num_nodes, 0.0);
         vector<double> V(num_nodes, 0.0);
 
