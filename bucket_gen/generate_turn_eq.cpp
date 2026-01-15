@@ -8,8 +8,8 @@ using namespace std;
 int encoding_map[(1 << 16) * 33];
 int encoding_index = 0;
 
-float num_rivers[169][78909];
-float turn_equity[169][78909];
+float num_rivers[169][161057];
+float turn_equity[169][161057];
 
 int encodeTurnBoard(Hand board, int s1, int s2)
 {
@@ -187,7 +187,7 @@ int encodeTurnBoard(Hand board, int s1, int s2)
     return strength * 33 + suited_state;
 }
 
-int solve(int p1, int p2)
+void solve(int p1, int p2)
 {
     assert(p1 >= 0 && p1 < 52 && p2 >= 0 && p2 < 52 && p1 != p2);
     std::ifstream map("emd_bucket_data/encoding_map.bin", std::ios::binary);
@@ -252,7 +252,7 @@ void generateEncodingMap()
                         {
                             for (int s2 = 0; s2 < 4; s2++)
                             {
-                                int encoded = encodeBoard(board, s1, s2);
+                                int encoded = encodeTurnBoard(board, s1, s2);
                                 if (encoding_map[encoded] != -1)
                                     continue;
                                 encoding_map[encoded] = encoding_index++;
@@ -320,18 +320,21 @@ int main(){
             cards[getHoleId(i/4, j/4, i%4, j%4)].push_back(make_pair(i, j));
         }
     }
+    cout << "checkpoint 1" << endl;
     saveEncodingMap("./emd_bucket_data/turn_encoding_map.bin");
+    cout << "checkpoint 2" << endl;
 
     #pragma omp parallel for schedule(static)
     for(int t = 0; t < 169; t++){
         int st = 0;
-        // cout << "Generating equity for hand class " << t << endl;
+        cout << "Generating equity for hand class " << t << endl;
         for(pair<int, int> p : cards[t]){
             int i = p.first;
             int j = p.second;
             solve(i, j);
         }
     }
+    // solve(0,1);
     saveEquity("./emd_bucket_data/turn_equity.bin");
     return 0;
 }
