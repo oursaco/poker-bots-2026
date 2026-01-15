@@ -210,8 +210,10 @@ void solve(int p1, int p2)
                     for (int b5 = b4 + 1; b5 < 52; b5++){
                         if (b5 == p1 || b5 == p2) continue;
                         Hand turn = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5);
-                        int s1 = (p1 < p2) ? (p1 % 4) : (p2 % 4); // s1 is the suit of the first player
-                        int s2 = (p1 < p2) ? (p2 % 4) : (p1 % 4); // s2 is the suit of the second player
+                        int s1 = p1 % 4;
+                        int s2 = p2 % 4;
+                        // int s1 = (p1 < p2) ? (p1 % 4) : (p2 % 4); // s1 is the suit of the first player
+                        // int s2 = (p1 < p2) ? (p2 % 4) : (p1 % 4); // s2 is the suit of the second player
                         int turn_id = encoding_map[encodeTurnBoard(turn, s1, s2)];
                         assert(turn_id >= 0);
                         for (int b6 = 0; b6 < 52; b6++){
@@ -220,7 +222,8 @@ void solve(int p1, int p2)
                             Hand river = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5) + Hand(b6);
                             int board_id = river_encoding_map[encodeBoard(river, s1, s2)];
                             assert(board_id >= 0);
-                            int hand_id = (p1 < p2) ? getHoleId(p1 / 4, p2 / 4, s1, s2) : getHoleId(p2 / 4, p1 / 4, s1, s2);
+                            // int hand_id = (p1 < p2) ? getHoleId(p1 / 4, p2 / 4, s1, s2) : getHoleId(p2 / 4, p1 / 4, s1, s2);
+                            int hand_id = getHoleId(p1/4, p2/4, s1, s2);
                             assert(hand_id >= 0);
                             float eq = river_equity[hand_id * river_encoding_index + board_id];
                             turn_equity[hand_id][turn_id] += eq;
@@ -277,11 +280,12 @@ void saveEncodingMap(string dir)
     ouf.close();
 }
 
-void saveEquity(string dir)
+void saveEquity(string dir1, string dir2)
 {
-    ofstream ouf(dir, ios::binary);
+    ofstream ouf1(dir1, ios::binary);
+    ofstream ouf2(dir2, ios::binary);
     int visited = 0;
-    for (int i = 0; i < 169; i++)
+    for (int i = 0; i < 100; i++)
     {
         for (int j = 0; j < encoding_index; j++)
         {
@@ -290,11 +294,24 @@ void saveEquity(string dir)
             {
                 eq = turn_equity[i][j] / (float)num_rivers[i][j];
             }
-            ouf.write(reinterpret_cast<const char *>(&eq), sizeof(float));
+            ouf1.write(reinterpret_cast<const char *>(&eq), sizeof(float));
+        }
+    }
+    for (int i = 100; i < 169; i++)
+    {
+        for (int j = 0; j < encoding_index; j++)
+        {
+            float eq = -1.0f;
+            if (num_rivers[i][j] > 0)
+            {
+                eq = turn_equity[i][j] / (float)num_rivers[i][j];
+            }
+            ouf2.write(reinterpret_cast<const char *>(&eq), sizeof(float));
         }
     }
     cout << "visited nodes: " << visited << endl;
-    ouf.close();
+    ouf1.close();
+    ouf2.close();
 }
 
 void tests(){
@@ -334,6 +351,6 @@ int main(){
             solve(i, j);
         }
     }
-    saveEquity("./emd_bucket_data/turn_equity.bin");
+    saveEquity("./emd_bucket_data/turn_equity_1.bin", "./emd_bucket_data/turn_equity_2.bin");
     return 0;
 }
