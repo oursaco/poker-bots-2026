@@ -19,15 +19,15 @@ int encodeFlopBoard(Hand board, int s1, int s2)
 void solve(int p1, int p2)
 {
     assert(p1 >= 0 && p1 < 52 && p2 >= 0 && p2 < 52 && p1 != p2);
-    std::ifstream map("emd_bucket_data/encoding_map.bin", std::ios::binary);
-    int river_encoding_index = 0;
-    map.read(reinterpret_cast<char *>(&river_encoding_index), sizeof(int));
-    std::vector<int> turn_encoding_map((1 << 16) * 162, -1);
-    map.read(reinterpret_cast<char *>(turn_encodin.data()), river_encoding_map.size() * sizeof(int));
+    std::ifstream map("emd_bucket_data/turn_encoding_map.bin", std::ios::binary);
+    int turn_encoding_index = 0;
+    map.read(reinterpret_cast<char *>(&turn_encoding_index), sizeof(int));
+    std::vector<int> turn_encoding_map((1 << 16) * 33, -1);
+    map.read(reinterpret_cast<char *>(turn_encoding_map.data()), turn_encoding_map.size() * sizeof(int));
 
-    std::ifstream eq("emd_bucket_data/river_equity.bin", std::ios::binary);
-    std::vector<float> river_equity(169 * river_encoding_index);
-    eq.read(reinterpret_cast<char *>(river_equity.data()), river_equity.size() * sizeof(float));
+    std::ifstream eq("emd_bucket_data/turn_equity.bin", std::ios::binary);
+    std::vector<float> turn_equity(169 * river_encoding_index);
+    eq.read(reinterpret_cast<char *>(turn_equity.data()), turn_equity.size() * sizeof(float));
     for (int b1 = 0; b1 < 52; b1++){
         if (b1 == p1 || b1 == p2) continue;
         for (int b2 = b1 + 1; b2 < 52; b2++){
@@ -39,14 +39,18 @@ void solve(int p1, int p2)
                         Hand flop = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4);
                         int s1 = p1 % 4;
                         int s2 = p2 % 4;
-                        int turn_id = encoding_map[encodeFlopBoard(flop, s1, s2)];
+                        int flop_id = encoding_map[encodeFlopBoard(flop, s1, s2)];
                         assert(turn_id >= 0);
                         for (int b5 = 0; b5 < 52; b5++){
                             if (b5 == p1 || b5 == p2 || b5 == b1 || b5 == b2 || b5 == b3 || b5 == b4)
                                 continue;
                             Hand turn = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5);
+                            int hand_id = getHoleId(p1/4, p2/4, s1, s2);
                             int board_id = river_encoding_map[encodeTurn(river, s1, s2)];
                             assert(board_id >= 0);
+                            float eq = turn_equity[hand_id * river_encoding_index + board_id];
+                            flop_equity[hand_id][flop_id] += eq;
+                            num_turns[hand_id][flop_id]++;
                         }
                     }
                 }
