@@ -11,8 +11,8 @@ using namespace std;
 void test_inference(){
     ThreeCardInferenceTree tree1;
     ThreeCardInferenceTree tree2;
-    EHSThreeCardBucket bucket;
-    bucket.init("./bucket_data");
+    DynamicThreeCardBucket bucket;
+    bucket.init("./emd_bucket_data");
     tree1.setBucket(&bucket);
     tree2.setBucket(&bucket);
     tree1.init();
@@ -26,11 +26,13 @@ void test_inference(){
 }
 
 int main() {
+    test_inference();
+    return 0;
     ThreeCardInferenceTree tree1;
     ThreeCardInferenceTree tree3;
     ThreeCardGameTree tree2;
-    EHSThreeCardBucket bucket;
-    bucket.init("./bucket_data");
+    DynamicThreeCardBucket bucket;
+    bucket.init("./emd_bucket_data");
     tree1.setBucket(&bucket);
     tree1.init();
     tree2.setBucket(&bucket);

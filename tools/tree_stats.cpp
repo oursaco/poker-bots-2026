@@ -328,7 +328,7 @@ void generateTreeRecursive(TestState& state, TreeStats& stats, size_t depth) {
             spr_scale = 20;
         }
     }
-    if(state.turn != -1){
+    if(!state.isTerminal() && state.turn != -1){
         if(state.turn == 0){
             if(state.sb_stack == 0){
                 assert(state.street != 0);

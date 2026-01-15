@@ -120,12 +120,12 @@ void visualizeInfoSetsDepthLimited(GameState* state, GameTree* tree, const strin
     }
 }
 
-static EHSThreeCardBucket bucket;
+static DynamicThreeCardBucket bucket;
 
 void visualizeThreeCardInfoSets(){
     ThreeCardGameTree tree;
     // SingleBucketThreeCard bucket;
-    bucket.init("./bucket_data");
+    bucket.init("./emd_bucket_data");
     tree.setBucket(&bucket);
     tree.init();
     tree.prepare(42);

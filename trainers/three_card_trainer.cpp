@@ -32,8 +32,8 @@ int main() {
 
     ThreeCardInferenceTree tree1;
     ThreeCardInferenceTree tree2;
-    EHSThreeCardBucket bucket;
-    bucket.init("./bucket_data");
+    DynamicThreeCardBucket bucket;
+    bucket.init("./emd_bucket_data");
     tree1.setBucket(&bucket);
     tree1.init();
     tree2.setBucket(&bucket);

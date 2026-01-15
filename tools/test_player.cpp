@@ -521,7 +521,7 @@ vector<float> getPolicyActionProbabilities(ThreeCardPlayer& bot,
     if(actions.empty()){
         return probs;
     }
-    int info_set = bot.tree.calcInfoSet(node_id, hand, board, bot.discard);
+    int info_set = bot.tree.calcInfoSet(node_id, hand, bot.flop, board, bot.opp_discard, bot.my_discard);
     int move_count = bot.policy.getMoveCount(info_set);
     probs.assign(actions.size(), 0.0f);
     if(move_count != static_cast<int>(actions.size())){
@@ -617,7 +617,7 @@ int choosePolicyActionIndex(ThreeCardPlayer& bot, std::mt19937& rng){
     return static_cast<int>(probs.size()) - 1;
 }
 
-bool playHand(ThreeCardPlayer& bot, EHSThreeCardBucket& bucket, std::mt19937& rng, int human_id, int hand_number){
+bool playHand(ThreeCardPlayer& bot, DynamicThreeCardBucket& bucket, std::mt19937& rng, int human_id, int hand_number){
     Deck deck(rng);
     uint64_t sb_hand = 0;
     uint64_t bb_hand = 0;
@@ -708,7 +708,7 @@ bool playHand(ThreeCardPlayer& bot, EHSThreeCardBucket& bucket, std::mt19937& rn
                 board |= 1ull << discarded;
                 bot.updateBoard(discarded);
                 cout << "You discard " << cardToString(discarded) << "\n";
-                bot.setDiscard(discarded);
+                bot.setOppDiscard(discarded);
                 state = *dynamic_cast<ThreeCardGameState*>(actions[action_index].first.get());
                 bot.receiveAction(std::move(actions[action_index].second));
             } else {
@@ -827,8 +827,8 @@ int main(int argc, char* argv[]){
 
     ThreeCardPlayer bot;
     bot.init(options.policy_path);
-    EHSThreeCardBucket bucket;
-    bucket.init("./bucket_data");
+    DynamicThreeCardBucket bucket;
+    bucket.init("./emd_bucket_data");
 
     int hand_number = 1;
     while(options.max_hands == 0 || hand_number <= options.max_hands){

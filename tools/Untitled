@@ -1,1 +1,0 @@
-./build/nash_distance --game three_card --player0 checkpoints/player0_9420225.bin --player1 checkpoints/player0_9420225.bin --samples 10000

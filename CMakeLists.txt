@@ -55,17 +55,8 @@ target_link_libraries(visualize_utility PRIVATE pokerbots_headers omp OpenMP::Op
 add_executable(visualize_strategy tools/visualize_strategy.cpp)
 target_link_libraries(visualize_strategy PRIVATE pokerbots_headers omp)
 
-add_executable(visualize_buckets tools/visualize_buckets.cpp)
-target_link_libraries(visualize_buckets PRIVATE pokerbots_headers omp)
-
 add_executable(convert_strategy_sum tools/convert_strategy_sum.cpp)
 target_link_libraries(convert_strategy_sum PRIVATE pokerbots_headers omp)
-
-add_executable(generate_buckets bucket_gen/generate_buckets.cpp)
-target_link_libraries(generate_buckets PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
-
-add_executable(test_buckets bucket_gen/test_buckets.cpp)
-target_link_libraries(test_buckets PRIVATE pokerbots_headers omp)
 
 add_executable(test_player tools/test_player.cpp)
 target_link_libraries(test_player PRIVATE pokerbots_headers omp)
@@ -87,6 +78,12 @@ target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::O
 
 add_executable(test_river_eq bucket_gen/test_river_eq.cpp)
 target_link_libraries(test_river_eq PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+
+add_executable(generate_flop_eq bucket_gen/generate_flop_eq.cpp)
+target_link_libraries(generate_flop_eq PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+
+add_executable(generate_three_eq bucket_gen/generate_three_eq.cpp)
+target_link_libraries(generate_three_eq PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
 add_executable(generate_turn_eq bucket_gen/generate_turn_eq.cpp)
 target_link_libraries(generate_turn_eq PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)

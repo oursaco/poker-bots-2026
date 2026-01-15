@@ -1,8 +1,6 @@
 #include "external/omp/HandEvaluator.h"
 #include "external/omp/Hand.h"
-#include "river_encoding.h"
-#include <set>
-#include <unordered_set>
+#include "encoding.h"
 #include <iostream>
 #include <chrono>
 #include <random>
@@ -21,6 +19,8 @@ float ties[169][135991];
 
 int encoding_map[(1 << 16)*162];
 int encoding_index = 0;
+
+omp::HandEvaluator eval;
 
 void solve(int p1, int p2){
     int ps1 = p1%4;
@@ -75,8 +75,8 @@ void solve(int p1, int p2){
                                     else t++;
                                 }
                             }
-                            int player_id = getHoleId(p1/4, p2/4, ps1, ps2);
-                            int encoded = encoding_map[encodeBoard(board1, ps1, ps2)];
+                            int player_id = encoding::getHoleId(p1/4, p2/4, ps1, ps2);
+                            int encoded = encoding_map[encoding::encodeRiverBoard(board1, ps1, ps2)];
                             wins[player_id][encoded] += w;
                             loses[player_id][encoded] += l;
                             ties[player_id][encoded] += t;
@@ -99,7 +99,7 @@ void generateEncodingMap(){
                             Hand board = Hand::empty() + Hand(b1) + Hand(b2) + Hand(b3) + Hand(b4) + Hand(b5) + Hand(b6);
                             for(int s1 = 0; s1 < 4; s1++){
                                 for(int s2 = 0; s2 < 4; s2++){
-                                    int encoded = encodeBoard(board, s1, s2);
+                                    int encoded = encoding::encodeRiverBoard(board, s1, s2);
                                     if(encoding_map[encoded] != -1) continue;
                                     encoding_map[encoded] = encoding_index++;
                                 }
@@ -143,7 +143,7 @@ int main(){
     vector<pair<int, int>> cards[169];
     for(int i = 0; i < 52; i++){
         for(int j = i + 1; j < 52; j++){
-            cards[getHoleId(i/4, j/4, i%4, j%4)].push_back(make_pair(i, j));
+            cards[encoding::getHoleId(i/4, j/4, i%4, j%4)].push_back(make_pair(i, j));
         }
     }
     saveEncodingMap("./emd_bucket_data/encoding_map.bin");

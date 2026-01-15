@@ -151,18 +151,18 @@ struct FastTrainer {
         pair<int, int>{5, 13},
         pair<int, int>{14, 34},
         pair<int, int>{35, 85},
-        pair<int, int>{86, 242},
-        pair<int, int>{243, 735},
-        pair<int, int>{736, 2118},
-        pair<int, int>{2119, 5772},
-        pair<int, int>{5773, 14736},
-        pair<int, int>{14737, 35409},
-        pair<int, int>{35410, 75072},
-        pair<int, int>{75073, 130980},
-        pair<int, int>{130981, 184512},
-        pair<int, int>{184513, 216453},
-        pair<int, int>{216454, 226839},
-        pair<int, int>{226840, 228225},
+        pair<int, int>{86, 233},
+        pair<int, int>{234, 672},
+        pair<int, int>{673, 1830},
+        pair<int, int>{1831, 4755},
+        pair<int, int>{4756, 11631},
+        pair<int, int>{11632, 27102},
+        pair<int, int>{27103, 57684},
+        pair<int, int>{57685, 103935},
+        pair<int, int>{103936, 152256},
+        pair<int, int>{152257, 183567},
+        pair<int, int>{183568, 194241},
+        pair<int, int>{194242, 195573},
     };
 
     void setTree(ThreeCardInferenceTree* tree1_, ThreeCardInferenceTree* tree2_){
@@ -177,6 +177,9 @@ struct FastTrainer {
             }
             int r = cur_index - 1;
             if(l <= r) depth_ranges.emplace_back(l, r);
+        }
+        for(pair<int, int> p : depth_ranges){
+            cout << p.first << " " << p.second << endl;
         }
         assert(depth_ranges.size() == expected_ranges.size());
         for(int i = 0; i < depth_ranges.size(); i++){

@@ -8,8 +8,8 @@ int main() {
     string target_path = "./three_card_models/player.bin";
     float iterations = 10000000;
     DCFRPolicy policy;
-    EHSThreeCardBucket bucket;
-    bucket.init("./bucket_data");
+    DynamicThreeCardBucket bucket;
+    bucket.init("./emd_bucket_data");
     ThreeCardGameTree tree;
     tree.setBucket(&bucket);
     tree.init();

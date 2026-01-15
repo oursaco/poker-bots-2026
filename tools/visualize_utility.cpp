@@ -339,8 +339,8 @@ void visualizeUtilityDepthLimited(GameState* state, const string& prefix, array<
 
 void visualizeThreeCardUtility(const UtilityOptions& options){
     ThreeCardGameTree tree;
-    EHSThreeCardBucket bucket;
-    bucket.init("./bucket_data");
+    DynamicThreeCardBucket bucket;
+    bucket.init("./emd_bucket_data");
     tree.setBucket(&bucket);
     tree.init();
     srand(NULL);

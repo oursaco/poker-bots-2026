@@ -1,7 +1,8 @@
 #include "external/omp/HandEvaluator.h"
 #include "external/omp/Hand.h"
-#include "bucket_gen/river_encoding.h"
-
+#include "bucket_gen/encoding.h"
+#include <vector>
+#include <fstream>
 using namespace omp;
 using namespace std;
 
