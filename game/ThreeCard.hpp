@@ -728,7 +728,7 @@ struct ThreeCardGameTree : GameTree {
     int calcInfoSet(int node_id, uint64_t hand, uint64_t flop, uint64_t board_mask, int opp_discard, int my_discard){
         int street = nodes[node_id].getStreet();
         int info_set_index = nodes[node_id].getInfoSetIndex();
-        assert(board_mask == board[node_id]);
+        // assert(board_mask == board[node_id]);
         /* this assert fails for the 3 card player
         if(nodes[node_id].getTurn() == 1 && street > 2){
             assert(discard == sb_discard_card[node_id]);

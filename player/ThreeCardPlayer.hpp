@@ -72,6 +72,9 @@ struct ThreeCardPlayer : Player {
         node_id = 0;
         hand = hand_;
         board = 0;
+        flop = 0;
+        opp_discard = -1;
+        my_discard = -1;
         int loss = 0;
         int turn = player_id;
         for(int i = round; i <= 1000; i++){
@@ -274,9 +277,22 @@ struct ThreeCardPlayer : Player {
         }
         assert(chosen_action != -1);
         if(actions[chosen_action].second.action == "discard"){
+            array<int, 3> discard_order = tree.calcOrder(board, hand);
+            auto getDiscard = [&](uint64_t hand, int n){
+                for(int i = 0; i < n; i++){
+                    hand ^= 1ull << __builtin_ctzll(hand);
+                }
+                return __builtin_ctzll(hand);
+            };
+            array<int, 3> rev_order;
+            for(int i = 0; i < 3; i++) rev_order[discard_order[i]] = i;
+            cout << "Discard order: ";
+            for(int i = 0; i < 3; i++) cout << discard_order[i] << " ";
+            cout << endl;
+            my_discard = getDiscard(hand, rev_order[chosen_action]);
             node_id = children[node_id][chosen_action];
             state = actions[chosen_action].first;
-            return make_unique<ThreeCardAction>("discard", player_id, chosen_action, real_sb_stack, real_bb_stack, 0.0f);
+            return make_unique<ThreeCardAction>("discard", player_id, rev_order[chosen_action], real_sb_stack, real_bb_stack, 0.0f);
         } else if(actions[chosen_action].second.action == "fold"){
             if(all_in_next) all_in_next = false;
             real_pot -= max(real_sb_bet, real_bb_bet) - min(real_sb_bet, real_bb_bet);

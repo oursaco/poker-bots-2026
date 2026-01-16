@@ -130,6 +130,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         if(state->turn == 0){
             if(state->sb_stack == 0){
                 assert(state->street != 0);
+                //cur_buckets = (state->street == 3 ? 1250 : 1);
                 cur_buckets = 1;
             } else {
                 if(state->street == 0){
@@ -150,6 +151,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         } else {
             if(state->bb_stack == 0){
                 assert(state->street != 0);
+                // cur_buckets = (state->street == 2 ? 250 : 1);
                 cur_buckets = 1;
             } else {
                 if(state->street == 0){

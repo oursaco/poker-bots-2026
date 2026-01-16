@@ -468,14 +468,16 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("./final_model/player.bin");
-    trainer.players[1].loadPolicy("./final_model/player.bin");
+    trainer.players[0].loadPolicy("./checkpoints/player0_5149380.bin");
+    trainer.players[1].loadPolicy("./checkpoints/player0_5149380.bin");
 
     cout << fixed << setprecision(4);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
     cout << "sb hole: " << maskToString(hole_cards.sb_hand) << "\n";
     cout << "bb hole: " << maskToString(hole_cards.bb_hand) << "\n";
     cout << "runout: flop " << maskToString(tree.fixed_flop) << " | turn " << maskToString(tree.fixed_turn) << " | river " << maskToString(tree.fixed_river) << "\n";
+    array<int, 3> bb_discard_order = tree.calcOrder(tree.fixed_flop, tree.fixed_bb_hand);
+    cout << "bb discard order: " << bb_discard_order[0] << " " << bb_discard_order[1] << " " << bb_discard_order[2] << "\n";
     cout << "\n";
     node_id_counter = 0;
     ThreeCardGameState root = ThreeCardGameState();
