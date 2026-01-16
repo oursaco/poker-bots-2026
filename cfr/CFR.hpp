@@ -147,7 +147,6 @@ struct DCFRPolicy : CFRPolicy {
     }
 };
 
-#include "nash/best_response.hpp"
 // NOTE: This project uses `tools/best_response.cpp` as a header-style include (see tools/nash_distance.cpp).
 // We include it here (after DCFRPolicy is defined) so the trainer can run BR evaluations at checkpoints.
 struct DCFRTrainer : CFRTrainer {
@@ -243,59 +242,7 @@ struct DCFRTrainer : CFRTrainer {
                 last_checkpoint_time = cur_time;
                 players[0].savePolicy(checkpoint_dir + "/player0_" + to_string(i) + ".bin");
                 players[1].savePolicy(checkpoint_dir + "/player1_" + to_string(i) + ".bin");
-
-                // If an evaluation is still running, don't start another one.
-                if(br_in_flight){
-                    if(br_future.valid() && br_future.wait_for(std::chrono::seconds(0)) == std::future_status::ready){
-                        br_future.get();
-                        br_in_flight = false;
-                    } else {
-                        cout << "Skipping BR eval at iteration " << i << " (previous eval still running)" << endl;
-                    }
-                }
-
-                if(!br_in_flight){
-                    // Snapshot policies so BR thread reads an immutable copy.
-                    DCFRPolicy p0_snapshot = players[0];
-                    DCFRPolicy p1_snapshot = players[1];
-                    GameTree* br_tree_ptr = br_tree.get();
-                    const int eval_iter = i;
-                    const int eval_seed = seed ^ (int)((uint32_t)i * 0x9E3779B9u);
-                    const int eval_samples = 100000;
-
-                    br_future = std::async(std::launch::async, [=]() mutable {
-                        auto t0 = chrono::high_resolution_clock::now();
-                        BestResponseEvaluator evaluator;
-                        evaluator.setTree(br_tree_ptr);
-
-                        // BR vs player0 (SB) strategy -> value from player1 (BB) perspective
-                        BestResponseResult br_bb = evaluator.computeBestResponse(p0_snapshot, 0, eval_seed, eval_samples);
-                        // BR vs player1 (BB) strategy -> value from player0 (SB) perspective
-                        BestResponseResult br_sb = evaluator.computeBestResponse(p1_snapshot, 1, eval_seed + 1, eval_samples);
-
-                        float nashconv = br_sb.value + br_bb.value;
-                        float exploitability = 0.5f * nashconv;
-                        auto secs = chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - t0).count();
-
-                        lock_guard<std::mutex> lock(br_cout_mutex);
-                        cout.setf(std::ios::fixed);
-                        cout.precision(6);
-                        cout << "[BR @ iter " << eval_iter << "] "
-                             << "BR(SB)=" << br_sb.value << " "
-                             << "BR(BB)=" << br_bb.value << " "
-                             << "NashConv=" << nashconv << " "
-                             << "Exploitability=" << exploitability << " "
-                             << "(" << secs << "s)" << endl;
-                    });
-                    br_in_flight = true;
-                }
             }
-        }
-
-        // Ensure background BR evaluation finishes before we return (so br_tree stays alive).
-        if(br_in_flight && br_future.valid()){
-            br_future.get();
-            br_in_flight = false;
         }
 
         cout << "Finished training in " << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - start_time).count() << " seconds" << endl;
