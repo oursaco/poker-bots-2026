@@ -335,7 +335,6 @@ struct FastTrainer {
             float neg_mult = pow(t, beta)/(pow(t, beta) + 1);
             float strat_mult = pow(float(t)/float(t + 1), gamma);
             int seeds[2] = {static_cast<int>(rng()), static_cast<int>(rng())};
-            
             #pragma omp parallel for schedule(static) // decay regrets here. 
             for(int j = 0; j < players[0].state_count; j++){
                 players[0].regret_sum[j] *= (players[0].regret_sum[j] > 0.0f ? pos_mult : neg_mult);
@@ -343,10 +342,10 @@ struct FastTrainer {
                 players[0].strategy_sum[j] *= strat_mult;
                 players[1].strategy_sum[j] *= strat_mult;
             }
-            #pragma omp parallel num_threads(2) 
+            #pragma omp parallel num_threads(2)
             {
                 int tree_idx = omp_get_thread_num();
-                #pragma omp parallel num_threads(inner_threads) 
+                #pragma omp parallel num_threads(inner_threads)
                 {
                     tree[tree_idx]->prepare(seeds[tree_idx]);
                     #pragma omp barrier
