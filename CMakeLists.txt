@@ -90,3 +90,6 @@ target_link_libraries(test_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX
 
 add_executable(merge_turn emd_bucket_data/merge_turn.cpp)
 target_link_libraries(merge_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+
+add_executable(nash_distance tools/nash_distance.cpp)
+target_link_libraries(nash_distance PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
