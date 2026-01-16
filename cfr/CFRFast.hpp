@@ -339,7 +339,7 @@ struct FastTrainer {
         for(int i = previous_iteration + 1; i <= iterations; i++){
             float t = i;
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
-            float neg_mult = pow(t, beta);
+            float neg_mult = pow(t, beta)/(pow(t, beta) + 1);
             float strat_mult = pow(float(t)/float(t + 1), gamma);
             int seeds[2] = {static_cast<int>(rng()), static_cast<int>(rng())};
             #pragma omp parallel
