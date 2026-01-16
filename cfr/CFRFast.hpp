@@ -312,16 +312,6 @@ struct FastTrainer {
         }
     }
 
-    void decayRegret(float alpha, float beta, float gamma){
-        #pragma omp for schedule(static)
-        for(int i = 0; i < players[0].state_count; i++){
-            players[0].regret_sum[i] *= (players[0].regret_sum[i] > 0.0f ? alpha : beta);
-            players[1].regret_sum[i] *= (players[1].regret_sum[i] > 0.0f ? alpha : beta);
-            players[0].strategy_sum[i] *= gamma;
-            players[1].strategy_sum[i] *= gamma;
-        }
-    }
-
     void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir, int previous_iteration = 0){
         omp::XoroShiro128Plus rng(seed);
         auto start_time = chrono::high_resolution_clock::now();
@@ -333,6 +323,9 @@ struct FastTrainer {
         if(player0_dir.size() > 0) players[0].loadPolicy(player0_dir);
         if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
 
+        omp_set_nested(1);
+        int inner_threads = max(1, (int) omp_get_max_threads() / 2);
+
         float alpha = 1.5f;
         float beta = 0.0f;
         float gamma = 2.0f;
@@ -342,18 +335,23 @@ struct FastTrainer {
             float neg_mult = pow(t, beta)/(pow(t, beta) + 1);
             float strat_mult = pow(float(t)/float(t + 1), gamma);
             int seeds[2] = {static_cast<int>(rng()), static_cast<int>(rng())};
-            #pragma omp parallel
-            {
-                decayRegret(pos_mult, neg_mult, strat_mult);
-                #pragma omp barrier
-                tree[0]->prepare(seeds[0]);
-                tree[1]->prepare(seeds[1]);
-                #pragma omp barrier
-                updateUtility(i%2, 0);
-                updateUtility(i%2, 1);
-                #pragma omp barrier
-                updatePlayer(0, i%2, 0);
-                updatePlayer(1, i%2, 1);
+            
+            #pragma omp parallel for schedule(static) // decay regrets here. 
+            for(int j = 0; j < players[0].state_count; j++){
+                players[0].regret_sum[j] *= (players[0].regret_sum[j] > 0.0f ? pos_mult : neg_mult);
+                players[1].regret_sum[j] *= (players[1].regret_sum[j] > 0.0f ? pos_mult : neg_mult);
+                players[0].strategy_sum[j] *= strat_mult;
+                players[1].strategy_sum[j] *= strat_mult;
+            }
+            #pragma omp parallel num_threads(2) {
+                int tree_idx = omp_get_thread_num();
+                #pragma omp parallel num_threads(inner_threads) {
+                    tree[tree_idx]->prepare(seeds[tree_idx]);
+                    #pragma omp barrier
+                    updateUtility(i%2, tree_idx);
+                    #pragma omp barrier
+                    updatePlayer(tree_idx, i%2, tree_idx);
+                }
             }
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){
@@ -371,7 +369,8 @@ struct FastTrainer {
 
         cout << "Finished training in " << chrono::duration_cast<chrono::seconds>(chrono::high_resolution_clock::now() - start_time).count() << " seconds" << endl;
         if(checkpoint_dir.size() > 0){
-            players[0].savePolicy(checkpoint_dir + "/player.bin");
+            players[0].savePolicy(checkpoint_dir + "/player0_final.bin");
+            players[1].savePolicy(checkpoint_dir + "/player1_final.bin");
         }
     }
 };
