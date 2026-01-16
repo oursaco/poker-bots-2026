@@ -343,9 +343,11 @@ struct FastTrainer {
                 players[0].strategy_sum[j] *= strat_mult;
                 players[1].strategy_sum[j] *= strat_mult;
             }
-            #pragma omp parallel num_threads(2) {
+            #pragma omp parallel num_threads(2) 
+            {
                 int tree_idx = omp_get_thread_num();
-                #pragma omp parallel num_threads(inner_threads) {
+                #pragma omp parallel num_threads(inner_threads) 
+                {
                     tree[tree_idx]->prepare(seeds[tree_idx]);
                     #pragma omp barrier
                     updateUtility(i%2, tree_idx);
