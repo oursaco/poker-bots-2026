@@ -18,7 +18,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-O3 -std=c++17 -pthread -march=native -ffast-math -fopenmp)
-# add_link_options(-Wl,--stack,2147483648)
+if(WIN32)
+    add_link_options(-Wl,--stack,2147483648)
+endif()
 add_compile_options(-w)
 
 add_library(pokerbots_headers INTERFACE)
@@ -90,6 +92,3 @@ target_link_libraries(test_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX
 
 add_executable(merge_turn emd_bucket_data/merge_turn.cpp)
 target_link_libraries(merge_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
-
-# add_executable(nash_distance tools/nash_distance.cpp)
-# target_link_libraries(nash_distance PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)

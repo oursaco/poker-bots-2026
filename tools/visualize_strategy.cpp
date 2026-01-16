@@ -468,8 +468,10 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("./checkpoints/player0_6313286.bin");
-    trainer.players[1].loadPolicy("./checkpoints/player0_6313286.bin");
+    trainer.players[0].loadPolicy("checkpoints/player0_5149380.bin");
+    trainer.players[1].loadPolicy("checkpoints/player1_5149380.bin");
+    // trainer.players[0].loadPolicy("./final_model/player.bin");
+    // trainer.players[1].loadPolicy("./final_model/player.bin");
 
     cout << fixed << setprecision(4);
     HoleCards hole_cards = {tree.fixed_sb_hand, tree.fixed_bb_hand};
