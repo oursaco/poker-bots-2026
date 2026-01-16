@@ -6,7 +6,7 @@
 #include "game/ThreeCard.hpp"
 #include "game/ThreeCardInference.hpp"
 #include "game/ThreeCardBucket.hpp"
-#include "tools/best_response_fast.hpp"
+#include "tools/best_response.hpp"
 
 #include <algorithm>
 #include <cstdint>
@@ -22,7 +22,6 @@
 using namespace std;
 
 // Huge; keep on heap (stack overflow otherwise).
-static unique_ptr<EHSThreeCardBucket> g_three_card_bucket;
 
 struct EvalConfig {
     string game;
@@ -81,20 +80,6 @@ static bool parseArgs(int argc, char** argv, EvalConfig& config) {
     return !config.game.empty() && !config.player0_policy.empty() && !config.player1_policy.empty();
 }
 
-static unique_ptr<GameTree> createTree(const string& game) {
-    if (game == "khun") return make_unique<KhunPokerGameTree>();
-    if (game == "poker") return make_unique<PokerGameTree>();
-    if (game == "three_card") {
-        // Match the bucket used by `trainers/three_card_trainer.cpp` so policies load correctly.
-        auto g_three_card_bucket = make_unique<EHSThreeCardBucket>();
-        g_three_card_bucket->init("./bucket_data");
-        auto tree = make_unique<ThreeCardGameTree>();
-        tree->setBucket(g_three_card_bucket.get());
-        return tree;
-    }
-    return nullptr;
-}
-
 int main(int argc, char** argv) {
     EvalConfig config;
     if (!parseArgs(argc, argv, config)) {
@@ -105,52 +90,22 @@ int main(int argc, char** argv) {
     if (config.game == "khun") {
         auto tree = make_unique<KhunPokerGameTree>();
         tree->init();
-        return evalGeneric(tree.get(), config.player0_policy, config.player1_policy, config.seed, config.samples);
-    }
-    if (config.game == "poker") {
-        auto tree = make_unique<PokerGameTree>();
-        tree->init();
-        return evalGeneric(tree.get(), config.player0_policy, config.player1_policy, config.seed, config.samples);
+        BestResponseEvaluator evaluator;
+        evaluator.setTree(tree.get());
+        DCFRPolicy policy1;
+        policy1.loadPolicy(config.player0_policy);
+        cout << evaluator.computeBestResponse(policy1,config.seed, config.samples).value << endl;
+        return 0;
     }
     if (config.game == "three_card") {
-        // We support BOTH formats:
-        //  - FastTrainer policies: `FastPolicy` trained on `ThreeCardInferenceTree`
-        //  - DCFRTrainer policies: `DCFRPolicy` trained on `ThreeCardGameTree`
-        //
-        // Decide which to use by reading the policy header and matching info_set_count.
-        int header_infosets = -1, header_states = -1;
-        if (!readPolicyHeader(config.player0_policy, header_infosets, header_states)) {
-            cerr << "Failed to read policy header from: " << config.player0_policy << "\n";
-            return 1;
-        }
-
-        g_three_card_bucket = make_unique<EHSThreeCardBucket>();
-        g_three_card_bucket->init("./bucket_data");
-
-        // Build inference tree (FastTrainer format). This object is huge, so allocate on heap.
-        auto inf_tree = make_unique<ThreeCardInferenceTree>();
-        inf_tree->setBucket(g_three_card_bucket.get());
-        inf_tree->init();
-
-        if (header_infosets == inf_tree->infoSetCount()) {
-            return evalFast(inf_tree.get(), config.player0_policy, config.player1_policy, config.seed, config.samples);
-        }
-
-        // Build full tree (DCFRTrainer format).
-        auto full_tree = make_unique<ThreeCardGameTree>();
-        full_tree->setBucket(g_three_card_bucket.get());
-        full_tree->init();
-
-        if (header_infosets == full_tree->infoSetCount()) {
-            return evalGeneric(full_tree.get(), config.player0_policy, config.player1_policy, config.seed, config.samples);
-        }
-
-        cerr << "Policy/tree mismatch for --game three_card.\n";
-        cerr << "  policy header infosets: " << header_infosets << " (states: " << header_states << ")\n";
-        cerr << "  inference tree infosets: " << inf_tree->infoSetCount() << "\n";
-        cerr << "  full tree infosets:      " << full_tree->infoSetCount() << "\n";
-        cerr << "This usually means the policy was trained with a different abstraction/bucket config.\n";
-        return 1;
+        auto tree = make_unique<ThreeCardGameTree>();
+        tree->init();
+        BestResponseEvaluator evaluator;
+        evaluator.setTree(tree.get());
+        FastPolicy policy1;
+        policy1.loadPolicy(config.player0_policy);
+        cout << evaluator.computeBestResponse(policy1, config.seed, config.samples).value << endl;
+        return 0;
     }
 
     cerr << "Unknown game: " << config.game << "\n";
