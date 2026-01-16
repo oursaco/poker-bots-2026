@@ -73,9 +73,6 @@ target_link_libraries(poker_trainer PRIVATE pokerbots_headers omp Threads::Threa
 add_executable(three_card_trainer trainers/three_card_trainer.cpp)
 target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX Threads::Threads)
 
-# add_executable(nash_distance tools/nash_distance.cpp)
-# target_link_libraries(nash_distance PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
-
 add_executable(test_river_eq bucket_gen/test_river_eq.cpp)
 target_link_libraries(test_river_eq PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
