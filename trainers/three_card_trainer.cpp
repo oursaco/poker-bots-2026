@@ -1,6 +1,4 @@
 #include "cfr/CFR.hpp"
-#include "cfr/CFRFast.hpp"
-#include "game/ThreeCardInference.hpp"
 #include "game/ThreeCard.hpp"
 #include "constants/constants.h"
 #include "game/ThreeCardBucket.hpp"
@@ -30,16 +28,14 @@ int main() {
     config.output_dir = "./three_card_models";
     config.iterations = 100'000'000;
 
-    ThreeCardInferenceTree tree1;
-    ThreeCardInferenceTree tree2;
+    ThreeCardGameTree tree;
     DynamicThreeCardBucket bucket;
     bucket.init("./emd_bucket_data");
-    tree1.setBucket(&bucket);
-    tree1.init();
-    tree2.setBucket(&bucket);
-    tree2.init();
-    FastTrainer trainer;
-    trainer.setTree(&tree1, &tree2);
+    tree.setBucket(&bucket);
+    tree.init();
+
+    DCFRTrainer trainer;
+    trainer.setTree(&tree);
     trainer.train(
         config.seed,
         config.iterations,

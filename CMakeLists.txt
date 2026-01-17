@@ -78,6 +78,12 @@ target_link_libraries(three_card_trainer PRIVATE pokerbots_headers omp OpenMP::O
 add_executable(three_card_trainer_fast trainers/three_card_trainer_fast.cpp)
 target_link_libraries(three_card_trainer_fast PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX Threads::Threads)
 
+add_executable(three_card_trainer_fast_B trainers/three_card_trainer_fast_B.cpp)
+target_link_libraries(three_card_trainer_fast_B PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX Threads::Threads)
+
+add_executable(three_card_trainer_fast_old trainers/three_card_trainer_fast_old.cpp)
+target_link_libraries(three_card_trainer_fast_old PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX Threads::Threads)
+
 add_executable(test_river_eq bucket_gen/test_river_eq.cpp)
 target_link_libraries(test_river_eq PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 

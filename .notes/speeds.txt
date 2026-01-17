@@ -1,0 +1,16 @@
+(iterations / 30 seconds, ps aux %)
+
+Threads| Normal     | Fast       | Fast B      | Fast Old    | Fast'    | Fast B'   | Fast Old'
+1       (655, 100)  (1177, 189)   (1193, 187)   (644, 97)     (317, 100) (348, 100)   (378, 100)
+2       (650, 100)  (1214, 185)   (1231, 184)   (1080, 180)   (639, 180) (812, 190)   (713, 190)
+4       (642, 100)  (1068, 280)   (929, 255)    (1534, 375)   (1137, 360) (1020, 340)  (997, 360)
+8       (639, 100)  (721, 440)    (753, 420)    (2374, 690)   (1421, 720) (1493, 730) (1318, 710)
+16      (641, 100)  (662, 820)    (674, 800)    (3713, 1475)  (2090, 1420) (2254, 1450) (2182, 1450)
+32      (640, 100)  (452, 1700)   (502, 1620)   (165, 2900)   (114, 2762)  (95, 2800)  (114, 2650)
+
+Note: 
+first 4 columnds, OMP_PROC_BIND = true; 
+next 3 columns, OMP_PROC_BIND = close; [best i think]
+if threads high, OMP_PROC_BIND = spread can help [if memory bandwidth bound]
+
+try 28, no 30 threads not 32
