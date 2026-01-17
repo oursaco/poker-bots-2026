@@ -393,7 +393,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return min(straight_match + flush_match, 1);
     }
 
-    array<float, 9> flop_eq_thresholds_10 = {0.40f, 0.50f, 0.55f, 0.60f, 0.65f, 0.70f, 0.75f, 0.80f, 0.85f};
+    array<float, 9> flop_eq_thresholds_10 = {0.256f, 0.319f, 0.369f, 0.425f, 0.481f, 0.537f, 0.600f, 0.676f, 0.775f};
 
     int getFlopBucket10(uint64_t board, uint64_t hand){
         float equity = calcEquity(getHand(board), hand);
@@ -401,7 +401,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return equity_bucket;
     }
 
-    array<float, 3> flop_eq_thresholds_4 = {0.40f, 0.55f, 0.70f};
+    array<float, 3> flop_eq_thresholds_32 = {0.344f, 0.481f, 0.637f};
 
     int getFlopBucket32(uint64_t board, uint64_t hand){
         omp::Hand board_hand = getHand(board);
@@ -411,12 +411,12 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         int my_draws = checkMyDraws(board_hand, rank_mask, hand);
         assert(my_draws < 2);
         float equity = calcEquity(getHand(board), hand);
-        int equity_bucket = lower_bound(flop_eq_thresholds_4.begin(), flop_eq_thresholds_4.end(), equity) - flop_eq_thresholds_4.begin();
+        int equity_bucket = lower_bound(flop_eq_thresholds_32.begin(), flop_eq_thresholds_32.end(), equity) - flop_eq_thresholds_32.begin();
         assert(equity_bucket < 4);
         return equity_bucket*8 + board_draws*2 + my_draws;
     }
 
-    array<float, 7> flop_eq_thresholds_8 = {0.40f, 0.50f, 0.55f, 0.60f, 0.65f, 0.70f, 0.75f};
+    array<float, 7> flop_eq_thresholds_64 = {0.269f, 0.344f, 0.412f, 0.481f, 0.550f, 0.637f, 0.750f};
 
     int getFlopBucket64(uint64_t board, uint64_t hand){
         omp::Hand board_hand = getHand(board);
@@ -426,7 +426,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         int my_draws = checkMyDraws(board_hand, rank_mask, hand);
         assert(my_draws < 2);
         float equity = calcEquity(getHand(board), hand);
-        int equity_bucket = lower_bound(flop_eq_thresholds_8.begin(), flop_eq_thresholds_8.end(), equity) - flop_eq_thresholds_8.begin();
+        int equity_bucket = lower_bound(flop_eq_thresholds_64.begin(), flop_eq_thresholds_64.end(), equity) - flop_eq_thresholds_64.begin();
         assert(equity_bucket < 8);
         return equity_bucket*8 + board_draws*2 + my_draws;
     }
@@ -471,7 +471,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         else assert(false);
     }
 
-    array<float, 4> turn_eq_thresholds_10 = {0.20f, 0.70f, 0.80f, 0.90f};
+    array<float, 4> turn_eq_thresholds_10 = {0.267f, 0.400f, 0.542f, 0.742f};
 
     int getTurnBucket10(uint64_t board, uint64_t hand){
         float equity = calcEquity(getHand(board), hand);
@@ -481,7 +481,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return equity_bucket*2 + board_draws;
     }
 
-    array<float, 7> turn_eq_thresholds_32 = {0.20f, 0.30f, 0.50f, 0.60f, 0.70f, 0.80f, 0.90f};
+    array<float, 7> turn_eq_thresholds_32 = {0.217f, 0.300f, 0.383f, 0.467f, 0.567f, 0.692f, 0.825f};
 
     int getTurnBucket32(uint64_t board, uint64_t hand){
         float equity = calcEquity(getHand(board), hand);
@@ -493,7 +493,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return equity_bucket*4 + board_draws*2 + my_draws;
     }
 
-    array<float, 7> turn_eq_thresholds_64 = {0.20f, 0.30f, 0.50f, 0.60f, 0.70f, 0.80f, 0.90f};
+    array<float, 7> turn_eq_thresholds_64 = {0.217f, 0.300f, 0.383f, 0.467f, 0.567f, 0.692f, 0.825f};
 
     int getTurnBucket64(uint64_t board, uint64_t hand){
         float equity = calcEquity(getHand(board), hand);
@@ -527,7 +527,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return equity_bucket*16 + opp_type*2 + my_type;
     }
 
-    array<float, 4> river_eq_thresholds_5 = {0.20f, 0.50f, 0.70f, 0.90f};
+    array<float, 4> river_eq_thresholds_5 = {0.206f, 0.400f, 0.606f, 0.831f};
 
     int getRiverBucket5(uint64_t board, uint64_t hand){
         float equity = calcEquity(getHand(board), hand);
@@ -535,7 +535,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return equity_bucket;
     }
 
-    array<float, 9> river_eq_thresholds_10 = {0.20f, 0.30f, 0.50f, 0.60f, 0.65f, 0.70f, 0.75f, 0.80f, 0.90f};
+    array<float, 9> river_eq_thresholds_10 = {0.100f, 0.206f, 0.306f, 0.400f, 0.494f, 0.606f, 0.719f, 0.831f, 0.919f};
 
     int getRiverBucket10(uint64_t board, uint64_t hand){
         float equity = calcEquity(getHand(board), hand);
@@ -543,7 +543,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         return equity_bucket;
     }
 
-    array<float, 19> river_eq_thresholds_20 = {0.30f, 0.35f, 0.40f, 0.45f, 0.50f, 0.525f, 0.55f, 0.575f, 0.60f, 0.625f, 0.65f, 0.675f, 0.70f, 0.725f, 0.75f, 0.775f, 0.80f, 0.825f, 0.85f};
+    array<float, 19> river_eq_thresholds_20 = {0.050f, 0.100f, 0.150f, 0.206f, 0.256f, 0.306f, 0.356f, 0.400f, 0.450f, 0.494f, 0.550f, 0.606f, 0.662f, 0.719f, 0.775f, 0.831f, 0.881f, 0.919f, 0.963f};
 
     int getRiverBucket20(uint64_t board, uint64_t hand){
         float equity = calcEquity(getHand(board), hand);
