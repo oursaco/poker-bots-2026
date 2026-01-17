@@ -93,5 +93,8 @@ target_link_libraries(test_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX
 add_executable(merge_turn emd_bucket_data/merge_turn.cpp)
 target_link_libraries(merge_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
+add_executable(best_response tools/best_response.cpp)
+target_link_libraries(best_response PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
+
 add_executable(compress_bin checkpoints/compress_bin.cpp)
 target_link_libraries(compress_bin PRIVATE pokerbots_headers omp)
