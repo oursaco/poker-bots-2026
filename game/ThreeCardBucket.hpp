@@ -130,8 +130,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         if(state->turn == 0){
             if(state->sb_stack == 0){
                 assert(state->street != 0);
-                //cur_buckets = (state->street == 3 ? 1250 : 1);
-                cur_buckets = 1;
+                cur_buckets = (state->street == 3 ? 1250 : 1);
             } else {
                 if(state->street == 0){
                     cur_buckets = 1755;
@@ -151,8 +150,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         } else {
             if(state->bb_stack == 0){
                 assert(state->street != 0);
-                // cur_buckets = (state->street == 2 ? 250 : 1);
-                cur_buckets = 1;
+                cur_buckets = (state->street == 2 ? 250 : 1);
             } else {
                 if(state->street == 0){
                     cur_buckets = 1755;
@@ -604,6 +602,9 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
     }
 
     int getWinner(uint64_t board, uint64_t hand1, uint64_t hand2){
+        assert(__builtin_popcountll(board) == 6);
+        assert(__builtin_popcountll(hand1) == 2);
+        assert(__builtin_popcountll(hand2) == 2);
         int dif = eval_8(board | hand1) - eval_8(board | hand2);
         if(dif > 0) return 1;
         else if(dif < 0) return -1;

@@ -132,7 +132,7 @@ void visualizeThreeCardInfoSets(){
 
     ThreeCardGameState root = ThreeCardGameState();
     node_id_counter = 0;
-    visualizeInfoSetsDepthLimited(&root, &tree, "", 0, 5);
+    visualizeInfoSetsDepthLimited(&root, &tree, "", 0, 7);
 }
 
 int main(){
