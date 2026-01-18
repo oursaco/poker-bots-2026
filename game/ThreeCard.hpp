@@ -651,7 +651,7 @@ struct ThreeCardGameTree : GameTree {
             int bb_bucket_80 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 80, 1);
             int bb_bucket_160 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 160, 1);
             int bb_bucket_320 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 320, 1);
-            int winner = bucket->getWinner(board[node_id], sb_hand, bb_hand);
+            int winner = bucket->getWinner(board[node_id], sb_hand ^ (1ull << sb_discard_card[node_id]), bb_hand ^ (1ull << bb_discard_card[node_id]));
             int turn = nodes[node_id].getTurn();
             if(turn == 0){
                 int sb_bucket = (buckets[node_id] == 1 ? 0 : (buckets[node_id] == 80 ? sb_bucket_80 : (buckets[node_id] == 160 ? sb_bucket_160 : sb_bucket_320)));
