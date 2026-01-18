@@ -24,7 +24,7 @@ struct TrainConfig {
 
 int main() {
     TrainConfig config;
-    config.seed = 389541;
+    config.seed = 770152972;
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./three_card_models";
