@@ -54,12 +54,13 @@ int evaluate_river(int p1, int p2, vector<int> board){
 
 float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
     assert(board.size() == 6);
+    //update range
     for(int i=0; i<22100; i++){
         if(range[i] > 0){
             if(
                 !(
-                ((opp_bb && (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2])) ||
-                (!opp_bb && (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3]))) ||
+                ((opp_bb && (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2]))) ||
+                ((!opp_bb && (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3])))
                 ) ||
                 (hand_map[i][0] == board[0] || hand_map[i][1] == board[0] || hand_map[i][2] == board[0]) ||
                 (hand_map[i][0] == board[1] || hand_map[i][1] == board[1] || hand_map[i][2] == board[1]) ||
@@ -71,6 +72,7 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
         }
     }
     normalize();
+    //calculate equity
     float eq = 0;
     for(int i=0; i<22100; i++){
         if(range[i] > 0){
@@ -78,13 +80,12 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
                 (opp_bb && (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2])) ||
                 (!opp_bb && (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3]))
             );
-            assert(hand_map[i][0] != board[0] && hand_map[i][1] != board[0] && hand_map[i][2] != board[0]);
-            assert(hand_map[i][0] != board[1] && hand_map[i][1] != board[1] && hand_map[i][2] != board[1]);
-            assert(hand_map[i][0] != board[2] && hand_map[i][1] != board[2] && hand_map[i][2] != board[2]);
-            assert(hand_map[i][0] != board[3] && hand_map[i][1] != board[3] && hand_map[i][2] != board[3]);
-            assert(hand_map[i][0] != board[4] && hand_map[i][1] != board[4] && hand_map[i][2] != board[4]);
-            assert(hand_map[i][0] != board[5] && hand_map[i][1] != board[5] && hand_map[i][2] != board[5]);
             vector<int> opp_cards;
+            int cnt = 0;
+            for(int j=0; j<5; j++){
+                cnt += (hand_map[i][0] == board[j]) + (hand_map[i][1] == board[j]) + (hand_map[i][2] == board[j]);
+            }
+            assert(cnt == 1);
             for(int j=0; j<3; j++){
                 if(hand_map[i][j] != board[2])
                     opp_cards.push_back(hand_map[i][j]);
@@ -95,24 +96,31 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
             else eq -= range[i];
         }
     }
+    assert(0 <= eq && eq <= 1);
+    return eq;
 }
 
 float get_turn_equity(int p1, int p2, vector<int> board, bool opp_bb){
     assert(board.size() == 5);
     float eq = 0, cnt = 0;
+    //deal river card
     for(int b=0; b<52; b++){
         if(b == board[0] || b == board[1] || b == board[2] || b == board[3] || b == board[4] || p1 == b || p2 == b) continue;
         cnt++;
         vector<int> new_board = board;
         new_board.push_back(b);
+        assert(new_board.size() == 6);
         eq += get_river_equity(p1, p2, new_board, opp_bb);
+        //get equity for specific river card
     }
+    assert(0 <= eq/cnt && eq/cnt <= 1);
     return eq/cnt;
 }
 
 float get_flop_equity(int p1, int p2, vector<int> board, bool opp_bb){
     assert(board.size() == 4);
     float eq = 0, cnt = 0;
+    //get turn and river cards
     for(int b1=0; b1<52; b1++){
         for(int b2=b1+1; b2<52; b2++){
             if(
@@ -123,25 +131,29 @@ float get_flop_equity(int p1, int p2, vector<int> board, bool opp_bb){
                 (p1 == b1 || p2 == b1 || p1 == b2 || p2 == b2)
             ) continue;
             cnt++;
+            //get equity for specific turn and river cards
             vector<int> new_board = board;
             new_board.push_back(b1);
             new_board.push_back(b2);
             eq += get_river_equity(p1, p2, new_board, opp_bb);
         }
     }
-    for(int b=0; b<52; b++){
-        bool on_board = false;
-        for(int i=0; i<board.size(); i++){
-            if(board[i] == b)
-                on_board = true;
-        }
-        if(p1 == b || p2 == b) continue;
-        if(on_board) continue;
-        cnt++;
-        board.push_back(b);
-        eq += get_river_equity(p1, p2, board, opp_bb);
-    }
+    assert(0 <= eq/cnt && eq/cnt <= 1);
     return eq/cnt;
+}
+
+float get_equity(int p1, int p2, vector<int> board, bool opp_bb){
+    assert(board.size() == 4 || board.size() == 5 || board.size() == 6);
+    float val = -1;
+    if(board.size() == 4){
+        val = get_flop_equity(p1, p2, board, opp_bb);
+    } else if(board.size() == 5){
+        val = get_turn_equity(p1, p2, board, opp_bb);
+    } else if(board.size() == 6){
+        val = get_river_equity(p1, p2, board, opp_bb);
+    }
+    assert(val != -1);
+    return val;
 }
 
 void generateHoleCards(){
@@ -157,43 +169,10 @@ void generateHoleCards(){
     }
 }
 
-float winProbability(int p1, int p2, set<int> board, int cards_to_gen){
-    Hand cur_board = Hand::empty();
-    for(int card: board)
-        cur_board += Hand(card);
-    if(cards_to_gen == 0){
-        for(int i=0; i<22100; i++){
-
-        }
-    }
-}
-
-void localBR(DCFRPolicy& policy, ThreeCardGameState* state, Hand hole_cards){
-    float wp; // win probability
-    float pot = state->pot;
-    auto actions = state->generateActions();
-    for(auto& game_action : actions){
-        auto action = static_cast<ThreeCardAction*>(game_action.second.get());
-        float amount = action->amount;
-        float new_range[22100];
-        float fp = 0.0f;
-
-        float sum = 0;
-        for(auto u: new_range)
-            sum += u;
-        for(int i=0; i<22100; i++){
-            new_range[i] /= sum;
-        }
-        float wp; // win probability
-        // float utility = fp * pot + (1-fp) * (wp * (pot + asked) - (1-wp) * (asked +
-    }
-}
-
 int main(){
 
     generateHoleCards();
-    // cout << get<0>(hand_map[0]) << " " << get<1>(hand_map[0]) << " " << get<2>(hand_map[0]) << endl;
-
+    cout << evaluate_river(48, 49, {50, 51, 0, 1, 2, 3}) << endl;
 
     return 0;
 }
