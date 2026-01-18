@@ -28,3 +28,28 @@ todo: implement this local player stuff and a local player that takes a cfr chec
 also implement aivat inside tools folder. 
 
 
+also some notes about LBR that i have from my understanding (didnt read paper at all)
+
+basically, LBR works like
+given some game state and private info
+do depth d search over actions (using opponent action abstractions)
+whilst traversing down tree, update opponent range
+at each terminal action, calculate equity of your hand against opponent range
+then convert this to chipEV and bottom up compute chipEV of higher up nodes
+for nodes where its your opponents turn, chipEV(parent) = p(child) * chipEV(child)
+for nodes where its your turn, chipEV(parent) = argmax chipEV(child)
+now, at root node where you have to make a decision, choose the child node with highest chipEV
+
+we should choose depth by level in game, not physical game depth (double check with thomas how he processes cfr level by level, but its probably with this idea im guessing)
+so first turn of flop is same depth for example. 
+
+actually, i guess we can also choose depth by actual depth not level in game, but this might be worse unsure.
+either way, we should never terminate our depth preflop (always after all discards are done)
+this way this equity stuff at the end actually means something.
+also, we should adjust our depth based on roughly time/branching factor for later streets. 
+this depth information should be hyperparameters in the specific LBR_3card_player
+
+
+
+
+
