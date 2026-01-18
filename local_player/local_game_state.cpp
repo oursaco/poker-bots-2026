@@ -1,4 +1,4 @@
-#include <string>
+    #include <string>
 #include "game/GameTree.hpp"
 #include "cfr/CFR.hpp"
 
@@ -21,6 +21,7 @@ struct LocalAction {
 };
 
 struct LocalGameState {
+    vector<Action> action_history;
     vector<int> board; // 0, 1: flop, 2: bb discard, 3: sb discard, 4: turn, 5: river
     int street;
     int pot;
