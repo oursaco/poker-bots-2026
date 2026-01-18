@@ -1,0 +1,55 @@
+make some game state that represents all the public knowledge at any point in time
+this should include the action history (chip bet sizes), as well as board/discard cards.
+this should be defined as some struct [three_card_game_state_local] or something that inherits from a abstract struct for general three_card_game_state_local
+
+then, a generic local player abstract struct should be made
+this should support one function and should be stateless
+
+game_state, private info -> distribution over valid actions
+it can also have an init with arbitrary args based on whatevers needed for that player idk. 
+
+game_state is the before game state; private info in our case is the 3 card hand dealt at the beginning.
+distribution over valid actions is a distribution over all the possible actions at a given state.
+
+i guess priivate info should also be some struct and u have 3card private info
+or even simplier it could simply be an integer representing which cards u were dealt, so we dont have extra structs for not much reason. 
+
+note that if we want, we can have our player class simply call this local player class in the future.
+
+this local player class is being created to allow us to play two players or strategies against eachother using AIVAT
+
+in particular, we will be able to play one strategy computed by CFR against a LBR strategy that is given this opposing local player strategy during its init.
+then, LBR can call this opposing strategy local player and figure out whats the local best action, and use that when outputting its action distribution
+in addition, the LBR should only output actions with nonzero probabilities when it is supported by the same action abstraction as the opposing local player (we dont want off-tree actions for now)
+
+there is some more stuff i should elaborate on, text me if i forget.
+
+todo: implement this local player stuff and a local player that takes a cfr checkpoint as input
+also implement aivat inside tools folder. 
+
+
+also some notes about LBR that i have from my understanding (didnt read paper at all)
+
+basically, LBR works like
+given some game state and private info
+do depth d search over actions (using opponent action abstractions)
+whilst traversing down tree, update opponent range
+at each terminal action, calculate equity of your hand against opponent range
+then convert this to chipEV and bottom up compute chipEV of higher up nodes
+for nodes where its your opponents turn, chipEV(parent) = p(child) * chipEV(child)
+for nodes where its your turn, chipEV(parent) = argmax chipEV(child)
+now, at root node where you have to make a decision, choose the child node with highest chipEV
+
+we should choose depth by level in game, not physical game depth (double check with thomas how he processes cfr level by level, but its probably with this idea im guessing)
+so first turn of flop is same depth for example. 
+
+actually, i guess we can also choose depth by actual depth not level in game, but this might be worse unsure.
+either way, we should never terminate our depth preflop (always after all discards are done)
+this way this equity stuff at the end actually means something.
+also, we should adjust our depth based on roughly time/branching factor for later streets. 
+this depth information should be hyperparameters in the specific LBR_3card_player
+
+
+
+
+
