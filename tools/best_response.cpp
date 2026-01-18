@@ -97,18 +97,38 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
     }
 }
 
-int get_turn_equity(int p1, int p2, vector<int> board, bool opp_bb){
+float get_turn_equity(int p1, int p2, vector<int> board, bool opp_bb){
     assert(board.size() == 5);
-    for(int i=0; i<22100; i++){
-        if(range[i] > 0){
-            if(!(
-                (opp_bb && (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2])) ||
-                (!opp_bb && (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3]))
-            )) range[i] = 0;
+    float eq = 0, cnt = 0;
+    for(int b=0; b<52; b++){
+        if(b == board[0] || b == board[1] || b == board[2] || b == board[3] || b == board[4] || p1 == b || p2 == b) continue;
+        cnt++;
+        vector<int> new_board = board;
+        new_board.push_back(b);
+        eq += get_river_equity(p1, p2, new_board, opp_bb);
+    }
+    return eq/cnt;
+}
+
+float get_flop_equity(int p1, int p2, vector<int> board, bool opp_bb){
+    assert(board.size() == 4);
+    float eq = 0, cnt = 0;
+    for(int b1=0; b1<52; b1++){
+        for(int b2=b1+1; b2<52; b2++){
+            if(
+                (b1 == board[0] || b2 == board[0]) ||
+                (b1 == board[1] || b2 == board[1]) ||
+                (b1 == board[2] || b2 == board[2]) ||
+                (b1 == board[3] || b2 == board[3]) ||
+                (p1 == b1 || p2 == b1 || p1 == b2 || p2 == b2)
+            ) continue;
+            cnt++;
+            vector<int> new_board = board;
+            new_board.push_back(b1);
+            new_board.push_back(b2);
+            eq += get_river_equity(p1, p2, new_board, opp_bb);
         }
     }
-    normalize();
-    int eq = 0, cnt = 0;
     for(int b=0; b<52; b++){
         bool on_board = false;
         for(int i=0; i<board.size(); i++){
@@ -122,10 +142,6 @@ int get_turn_equity(int p1, int p2, vector<int> board, bool opp_bb){
         eq += get_river_equity(p1, p2, board, opp_bb);
     }
     return eq/cnt;
-}
-
-int evaluate_turn(int p1, int p2, vector<int> board){
-
 }
 
 void generateHoleCards(){
