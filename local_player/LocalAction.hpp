@@ -39,7 +39,12 @@ struct LocalAction {
     
     static LocalAction dealRiver(int card) {return LocalAction(ActionType::DEAL_RIVER, card);}
     
-    bool operator==(const LocalAction& other) const {return type == other.type && value == other.value;}
+    bool operator==(const LocalAction& other) const {
+        if (type != other.type) return false;
+
+        if (type == ActionType::FOLD || type == ActionType::CALL) return true;
+        return value == other.value;
+    }
     
     bool operator!=(const LocalAction& other) const {return !(*this == other);}
 };
