@@ -78,7 +78,7 @@ LocalAction get_best_action(LocalGameState state, DCFRPolicy& opp_policy, array<
             }
             vector<int> cards;
             for(int j=0; j<3; j++){
-                if(hole_cards[j] != discard_card)
+                if(j != discard_card)
                     cards.push_back(hole_cards[j]);
             }
             assert(cards.size() == 2);
