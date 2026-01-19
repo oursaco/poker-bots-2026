@@ -4,9 +4,9 @@
 #include <cstddef>
 #include <iostream>
 #include <string>
-#include "game/ThreeCard.hpp"
+#include <typeinfo>
 #include "game/ThreeCardState.hpp"
-#include "game/FakePoker.hpp"
+// #include "game/FakePoker.hpp"
 using namespace std;
 
 void visualizeTree(GameState* state, const string& prefix){
@@ -36,6 +36,7 @@ void visualizeTree(GameState* state, const string& prefix){
 
 void visualizeTreeDepthLimited(GameState* state, const string& prefix, int depth){
     auto actions = state->generateActions();
+
     if(actions.empty()){
         cout << prefix << "(no actions)\n";
         return;
@@ -60,6 +61,8 @@ void visualizeTreeDepthLimited(GameState* state, const string& prefix, int depth
         if(!is_terminal){
             visualizeTreeDepthLimited(next_state, prefix + (is_last ? "    " : "|   "), depth - 1);
         }
+        if(action->toString().substr(0, 5) == "bb: d") break;
+        if(action->toString().substr(0, 5) == "sb: d") break;
     }
 }
 
@@ -75,14 +78,17 @@ void visualizePokerTree(){
 
 void visualizeThreeCardTree(){
     ThreeCardGameState root = ThreeCardGameState();
-    visualizeTreeDepthLimited(&root, "", 5);
+    visualizeTreeDepthLimited(&root, "", 100);
 }
 
+/*
 void visualizeFakePokerTree(){
     FakePokerGameState root = FakePokerGameState();
     visualizeTreeDepthLimited(&root, "", 5);
 }
+*/
 
 int main(){
-    visualizeFakePokerTree();
+    //visualizeFakePokerTree();
+    visualizeThreeCardTree();
 }

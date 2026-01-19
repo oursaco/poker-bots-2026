@@ -138,13 +138,13 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
                     cur_buckets = 1250;
                 } else if(state->street == 4){
                     assert(spr_scale > 0);
-                    cur_buckets = 10*spr_scale;
+                    cur_buckets = 5*spr_scale;
                 } else if(state->street == 5){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 } else if(state->street == 6){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 }
             }
         } else {
@@ -158,13 +158,13 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
                     cur_buckets = 250;
                 } else if(state->street == 4){
                     assert(spr_scale > 0);
-                    cur_buckets = 10*spr_scale;
+                    cur_buckets = 5*spr_scale;
                 } else if(state->street == 5){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 } else if(state->street == 6){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 }
             }
         }
@@ -444,12 +444,12 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
         my_type = min(my_type, 1);
         int equity_bucket = 0;
-        if(equity_buckets == 100) equity_bucket = getFlopBucket10(board, hand);
-        else if(equity_buckets == 320) equity_bucket = getFlopBucket32(board, hand);
-        else if(equity_buckets == 640) equity_bucket = getFlopBucket64(board, hand);
+        if(equity_buckets == 50) equity_bucket = getFlopBucket10(board, hand);
+        else if(equity_buckets == 160) equity_bucket = getFlopBucket32(board, hand);
+        else if(equity_buckets == 320) equity_bucket = getFlopBucket64(board, hand);
         else assert(false);
-        assert(equity_bucket < equity_buckets/10);
-        return equity_bucket*10 + opp_type*2 + my_type;
+        assert(equity_bucket < equity_buckets/5);
+        return equity_bucket*5 + opp_type;
     } 
 
     int checkDiscardInteraction(uint64_t flop_mask, uint64_t new_card_mask, int discard_card, int discard_suit){
@@ -516,15 +516,13 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         if(player_turn == 0) board_mask1 ^= 1ull << my_discard;
         else board_mask2 ^= 1ull << opp_discard;
         int opp_type = checkDiscardInteraction(board_mask1, turn, opp_discard/4, opp_discard%4);
-        int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
-        my_type = min(my_type, 1);
         int equity_bucket = 0;
-        if(equity_buckets == 160) equity_bucket = getTurnBucket10(flop | turn, hand);
-        else if(equity_buckets == 512) equity_bucket = getTurnBucket32(flop | turn, hand);
-        else if(equity_buckets == 1024) equity_bucket = getTurnBucket64(flop | turn, hand);
+        if(equity_buckets == 80) equity_bucket = getTurnBucket10(flop | turn, hand);
+        else if(equity_buckets == 256) equity_bucket = getTurnBucket32(flop | turn, hand);
+        else if(equity_buckets == 512) equity_bucket = getTurnBucket64(flop | turn, hand);
         else assert(false);
-        assert(equity_bucket < equity_buckets/16);
-        return equity_bucket*16 + opp_type*2 + my_type;
+        assert(equity_bucket < equity_buckets/8);
+        return equity_bucket*8 + opp_type;
     }
 
     array<float, 4> river_eq_thresholds_5 = {0.206f, 0.400f, 0.606f, 0.831f};
@@ -563,14 +561,13 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         else board_mask2 ^= 1ull << opp_discard;
         int opp_type = checkDiscardInteraction(board_mask1, turn_river, opp_discard/4, opp_discard%4);
         int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
-        my_type = min(my_type, 1);
         int equity_bucket = 0;
-        if(equity_buckets == 80) equity_bucket = getRiverBucket5(flop | turn_river, hand);
-        else if(equity_buckets == 160) equity_bucket = getRiverBucket10(flop | turn_river, hand);
-        else if(equity_buckets == 320) equity_bucket = getRiverBucket20(flop | turn_river, hand);
+        if(equity_buckets == 40) equity_bucket = getRiverBucket5(flop | turn_river, hand);
+        else if(equity_buckets == 80) equity_bucket = getRiverBucket10(flop | turn_river, hand);
+        else if(equity_buckets == 160) equity_bucket = getRiverBucket20(flop | turn_river, hand);
         else assert(false);
-        assert(equity_bucket < equity_buckets/16);
-        return equity_bucket*16 + opp_type*2 + my_type;
+        assert(equity_bucket < equity_buckets/8);
+        return equity_bucket*8 + opp_type;
     }
 
     int eval_7(uint64_t mask){
@@ -584,6 +581,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
     }
 
     int eval_8(uint64_t mask){
+        assert(__builtin_popcountll(mask) == 8);
         int cards[8], suits[8];
         omp::Hand pre[8];
         for(int i = 0; i < 8; i++){
@@ -602,9 +600,6 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
     }
 
     int getWinner(uint64_t board, uint64_t hand1, uint64_t hand2){
-        assert(__builtin_popcountll(board) == 6);
-        assert(__builtin_popcountll(hand1) == 2);
-        assert(__builtin_popcountll(hand2) == 2);
         int dif = eval_8(board | hand1) - eval_8(board | hand2);
         if(dif > 0) return 1;
         else if(dif < 0) return -1;

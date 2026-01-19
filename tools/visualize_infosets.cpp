@@ -130,6 +130,8 @@ void visualizeThreeCardInfoSets(){
     tree.init();
     tree.prepare(42);
 
+    
+
     ThreeCardGameState root = ThreeCardGameState();
     node_id_counter = 0;
     visualizeInfoSetsDepthLimited(&root, &tree, "", 0, 7);

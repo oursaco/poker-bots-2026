@@ -2,6 +2,8 @@
 #define THREECARDSTATE_HPP
 
 #include <string>
+#include <typeinfo>
+#include <iostream>
 #include "game/GameTree.hpp"
 
 struct ThreeCardAction : Action {
@@ -112,6 +114,7 @@ struct ThreeCardGameState : GameState {
             call->winner = 0;
             call->showdown = true;
         } else {
+            if(amount == 0) call->agressor = -1;
             call->street++;
             call->sb_bet = call->bb_bet = 0;
             call->turn = -1;
@@ -211,9 +214,8 @@ struct ThreeCardGameState : GameState {
             vector<int> raise_sizes;
             if(bb_bet > sb_bet){
                 raise_sizes = {pot_raise_size()};
-                if(action_depth == 1 && street != 0 && min_click_size() < pot_raise_size()/2) raise_sizes.push_back(min_click_size());
             } else {
-                if(agressor == 1){
+                if(agressor == 0 || agressor == -1){
                     raise_sizes = {pot_raise_size()};
                 } else {
                     raise_sizes = {half_pot_raise_size()};
@@ -234,10 +236,14 @@ struct ThreeCardGameState : GameState {
             actions.push_back(bb_call());
             vector<int> raise_sizes;
             if(sb_bet > bb_bet || (street == 0 && sb_bet == 2)){
+                if(action_depth == 2 && street != 0 && street != 6 && min_click_size() < pot_raise_size()/2){
+                    raise_sizes.push_back(min_click_size());
+                }
                 raise_sizes = {pot_raise_size()};
             } else {
-                raise_sizes = {half_pot_raise_size(), pot_raise_size()};
-                if(agressor == 0){
+                raise_sizes = {half_pot_raise_size()};
+                if(agressor == 1 || agressor == -1){
+                    raise_sizes.push_back(pot_raise_size());
                     raise_sizes.push_back(double_pot_raise_size());
                 }
             }

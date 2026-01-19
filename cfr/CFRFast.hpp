@@ -151,18 +151,18 @@ struct FastTrainer {
         pair<int, int>{5, 13},
         pair<int, int>{14, 34},
         pair<int, int>{35, 85},
-        pair<int, int>{86, 233},
-        pair<int, int>{234, 672},
-        pair<int, int>{673, 1830},
-        pair<int, int>{1831, 4755},
-        pair<int, int>{4756, 11631},
-        pair<int, int>{11632, 27102},
-        pair<int, int>{27103, 57684},
-        pair<int, int>{57685, 103935},
-        pair<int, int>{103936, 152256},
-        pair<int, int>{152257, 183567},
-        pair<int, int>{183568, 194241},
-        pair<int, int>{194242, 195573},
+        pair<int, int>{86, 224},
+        pair<int, int>{225, 627},
+        pair<int, int>{628, 1686},
+        pair<int, int>{1687, 4251},
+        pair<int, int>{4252, 10191},
+        pair<int, int>{10192, 23115},
+        pair<int, int>{23116, 45660},
+        pair<int, int>{45661, 74523},
+        pair<int, int>{74524, 99966},
+        pair<int, int>{99967, 113853},
+        pair<int, int>{113854, 117903},
+        pair<int, int>{117904, 118407},
     };
 
     void setTree(ThreeCardInferenceTree* tree1_, ThreeCardInferenceTree* tree2_){
@@ -334,7 +334,7 @@ struct FastTrainer {
         if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
 
         float alpha = 1.5f;
-        float beta = 0.0f;
+        float beta = 0.5f;
         float gamma = 2.0f;
         for(int i = previous_iteration + 1; i <= iterations; i++){
             float t = i;

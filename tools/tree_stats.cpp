@@ -20,7 +20,7 @@ struct TreeStats {
 };
 
 
-struct TestState : GameState {
+struct TestState {
 
     // 0: preflop, 1: flop, 2: turn, 3: river
     int street;
@@ -66,7 +66,7 @@ struct TestState : GameState {
         return float(stack)/new_pot;
     }
 
-    pair<unique_ptr<GameState>, unique_ptr<Action>> sb_fold(){
+    pair<unique_ptr<TestState>, unique_ptr<Action>> sb_fold(){
         auto fold = make_unique<TestState>(*this);  
         fold->winner = -1;
         fold->pot -= fold->bb_bet - fold->sb_bet;
@@ -74,7 +74,7 @@ struct TestState : GameState {
         return {std::move(fold), make_unique<ThreeCardAction>("fold", 0, 0, fold->sb_stack, fold->bb_stack, 0.0f)};
     }
 
-    pair<unique_ptr<GameState>, unique_ptr<Action>> bb_fold(){
+    pair<unique_ptr<TestState>, unique_ptr<Action>> bb_fold(){
         auto fold = make_unique<TestState>(*this);  
         fold->winner = 1;
         fold->pot -= fold->sb_bet - fold->bb_bet;
@@ -82,7 +82,7 @@ struct TestState : GameState {
         return {std::move(fold), make_unique<ThreeCardAction>("fold", 1, 0, fold->sb_stack, fold->bb_stack, 0.0f)};
     }
 
-    pair<unique_ptr<GameState>, unique_ptr<Action>> sb_call(){
+    pair<unique_ptr<TestState>, unique_ptr<Action>> sb_call(){
         auto call = make_unique<TestState>(*this);  
         assert(call->sb_bet < call->bb_bet || call->bb_bet == 0);
         int amount = call->bb_bet - call->sb_bet;
@@ -96,6 +96,7 @@ struct TestState : GameState {
             call->winner = 0;
             call->showdown = true;
         } else {
+            if(amount == 0) call->agressor = -1;
             call->street++;
             call->sb_bet = call->bb_bet = 0;
             call->turn = -1;
@@ -104,7 +105,7 @@ struct TestState : GameState {
         return {std::move(call), make_unique<ThreeCardAction>("call", 0, amount, call->sb_stack, call->bb_stack, 0.0f)};
     }
 
-    pair<unique_ptr<GameState>, unique_ptr<Action>> bb_call(){
+    pair<unique_ptr<TestState>, unique_ptr<Action>> bb_call(){
         auto call = make_unique<TestState>(*this);  
         assert(call->bb_bet < call->sb_bet || call->sb_bet == 0 || (street == 0 && call->sb_bet == 2));
         int amount = call->sb_bet - call->bb_bet;
@@ -130,7 +131,7 @@ struct TestState : GameState {
         return float(amount - bet_diff)/float(pot + bet_diff);
     }
 
-    pair<unique_ptr<GameState>, unique_ptr<Action>> sb_raise(int amount){
+    pair<unique_ptr<TestState>, unique_ptr<Action>> sb_raise(int amount){
         auto raise = make_unique<TestState>(*this);  
         assert(raise->sb_bet < raise->bb_bet || raise->bb_bet == 0);
         assert(raise->sb_bet + amount > raise->bb_bet);
@@ -144,7 +145,7 @@ struct TestState : GameState {
         return {std::move(raise), make_unique<ThreeCardAction>("raise", 0, amount, raise->sb_stack, raise->bb_stack, raiseSizeRelativeToPot(amount))};
     }
 
-    pair<unique_ptr<GameState>, unique_ptr<Action>> bb_raise(int amount){
+    pair<unique_ptr<TestState>, unique_ptr<Action>> bb_raise(int amount){
         auto raise = make_unique<TestState>(*this);  
         assert(raise->bb_bet < raise->sb_bet || raise->sb_bet == 0 || (street == 0 && raise->sb_bet == 2));
         assert(raise->bb_bet + amount > raise->sb_bet);
@@ -185,8 +186,8 @@ struct TestState : GameState {
         return amount < bb_stack && amount >= 2*sb_bet && amount + bb_bet - sb_bet < sb_stack && spr_after_raise(amount, bb_stack) >= 0.5f;
     }
 
-    vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> generateStreetActions() {
-        vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions;
+    vector<pair<unique_ptr<TestState>, unique_ptr<Action>>> generateStreetActions() {
+        vector<pair<unique_ptr<TestState>, unique_ptr<Action>>> actions;
         if(turn == 0){
             if(bb_bet > 0){
                 actions.push_back(sb_fold());
@@ -195,9 +196,8 @@ struct TestState : GameState {
             vector<int> raise_sizes;
             if(bb_bet > sb_bet){
                 raise_sizes = {pot_raise_size()};
-                if(action_depth == 1 && street != 0 && min_click_size() < pot_raise_size()/2) raise_sizes.push_back(min_click_size());
             } else {
-                if(agressor == 1){
+                if(agressor == 0 || agressor == -1){
                     raise_sizes = {pot_raise_size()};
                 } else {
                     raise_sizes = {half_pot_raise_size()};
@@ -218,10 +218,14 @@ struct TestState : GameState {
             actions.push_back(bb_call());
             vector<int> raise_sizes;
             if(sb_bet > bb_bet || (street == 0 && sb_bet == 2)){
+                if(action_depth == 2 && street != 0 && street != 6 && min_click_size() < pot_raise_size()/2){
+                    raise_sizes.push_back(min_click_size());
+                }
                 raise_sizes = {pot_raise_size()};
             } else {
-                raise_sizes = {half_pot_raise_size(), pot_raise_size()};
-                if(agressor == 0){
+                raise_sizes = {half_pot_raise_size()};
+                if(agressor == 1 || agressor == -1){
+                    raise_sizes.push_back(pot_raise_size());
                     raise_sizes.push_back(double_pot_raise_size());
                 }
             }
@@ -237,10 +241,10 @@ struct TestState : GameState {
         return actions;
     }
 
-    vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> generateActions() override {
+    vector<pair<unique_ptr<TestState>, unique_ptr<Action>>> generateActions() {
         if(isTerminal()) return {};
         if(turn == -1){
-            vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions;
+            vector<pair<unique_ptr<TestState>, unique_ptr<Action>>> actions;
             string action_name = "";
             auto next_state = make_unique<TestState>(*this);
             if(street == 0){
@@ -264,7 +268,7 @@ struct TestState : GameState {
             return actions;
         }
         if(street == 2){
-            vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions;
+            vector<pair<unique_ptr<TestState>, unique_ptr<Action>>> actions;
             for(int i = 1; i <= 3; i++){
                 auto next_state = make_unique<TestState>(*this);
                 next_state->turn = 0;
@@ -274,7 +278,7 @@ struct TestState : GameState {
             return actions;
         }
         if(street == 3){
-            vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions;
+            vector<pair<unique_ptr<TestState>, unique_ptr<Action>>> actions;
             for(int i = 1; i <= 3; i++){
                 auto next_state = make_unique<TestState>(*this);
                 next_state->turn = 1;
@@ -307,17 +311,17 @@ void generateTreeRecursive(TestState& state, TreeStats& stats, size_t depth) {
         if(1 <= spr_bucket && spr_bucket <= 3){
             spr_scale = 10;
         } else if(4 <= spr_bucket && spr_bucket <= 13){
-            spr_scale = 64;
-        } else {
             spr_scale = 32;
+        } else {
+            spr_scale = 16;
         }
     } else if(state.street == 5){
         if(1 <= spr_bucket && spr_bucket <= 3){
             spr_scale = 10;
         } else if(4 <= spr_bucket && spr_bucket <= 6){
-            spr_scale = 64;
-        } else {
             spr_scale = 32;
+        } else {
+            spr_scale = 16;
         }
     } else if(state.street == 6){
         if(1 <= spr_bucket && spr_bucket <= 2){
@@ -325,7 +329,7 @@ void generateTreeRecursive(TestState& state, TreeStats& stats, size_t depth) {
         } else if(3 <= spr_bucket && spr_bucket <= 5){
             spr_scale = 10;
         } else {
-            spr_scale = 20;
+            spr_scale = 10;
         }
     }
     if(!state.isTerminal() && state.turn != -1){
