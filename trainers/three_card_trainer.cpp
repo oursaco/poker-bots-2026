@@ -16,7 +16,7 @@ struct TrainConfig {
     int seed = 0;
     int iterations = 1'000;
     float log_every_secs = 5.0f;
-    float checkpoint_every_secs = 3600.0f;
+    float checkpoint_every_secs = 1800.0f;
     std::string output_dir;
     std::string player0_policy;
     std::string player1_policy;
@@ -24,7 +24,7 @@ struct TrainConfig {
 
 int main() {
     TrainConfig config;
-    config.seed = 770152972;
+    config.seed = 410344858;
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./three_card_models";
