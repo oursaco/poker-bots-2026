@@ -23,21 +23,18 @@ struct LocalAction {
 struct LocalGameState {
     vector<Action> action_history;
     vector<int> board; // 0, 1: flop, 2: bb discard, 3: sb discard, 4: turn, 5: river
-    int street;
     int pot;
     int sb_stack, bb_stack;
     int sb_bet, bb_bet;
-    int action_depth;
-    //0: player0, 1: player1, -1: world
-    //player 0 is sb
     int turn;
-    // 0: no winner, 1: sb wins, -1: bb wins
-    // change in pnl is winner * pot, so sb is positive bb is negative
-    int winner;
-    bool showdown;
-    int agressor;
 
+    vector<LocalAction> get_possible_actions(){
+        //to-do
+    }
 
+    LocalGameState get_next_state(LocalAction action){
+        //to-do
+    }
 };
 
 struct LocalPlayer {
@@ -59,5 +56,4 @@ struct LocalPlayer {
             depth = depth_;
         }
     }
-    virtual LocalAction get_distrib(LocalGameState* state, tuple<int,int,int> hole_cards) = 0;
 };
