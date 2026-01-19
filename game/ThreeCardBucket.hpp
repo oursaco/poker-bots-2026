@@ -77,11 +77,11 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         cout << "  6 cards (2c5c8dKd9h3c): " << (calcEquity(flush_board_6, flush_hand) * 100) << "%" << endl;
         
         // Example 3: Straight draw with Tc 6d hole cards (789 board)
-        uint64_t straight_hand = cardMask("Tc") | cardMask("9d");
-        omp::Hand straight_board_3 = omp::Hand::empty() + omp::Hand(getCardId("7c")) + omp::Hand(getCardId("8h")) + omp::Hand(getCardId("2d"));
-        omp::Hand straight_board_4 = straight_board_3 + omp::Hand(getCardId("3s"));
-        omp::Hand straight_board_5 = straight_board_4 + omp::Hand(getCardId("Ac"));
-        omp::Hand straight_board_6 = straight_board_5 + omp::Hand(getCardId("Kh"));
+        uint64_t straight_hand = cardMask("2c") | cardMask("3d");
+        omp::Hand straight_board_3 = omp::Hand::empty() + omp::Hand(getCardId("4c")) + omp::Hand(getCardId("5h")) + omp::Hand(getCardId("Kd"));
+        omp::Hand straight_board_4 = straight_board_3 + omp::Hand(getCardId("Ts"));
+        omp::Hand straight_board_5 = straight_board_4 + omp::Hand(getCardId("8c"));
+        omp::Hand straight_board_6 = straight_board_5 + omp::Hand(getCardId("5h"));
         
         cout << "\nSTRAIGHT DRAW with Tc 6d hole cards (Board: 789 2 4 Q):\n";
         cout << "Hole cards: Tc 6d\n";
@@ -126,6 +126,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
                 spr_scale = 20;
             }
         }
+        spr_scale = 10;
         int cur_buckets = 0;
         if(state->turn == 0){
             if(state->sb_stack == 0){
@@ -186,20 +187,22 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         encoding::readFlopEquity(tar_dir + "/flop_equity.bin");
         encoding::readThreeEncodingMap(tar_dir + "/three_encoding_map.bin");
         encoding::readThreeEquity(tar_dir + "/three_equity.bin");
-        for(int i = 1; i + 3 < 12; i++){
+        for(int i = 0; i + 3 < 13; i++){
             uint64_t mask = 0;
             for(int j = i; j < i + 3; j++){
                 mask |= 1ull << j;
             }
             three_card_straight_masks.push_back(mask);
         }
-        for(int i = 0; i + 4 < 13; i++){
+        for(int i = 0; i + 4 <= 13; i++){
             uint64_t mask = 0;
             for(int j = i; j < i + 4; j++){
                 mask |= 1ull << j;
             }
             four_card_straight_masks.push_back(mask);
         }
+        four_card_straight_masks.push_back(1ull << 12);
+        for(int i = 0; i < 3; i++) four_card_straight_masks.back() |= 1ull << i;
         printSpecificEquities();
     }
 
@@ -309,6 +312,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
             cards[i] = __builtin_ctzll(hand);
             hand ^= 1ull << cards[i];
         }
+        assert(__builtin_popcountll(hand) == 0);
         return encoding::preflop_buckets[cards[0]][cards[1]][cards[2]];
     }
 
@@ -441,8 +445,6 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         if(player_turn == 0) board_mask1 ^= 1ull << my_discard;
         else board_mask2 ^= 1ull << opp_discard;
         int opp_type = getDiscardType(getHand(board_mask1), getRankMask(board_mask1), opp_discard/4, opp_discard%4);
-        int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
-        my_type = min(my_type, 1);
         int equity_bucket = 0;
         if(equity_buckets == 50) equity_bucket = getFlopBucket10(board, hand);
         else if(equity_buckets == 160) equity_bucket = getFlopBucket32(board, hand);
@@ -517,6 +519,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         else board_mask2 ^= 1ull << opp_discard;
         int opp_type = checkDiscardInteraction(board_mask1, turn, opp_discard/4, opp_discard%4);
         int equity_bucket = 0;
+        assert(__builtin_popcountll(flop | turn) == 5);
         if(equity_buckets == 80) equity_bucket = getTurnBucket10(flop | turn, hand);
         else if(equity_buckets == 256) equity_bucket = getTurnBucket32(flop | turn, hand);
         else if(equity_buckets == 512) equity_bucket = getTurnBucket64(flop | turn, hand);
@@ -559,8 +562,8 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         uint64_t board_mask2 = flop ^ (1ull << my_discard);
         if(player_turn == 0) board_mask1 ^= 1ull << my_discard;
         else board_mask2 ^= 1ull << opp_discard;
+        assert(__builtin_popcountll(flop | turn_river) == 6);
         int opp_type = checkDiscardInteraction(board_mask1, turn_river, opp_discard/4, opp_discard%4);
-        int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
         int equity_bucket = 0;
         if(equity_buckets == 40) equity_bucket = getRiverBucket5(flop | turn_river, hand);
         else if(equity_buckets == 80) equity_bucket = getRiverBucket10(flop | turn_river, hand);

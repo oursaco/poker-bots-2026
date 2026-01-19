@@ -11,6 +11,15 @@ using namespace omp;
 
 using namespace std;
 
+string SUITS = "chsd";
+string CARDS = "23456789TJQKA";
+
+inline unsigned getCardId(string x) {
+    unsigned rank = find(CARDS.begin(), CARDS.end(), x[0]) - CARDS.begin();
+    unsigned suit = find(SUITS.begin(), SUITS.end(), x[1]) - SUITS.begin();
+    return rank*4 + suit;
+}
+
 int main(){
     std::ifstream map("emd_bucket_data/river_encoding_map.bin", std::ios::binary);
     int encoding_index = 0;
@@ -23,19 +32,22 @@ int main(){
     std::ifstream eq("emd_bucket_data/river_equity.bin", std::ios::binary);
     std::vector<float> equity(169 * encoding_index);
     eq.read(reinterpret_cast<char*>(equity.data()), equity.size() * sizeof(float));
+    HandEvaluator eval;
+    cout << equity.size() << endl;
 
     // Hand board = Hand::empty() + Hand(48) + Hand(49) + Hand(1) + Hand(3) + Hand(6) + Hand(10); // As, Ah, 2h, 2d, 3c, 4c
-    Hand board = Hand::empty() + Hand(45) + Hand(46) + Hand(48) + Hand(47) + Hand(50) + Hand(0);
-    int p1 = 49;
-    int p2 = 51;
-    int s1 = p1 % 4;
-    int s2 = p2 % 4;
+    Hand board = Hand::empty() + Hand(getCardId("4c")) + Hand(getCardId("5h")) + Hand(getCardId("Ad")) + Hand(getCardId("8s")) + Hand(getCardId("9c")) + Hand(getCardId("Td"));
+    cout << board.count() << " " << eval.evaluate(board)<< endl;
+    int c1 = getCardId("2s");
+    int c2 = getCardId("3c");
+    int s1 = c1 % 4;
+    int s2 = c2 % 4;
     int board_id = encoding_map[encoding::encodeRiverBoard(board, s1, s2)];
     cout << board_id << endl;
     // int hand_id = getHoleId(2, 2, 0, 1);
-    int hand_id = encoding::getHoleId(p1/4, p2/4, s1, s2);
+    int hand_id = encoding::getHoleId(c1/4, c2/4, s1, s2);
+    cout << hand_id * encoding_index + board_id << endl;
     float value = equity[hand_id * encoding_index + board_id];
     cout << value << endl;
-
     return 0;
 }
