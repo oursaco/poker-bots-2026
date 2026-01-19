@@ -61,7 +61,7 @@ river: terminal nodes are terminal nodes of the game.
 i guess if we want to do higher depth, terminal nodes for flop could be right bfr river revealed, but this is surely too expensive. 
 benchmark benchmark i guess. 
 
-ig we can have options (i.e.)
+also, in terms for the action abstraction stuff, the LBR local player should simply call the CFR local player's function, and use the same actions as them. 
 
 
 

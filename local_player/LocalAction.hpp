@@ -31,6 +31,8 @@ struct LocalAction {
     
     static LocalAction raise(uint64_t amount) {return LocalAction(ActionType::RAISE, amount);}
     
+    static LocalAction raise(uint64_t call_amount, uint64_t raise_amount) {return LocalAction(ActionType::RAISE, call_amount + raise_amount);}
+    
     static LocalAction discard(int card) {return LocalAction(ActionType::DISCARD, card);}
     
     static LocalAction dealFlop(int card1, int card2) {return LocalAction(ActionType::DEAL_FLOP, (1ull << card1) | (1ull << card2));}
