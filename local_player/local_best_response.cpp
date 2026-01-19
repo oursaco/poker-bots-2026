@@ -14,17 +14,19 @@
 #include "local_player/local_equities.cpp"
 
 
-LocalAction get_best_action(LocalGameState state, DCFRPolicy& opp_policy, bool opp_bb, array<int, 3> hole_cards, int depth){
+LocalAction get_best_action(LocalGameState state, DCFRPolicy& opp_policy, array<float, 22100> range, bool opp_bb, array<int, 3> hole_cards, int depth){
     vector<int> board = state.board;
     assert(
         (opp_bb && (hole_cards[0] == board[3] || hole_cards[1] == board[3] || hole_cards[2] == board[3])) ||
         (!opp_bb && (hole_cards[0] == board[2] || hole_cards[1] == board[2] || hole_cards[2] == board[2]))
     );
     vector<vector<pair<int,int>>> children; // children[i] is the children of the ith node
-    vector<pair<LocalGameState, int>> tree = {};
+    vector<array<float, 22100>> node_ranges; // node_ranges[i] is the range of the ith node
+    vector<pair<LocalGameState, int>> tree;
     vector<bool> is_terminal; // is_terminal[i] is true if the ith node is a terminal node
     tree.push_back(make_pair(state, 0));
     is_terminal.push_back(false);
+    node_ranges.push_back(range);
     int index = 0, tree_size = 1;
     while(index < tree_size){
         LocalGameState* cur_state = &tree[index].first; // current state
@@ -39,6 +41,7 @@ LocalAction get_best_action(LocalGameState state, DCFRPolicy& opp_policy, bool o
                 tree.push_back(make_pair(next_state, tree[index].second + 1));
                 children[index].push_back(make_pair(tree_size, actions[i].second));
                 is_terminal.push_back(false);
+                // need to update range here and push to node_ranges :(
                 tree_size++;
                 has_children = true;
             }
@@ -79,7 +82,7 @@ LocalAction get_best_action(LocalGameState state, DCFRPolicy& opp_policy, bool o
                     cards.push_back(hole_cards[j]);
             }
             assert(cards.size() == 2);
-            chipev[i] = get_equity(cards[0], cards[1], board, opp_bb);
+            chipev[i] = get_equity(cards[0], cards[1], board, node_ranges[i].data(), opp_bb);
         } else{
             int turn = tree[i].first.street;
             auto action_distribution = tree[i].first.get_possible_actions();

@@ -20,12 +20,12 @@ using namespace omp;
 using namespace std;
 
 array<array<int, 3>, 22100> hand_map;
-float range[22100];
 
-void normalize(){
+void normalize(float range[22100]){
     float sum = 0;
-    for(int num: range)
-        sum += num;
+    for(int i=0; i<22100; i++){
+        sum += range[i];
+    }
     for(int i=0; i<22100; i++){
         range[i] /= sum;
     }
@@ -52,7 +52,7 @@ int evaluate_river(int p1, int p2, vector<int> board){
     return strength;
 }
 
-float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
+float get_river_equity(int p1, int p2, vector<int> board, float range[22100], bool opp_bb){
     assert(board.size() == 6);
     //update range
     for(int i=0; i<22100; i++){
@@ -68,7 +68,7 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
             range[i] = 0;
         }
     }
-    normalize();
+    normalize(range);
     //calculate equity
     float eq = 0;
     for(int i=0; i<22100; i++){
@@ -98,7 +98,7 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
     return eq;
 }
 
-float get_turn_equity(int p1, int p2, vector<int> board, bool opp_bb){
+float get_turn_equity(int p1, int p2, vector<int> board, float range[22100], bool opp_bb){
     assert(board.size() == 5);
     float eq = 0, cnt = 0;
     //deal river card
@@ -108,14 +108,14 @@ float get_turn_equity(int p1, int p2, vector<int> board, bool opp_bb){
         vector<int> new_board = board;
         new_board.push_back(b);
         assert(new_board.size() == 6);
-        eq += get_river_equity(p1, p2, new_board, opp_bb);
+        eq += get_river_equity(p1, p2, new_board, range, opp_bb);
         //get equity for specific river card
     }
     assert(0 <= eq/cnt && eq/cnt <= 1);
     return eq/cnt;
 }
 
-float get_flop_equity(int p1, int p2, vector<int> board, bool opp_bb){
+float get_flop_equity(int p1, int p2, vector<int> board, float range[22100], bool opp_bb){
     assert(board.size() == 4);
     float eq = 0, cnt = 0;
     //get turn and river cards
@@ -134,22 +134,22 @@ float get_flop_equity(int p1, int p2, vector<int> board, bool opp_bb){
             new_board.push_back(b1);
             new_board.push_back(b2);
             assert(new_board.size() == 6);
-            eq += get_river_equity(p1, p2, new_board, opp_bb);
+            eq += get_river_equity(p1, p2, new_board, range, opp_bb);
         }
     }
     assert(0 <= eq/cnt && eq/cnt <= 1);
     return eq/cnt;
 }
 
-float get_equity(int p1, int p2, vector<int> board, bool opp_bb){
+float get_equity(int p1, int p2, vector<int> board, float range[22100], bool opp_bb){
     assert(board.size() == 4 || board.size() == 5 || board.size() == 6);
     float val = -1;
     if(board.size() == 4){
-        val = get_flop_equity(p1, p2, board, opp_bb);
+        val = get_flop_equity(p1, p2, board, range, opp_bb);
     } else if(board.size() == 5){
-        val = get_turn_equity(p1, p2, board, opp_bb);
+        val = get_turn_equity(p1, p2, board, range, opp_bb);
     } else if(board.size() == 6){
-        val = get_river_equity(p1, p2, board, opp_bb);
+        val = get_river_equity(p1, p2, board, range, opp_bb);
     }
     assert(0 <= val && val <= 1);
     return val;
