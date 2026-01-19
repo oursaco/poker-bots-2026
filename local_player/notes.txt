@@ -49,7 +49,19 @@ this way this equity stuff at the end actually means something.
 also, we should adjust our depth based on roughly time/branching factor for later streets. 
 this depth information should be hyperparameters in the specific LBR_3card_player
 
+small addition:
+i think we should prolly do the level by level depth sorta thing. ngl we might be able to search whole tree or smth. 
+i guess its expensive updating opponent's range cause for each hand u gotta figure out which infoset its in and extra actions. 
+either way, i think the way we do the depth of search is like:
+preflop/discard1/discard2: terminal nodes are right after before (or after?) the flop has been revealed
+flop: terminal nodes are right before (or after?) the turn has been revealed. 
+turn: terminal nodes are right before the river has been revealed.
+river: terminal nodes are terminal nodes of the game. 
 
+i guess if we want to do higher depth, terminal nodes for flop could be right bfr river revealed, but this is surely too expensive. 
+benchmark benchmark i guess. 
+
+ig we can have options (i.e.)
 
 
 
