@@ -1,4 +1,4 @@
-    #include <string>
+#include <string>
 #include "game/GameTree.hpp"
 #include "cfr/CFR.hpp"
 
@@ -23,13 +23,17 @@ struct LocalAction {
 struct LocalGameState {
     vector<Action> action_history;
     vector<int> board; // 0, 1: flop, 2: bb discard, 3: sb discard, 4: turn, 5: river
+    int street; // 
     int pot;
     int sb_stack, bb_stack;
     int sb_bet, bb_bet;
-    int turn;
+    int turn; // 0: sb, 1: bb, -1: world
+    int winner; // 0: sb wins, 1: bb wins, -1: no winner
 
-    vector<LocalAction> get_possible_actions(){
+    vector<pair<LocalAction, float>> get_possible_actions(){
         //to-do
+        // returns a vector of pairs of actions and their probabilities
+        // this function should be deterministic (i.e. should always return the same actions and probabilites in the same order)
     }
 
     LocalGameState get_next_state(LocalAction action){
