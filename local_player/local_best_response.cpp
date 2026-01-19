@@ -71,6 +71,7 @@ LocalAction get_best_action(LocalGameState* state, DCFRPolicy& opp_policy, bool 
             auto action_distribution = tree[i].first.get_possible_actions();
             if((turn == 0 && opp_bb) || (turn == -1 && !opp_bb)){
                 // our turn
+                assert(chipev[i] == 0); // shoudln't have been modified yet
                 float max_chipev = -1e9;
                 for(int j=0; j<children[i].size(); j++){
                     float max_chipev = max(max_chipev, chipev[children[i][j].first]);
@@ -78,6 +79,7 @@ LocalAction get_best_action(LocalGameState* state, DCFRPolicy& opp_policy, bool 
                 chipev[i] = max_chipev;
             } else{
                 // opponent's turn
+                assert(chipev[i] == 0); // shoudln't have been modified yet
                 for(int j=0; j<children[i].size(); j++){
                     chipev[i] += chipev[children[i][j].first] * action_distribution[children[i][j].second].second;
                 }
