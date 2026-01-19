@@ -3,7 +3,7 @@
 #include "cfr/CFR.hpp"
 
 struct LocalAction { 
-    string action;
+    string action; // fold, check, bet, call, raise, all-in
     int turn;
     int amount;
     int sb_stack;
@@ -21,23 +21,22 @@ struct LocalAction {
 };
 
 struct LocalGameState {
-    vector<Action> action_history;
+    vector<LocalAction> action_history;
     vector<int> board; // 0, 1: flop, 2: bb discard, 3: sb discard, 4: turn, 5: river
     int street; // 
     int pot;
     int sb_stack, bb_stack;
-    int sb_bet, bb_bet;
     int turn; // 0: sb, 1: bb, -1: world
     int winner; // 0: sb wins, 1: bb wins, -1: no winner
 
     vector<pair<LocalAction, float>> get_possible_actions(){
         //to-do
-        // returns a vector of pairs of actions and their probabilities
+        // returns a vector of pairs of actions and the probabilites of each action
         // this function should be deterministic (i.e. should always return the same actions and probabilites in the same order)
     }
 
     LocalGameState get_next_state(LocalAction action){
-        //to-do
+        
     }
 };
 
@@ -48,7 +47,8 @@ struct LocalPlayer {
     DCFRPolicy cfr_policy;
     int depth;
 
-    virtual void init(string cfr_policy_path_: string = "", int depth_: int = 0){
+
+    void init(string cfr_policy_path_, int depth_){
         if(cfr_policy_path_ != ""){
             cfr_policy.loadPolicy(cfr_policy_path_);
             is_online = false;

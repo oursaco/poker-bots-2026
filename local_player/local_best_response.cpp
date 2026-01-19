@@ -1,13 +1,27 @@
-#include "local_game_state.cpp"
+#include <array>
+#include <vector>
+#include <utility>
+#include <cassert>
+#include <cmath>
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <chrono>
+#include <omp.h>
 
-LocalAction get_best_action(LocalGameState* state, DCFRPolicy& opp_policy, bool opp_bb, tuple<int,int,int> hole_cards, int depth){
-    vector<int> board = state->board;
+#include "local_player/local_game_state.cpp"
+#include "local_player/local_equities.cpp"
+
+
+LocalAction get_best_action(LocalGameState state, DCFRPolicy& opp_policy, bool opp_bb, array<int, 3> hole_cards, int depth){
+    vector<int> board = state.board;
     assert(
         (opp_bb && (hole_cards[0] == board[3] || hole_cards[1] == board[3] || hole_cards[2] == board[3])) ||
         (!opp_bb && (hole_cards[0] == board[2] || hole_cards[1] == board[2] || hole_cards[2] == board[2]))
     );
     vector<vector<pair<int,int>>> children; // children[i] is the children of the ith node
-    vector<pair<LocalGameState, int>> tree;
+    vector<pair<LocalGameState, int>> tree = {};
     vector<bool> is_terminal; // is_terminal[i] is true if the ith node is a terminal node
     tree.push_back(make_pair(state, 0));
     is_terminal.push_back(false);
@@ -88,8 +102,12 @@ LocalAction get_best_action(LocalGameState* state, DCFRPolicy& opp_policy, bool 
     }
     auto action_distribution = tree[0].first.get_possible_actions();
     float max_chipev = -1e9;
+    LocalAction best_action = action_distribution[children[0][0].second].first;
     for(int i=0; i<children[0].size(); i++){
-        max_chipev = max(max_chipev, chipev[children[0][i].first]);
+        if(chipev[children[0][i].first] > max_chipev){
+            max_chipev = chipev[children[0][i].first];
+            best_action = action_distribution[children[0][i].second].first;
+        }
     }
-    return max_chipev;
+    return best_action;
 }

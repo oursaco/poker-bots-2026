@@ -56,19 +56,16 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
     assert(board.size() == 6);
     //update range
     for(int i=0; i<22100; i++){
-        if(range[i] > 0){
-            if(
-                !(
-                ((opp_bb && (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2]))) ||
-                ((!opp_bb && (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3])))
-                ) ||
-                (hand_map[i][0] == board[0] || hand_map[i][1] == board[0] || hand_map[i][2] == board[0]) ||
-                (hand_map[i][0] == board[1] || hand_map[i][1] == board[1] || hand_map[i][2] == board[1]) ||
-                (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2]) ||
-                (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3]) ||
-                (hand_map[i][0] == board[4] || hand_map[i][1] == board[4] || hand_map[i][2] == board[4]) ||
-                (hand_map[i][0] == board[5] || hand_map[i][1] == board[5] || hand_map[i][2] == board[5])
-            ) range[i] = 0;
+        int cnt = 0;
+        for(int j=0; j<6; j++){
+            cnt += (hand_map[i][0] == board[j]) + (hand_map[i][1] == board[j]) + (hand_map[i][2] == board[j]);
+        }
+        if(
+            cnt != 1 || // (not) one hole card on the board
+            (opp_bb && hand_map[i][0] != board[2] && hand_map[i][1] != board[2] && hand_map[i][2] != board[2]) || // opp's hole card in the wrong spot
+            (!opp_bb && hand_map[i][0] != board[3] && hand_map[i][1] != board[3] && hand_map[i][2] != board[3]) // opp's hole card in the wrong spot
+        ){
+            range[i] = 0;
         }
     }
     normalize();
@@ -77,15 +74,16 @@ float get_river_equity(int p1, int p2, vector<int> board, bool opp_bb){
     for(int i=0; i<22100; i++){
         if(range[i] > 0){
             assert(
-                (opp_bb && (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2])) ||
-                (!opp_bb && (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3]))
+                (opp_bb && (hand_map[i][0] == board[2] || hand_map[i][1] == board[2] || hand_map[i][2] == board[2])) || // opponent hole card on bb discard spot
+                (!opp_bb && (hand_map[i][0] == board[3] || hand_map[i][1] == board[3] || hand_map[i][2] == board[3])) // opponent hole card on sb discard spot
             );
-            vector<int> opp_cards;
             int cnt = 0;
-            for(int j=0; j<5; j++){
+            for(int j=0; j<6; j++){
                 cnt += (hand_map[i][0] == board[j]) + (hand_map[i][1] == board[j]) + (hand_map[i][2] == board[j]);
             }
             assert(cnt == 1);
+            vector<int> opp_cards;
+            cnt = 0;
             for(int j=0; j<3; j++){
                 if(hand_map[i][j] != board[2])
                     opp_cards.push_back(hand_map[i][j]);
@@ -135,6 +133,7 @@ float get_flop_equity(int p1, int p2, vector<int> board, bool opp_bb){
             vector<int> new_board = board;
             new_board.push_back(b1);
             new_board.push_back(b2);
+            assert(new_board.size() == 6);
             eq += get_river_equity(p1, p2, new_board, opp_bb);
         }
     }
@@ -152,7 +151,7 @@ float get_equity(int p1, int p2, vector<int> board, bool opp_bb){
     } else if(board.size() == 6){
         val = get_river_equity(p1, p2, board, opp_bb);
     }
-    assert(val != -1);
+    assert(0 <= val && val <= 1);
     return val;
 }
 
