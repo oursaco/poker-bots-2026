@@ -5,26 +5,43 @@
 
 enum class ActionType : uint8_t { 
     FOLD = 0, 
-    CALL = 1,    // also check
-    RAISE = 2,   // value = raise amount added to pot
-    DISCARD = 3  // value = card index 0-2 (ordered by equity)
+    CALL = 1,
+    RAISE = 2,
+    DISCARD = 3,
+    // World actions
+    DEAL_FLOP = 4,
+    DEAL_TURN = 5,
+    DEAL_RIVER = 6
 };
 
 struct LocalAction {
     ActionType type;
-    uint16_t value;  // raise amount for RAISE, card index for DISCARD, unused otherwise
+    uint64_t value;
+    // value is either a raise amount in chips
+    // or a card index 0-51
+    // or a 2-card bitmask for the flop. 
     
     LocalAction() : type(ActionType::FOLD), value(0) {}
     
-    LocalAction(ActionType t, uint16_t v = 0) : type(t), value(v) {}
+    LocalAction(ActionType t, uint64_t v = 0) : type(t), value(v) {}
     
-    bool operator==(const LocalAction& other) const {
-        return type == other.type && value == other.value;
-    }
+    static LocalAction fold() {return LocalAction(ActionType::FOLD);}
+
+    static LocalAction call() {return LocalAction(ActionType::CALL);}
     
-    bool operator!=(const LocalAction& other) const {
-        return !(*this == other);
-    }
+    static LocalAction raise(uint64_t amount) {return LocalAction(ActionType::RAISE, amount);}
+    
+    static LocalAction discard(int card) {return LocalAction(ActionType::DISCARD, card);}
+    
+    static LocalAction dealFlop(int card1, int card2) {return LocalAction(ActionType::DEAL_FLOP, (1ull << card1) | (1ull << card2));}
+    
+    static LocalAction dealTurn(int card) {return LocalAction(ActionType::DEAL_TURN, card);}
+    
+    static LocalAction dealRiver(int card) {return LocalAction(ActionType::DEAL_RIVER, card);}
+    
+    bool operator==(const LocalAction& other) const {return type == other.type && value == other.value;}
+    
+    bool operator!=(const LocalAction& other) const {return !(*this == other);}
 };
 
 #endif // LOCALACTION_HPP
