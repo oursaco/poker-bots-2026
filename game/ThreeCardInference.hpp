@@ -504,18 +504,14 @@ struct ThreeCardInferenceTree {
         for(int t = 0; t < sb_discard.size(); t++){
             int node_id = sb_discard[t].first;
             int prv_new_card = sb_discard[t].second;
-            int bb_bucket_50 = bucket->getFlopBucket(board[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 50, 1);
-            int bb_bucket_160 = bucket->getFlopBucket(board[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 160, 1);
-            int bb_bucket_320 = bucket->getFlopBucket(board[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 320, 1);
-            int sb_bucket_50 = bucket->getFlopBucket(board[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 50, 0);
-            int sb_bucket_160 = bucket->getFlopBucket(board[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 160, 0);
-            int sb_bucket_320 = bucket->getFlopBucket(board[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 320, 0);
+            int bb_bucket_10 = bucket->getFlopBucket(board[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 10, 1);
+            int sb_bucket_10 = bucket->getFlopBucket(board[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 10, 0);
             if(nodes[node_id].getTurn() == 0){
-                int sb_bucket = (buckets[node_id] == 1 ? 0 : (buckets[node_id] == 50 ? sb_bucket_50 : (buckets[node_id] == 160 ? sb_bucket_160 : sb_bucket_320)));
+                int sb_bucket = (buckets[node_id] == 1 ? 0 : sb_bucket_10);
                 assert(sb_bucket < buckets[node_id]);
                 nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + sb_bucket);
             } else {
-                int bb_bucket = (buckets[node_id] == 1 ? 0 : (buckets[node_id] == 50 ? bb_bucket_50 : (buckets[node_id] == 160 ? bb_bucket_160 : bb_bucket_320)));
+                int bb_bucket = (buckets[node_id] == 1 ? 0 : bb_bucket_10);
                 assert(bb_bucket < buckets[node_id]);
                 nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + bb_bucket);
             }
@@ -527,11 +523,11 @@ struct ThreeCardInferenceTree {
                 }
                 int turn = nodes[i].getTurn();
                 if(turn == 0){
-                    int sb_bucket = (buckets[i] == 1 ? 0 : (buckets[i] == 50 ? sb_bucket_50 : (buckets[i] == 160 ? sb_bucket_160 : sb_bucket_320)));
+                    int sb_bucket = (buckets[node_id] == 1 ? 0 : sb_bucket_10);
                     assert(sb_bucket < buckets[i]);
                     nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + sb_bucket);
                 } else {
-                    int bb_bucket = (buckets[i] == 1 ? 0 : (buckets[i] == 50 ? bb_bucket_50 : (buckets[i] == 160 ? bb_bucket_160 : bb_bucket_320)));
+                    int bb_bucket = (buckets[node_id] == 1 ? 0 : bb_bucket_10);
                     assert(bb_bucket < buckets[i]);
                     nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + bb_bucket);
                 }
@@ -542,19 +538,15 @@ struct ThreeCardInferenceTree {
         for(int t = 0; t < deal_turn.size(); t++){
             int node_id = deal_turn[t].first;
             int prv_new_card = deal_turn[t].second;
-            int sb_bucket_80 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 80, 0);
-            int sb_bucket_256 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 256, 0);
-            int sb_bucket_512 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 512, 0);
-            int bb_bucket_80 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 80, 1);
-            int bb_bucket_256 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 256, 1);
-            int bb_bucket_512 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 512, 1);
+            int sb_bucket_10 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 10, 0);
+            int bb_bucket_10 = bucket->getTurnBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 10, 1);
             int turn = nodes[node_id].getTurn();
             if(turn == 0){
-                int sb_bucket = (buckets[node_id] == 1 ? 0 : (buckets[node_id] == 80 ? sb_bucket_80 : (buckets[node_id] == 256 ? sb_bucket_256 : sb_bucket_512)));
+		int sb_bucket = (buckets[node_id] == 1 ? 0 : sb_bucket_10);
                 assert(sb_bucket < buckets[node_id]);
                 nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + sb_bucket);
             } else {
-                int bb_bucket = (buckets[node_id] == 1 ? 0 : (buckets[node_id] == 80 ? bb_bucket_80 : (buckets[node_id] == 256 ? bb_bucket_256 : bb_bucket_512)));
+		int bb_bucket = (buckets[node_id] == 1 ? 0 : bb_bucket_10);
                 assert(bb_bucket < buckets[node_id]);
                 nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + bb_bucket);
             }
@@ -566,11 +558,11 @@ struct ThreeCardInferenceTree {
                 }
                 int child_turn = nodes[i].getTurn();
                 if(child_turn == 0){
-                    int sb_bucket = (buckets[i] == 1 ? 0 : (buckets[i] == 80 ? sb_bucket_80 : (buckets[i] == 256 ? sb_bucket_256 : sb_bucket_512)));
+		    int sb_bucket = (buckets[i] == 1 ? 0 : sb_bucket_10);
                     assert(sb_bucket < buckets[i]);
                     nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + sb_bucket);
                 } else {
-                    int bb_bucket = (buckets[i] == 1 ? 0 : (buckets[i] == 80 ? bb_bucket_80 : (buckets[i] == 256 ? bb_bucket_256 : bb_bucket_512)));
+		    int bb_bucket = (buckets[i] == 1 ? 0 : bb_bucket_10);
                     assert(bb_bucket < buckets[i]);
                     nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + bb_bucket);
                 }
@@ -581,20 +573,16 @@ struct ThreeCardInferenceTree {
         for(int t = 0; t < deal_river.size(); t++){
             int node_id = deal_river[t].first;
             int prv_new_card = deal_river[t].second;
-            int sb_bucket_40 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 40, 0);
-            int sb_bucket_80 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 80, 0);
-            int sb_bucket_160 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 160, 0);
-            int bb_bucket_40 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 40, 1);
-            int bb_bucket_80 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 80, 1);
-            int bb_bucket_160 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 160, 1);
+            int sb_bucket_10 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], sb_hand, bb_discard_card[node_id], sb_discard_card[node_id], 10, 0);
+            int bb_bucket_10 = bucket->getRiverBucket(flop[node_id], board[node_id] ^ flop[node_id], bb_hand, sb_discard_card[node_id], bb_discard_card[node_id], 10, 1);
             int winner = bucket->getWinner(board[node_id], sb_hand, bb_hand);
             int turn = nodes[node_id].getTurn();
             if(turn == 0){
-                int sb_bucket = (buckets[node_id] == 1 ? 0 : (buckets[node_id] == 40 ? sb_bucket_40 : (buckets[node_id] == 80 ? sb_bucket_80 : sb_bucket_160)));
+		int sb_bucket = (buckets[node_id] == 1 ? 0 : sb_bucket_10);
                 assert(sb_bucket < buckets[node_id]);
                 nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + sb_bucket);
             } else {
-                int bb_bucket = (buckets[node_id] == 1 ? 0 : (buckets[node_id] == 40 ? bb_bucket_40 : (buckets[node_id] == 80 ? bb_bucket_80 : bb_bucket_160)));
+		int bb_bucket = (buckets[node_id] == 1 ? 0 : bb_bucket_10);
                 assert(bb_bucket < buckets[node_id]);
                 nodes[node_id].setInfoSet(info_set_map[nodes[node_id].getInfoSetIndex()] + bb_bucket);
             }
@@ -607,11 +595,11 @@ struct ThreeCardInferenceTree {
                 }
                 int child_turn = nodes[i].getTurn();
                 if(child_turn == 0){
-                    int sb_bucket = (buckets[i] == 1 ? 0 : (buckets[i] == 40 ? sb_bucket_40 : (buckets[i] == 80 ? sb_bucket_80 : sb_bucket_160)));
+		    int sb_bucket = (buckets[i] == 1 ? 0 : sb_bucket_10);
                     assert(sb_bucket < buckets[i]);
                     nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + sb_bucket);
                 } else {
-                    int bb_bucket = (buckets[i] == 1 ? 0 : (buckets[i] == 40 ? bb_bucket_40 : (buckets[i] == 80 ? bb_bucket_80 : bb_bucket_160)));
+		    int bb_bucket = (buckets[i] == 1 ? 0 : bb_bucket_10);
                     assert(bb_bucket < buckets[i]);
                     nodes[i].setInfoSet(info_set_map[nodes[i].getInfoSetIndex()] + bb_bucket);
                 }

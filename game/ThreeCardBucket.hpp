@@ -139,13 +139,13 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
                     cur_buckets = 1250;
                 } else if(state->street == 4){
                     assert(spr_scale > 0);
-                    cur_buckets = 5*spr_scale;
+                    cur_buckets = spr_scale;
                 } else if(state->street == 5){
                     assert(spr_scale > 0);
-                    cur_buckets = 8*spr_scale;
+                    cur_buckets = spr_scale;
                 } else if(state->street == 6){
                     assert(spr_scale > 0);
-                    cur_buckets = 8*spr_scale;
+                    cur_buckets = spr_scale;
                 }
             }
         } else {
@@ -159,13 +159,13 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
                     cur_buckets = 250;
                 } else if(state->street == 4){
                     assert(spr_scale > 0);
-                    cur_buckets = 5*spr_scale;
+                    cur_buckets = spr_scale;
                 } else if(state->street == 5){
                     assert(spr_scale > 0);
-                    cur_buckets = 8*spr_scale;
+                    cur_buckets = spr_scale;
                 } else if(state->street == 6){
                     assert(spr_scale > 0);
-                    cur_buckets = 8*spr_scale;
+                    cur_buckets = spr_scale;
                 }
             }
         }
@@ -445,12 +445,10 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
         my_type = min(my_type, 1);
         int equity_bucket = 0;
-        if(equity_buckets == 50) equity_bucket = getFlopBucket10(board, hand);
-        else if(equity_buckets == 160) equity_bucket = getFlopBucket32(board, hand);
-        else if(equity_buckets == 320) equity_bucket = getFlopBucket64(board, hand);
-        else assert(false);
-        assert(equity_bucket < equity_buckets/5);
-        return equity_bucket*5 + opp_type;
+        if(equity_buckets == 10) equity_bucket = getFlopBucket10(board, hand);
+	else assert(false);
+        assert(equity_bucket < equity_buckets);
+        return equity_bucket;
     } 
 
     int checkDiscardInteraction(uint64_t flop_mask, uint64_t new_card_mask, int discard_card, int discard_suit){
@@ -518,12 +516,10 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         else board_mask2 ^= 1ull << opp_discard;
         int opp_type = checkDiscardInteraction(board_mask1, turn, opp_discard/4, opp_discard%4);
         int equity_bucket = 0;
-        if(equity_buckets == 80) equity_bucket = getTurnBucket10(flop | turn, hand);
-        else if(equity_buckets == 256) equity_bucket = getTurnBucket32(flop | turn, hand);
-        else if(equity_buckets == 512) equity_bucket = getTurnBucket64(flop | turn, hand);
-        else assert(false);
-        assert(equity_bucket < equity_buckets/8);
-        return equity_bucket*8 + opp_type;
+        if(equity_buckets == 10) equity_bucket = getTurnBucket10(flop | turn, hand);
+	else assert(false);
+        assert(equity_bucket < equity_buckets);
+        return equity_bucket;
     }
 
     array<float, 4> river_eq_thresholds_5 = {0.206f, 0.400f, 0.606f, 0.831f};
@@ -563,12 +559,10 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
         int opp_type = checkDiscardInteraction(board_mask1, turn_river, opp_discard/4, opp_discard%4);
         int my_type = getDiscardType(getHand(board_mask2), getRankMask(board_mask2), my_discard/4, my_discard%4);
         int equity_bucket = 0;
-        if(equity_buckets == 40) equity_bucket = getRiverBucket5(flop | turn_river, hand);
-        else if(equity_buckets == 80) equity_bucket = getRiverBucket10(flop | turn_river, hand);
-        else if(equity_buckets == 160) equity_bucket = getRiverBucket20(flop | turn_river, hand);
+        if(equity_buckets == 10) equity_bucket = getRiverBucket10(flop | turn_river, hand);
         else assert(false);
-        assert(equity_bucket < equity_buckets/8);
-        return equity_bucket*8 + opp_type;
+        assert(equity_bucket < equity_buckets);
+        return equity_bucket;
     }
 
     int eval_7(uint64_t mask){
