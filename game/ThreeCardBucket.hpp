@@ -126,7 +126,6 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
                 spr_scale = 20;
             }
         }
-        spr_scale = 10;
         int cur_buckets = 0;
         if(state->turn == 0){
             if(state->sb_stack == 0){

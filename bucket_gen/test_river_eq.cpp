@@ -39,13 +39,15 @@ int main(){
     Hand board = Hand::empty() + Hand(getCardId("4c")) + Hand(getCardId("5h")) + Hand(getCardId("Ad")) + Hand(getCardId("8s")) + Hand(getCardId("9c")) + Hand(getCardId("Td"));
     cout << board.count() << " " << eval.evaluate(board)<< endl;
     int c1 = getCardId("2s");
-    int c2 = getCardId("3c");
+    int c2 = getCardId("3s");
     int s1 = c1 % 4;
     int s2 = c2 % 4;
     int board_id = encoding_map[encoding::encodeRiverBoard(board, s1, s2)];
     cout << board_id << endl;
     // int hand_id = getHoleId(2, 2, 0, 1);
+    cout << c1/4 << " " << c2/4 << " " << s1 << " " << s2 << endl;
     int hand_id = encoding::getHoleId(c1/4, c2/4, s1, s2);
+    cout << hand_id << endl;
     cout << hand_id * encoding_index + board_id << endl;
     float value = equity[hand_id * encoding_index + board_id];
     cout << value << endl;
