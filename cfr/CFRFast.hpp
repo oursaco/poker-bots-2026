@@ -350,9 +350,11 @@ struct FastTrainer {
                 tree[1]->prepare(seeds[1]);
                 #pragma omp barrier
                 updateUtility(i%2, 0);
-                updateUtility(i%2, 1);
                 #pragma omp barrier
                 updatePlayer(0, i%2, 0);
+                #pragma omp barrier
+                updateUtility(i%2, 1);
+                #pragma omp barrier
                 updatePlayer(1, i%2, 1);
             }
             auto cur_time = chrono::high_resolution_clock::now();
