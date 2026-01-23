@@ -355,7 +355,7 @@ struct ThreeCardInferenceTree {
     uint64_t bb_hand = 0;
 
     // prepares the game tree for an iteration of training
-    void prepare(int seed){
+    void prepare(uint64_t seed){
         #pragma omp for schedule(static)
         for(int i = 0; i < tree_index; i++){
             board[i] = used_mask[i] = 0;

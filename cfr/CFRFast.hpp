@@ -242,7 +242,7 @@ struct FastTrainer {
         }
     }
 
-    void updatePlayerRangeFast(int l, int r, int target_player, int swap_players, int tree_index){
+    void updatePlayerRangeFast(int l, int r, int target_player, int swap_players, int tree_index, float strat_mult){
         #pragma omp for schedule(static)
         for(int x = l; x <= r; x++){
             int i = depth_to_node[x];
@@ -261,12 +261,12 @@ struct FastTrainer {
                 float prob_dif = reach_probability[tree_index][i << 1 | par_player];
                 int st = players[par_player ^ swap_players].getState(info, move);
                 #pragma omp atomic update
-                players[par_player ^ swap_players].strategy_sum[st] += prob_dif;
+                players[par_player ^ swap_players].strategy_sum[st] += prob_dif*strat_mult;
             }
         }
     }
 
-    void updatePlayerRangeSlow(int l, int r, int target_player, int swap_players, int tree_index){
+    void updatePlayerRangeSlow(int l, int r, int target_player, int swap_players, int tree_index, float strat_mult){
         for(int x = l; x <= r; x++){
             int i = depth_to_node[x];
             int parent = tree[tree_index]->getParentId(i);
@@ -282,44 +282,42 @@ struct FastTrainer {
             } else {
                 float prob_dif = reach_probability[tree_index][i << 1 | par_player];
                 int st = players[par_player ^ swap_players].getState(info, move);
-                players[par_player ^ swap_players].strategy_sum[st] += prob_dif;
+                players[par_player ^ swap_players].strategy_sum[st] += prob_dif*strat_mult;
             }
         }
     }
 
     // Updates target player regrets
     // Updates other player's strategies
-    void updatePlayer(int target_player, int swap_players, int tree_index){
+    void updatePlayer(int target_player, int swap_players, int tree_index, float strat_mult){
         #pragma omp single
         {
             for(int i = 1; i <= 8; i++){
-                updatePlayerRangeSlow(expected_ranges[i].first, expected_ranges[i].second, target_player, swap_players, tree_index);
+                updatePlayerRangeSlow(expected_ranges[i].first, expected_ranges[i].second, target_player, swap_players, tree_index, strat_mult);
             }
         }
-        updatePlayerRangeFast(expected_ranges[9].first, expected_ranges[9].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[10].first, expected_ranges[10].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[11].first, expected_ranges[11].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[12].first, expected_ranges[12].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[13].first, expected_ranges[13].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[14].first, expected_ranges[14].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[15].first, expected_ranges[15].second, target_player, swap_players, tree_index);
+        updatePlayerRangeFast(expected_ranges[9].first, expected_ranges[9].second, target_player, swap_players, tree_index, strat_mult);
+        updatePlayerRangeFast(expected_ranges[10].first, expected_ranges[10].second, target_player, swap_players, tree_index, strat_mult);
+        updatePlayerRangeFast(expected_ranges[11].first, expected_ranges[11].second, target_player, swap_players, tree_index, strat_mult);
+        updatePlayerRangeFast(expected_ranges[12].first, expected_ranges[12].second, target_player, swap_players, tree_index, strat_mult);
+        updatePlayerRangeFast(expected_ranges[13].first, expected_ranges[13].second, target_player, swap_players, tree_index, strat_mult);
+        updatePlayerRangeFast(expected_ranges[14].first, expected_ranges[14].second, target_player, swap_players, tree_index, strat_mult);
+        updatePlayerRangeFast(expected_ranges[15].first, expected_ranges[15].second, target_player, swap_players, tree_index, strat_mult);
         #pragma omp single
         {
-            updatePlayerRangeSlow(expected_ranges[16].first, expected_ranges[16].second, target_player, swap_players, tree_index);
+            updatePlayerRangeSlow(expected_ranges[16].first, expected_ranges[16].second, target_player, swap_players, tree_index, strat_mult);
         }
     }
 
-    void decayRegret(float alpha, float beta, float gamma){
+    void decayRegret(float alpha, float beta){
         #pragma omp for schedule(static)
         for(int i = 0; i < players[0].state_count; i++){
             players[0].regret_sum[i] *= (players[0].regret_sum[i] > 0.0f ? alpha : beta);
             players[1].regret_sum[i] *= (players[1].regret_sum[i] > 0.0f ? alpha : beta);
-            players[0].strategy_sum[i] *= gamma;
-            players[1].strategy_sum[i] *= gamma;
         }
     }
 
-    void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir, int previous_iteration = 0){
+    void train(uint64_t seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir, int previous_iteration = 0){
         omp::XoroShiro128Plus rng(seed);
         auto start_time = chrono::high_resolution_clock::now();
         auto last_log_time = start_time;
@@ -337,22 +335,22 @@ struct FastTrainer {
             float t = i;
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
             float neg_mult = pow(t, beta)/(pow(t, beta) + 1);
-            float strat_mult = pow(float(t)/float(t + 1), gamma);
-            int seeds[2] = {rng(), rng()};
+            float strat_mult = pow(t, gamma);
+            uint64_t seeds[2] = {rng(), rng()};
             #pragma omp parallel
             {
-                decayRegret(pos_mult, neg_mult, strat_mult);
+                decayRegret(pos_mult, neg_mult);
                 #pragma omp barrier
                 tree[0]->prepare(seeds[0]);
                 tree[1]->prepare(seeds[1]);
                 #pragma omp barrier
                 updateUtility(i%2, 0);
                 #pragma omp barrier
-                updatePlayer(0, i%2, 0);
+                updatePlayer(0, i%2, 0, strat_mult);
                 #pragma omp barrier
                 updateUtility(i%2, 1);
                 #pragma omp barrier
-                updatePlayer(1, i%2, 1);
+                updatePlayer(1, i%2, 1, strat_mult);
             }
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){
