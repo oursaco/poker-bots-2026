@@ -68,6 +68,7 @@ struct FastPolicy {
     }
 
     // returns probability of moving to node_id from the parent of node_id given info_set
+    // now unused. 
     float getProb(int info_set, int move_id) const{
         float sum = 0.0;
         int st = getState(info_set, 0);
@@ -192,12 +193,19 @@ struct FastTrainer {
         for(int x = r; x >= l; x--){
             int i = depth_to_node[x];
             int children_index = children_map[i];
+            int player = tree[tree_index]->getTurn(i);
+            int info = tree[tree_index]->getInfoSet(i);
+            FastPolicy &pol = players[player ^ swap_players];
+            int st0 = pol.getState(info, 0);
+            int move_count = pol.getMoveCount(info);
+            float sum_pos = 0.0f;
+            for(int m = 0; m < move_count; m++){
+                sum_pos += max(0.0f, pol.regret_sum[st0 + m]);
+            }
             for(int j = 0; j < compressed_children[children_index]; j++){
                 int child = compressed_children[children_index + j + 1];
-                int player = tree[tree_index]->getTurn(i);
-                int info = tree[tree_index]->getInfoSet(i);
                 int move = tree[tree_index]->getMove(child);
-                float probability = players[player ^ swap_players].getProb(info, move);
+                float probability = (sum_pos > 0.0f) ? max(0.0f, pol.regret_sum[st0 + move]) / sum_pos : 1.0f / move_count;
                 utility[tree_index][i] += probability*utility[tree_index][child];
                 reach_probability[tree_index][child << 1 | player] = probability;
                 reach_probability[tree_index][child << 1 | (player ^ 1)] = 1.0f;
@@ -209,12 +217,19 @@ struct FastTrainer {
         for(int x = r; x >= l; x--){
             int i = depth_to_node[x];
             int children_index = children_map[i];
+            int player = tree[tree_index]->getTurn(i);
+            int info = tree[tree_index]->getInfoSet(i);
+            FastPolicy &pol = players[player ^ swap_players];
+            int st0 = pol.getState(info, 0);
+            int move_count = pol.getMoveCount(info);
+            float sum_pos = 0.0f;
+            for(int m = 0; m < move_count; m++){
+                sum_pos += max(0.0f, pol.regret_sum[st0 + m]);
+            }
             for(int j = 0; j < compressed_children[children_index]; j++){
                 int child = compressed_children[children_index + j + 1];
-                int player = tree[tree_index]->getTurn(i);
-                int info = tree[tree_index]->getInfoSet(i);
                 int move = tree[tree_index]->getMove(child);
-                float probability = players[player ^ swap_players].getProb(info, move);
+                float probability = (sum_pos > 0.0f) ? max(0.0f, pol.regret_sum[st0 + move]) / sum_pos : 1.0f / move_count;
                 utility[tree_index][i] += probability*utility[tree_index][child];
                 reach_probability[tree_index][child << 1 | player] = probability;
                 reach_probability[tree_index][child << 1 | (player ^ 1)] = 1.0f;
