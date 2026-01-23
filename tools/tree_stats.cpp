@@ -197,11 +197,7 @@ struct TestState {
             if(bb_bet > sb_bet){
                 raise_sizes = {pot_raise_size()};
             } else {
-                if(agressor == 0 || agressor == -1){
-                    raise_sizes = {pot_raise_size()};
-                } else {
-                    raise_sizes = {half_pot_raise_size()};
-                }
+                raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};
             }
             for(int size : raise_sizes){
                 if(valid_sb_raise(size) && action_depth < 4){
@@ -218,16 +214,9 @@ struct TestState {
             actions.push_back(bb_call());
             vector<int> raise_sizes;
             if(sb_bet > bb_bet || (street == 0 && sb_bet == 2)){
-                if(action_depth == 2 && street != 0 && street != 6 && min_click_size() < pot_raise_size()/2){
-                    raise_sizes.push_back(min_click_size());
-                }
                 raise_sizes = {pot_raise_size()};
             } else {
-                raise_sizes = {half_pot_raise_size()};
-                if(agressor == 1 || agressor == -1){
-                    raise_sizes.push_back(pot_raise_size());
-                    raise_sizes.push_back(double_pot_raise_size());
-                }
+                raise_sizes = {half_pot_raise_size(), pot_raise_size(), double_pot_raise_size()};
             }
             for(int size : raise_sizes){
                 if(valid_bb_raise(size) && action_depth < 4){
@@ -344,13 +333,13 @@ void generateTreeRecursive(TestState& state, TreeStats& stats, size_t depth) {
                     cur_buckets = 1250;
                 } else if(state.street == 4){
                     assert(spr_scale > 0);
-                    cur_buckets = 10*spr_scale;
+                    cur_buckets = 5*spr_scale;
                 } else if(state.street == 5){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 } else if(state.street == 6){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 }
             }
         } else {
@@ -364,13 +353,13 @@ void generateTreeRecursive(TestState& state, TreeStats& stats, size_t depth) {
                     cur_buckets = 250;
                 } else if(state.street == 4){
                     assert(spr_scale > 0);
-                    cur_buckets = 10*spr_scale;
+                    cur_buckets = 5*spr_scale;
                 } else if(state.street == 5){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 } else if(state.street == 6){
                     assert(spr_scale > 0);
-                    cur_buckets = 2*8*spr_scale;
+                    cur_buckets = 8*spr_scale;
                 }
             }
         }
