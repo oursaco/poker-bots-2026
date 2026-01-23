@@ -186,6 +186,11 @@ struct ThreeCardGameState : GameState {
         return (pot + bet_diff)/2 + bet_diff;
     }
 
+    int triple_pot_raise_size(){
+        int bet_diff = max(sb_bet, bb_bet) - min(sb_bet, bb_bet);
+        return (pot + bet_diff)*3 + bet_diff;
+    }
+
     int double_pot_raise_size(){
         int bet_diff = max(sb_bet, bb_bet) - min(sb_bet, bb_bet);
         return (pot + bet_diff)*2 + bet_diff;
@@ -215,11 +220,7 @@ struct ThreeCardGameState : GameState {
             if(bb_bet > sb_bet){
                 raise_sizes = {pot_raise_size()};
             } else {
-                if(agressor == 0 || agressor == -1){
-                    raise_sizes = {pot_raise_size()};
-                } else {
-                    raise_sizes = {half_pot_raise_size()};
-                }
+                raise_sizes = {half_pot_raise_size(), pot_raise_size(), triple_pot_raise_size()};
             }
             for(int size : raise_sizes){
                 if(valid_sb_raise(size) && action_depth < 4){
@@ -236,16 +237,9 @@ struct ThreeCardGameState : GameState {
             actions.push_back(bb_call());
             vector<int> raise_sizes;
             if(sb_bet > bb_bet || (street == 0 && sb_bet == 2)){
-                if(action_depth == 2 && street != 0 && street != 6 && min_click_size() < pot_raise_size()/2){
-                    raise_sizes.push_back(min_click_size());
-                }
                 raise_sizes = {pot_raise_size()};
             } else {
-                raise_sizes = {half_pot_raise_size()};
-                if(agressor == 1 || agressor == -1){
-                    raise_sizes.push_back(pot_raise_size());
-                    raise_sizes.push_back(double_pot_raise_size());
-                }
+                raise_sizes = {half_pot_raise_size(), pot_raise_size(), triple_pot_raise_size()};
             }
             for(int size : raise_sizes){
                 if(valid_bb_raise(size) && action_depth < 4){

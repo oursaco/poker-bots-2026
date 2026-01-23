@@ -123,7 +123,7 @@ struct DynamicThreeCardBucket : ThreeCardBucket {
             } else if(3 <= spr_bucket && spr_bucket <= 5){
                 spr_scale = 10;
             } else {
-                spr_scale = 20;
+                spr_scale = 10;
             }
         }
         int cur_buckets = 0;

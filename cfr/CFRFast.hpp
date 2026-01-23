@@ -120,9 +120,9 @@ struct FastPolicy {
 // We include it here (after DCFRPolicy is defined) so the trainer can run BR evaluations at checkpoints.
 struct FastTrainer {
     FastPolicy players[2];
-    ThreeCardInferenceTree *tree[2];
-    array<float, TREE_SZ> utility[2];
-    array<float, 2*TREE_SZ> reach_probability[2];
+    ThreeCardInferenceTree *tree;
+    array<float, TREE_SZ> utility;
+    array<float, 2*TREE_SZ> reach_probability;
     array<int, 2*TREE_SZ> compressed_children;
     array<int, TREE_SZ> children_map;
     array<vector<int>, TREE_SZ> children_list;
@@ -130,9 +130,9 @@ struct FastTrainer {
     vector<pair<int, int>> depth_ranges;
 
     void buildChildren(){
-        int num_nodes = tree[0]->nodeCount();
+        int num_nodes = tree->nodeCount();
         for(int i = 1; i < num_nodes; i++){
-            int parent = tree[0]->getParentId(i);
+            int parent = tree->getParentId(i);
             children_list[parent].push_back(i);
         }
         int children_index = 0;
@@ -151,28 +151,27 @@ struct FastTrainer {
         pair<int, int>{5, 13},
         pair<int, int>{14, 34},
         pair<int, int>{35, 85},
-        pair<int, int>{86, 224},
-        pair<int, int>{225, 627},
-        pair<int, int>{628, 1686},
-        pair<int, int>{1687, 4251},
-        pair<int, int>{4252, 10191},
-        pair<int, int>{10192, 23115},
-        pair<int, int>{23116, 45660},
-        pair<int, int>{45661, 74523},
-        pair<int, int>{74524, 99966},
-        pair<int, int>{99967, 113853},
-        pair<int, int>{113854, 117903},
-        pair<int, int>{117904, 118407},
+        pair<int, int>{86, 242},
+        pair<int, int>{243, 753},
+        pair<int, int>{754, 2226},
+        pair<int, int>{2227, 6231},
+        pair<int, int>{6232, 16347},
+        pair<int, int>{16348, 40206},
+        pair<int, int>{40207, 87816},
+        pair<int, int>{87817, 159114},
+        pair<int, int>{159115, 232824},
+        pair<int, int>{232825, 281037},
+        pair<int, int>{281038, 298524},
+        pair<int, int>{298525, 301161},
     };
 
-    void setTree(ThreeCardInferenceTree* tree1_, ThreeCardInferenceTree* tree2_){
-        tree[0] = tree1_;
-        tree[1] = tree2_;
+    void setTree(ThreeCardInferenceTree* tree_){
+        tree = tree_;
         buildChildren();
         int cur_index = 0;
         for(int i = 0; i < 100; i++){
             int l = cur_index;
-            for(int j : tree[0]->nodes_per_depth[i]){
+            for(int j : tree->nodes_per_depth[i]){
                 depth_to_node[cur_index++] = j;
             }
             int r = cur_index - 1;
@@ -187,149 +186,147 @@ struct FastTrainer {
         }
     }
 
-    void updateUtilityRangeFast(int l, int r, int swap_players, int tree_index){
+    void updateUtilityRangeFast(int l, int r, int swap_players){
         #pragma omp for schedule(static)
         for(int x = r; x >= l; x--){
             int i = depth_to_node[x];
             int children_index = children_map[i];
             for(int j = 0; j < compressed_children[children_index]; j++){
                 int child = compressed_children[children_index + j + 1];
-                int player = tree[tree_index]->getTurn(i);
-                int info = tree[tree_index]->getInfoSet(i);
-                int move = tree[tree_index]->getMove(child);
+                int player = tree->getTurn(i);
+                int info = tree->getInfoSet(i);
+                int move = tree->getMove(child);
                 float probability = players[player ^ swap_players].getProb(info, move);
-                utility[tree_index][i] += probability*utility[tree_index][child];
-                reach_probability[tree_index][child << 1 | player] = probability;
-                reach_probability[tree_index][child << 1 | (player ^ 1)] = 1.0f;
+                utility[i] += probability*utility[child];
+                reach_probability[child << 1 | player] = probability;
+                reach_probability[child << 1 | (player ^ 1)] = 1.0f;
             }
         }
     }
 
-    void updateUtilityRangeSlow(int l, int r, int swap_players, int tree_index){
+    void updateUtilityRangeSlow(int l, int r, int swap_players){
         for(int x = r; x >= l; x--){
             int i = depth_to_node[x];
             int children_index = children_map[i];
             for(int j = 0; j < compressed_children[children_index]; j++){
                 int child = compressed_children[children_index + j + 1];
-                int player = tree[tree_index]->getTurn(i);
-                int info = tree[tree_index]->getInfoSet(i);
-                int move = tree[tree_index]->getMove(child);
+                int player = tree->getTurn(i);
+                int info = tree->getInfoSet(i);
+                int move = tree->getMove(child);
                 float probability = players[player ^ swap_players].getProb(info, move);
-                utility[tree_index][i] += probability*utility[tree_index][child];
-                reach_probability[tree_index][child << 1 | player] = probability;
-                reach_probability[tree_index][child << 1 | (player ^ 1)] = 1.0f;
+                utility[i] += probability*utility[child];
+                reach_probability[child << 1 | player] = probability;
+                reach_probability[child << 1 | (player ^ 1)] = 1.0f;
             }
         }
     }
 
-    void updateUtility(int swap_players, int tree_index){
-        int num_nodes = tree[tree_index]->nodeCount();
+    void updateUtility(int swap_players){
+        int num_nodes = tree->nodeCount();
         #pragma omp for schedule(static)
         for(int i = 0; i < num_nodes; i++){
-            utility[tree_index][i] = 0.0f;
+            utility[i] = 0.0f;
         }
-        tree[tree_index]->updateUtility(utility[tree_index]);
-        updateUtilityRangeFast(expected_ranges[15].first, expected_ranges[15].second, swap_players, tree_index);
-        updateUtilityRangeFast(expected_ranges[14].first, expected_ranges[14].second, swap_players, tree_index);
-        updateUtilityRangeFast(expected_ranges[13].first, expected_ranges[13].second, swap_players, tree_index);
-        updateUtilityRangeFast(expected_ranges[12].first, expected_ranges[12].second, swap_players, tree_index);
-        updateUtilityRangeFast(expected_ranges[11].first, expected_ranges[11].second, swap_players, tree_index);
-        updateUtilityRangeFast(expected_ranges[10].first, expected_ranges[10].second, swap_players, tree_index);
-        updateUtilityRangeFast(expected_ranges[9].first, expected_ranges[9].second, swap_players, tree_index);
+        tree->updateUtility(utility);
+        updateUtilityRangeFast(expected_ranges[15].first, expected_ranges[15].second, swap_players);
+        updateUtilityRangeFast(expected_ranges[14].first, expected_ranges[14].second, swap_players);
+        updateUtilityRangeFast(expected_ranges[13].first, expected_ranges[13].second, swap_players);
+        updateUtilityRangeFast(expected_ranges[12].first, expected_ranges[12].second, swap_players);
+        updateUtilityRangeFast(expected_ranges[11].first, expected_ranges[11].second, swap_players);
+        updateUtilityRangeFast(expected_ranges[10].first, expected_ranges[10].second, swap_players);
+        updateUtilityRangeFast(expected_ranges[9].first, expected_ranges[9].second, swap_players);
         #pragma omp single
         {
             for(int i = 8; i >= 0; i--){
-                updateUtilityRangeSlow(expected_ranges[i].first, expected_ranges[i].second, swap_players, tree_index);
+                updateUtilityRangeSlow(expected_ranges[i].first, expected_ranges[i].second, swap_players);
             }
-            reach_probability[tree_index][0] = reach_probability[tree_index][1] = 1.0f;
+            reach_probability[0] = reach_probability[1] = 1.0f;
         }
     }
 
-    void updatePlayerRangeFast(int l, int r, int target_player, int swap_players, int tree_index){
+    void updatePlayerRangeFast(int l, int r, int target_player, int swap_players, float strat_mult){
         #pragma omp for schedule(static)
         for(int x = l; x <= r; x++){
             int i = depth_to_node[x];
-            int parent = tree[tree_index]->getParentId(i);
-            int par_player = tree[tree_index]->getTurn(parent);
-            int info = tree[tree_index]->getInfoSet(parent);
-            int move = tree[tree_index]->getMove(i);
-            reach_probability[tree_index][i << 1] *= reach_probability[tree_index][parent << 1];
-            reach_probability[tree_index][i << 1 | 1] *= reach_probability[tree_index][parent << 1 | 1];
+            int parent = tree->getParentId(i);
+            int par_player = tree->getTurn(parent);
+            int info = tree->getInfoSet(parent);
+            int move = tree->getMove(i);
+            reach_probability[i << 1] *= reach_probability[parent << 1];
+            reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
             if((par_player ^ swap_players) == target_player){
-                float utility_dif = (par_player ? -1 : 1)*reach_probability[tree_index][parent << 1 | (par_player ^ 1)]*(utility[tree_index][i] - utility[tree_index][parent]);
+                float utility_dif = (par_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
                 int st = players[par_player ^ swap_players].getState(info, move);
                 #pragma omp atomic update
                 players[par_player ^ swap_players].regret_sum[st] += utility_dif;
             } else {
-                float prob_dif = reach_probability[tree_index][i << 1 | par_player];
+                float prob_dif = reach_probability[i << 1 | par_player];
                 int st = players[par_player ^ swap_players].getState(info, move);
                 #pragma omp atomic update
-                players[par_player ^ swap_players].strategy_sum[st] += prob_dif;
+                players[par_player ^ swap_players].strategy_sum[st] += prob_dif*strat_mult;
             }
         }
     }
 
-    void updatePlayerRangeSlow(int l, int r, int target_player, int swap_players, int tree_index){
+    void updatePlayerRangeSlow(int l, int r, int target_player, int swap_players, float strat_mult){
         for(int x = l; x <= r; x++){
             int i = depth_to_node[x];
-            int parent = tree[tree_index]->getParentId(i);
-            int par_player = tree[tree_index]->getTurn(parent);
-            int info = tree[tree_index]->getInfoSet(parent);
-            int move = tree[tree_index]->getMove(i);
-            reach_probability[tree_index][i << 1] *= reach_probability[tree_index][parent << 1];
-            reach_probability[tree_index][i << 1 | 1] *= reach_probability[tree_index][parent << 1 | 1];
+            int parent = tree->getParentId(i);
+            int par_player = tree->getTurn(parent);
+            int info = tree->getInfoSet(parent);
+            int move = tree->getMove(i);
+            reach_probability[i << 1] *= reach_probability[parent << 1];
+            reach_probability[i << 1 | 1] *= reach_probability[parent << 1 | 1];
             if((par_player ^ swap_players) == target_player){
-                float utility_dif = (par_player ? -1 : 1)*reach_probability[tree_index][parent << 1 | (par_player ^ 1)]*(utility[tree_index][i] - utility[tree_index][parent]);
+                float utility_dif = (par_player ? -1 : 1)*reach_probability[parent << 1 | (par_player ^ 1)]*(utility[i] - utility[parent]);
                 int st = players[par_player ^ swap_players].getState(info, move);
                 players[par_player ^ swap_players].regret_sum[st] += utility_dif;
             } else {
-                float prob_dif = reach_probability[tree_index][i << 1 | par_player];
+                float prob_dif = reach_probability[i << 1 | par_player];
                 int st = players[par_player ^ swap_players].getState(info, move);
-                players[par_player ^ swap_players].strategy_sum[st] += prob_dif;
+                players[par_player ^ swap_players].strategy_sum[st] += prob_dif*strat_mult;
             }
         }
     }
 
     // Updates target player regrets
     // Updates other player's strategies
-    void updatePlayer(int target_player, int swap_players, int tree_index){
+    void updatePlayer(int target_player, int swap_players, int tree_index, float strat_mult){
         #pragma omp single
         {
             for(int i = 1; i <= 8; i++){
-                updatePlayerRangeSlow(expected_ranges[i].first, expected_ranges[i].second, target_player, swap_players, tree_index);
+                updatePlayerRangeSlow(expected_ranges[i].first, expected_ranges[i].second, target_player, swap_players, strat_mult);
             }
         }
-        updatePlayerRangeFast(expected_ranges[9].first, expected_ranges[9].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[10].first, expected_ranges[10].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[11].first, expected_ranges[11].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[12].first, expected_ranges[12].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[13].first, expected_ranges[13].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[14].first, expected_ranges[14].second, target_player, swap_players, tree_index);
-        updatePlayerRangeFast(expected_ranges[15].first, expected_ranges[15].second, target_player, swap_players, tree_index);
+        updatePlayerRangeFast(expected_ranges[9].first, expected_ranges[9].second, target_player, swap_players, strat_mult);
+        updatePlayerRangeFast(expected_ranges[10].first, expected_ranges[10].second, target_player, swap_players, strat_mult);
+        updatePlayerRangeFast(expected_ranges[11].first, expected_ranges[11].second, target_player, swap_players, strat_mult);
+        updatePlayerRangeFast(expected_ranges[12].first, expected_ranges[12].second, target_player, swap_players, strat_mult);
+        updatePlayerRangeFast(expected_ranges[13].first, expected_ranges[13].second, target_player, swap_players, strat_mult);
+        updatePlayerRangeFast(expected_ranges[14].first, expected_ranges[14].second, target_player, swap_players, strat_mult);
+        updatePlayerRangeFast(expected_ranges[15].first, expected_ranges[15].second, target_player, swap_players, strat_mult);
         #pragma omp single
         {
-            updatePlayerRangeSlow(expected_ranges[16].first, expected_ranges[16].second, target_player, swap_players, tree_index);
+            updatePlayerRangeSlow(expected_ranges[16].first, expected_ranges[16].second, target_player, swap_players, strat_mult);
         }
     }
 
-    void decayRegret(float alpha, float beta, float gamma){
+    void decayRegret(float alpha, float beta){
         #pragma omp for schedule(static)
         for(int i = 0; i < players[0].state_count; i++){
             players[0].regret_sum[i] *= (players[0].regret_sum[i] > 0.0f ? alpha : beta);
             players[1].regret_sum[i] *= (players[1].regret_sum[i] > 0.0f ? alpha : beta);
-            players[0].strategy_sum[i] *= gamma;
-            players[1].strategy_sum[i] *= gamma;
         }
     }
 
-    void train(int seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir, int previous_iteration = 0){
+    void train(uint64_t seed, int iterations, float log_every_secs, float checkpoint_every_secs, string player0_dir, string player1_dir, string checkpoint_dir, int previous_iteration = 0){
         omp::XoroShiro128Plus rng(seed);
         auto start_time = chrono::high_resolution_clock::now();
         auto last_log_time = start_time;
         auto last_checkpoint_time = start_time;
 
-        players[0].initPolicy(tree[0]);
-        players[1].initPolicy(tree[0]);
+        players[0].initPolicy(tree);
+        players[1].initPolicy(tree);
         if(player0_dir.size() > 0) players[0].loadPolicy(player0_dir);
         if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
 
@@ -340,25 +337,28 @@ struct FastTrainer {
             float t = i;
             float pos_mult = pow(t, alpha)/(pow(t, alpha) + 1);
             float neg_mult = pow(t, beta)/(pow(t, beta) + 1);
-            float strat_mult = pow(float(t)/float(t + 1), gamma);
-            int seeds[2] = {static_cast<int>(rng()), static_cast<int>(rng())};
+            float strat_mult = pow(t, gamma);
+            uint64_t seeds[2] = {rng(), rng()};
             #pragma omp parallel
             {
-                decayRegret(pos_mult, neg_mult, strat_mult);
+                decayRegret(pos_mult, neg_mult);
                 #pragma omp barrier
-                tree[0]->prepare(seeds[0]);
-                tree[1]->prepare(seeds[1]);
+                tree->prepare(seeds[0]);
                 #pragma omp barrier
-                updateUtility(i%2, 0);
-                updateUtility(i%2, 1);
+                updateUtility(i%2);
                 #pragma omp barrier
-                updatePlayer(0, i%2, 0);
-                updatePlayer(1, i%2, 1);
+                updatePlayer(0, i%2, 0, strat_mult);
+                #pragma omp barrier
+                tree->prepare(seeds[1]);
+                #pragma omp barrier
+                updateUtility(i%2);
+                #pragma omp barrier
+                updatePlayer(1, i%2, 1, strat_mult);
             }
             auto cur_time = chrono::high_resolution_clock::now();
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_log_time).count() >= log_every_secs){
                 cout << "Finished iteration " << i << " of " << iterations << " in " << chrono::duration_cast<chrono::seconds>(cur_time - start_time).count() << " seconds" << endl;
-                cout << "Utility: " << utility[0][0] << " " << utility[1][0] << endl;
+                cout << "Utility: " << utility[0] << endl;
                 last_log_time = cur_time;
             }
             if(chrono::duration_cast<chrono::seconds>(cur_time - last_checkpoint_time).count() >= checkpoint_every_secs){

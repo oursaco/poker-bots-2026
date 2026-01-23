@@ -10,15 +10,12 @@ using namespace std;
 
 void test_inference(){
     ThreeCardInferenceTree tree1;
-    ThreeCardInferenceTree tree2;
     DynamicThreeCardBucket bucket;
     bucket.init("./emd_bucket_data");
     tree1.setBucket(&bucket);
-    tree2.setBucket(&bucket);
     tree1.init();
-    tree2.init();
     FastTrainer trainer;
-    trainer.setTree(&tree1, &tree2);
+    trainer.setTree(&tree1);
     auto start = chrono::high_resolution_clock::now();
     trainer.train(0, 1000, 100000.0f, 100000.0f, "", "", "");
     auto end = chrono::high_resolution_clock::now();
@@ -29,7 +26,6 @@ int main() {
     test_inference();
     return 0;
     ThreeCardInferenceTree tree1;
-    ThreeCardInferenceTree tree3;
     ThreeCardGameTree tree2;
     DynamicThreeCardBucket bucket;
     bucket.init("./emd_bucket_data");
@@ -37,10 +33,8 @@ int main() {
     tree1.init();
     tree2.setBucket(&bucket);
     tree2.init();
-    tree3.setBucket(&bucket);
-    tree3.init();
     FastTrainer trainer1;
-    trainer1.setTree(&tree1, &tree3);
+    trainer1.setTree(&tree1);
     trainer1.train(0, 1, 100000.0f, 100000.0f, "", "", "");
     DCFRTrainer trainer2;
     trainer2.setTree(&tree2);

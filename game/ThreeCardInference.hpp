@@ -372,7 +372,7 @@ struct ThreeCardInferenceTree {
     }
 
     // prepares the game tree for an iteration of training
-    void prepare(int seed){
+    void prepare(uint64_t seed){
         #pragma omp for schedule(static)
         for(int i = 0; i < tree_index; i++){
             board[i] = used_mask[i] = 0;
