@@ -13,7 +13,7 @@
 #include <system_error>
 
 struct TrainConfig {
-    int seed = 0;
+    uint64_t seed = 0;
     int iterations = 1'000;
     float log_every_secs = 5.0f;
     float checkpoint_every_secs = 1800.0f;
@@ -24,7 +24,7 @@ struct TrainConfig {
 
 int main() {
     TrainConfig config;
-    config.seed = 42;
+    config.seed = (uint64_t)654'789'123'456'789'012;
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./three_card_models";
