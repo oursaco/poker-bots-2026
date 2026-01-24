@@ -329,7 +329,7 @@ struct FastTrainer {
         if(player1_dir.size() > 0) players[1].loadPolicy(player1_dir);
 
         float alpha = 1.5f;
-        float beta = 0.0f;
+        float beta = 0.5f;
         float gamma = 2.0f;
         for(int i = previous_iteration + 1; i <= iterations; i++){
             float t = i;
