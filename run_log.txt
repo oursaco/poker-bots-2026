@@ -24330,3 +24330,29 @@ Finished iteration 10909010 of 20000000 in 60463 seconds
 Utility: -29.2041 -4.13977
 Finished iteration 10909846 of 20000000 in 60468 seconds
 Utility: -0.725464 -3.78281
+Finished iteration 10910637 of 20000000 in 60474 seconds
+Utility: 12.808 0.992715
+Finished iteration 10911471 of 20000000 in 60479 seconds
+Utility: -0.104808 1.75324
+Finished iteration 10912282 of 20000000 in 60484 seconds
+Utility: 5.87941 0.159523
+Finished iteration 10913078 of 20000000 in 60489 seconds
+Utility: -1.24842 2.85346
+Finished iteration 10913888 of 20000000 in 60494 seconds
+Utility: 1.08646 6.03513
+Finished iteration 10914733 of 20000000 in 60499 seconds
+Utility: -27.5426 0.45607
+Finished iteration 10915573 of 20000000 in 60504 seconds
+Utility: -26.031 0.404382
+Finished iteration 10916421 of 20000000 in 60509 seconds
+Utility: -34.2596 -0.569324
+Finished iteration 10917254 of 20000000 in 60514 seconds
+Utility: 2.70013 -22.3669
+Finished iteration 10918017 of 20000000 in 60519 seconds
+Utility: -11.4112 0.1499
+Finished iteration 10918882 of 20000000 in 60524 seconds
+Utility: -0.928808 0.337464
+Finished iteration 10919730 of 20000000 in 60529 seconds
+Utility: 2.96029 3.06303
+Finished iteration 10920572 of 20000000 in 60534 seconds
+Utility: -4.57621 0.242863
