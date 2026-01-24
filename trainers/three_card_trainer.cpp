@@ -28,7 +28,7 @@ int main() {
     config.player0_policy = "";
     config.player1_policy = "";
     config.output_dir = "./three_card_models";
-    config.iterations = 20'000'000;
+    config.iterations = 100'000'000;
 
     ThreeCardInferenceTree tree1;
     ThreeCardInferenceTree tree2;
