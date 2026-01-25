@@ -24,9 +24,9 @@ struct TrainConfig {
 
 int main() {
     TrainConfig config;
-    config.seed = (uint64_t)654'789'123'456'789'012;
-    config.player0_policy = "";
-    config.player1_policy = "";
+    config.seed = (uint64_t)796281372217544198;
+    config.player0_policy = "./checkpoints/player0_652403.bin";
+    config.player1_policy = "./checkpoints/player1_652403.bin";
     config.output_dir = "./three_card_models";
     config.iterations = 100'000'000;
 
@@ -44,7 +44,8 @@ int main() {
         config.checkpoint_every_secs,
         config.player0_policy,
         config.player1_policy,
-        config.output_dir);
+        config.output_dir,
+	652403);
 
     return 0;
 }
