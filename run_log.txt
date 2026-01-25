@@ -5,42 +5,31 @@ TRIPS on board with AA hole cards (Board: 222 7 9 T):
 Hole cards: Ac Ah
   3 cards (222):      93.0592%
   4 cards (2227):     93.108%
-  5 cards (22279):    0%
+  5 cards (22279):    93.4838%
   6 cards (22279T):   94.4503%
 
 FLUSH DRAW with Ah Kh hole cards (Board: 2c 5c 8d Kd 9h 3c):
 Hole cards: Ah Kh
   3 cards (2c5c8d):       72.9886%
   4 cards (2c5c8dKd):     85.5075%
-  5 cards (2c5c8dKd9h):   0%
+  5 cards (2c5c8dKd9h):   83.8681%
   6 cards (2c5c8dKd9h3c): 99.9789%
 
 STRAIGHT DRAW with Tc 6d hole cards (Board: 789 2 4 Q):
 Hole cards: Tc 6d
-  3 cards (789):      60.5215%
-  4 cards (7892):     51.4925%
-  5 cards (78924):    0%
-  6 cards (78924Q):   11.4693%
-total nodes: 118408
-sb nodes: 39503
-bb nodes: 39537
-distinct nodes: 39504
-total info sets: 2389272
-total strategy size: 2993757
+  3 cards (789):      42.0338%
+  4 cards (7892):     35.8666%
+  5 cards (78924):    27.8115%
+  6 cards (78924Q):   17.817%
+total nodes: 301162
+sb nodes: 100421
+bb nodes: 100455
+distinct nodes: 100422
+total info sets: 5250087
+total strategy size: 6624753
 flop deals: 17
-turn deals: 1359
-river deals: 7803
-bb discard: 51
-sb discard: 153
-total nodes: 118408
-sb nodes: 39503
-bb nodes: 39537
-distinct nodes: 39504
-total info sets: 2389272
-total strategy size: 2993757
-flop deals: 17
-turn deals: 1359
-river deals: 7803
+turn deals: 2151
+river deals: 17199
 bb discard: 51
 sb discard: 153
 0 0
@@ -48,1593 +37,3495 @@ sb discard: 153
 5 13
 14 34
 35 85
-86 224
-225 627
-628 1686
-1687 4251
-4252 10191
-10192 23115
-23116 45660
-45661 74523
-74524 99966
-99967 113853
-113854 117903
-117904 118407
-Finished iteration 888 of 100000000 in 5 seconds
-Utility: 148.018 -13.2068
-Finished iteration 1934 of 100000000 in 10 seconds
-Utility: 80.2112 -1.52143
-Finished iteration 2985 of 100000000 in 15 seconds
-Utility: 41.7344 110.228
-Finished iteration 4055 of 100000000 in 20 seconds
-Utility: 121.933 -58.752
-Finished iteration 5102 of 100000000 in 25 seconds
-Utility: -34.4393 -100.208
-Finished iteration 6130 of 100000000 in 30 seconds
-Utility: -55.3002 70.8248
-Finished iteration 7173 of 100000000 in 35 seconds
-Utility: 82.8205 37.9541
-Finished iteration 8218 of 100000000 in 40 seconds
-Utility: 56.7523 0.551508
-Finished iteration 9270 of 100000000 in 45 seconds
-Utility: 62.6933 40.176
-Finished iteration 10332 of 100000000 in 50 seconds
-Utility: 137.648 20.5463
-Finished iteration 11381 of 100000000 in 55 seconds
-Utility: 113.408 -10.3852
-Finished iteration 12440 of 100000000 in 60 seconds
-Utility: 16.6536 200.312
-Finished iteration 13478 of 100000000 in 65 seconds
-Utility: -1.7784 12.0718
-Finished iteration 14520 of 100000000 in 70 seconds
-Utility: 67.8593 263.085
-Finished iteration 15557 of 100000000 in 75 seconds
-Utility: 181.081 1.80022
-Finished iteration 16604 of 100000000 in 80 seconds
-Utility: -1.3429 14.2244
-Finished iteration 17662 of 100000000 in 85 seconds
-Utility: -3.04782 11.0832
-Finished iteration 18722 of 100000000 in 90 seconds
-Utility: 7.08171 -89.6005
-Finished iteration 19786 of 100000000 in 95 seconds
-Utility: -34.4655 4.31797
-Finished iteration 20863 of 100000000 in 100 seconds
-Utility: -32.5072 104.067
-Finished iteration 21926 of 100000000 in 105 seconds
-Utility: 17.7114 14.3014
-Finished iteration 22989 of 100000000 in 110 seconds
-Utility: 4.59159 136.838
-Finished iteration 24048 of 100000000 in 115 seconds
-Utility: 13.946 244.713
-Finished iteration 25111 of 100000000 in 120 seconds
-Utility: 93.4719 0.848918
-Finished iteration 26178 of 100000000 in 125 seconds
-Utility: 100.86 3.24752
-Finished iteration 27239 of 100000000 in 130 seconds
-Utility: 2.18332 1.77523
-Finished iteration 28305 of 100000000 in 135 seconds
-Utility: -61.6316 -126.854
-Finished iteration 29380 of 100000000 in 140 seconds
-Utility: -51.3157 -3.85047
-Finished iteration 30445 of 100000000 in 145 seconds
-Utility: -19.7971 28.8441
-Finished iteration 31521 of 100000000 in 150 seconds
-Utility: -29.93 -102.987
-Finished iteration 32593 of 100000000 in 155 seconds
-Utility: -97.9963 -43.1402
-Finished iteration 33659 of 100000000 in 160 seconds
-Utility: 29.0458 -177.365
-Finished iteration 34738 of 100000000 in 165 seconds
-Utility: -180.254 -103.786
-Finished iteration 35813 of 100000000 in 170 seconds
-Utility: -8.63497 -0.961232
-Finished iteration 36888 of 100000000 in 175 seconds
-Utility: -194.13 37.7475
-Finished iteration 37963 of 100000000 in 180 seconds
-Utility: 4.12849 35.6649
-Finished iteration 39026 of 100000000 in 185 seconds
-Utility: 54.5584 -2.99433
-Finished iteration 40088 of 100000000 in 190 seconds
-Utility: 80.4128 -165.649
-Finished iteration 41161 of 100000000 in 195 seconds
-Utility: 10.5393 -128.625
-Finished iteration 42237 of 100000000 in 200 seconds
-Utility: -93.5261 14.0846
-Finished iteration 43305 of 100000000 in 205 seconds
-Utility: 239.025 61.7551
-Finished iteration 44379 of 100000000 in 210 seconds
-Utility: 83.8667 -33.4242
-Finished iteration 45442 of 100000000 in 215 seconds
-Utility: 58.0539 51.573
-Finished iteration 46509 of 100000000 in 220 seconds
-Utility: -87.0303 46.7867
-Finished iteration 47583 of 100000000 in 225 seconds
-Utility: -101.97 -0.333145
-Finished iteration 48657 of 100000000 in 230 seconds
-Utility: -35.2653 48.4213
-Finished iteration 49721 of 100000000 in 235 seconds
-Utility: -78.6565 -35.2443
-Finished iteration 50792 of 100000000 in 240 seconds
-Utility: 0.0455738 145.042
-Finished iteration 51860 of 100000000 in 245 seconds
-Utility: 178.891 -31.8411
-Finished iteration 52922 of 100000000 in 250 seconds
-Utility: 56.6537 -26.7336
-Finished iteration 53984 of 100000000 in 255 seconds
-Utility: -40.7208 0.936703
-Finished iteration 55054 of 100000000 in 260 seconds
-Utility: 169.588 30.0498
-Finished iteration 56119 of 100000000 in 265 seconds
-Utility: -80.4068 15.7119
-Finished iteration 57191 of 100000000 in 270 seconds
-Utility: 3.4667 28.0303
-Finished iteration 58268 of 100000000 in 275 seconds
-Utility: -198.798 1.91936
-Finished iteration 59350 of 100000000 in 280 seconds
-Utility: -6.98465 101.231
-Finished iteration 60426 of 100000000 in 285 seconds
-Utility: 13.4112 -77.3553
-Finished iteration 61505 of 100000000 in 290 seconds
-Utility: 2.0632 97.5727
-Finished iteration 62574 of 100000000 in 295 seconds
-Utility: 20.2341 264.61
-Finished iteration 63651 of 100000000 in 300 seconds
-Utility: 1.05449 21.6037
-Finished iteration 64719 of 100000000 in 305 seconds
-Utility: -0.0580561 -131.645
-Finished iteration 65786 of 100000000 in 310 seconds
-Utility: -43.1815 -9.39699
-Finished iteration 66855 of 100000000 in 315 seconds
-Utility: 82.513 42.815
-Finished iteration 67904 of 100000000 in 320 seconds
-Utility: -31.482 32.8606
-Finished iteration 68934 of 100000000 in 325 seconds
-Utility: -5.22378 -11.5254
-Finished iteration 69985 of 100000000 in 330 seconds
-Utility: 39.4398 -24.5619
-Finished iteration 71028 of 100000000 in 335 seconds
-Utility: 59.0145 -1.00687
-Finished iteration 72098 of 100000000 in 340 seconds
-Utility: 154.611 12.286
-Finished iteration 73178 of 100000000 in 345 seconds
-Utility: 30.1931 18.8087
-Finished iteration 74260 of 100000000 in 350 seconds
-Utility: 64.527 6.59265
-Finished iteration 75340 of 100000000 in 355 seconds
-Utility: 25.9703 3.95959
-Finished iteration 76382 of 100000000 in 360 seconds
-Utility: 34.221 56.6532
-Finished iteration 77442 of 100000000 in 365 seconds
-Utility: -10.6736 2.61279
-Finished iteration 78473 of 100000000 in 370 seconds
-Utility: 16.5602 5.10363
-Finished iteration 79510 of 100000000 in 375 seconds
-Utility: -121.14 6.9803
-Finished iteration 80552 of 100000000 in 380 seconds
-Utility: -96.1111 -50.6071
-Finished iteration 81545 of 100000000 in 385 seconds
-Utility: 1.37175 -76.755
-Finished iteration 82614 of 100000000 in 390 seconds
-Utility: 5.83526 -4.8627
-Finished iteration 83667 of 100000000 in 395 seconds
-Utility: 252.378 29.2626
-Finished iteration 84703 of 100000000 in 400 seconds
-Utility: 50.0905 -83.3828
-Finished iteration 85781 of 100000000 in 405 seconds
-Utility: 122.637 0.958486
-Finished iteration 86835 of 100000000 in 410 seconds
-Utility: -94.4071 13.6605
-Finished iteration 87888 of 100000000 in 415 seconds
-Utility: 21.531 37.9919
-Finished iteration 88953 of 100000000 in 420 seconds
-Utility: -96.6616 -55.4417
-Finished iteration 90016 of 100000000 in 425 seconds
-Utility: 15.0952 31.6976
-Finished iteration 91078 of 100000000 in 430 seconds
-Utility: 137.96 253.489
-Finished iteration 92132 of 100000000 in 435 seconds
-Utility: 54.5735 -110.356
-Finished iteration 93179 of 100000000 in 440 seconds
-Utility: -6.3718 2.24185
-Finished iteration 94233 of 100000000 in 445 seconds
-Utility: 69.7278 -167.368
-Finished iteration 95280 of 100000000 in 450 seconds
-Utility: -18.3786 2.16875
-Finished iteration 96312 of 100000000 in 455 seconds
-Utility: -121.903 46.5194
-Finished iteration 97352 of 100000000 in 460 seconds
-Utility: 33.1214 -2.33568
-Finished iteration 98404 of 100000000 in 465 seconds
-Utility: -48.1721 130.981
-Finished iteration 99444 of 100000000 in 470 seconds
-Utility: 51.9739 -1.50394
-Finished iteration 100491 of 100000000 in 475 seconds
-Utility: 6.3061 -20.1971
-Finished iteration 101548 of 100000000 in 480 seconds
-Utility: -154.387 140.97
-Finished iteration 102639 of 100000000 in 485 seconds
-Utility: 34.9169 86.0685
-Finished iteration 103764 of 100000000 in 490 seconds
-Utility: -83.1811 3.68698
-Finished iteration 104902 of 100000000 in 495 seconds
-Utility: 168.184 -76.4025
-Finished iteration 106035 of 100000000 in 500 seconds
-Utility: -2.70376 -71.2358
-Finished iteration 107169 of 100000000 in 505 seconds
-Utility: 39.9221 -43.2756
-Finished iteration 108315 of 100000000 in 510 seconds
-Utility: 13.8694 -32.8205
-Finished iteration 109465 of 100000000 in 515 seconds
-Utility: 2.32742 0.69611
-Finished iteration 110603 of 100000000 in 520 seconds
-Utility: -7.44669 -33.465
-Finished iteration 111715 of 100000000 in 525 seconds
-Utility: -123.397 -33.2501
-Finished iteration 112836 of 100000000 in 530 seconds
-Utility: -2.96562 -42.9473
-Finished iteration 113961 of 100000000 in 535 seconds
-Utility: -143.873 63.462
-Finished iteration 115097 of 100000000 in 540 seconds
-Utility: 28.1984 -30.7995
-Finished iteration 116223 of 100000000 in 545 seconds
-Utility: 74.6115 -8.94555
-Finished iteration 117362 of 100000000 in 550 seconds
-Utility: 37.3456 -2.08673
-Finished iteration 118483 of 100000000 in 555 seconds
-Utility: 92.4361 -6.12107
-Finished iteration 119610 of 100000000 in 560 seconds
-Utility: 44.1298 -112.818
-Finished iteration 120729 of 100000000 in 565 seconds
-Utility: 38.3176 28.9371
-Finished iteration 121834 of 100000000 in 570 seconds
-Utility: -9.25482 60.2965
-Finished iteration 122931 of 100000000 in 575 seconds
-Utility: -31.5143 158.058
-Finished iteration 124005 of 100000000 in 580 seconds
-Utility: 355.845 197.324
-Finished iteration 125094 of 100000000 in 585 seconds
-Utility: 59.2091 189.237
-Finished iteration 126192 of 100000000 in 590 seconds
-Utility: 130.031 1.45521
-Finished iteration 127290 of 100000000 in 595 seconds
-Utility: -56.3934 -181.593
-Finished iteration 128388 of 100000000 in 600 seconds
-Utility: 10.1992 115.864
-Finished iteration 129500 of 100000000 in 605 seconds
-Utility: 9.68922 -8.54634
-Finished iteration 130594 of 100000000 in 610 seconds
-Utility: 23.2256 -50.0416
-Finished iteration 131690 of 100000000 in 615 seconds
-Utility: -72.788 -42.9661
-Finished iteration 132777 of 100000000 in 620 seconds
-Utility: 10.5354 -13.2807
-Finished iteration 133859 of 100000000 in 625 seconds
-Utility: -5.81643 2
-Finished iteration 134946 of 100000000 in 630 seconds
-Utility: 0.88064 -37.2485
-Finished iteration 136030 of 100000000 in 635 seconds
-Utility: -62.7312 -117.182
-Finished iteration 137118 of 100000000 in 640 seconds
-Utility: 31.5193 -59.3551
-Finished iteration 138203 of 100000000 in 645 seconds
-Utility: -19.3108 64.862
-Finished iteration 139290 of 100000000 in 650 seconds
-Utility: -33.0505 -69.3129
-Finished iteration 140383 of 100000000 in 655 seconds
-Utility: 0.319057 72.8696
-Finished iteration 141469 of 100000000 in 660 seconds
-Utility: 61.2057 -19.1162
-Finished iteration 142555 of 100000000 in 665 seconds
-Utility: 16.3353 -5.18639
-Finished iteration 143658 of 100000000 in 670 seconds
-Utility: -67.0809 153.565
-Finished iteration 144751 of 100000000 in 675 seconds
-Utility: 11.456 1.33188
-Finished iteration 145841 of 100000000 in 680 seconds
-Utility: 71.8628 0.220272
-Finished iteration 146925 of 100000000 in 685 seconds
-Utility: 12.7513 56.034
-Finished iteration 148025 of 100000000 in 690 seconds
-Utility: 15.5109 -88.5
-Finished iteration 149109 of 100000000 in 695 seconds
-Utility: 19.0502 27.1391
-Finished iteration 150201 of 100000000 in 700 seconds
-Utility: -1.61566 4.02287
-Finished iteration 151291 of 100000000 in 705 seconds
-Utility: 118.904 -75.519
-Finished iteration 152383 of 100000000 in 710 seconds
-Utility: -5.51046 77.2905
-Finished iteration 153485 of 100000000 in 715 seconds
-Utility: 0.837688 -73.0406
-Finished iteration 154600 of 100000000 in 720 seconds
-Utility: 40.6099 6.75532
-Finished iteration 155710 of 100000000 in 725 seconds
-Utility: -26.382 46.0843
-Finished iteration 156828 of 100000000 in 730 seconds
-Utility: -10.5495 -176.786
-Finished iteration 157927 of 100000000 in 735 seconds
-Utility: -7.86928 -29.3441
-Finished iteration 159039 of 100000000 in 740 seconds
-Utility: -56.9036 20.4465
-Finished iteration 160147 of 100000000 in 745 seconds
-Utility: 10.2132 25.467
-Finished iteration 161257 of 100000000 in 750 seconds
-Utility: 102.355 -0.88755
-Finished iteration 162358 of 100000000 in 755 seconds
-Utility: -0.0286647 126.412
-Finished iteration 163433 of 100000000 in 760 seconds
-Utility: 1.6496 -0.827448
-Finished iteration 164522 of 100000000 in 765 seconds
-Utility: 41.0269 -5.19486
-Finished iteration 165593 of 100000000 in 770 seconds
-Utility: -12.9875 178.871
-Finished iteration 166635 of 100000000 in 775 seconds
-Utility: 149.81 -1.79438
-Finished iteration 167721 of 100000000 in 780 seconds
-Utility: 1.5478 -32.2923
-Finished iteration 168771 of 100000000 in 785 seconds
-Utility: -14.5339 -5.26286
-Finished iteration 169852 of 100000000 in 790 seconds
-Utility: -52.8919 27.9636
-Finished iteration 170947 of 100000000 in 795 seconds
-Utility: -10.769 6.08506
-Finished iteration 172032 of 100000000 in 800 seconds
-Utility: -57.5736 -129.671
-Finished iteration 173111 of 100000000 in 805 seconds
-Utility: -7.65149 -48.517
-Finished iteration 174157 of 100000000 in 810 seconds
-Utility: 3.84678 -11.6038
-Finished iteration 175156 of 100000000 in 815 seconds
-Utility: -0.242818 26.4604
-Finished iteration 176221 of 100000000 in 820 seconds
-Utility: -109.179 -17.6433
-Finished iteration 177285 of 100000000 in 825 seconds
-Utility: 30.6787 26.6355
-Finished iteration 178353 of 100000000 in 830 seconds
-Utility: 10.1219 27.8103
-Finished iteration 179409 of 100000000 in 835 seconds
-Utility: -362.166 1.39654
-Finished iteration 180466 of 100000000 in 840 seconds
-Utility: -25.1255 293.861
-Finished iteration 181520 of 100000000 in 845 seconds
-Utility: -14.7104 -112.099
-Finished iteration 182571 of 100000000 in 850 seconds
-Utility: -30.2612 34.0774
-Finished iteration 183646 of 100000000 in 855 seconds
-Utility: 373.141 -70.7363
-Finished iteration 184710 of 100000000 in 860 seconds
-Utility: 37.9829 2.94473
-Finished iteration 185746 of 100000000 in 865 seconds
-Utility: -57.193 -4.44098
-Finished iteration 186784 of 100000000 in 870 seconds
-Utility: -30.8637 64.9221
-Finished iteration 187707 of 100000000 in 875 seconds
-Utility: 0.309328 -146.582
-Finished iteration 188748 of 100000000 in 880 seconds
-Utility: 225.88 5.65559
-Finished iteration 189794 of 100000000 in 885 seconds
-Utility: 105.504 -58.0408
-Finished iteration 190854 of 100000000 in 890 seconds
-Utility: 95.546 -14.6729
-Finished iteration 191956 of 100000000 in 895 seconds
-Utility: -85.1882 -0.800584
-Finished iteration 193016 of 100000000 in 900 seconds
-Utility: -60.6241 30.3538
-Finished iteration 194065 of 100000000 in 905 seconds
-Utility: 254.841 19.4321
-Finished iteration 195105 of 100000000 in 910 seconds
-Utility: -198.717 123.704
-Finished iteration 196194 of 100000000 in 915 seconds
-Utility: 75.1661 7.65865
-Finished iteration 197275 of 100000000 in 920 seconds
-Utility: 4.44509 14.9339
-Finished iteration 198360 of 100000000 in 925 seconds
-Utility: 30.2267 -153.382
-Finished iteration 199438 of 100000000 in 930 seconds
-Utility: -9.5933 71.3826
-Finished iteration 200520 of 100000000 in 935 seconds
-Utility: -8.12423 34.3914
-Finished iteration 201601 of 100000000 in 940 seconds
-Utility: 20.6801 5.43962
-Finished iteration 202679 of 100000000 in 945 seconds
-Utility: -1.14679 85.9402
-Finished iteration 203755 of 100000000 in 950 seconds
-Utility: -122.406 83.4196
-Finished iteration 204843 of 100000000 in 955 seconds
-Utility: 85.8132 -1.44011
-Finished iteration 205927 of 100000000 in 960 seconds
-Utility: -14.853 1.25502
-Finished iteration 207007 of 100000000 in 965 seconds
-Utility: -3.30804 -18.7461
-Finished iteration 208086 of 100000000 in 970 seconds
-Utility: -33.8444 118.984
-Finished iteration 209170 of 100000000 in 975 seconds
-Utility: 0.79426 40.2752
-Finished iteration 210246 of 100000000 in 980 seconds
-Utility: 114.539 4.05992
-Finished iteration 211256 of 100000000 in 985 seconds
-Utility: -19.953 110.351
-Finished iteration 212340 of 100000000 in 990 seconds
-Utility: 59.7261 -30.0156
-Finished iteration 213416 of 100000000 in 995 seconds
-Utility: -55.607 -3.7211
-Finished iteration 214488 of 100000000 in 1000 seconds
-Utility: 7.16302 -55.4593
-Finished iteration 215559 of 100000000 in 1005 seconds
-Utility: -17.3452 106.936
-Finished iteration 216633 of 100000000 in 1010 seconds
-Utility: 2.76909 1.39697
-Finished iteration 217707 of 100000000 in 1015 seconds
-Utility: 43.4002 4.43507
-Finished iteration 218783 of 100000000 in 1020 seconds
-Utility: 45.5939 6.99687
-Finished iteration 219849 of 100000000 in 1025 seconds
-Utility: 92.26 -63.4328
-Finished iteration 220908 of 100000000 in 1030 seconds
-Utility: -95.8935 20.029
-Finished iteration 221959 of 100000000 in 1035 seconds
-Utility: -47.1874 -67.386
-Finished iteration 223022 of 100000000 in 1040 seconds
-Utility: 31.1157 -261.146
-Finished iteration 224085 of 100000000 in 1045 seconds
-Utility: -14.3089 137.476
-Finished iteration 225169 of 100000000 in 1050 seconds
-Utility: 66.6187 3.7097
-Finished iteration 226251 of 100000000 in 1055 seconds
-Utility: -74.6162 3.72494
-Finished iteration 227336 of 100000000 in 1060 seconds
-Utility: 58.95 50.0946
-Finished iteration 228416 of 100000000 in 1065 seconds
-Utility: 39.8796 -78.2662
-Finished iteration 229464 of 100000000 in 1070 seconds
-Utility: -49.1154 -90.2602
-Finished iteration 230512 of 100000000 in 1075 seconds
-Utility: -1.03695 61.3911
-Finished iteration 231584 of 100000000 in 1080 seconds
-Utility: 70.0448 -34.9614
-Finished iteration 232658 of 100000000 in 1085 seconds
-Utility: -37.4321 -12.2534
-Finished iteration 233732 of 100000000 in 1090 seconds
-Utility: 10.6556 1.83763
-Finished iteration 234808 of 100000000 in 1095 seconds
-Utility: 7.60542 58.657
-Finished iteration 235895 of 100000000 in 1100 seconds
-Utility: -52.6081 -14.9801
-Finished iteration 236957 of 100000000 in 1105 seconds
-Utility: -38.9279 -47.1971
-Finished iteration 238022 of 100000000 in 1110 seconds
-Utility: -40.8995 -48.6889
-Finished iteration 239089 of 100000000 in 1115 seconds
-Utility: 97.3549 39.0367
-Finished iteration 240160 of 100000000 in 1120 seconds
-Utility: 19.0857 36.7662
-Finished iteration 241224 of 100000000 in 1125 seconds
-Utility: -1.69104 -5.03094
-Finished iteration 242289 of 100000000 in 1130 seconds
-Utility: 141.404 -5.91868
-Finished iteration 243355 of 100000000 in 1135 seconds
-Utility: -68.8592 -1.19327
-Finished iteration 244414 of 100000000 in 1140 seconds
-Utility: 9.46835 -114.119
-Finished iteration 245478 of 100000000 in 1145 seconds
-Utility: -212.188 -45.2212
-Finished iteration 246547 of 100000000 in 1150 seconds
-Utility: -15.6593 -59.7166
-Finished iteration 247618 of 100000000 in 1155 seconds
-Utility: -14.9144 5.7559
-Finished iteration 248698 of 100000000 in 1160 seconds
-Utility: -23.582 66.1435
-Finished iteration 249767 of 100000000 in 1165 seconds
-Utility: 247.855 41.4011
-Finished iteration 250833 of 100000000 in 1170 seconds
-Utility: -5.61981 1.09363
-Finished iteration 251908 of 100000000 in 1175 seconds
-Utility: 7.64052 1.54878
-Finished iteration 252969 of 100000000 in 1180 seconds
-Utility: -0.638793 -0.799711
-Finished iteration 254045 of 100000000 in 1185 seconds
-Utility: 8.58678 6.82528
-Finished iteration 255119 of 100000000 in 1190 seconds
-Utility: 37.2386 -20.1613
-Finished iteration 256186 of 100000000 in 1195 seconds
-Utility: 1.36831 -3.57966
-Finished iteration 257250 of 100000000 in 1200 seconds
-Utility: 19.3523 -53.8156
-Finished iteration 258307 of 100000000 in 1205 seconds
-Utility: -3.88764 58.4949
-Finished iteration 259360 of 100000000 in 1210 seconds
-Utility: -38.521 -6.51487
-Finished iteration 260415 of 100000000 in 1215 seconds
-Utility: 17.5392 -3.06254
-Finished iteration 261486 of 100000000 in 1220 seconds
-Utility: 93.9169 -29.9229
-Finished iteration 262539 of 100000000 in 1225 seconds
-Utility: -10.6009 -2.08345
-Finished iteration 263612 of 100000000 in 1230 seconds
-Utility: 55.9238 66.6664
-Finished iteration 264676 of 100000000 in 1235 seconds
-Utility: -190.768 -17.9344
-Finished iteration 265747 of 100000000 in 1240 seconds
-Utility: -24.9889 12.678
-Finished iteration 266826 of 100000000 in 1245 seconds
-Utility: -7.09833 58.5173
-Finished iteration 267905 of 100000000 in 1250 seconds
-Utility: -2.00636 -28.3648
-Finished iteration 268967 of 100000000 in 1255 seconds
-Utility: 58.8181 -51.4786
-Finished iteration 270037 of 100000000 in 1260 seconds
-Utility: 29.1259 5.02211
-Finished iteration 271081 of 100000000 in 1265 seconds
-Utility: -10.1906 -35.2595
-Finished iteration 272131 of 100000000 in 1270 seconds
-Utility: 8.83737 -26.6867
-Finished iteration 273190 of 100000000 in 1275 seconds
-Utility: 3.3955 173.49
-Finished iteration 274250 of 100000000 in 1280 seconds
-Utility: 0.86346 -11.3092
-Finished iteration 275287 of 100000000 in 1285 seconds
-Utility: -105.13 32.9094
-Finished iteration 276338 of 100000000 in 1290 seconds
-Utility: 23.7365 0.998804
-Finished iteration 277372 of 100000000 in 1295 seconds
-Utility: 69.8845 -0.818104
-Finished iteration 278445 of 100000000 in 1300 seconds
-Utility: -0.319571 33.3465
-Finished iteration 279519 of 100000000 in 1305 seconds
-Utility: 33.7536 10.6372
-Finished iteration 280598 of 100000000 in 1310 seconds
-Utility: 279.724 70.3
-Finished iteration 281684 of 100000000 in 1315 seconds
-Utility: 48.7857 -8.39023
-Finished iteration 282760 of 100000000 in 1320 seconds
-Utility: 38.0666 -225.333
-Finished iteration 283824 of 100000000 in 1325 seconds
-Utility: -1.74533 49.8585
-Finished iteration 284893 of 100000000 in 1330 seconds
-Utility: 11.3536 17.1308
-Finished iteration 285960 of 100000000 in 1335 seconds
-Utility: 3.70158 -9.048
-Finished iteration 287030 of 100000000 in 1340 seconds
-Utility: -30.5621 0.51625
-Finished iteration 288099 of 100000000 in 1345 seconds
-Utility: 181.21 3.95924
-Finished iteration 289182 of 100000000 in 1350 seconds
-Utility: 2.39075 -72.476
-Finished iteration 290260 of 100000000 in 1355 seconds
-Utility: -1.0025 -7.74116
-Finished iteration 291335 of 100000000 in 1360 seconds
-Utility: 15.5024 196.804
-Finished iteration 292420 of 100000000 in 1365 seconds
-Utility: 134.235 -3.35895
-Finished iteration 293494 of 100000000 in 1370 seconds
-Utility: -26.4265 -0.991561
-Finished iteration 294575 of 100000000 in 1375 seconds
-Utility: -1.74985 -18.9165
-Finished iteration 295644 of 100000000 in 1380 seconds
-Utility: 66.9271 1.2855
-Finished iteration 296701 of 100000000 in 1385 seconds
-Utility: -1.58488 75.5224
-Finished iteration 297767 of 100000000 in 1390 seconds
-Utility: -126.189 3.01279
-Finished iteration 298835 of 100000000 in 1395 seconds
-Utility: 7.53231 -45.5582
-Finished iteration 299900 of 100000000 in 1400 seconds
-Utility: 5.69804 -34.7311
-Finished iteration 300959 of 100000000 in 1405 seconds
-Utility: -9.54085 32.8386
-Finished iteration 302027 of 100000000 in 1410 seconds
-Utility: 20.4033 -13.3504
-Finished iteration 303089 of 100000000 in 1415 seconds
-Utility: -7.07047 -60.1749
-Finished iteration 304150 of 100000000 in 1420 seconds
-Utility: 9.07549 -59.4372
-Finished iteration 305211 of 100000000 in 1425 seconds
-Utility: 3.57069 -23.1032
-Finished iteration 306268 of 100000000 in 1430 seconds
-Utility: -1.36989 2.98505
-Finished iteration 307341 of 100000000 in 1435 seconds
-Utility: 281.71 -75.7912
-Finished iteration 308406 of 100000000 in 1440 seconds
-Utility: -8.23813 8.13233
-Finished iteration 309450 of 100000000 in 1445 seconds
-Utility: 68.9098 7.9646
-Finished iteration 310519 of 100000000 in 1450 seconds
-Utility: -60.533 4.08076
-Finished iteration 311591 of 100000000 in 1455 seconds
-Utility: -3.49455 4.63906
-Finished iteration 312656 of 100000000 in 1460 seconds
-Utility: 2.41445 6.37569
-Finished iteration 313728 of 100000000 in 1465 seconds
-Utility: 4.74372 52.5078
-Finished iteration 314803 of 100000000 in 1470 seconds
-Utility: -6.50386 17.9905
-Finished iteration 315877 of 100000000 in 1475 seconds
-Utility: 40.6243 -66.3195
-Finished iteration 316951 of 100000000 in 1480 seconds
-Utility: -4.42067 18.5379
-Finished iteration 318021 of 100000000 in 1485 seconds
-Utility: -10.5342 16.1592
-Finished iteration 319092 of 100000000 in 1490 seconds
-Utility: -7.71665 7.15246
-Finished iteration 320168 of 100000000 in 1495 seconds
-Utility: 26.6857 -20.1461
-Finished iteration 321240 of 100000000 in 1500 seconds
-Utility: 10.0378 -240.978
-Finished iteration 322316 of 100000000 in 1505 seconds
-Utility: 36.9557 -164.395
-Finished iteration 323386 of 100000000 in 1510 seconds
-Utility: 14.1855 5.83065
-Finished iteration 324458 of 100000000 in 1515 seconds
-Utility: 18.9419 -4.2056
-Finished iteration 325532 of 100000000 in 1520 seconds
-Utility: -1.73655 190.538
-Finished iteration 326551 of 100000000 in 1525 seconds
-Utility: 0.973277 -79.7221
-Finished iteration 327594 of 100000000 in 1530 seconds
-Utility: 0.387511 34.3518
-Finished iteration 328659 of 100000000 in 1535 seconds
-Utility: -54.1194 9.05475
-Finished iteration 329728 of 100000000 in 1540 seconds
-Utility: -18.823 41.5727
-Finished iteration 330798 of 100000000 in 1545 seconds
-Utility: -19.2589 383.76
-Finished iteration 331865 of 100000000 in 1550 seconds
-Utility: 187.527 60.1934
-Finished iteration 332954 of 100000000 in 1555 seconds
-Utility: 1.74071 2
-Finished iteration 334044 of 100000000 in 1560 seconds
-Utility: 41.1394 -156.23
-Finished iteration 335135 of 100000000 in 1565 seconds
-Utility: -59.9643 29.5005
-Finished iteration 336220 of 100000000 in 1570 seconds
-Utility: -36.8465 11.337
-Finished iteration 337294 of 100000000 in 1575 seconds
-Utility: 8.34722 -0.97827
-Finished iteration 338367 of 100000000 in 1580 seconds
-Utility: -3.04523 -83.3093
-Finished iteration 339447 of 100000000 in 1585 seconds
-Utility: 6.61614 4.52909
-Finished iteration 340522 of 100000000 in 1590 seconds
-Utility: 83.6533 50.2732
-Finished iteration 341594 of 100000000 in 1595 seconds
-Utility: 45.4859 5.31103
-Finished iteration 342661 of 100000000 in 1600 seconds
-Utility: -13.3136 -1.07705
-Finished iteration 343738 of 100000000 in 1605 seconds
-Utility: 80.5472 -33.7773
-Finished iteration 344808 of 100000000 in 1610 seconds
-Utility: -251.129 -13.7182
-Finished iteration 345880 of 100000000 in 1615 seconds
-Utility: -78.8842 -0.686668
-Finished iteration 346955 of 100000000 in 1620 seconds
-Utility: -87.395 207.099
-Finished iteration 348034 of 100000000 in 1625 seconds
-Utility: 3.07229 2.69929
-Finished iteration 349097 of 100000000 in 1630 seconds
-Utility: 3.14222 25.7832
-Finished iteration 350168 of 100000000 in 1635 seconds
-Utility: 2.14662 -195.549
-Finished iteration 351232 of 100000000 in 1640 seconds
-Utility: 23.3017 -6.48524
-Finished iteration 352269 of 100000000 in 1645 seconds
-Utility: 76.1435 -171.594
-Finished iteration 353314 of 100000000 in 1650 seconds
-Utility: -12.4672 -13.9431
-Finished iteration 354363 of 100000000 in 1655 seconds
-Utility: -75.1133 29.1669
-Finished iteration 355381 of 100000000 in 1660 seconds
-Utility: 87.0736 -11.6469
-Finished iteration 356423 of 100000000 in 1665 seconds
-Utility: 43.9898 -0.914405
-Finished iteration 357474 of 100000000 in 1670 seconds
-Utility: -49.3621 12.7244
-Finished iteration 358528 of 100000000 in 1675 seconds
-Utility: 5.80539 -5.61267
-Finished iteration 359586 of 100000000 in 1680 seconds
-Utility: -87.5695 1.55204
-Finished iteration 360642 of 100000000 in 1685 seconds
-Utility: 33.0971 -9.15089
-Finished iteration 361700 of 100000000 in 1690 seconds
-Utility: -14.8903 37.4874
-Finished iteration 362779 of 100000000 in 1695 seconds
-Utility: 11.1484 -48.1417
-Finished iteration 363865 of 100000000 in 1700 seconds
-Utility: -16.7918 -36.2776
-Finished iteration 364945 of 100000000 in 1705 seconds
-Utility: -2.18376 -6.11624
-Finished iteration 366035 of 100000000 in 1710 seconds
-Utility: 6.78797 31.649
-Finished iteration 367124 of 100000000 in 1715 seconds
-Utility: 37.5991 -40.659
-Finished iteration 368208 of 100000000 in 1720 seconds
-Utility: 63.2967 109.184
-Finished iteration 369290 of 100000000 in 1725 seconds
-Utility: -39.9543 -31.3463
-Finished iteration 370369 of 100000000 in 1730 seconds
-Utility: 14.1647 -1.82095
-Finished iteration 371462 of 100000000 in 1735 seconds
-Utility: 20.3175 3.45741
-Finished iteration 372557 of 100000000 in 1740 seconds
-Utility: -51.3569 0.872001
-Finished iteration 373655 of 100000000 in 1745 seconds
-Utility: -30.1756 2.89531
-Finished iteration 374751 of 100000000 in 1750 seconds
-Utility: 76.5975 -3.30449
-Finished iteration 375844 of 100000000 in 1755 seconds
-Utility: -1.34707 -22.6962
-Finished iteration 376937 of 100000000 in 1760 seconds
-Utility: 12.5464 113.223
-Finished iteration 378031 of 100000000 in 1765 seconds
-Utility: 0.33749 6.98238
-Finished iteration 379130 of 100000000 in 1770 seconds
-Utility: -40.6821 -94.7232
-Finished iteration 380226 of 100000000 in 1775 seconds
-Utility: 13.6774 -18.5463
-Finished iteration 381321 of 100000000 in 1780 seconds
-Utility: 71.4714 -14.5521
-Finished iteration 382420 of 100000000 in 1785 seconds
-Utility: -47.6451 4.99028
-Finished iteration 383516 of 100000000 in 1790 seconds
-Utility: 82.6853 -28.2844
-Finished iteration 384614 of 100000000 in 1795 seconds
-Utility: -17.7386 59.9254
-Saving checkpoint at iteration 385529
-Finished iteration 385676 of 100000000 in 1800 seconds
-Utility: 18.2608 -103.466
-Finished iteration 386777 of 100000000 in 1805 seconds
-Utility: 6.90872 -8.92154
-Finished iteration 387879 of 100000000 in 1810 seconds
-Utility: 113.705 24.5983
-Finished iteration 388980 of 100000000 in 1815 seconds
-Utility: 1.72053 -40.7691
-Finished iteration 390079 of 100000000 in 1820 seconds
-Utility: -178.978 85.1589
-Finished iteration 391160 of 100000000 in 1825 seconds
-Utility: -14.1675 17.8251
-Finished iteration 392255 of 100000000 in 1830 seconds
-Utility: 3.75562 10.9401
-Finished iteration 393352 of 100000000 in 1835 seconds
-Utility: 6.21841 -27.8649
-Finished iteration 394446 of 100000000 in 1840 seconds
-Utility: -48.376 -4.38961
-Finished iteration 395538 of 100000000 in 1845 seconds
-Utility: -112.867 -40.4975
-Finished iteration 396635 of 100000000 in 1850 seconds
-Utility: 158.811 -10.1849
-Finished iteration 397730 of 100000000 in 1855 seconds
-Utility: 42.0769 -12.1558
-Finished iteration 398824 of 100000000 in 1860 seconds
-Utility: 0.837789 2.48357
-Finished iteration 399922 of 100000000 in 1865 seconds
-Utility: 18.1569 60.8978
-Finished iteration 401017 of 100000000 in 1870 seconds
-Utility: 20.5567 1.40662
-Finished iteration 402111 of 100000000 in 1875 seconds
-Utility: 126.725 55.292
-Finished iteration 403203 of 100000000 in 1880 seconds
-Utility: -231.125 -7.66276
-Finished iteration 404294 of 100000000 in 1885 seconds
-Utility: 5.77922 99.5029
-Finished iteration 405389 of 100000000 in 1890 seconds
-Utility: -11.6265 2.5556
-Finished iteration 406484 of 100000000 in 1895 seconds
-Utility: 3.02855 -7.81075
-Finished iteration 407580 of 100000000 in 1900 seconds
-Utility: 6.49521 -2.23986
-Finished iteration 408676 of 100000000 in 1905 seconds
-Utility: -195.226 1.07041
-Finished iteration 409771 of 100000000 in 1910 seconds
-Utility: 1.77181 2.80244
-Finished iteration 410860 of 100000000 in 1915 seconds
-Utility: 36.8559 -0.449791
-Finished iteration 411954 of 100000000 in 1920 seconds
-Utility: 18.698 -29.5722
-Finished iteration 413049 of 100000000 in 1925 seconds
-Utility: 98.4692 -55.3799
-Finished iteration 414144 of 100000000 in 1930 seconds
-Utility: 4.67752 -1.5483
-Finished iteration 415237 of 100000000 in 1935 seconds
-Utility: 7.05642 64.9449
-Finished iteration 416334 of 100000000 in 1940 seconds
-Utility: 123.918 -0.466023
-Finished iteration 417422 of 100000000 in 1945 seconds
-Utility: -4.89192 2.02384
-Finished iteration 418507 of 100000000 in 1950 seconds
-Utility: -122.675 93.5428
-Finished iteration 419589 of 100000000 in 1955 seconds
-Utility: 13.917 4.01217
-Finished iteration 420674 of 100000000 in 1960 seconds
-Utility: -5.98153 17.792
-Finished iteration 421760 of 100000000 in 1965 seconds
-Utility: -0.774094 126.299
-Finished iteration 422846 of 100000000 in 1970 seconds
-Utility: 153.499 -192.81
-Finished iteration 423928 of 100000000 in 1975 seconds
-Utility: -27.2351 -273.429
-Finished iteration 425012 of 100000000 in 1980 seconds
-Utility: 33.7142 -16.7703
-Finished iteration 426097 of 100000000 in 1985 seconds
-Utility: 13.271 25.2868
-Finished iteration 427182 of 100000000 in 1990 seconds
-Utility: -6.75293 -32.6882
-Finished iteration 428269 of 100000000 in 1995 seconds
-Utility: -112.966 -35.3943
-Finished iteration 429358 of 100000000 in 2000 seconds
-Utility: 11.2146 -1.562
-Finished iteration 430443 of 100000000 in 2005 seconds
-Utility: 56.9337 -4.57868
-Finished iteration 431534 of 100000000 in 2010 seconds
-Utility: -31.6919 171.433
-Finished iteration 432629 of 100000000 in 2015 seconds
-Utility: -16.9118 9.00784
-Finished iteration 433719 of 100000000 in 2020 seconds
-Utility: 4.75216 -7.10993
-Finished iteration 434810 of 100000000 in 2025 seconds
-Utility: 46.9357 61.1314
-Finished iteration 435902 of 100000000 in 2030 seconds
-Utility: 102.977 7.62964
-Finished iteration 436989 of 100000000 in 2035 seconds
-Utility: 33.7561 2.72539
-Finished iteration 438077 of 100000000 in 2040 seconds
-Utility: 3.08834 -10.371
-Finished iteration 439166 of 100000000 in 2045 seconds
-Utility: 28.3586 4.43381
-Finished iteration 440248 of 100000000 in 2050 seconds
-Utility: -13.903 40.1751
-Finished iteration 441337 of 100000000 in 2055 seconds
-Utility: 62.5932 -5.48744
-Finished iteration 442428 of 100000000 in 2060 seconds
-Utility: -89.1269 -4.09835
-Finished iteration 443503 of 100000000 in 2065 seconds
-Utility: 15.0152 -23.8544
-Finished iteration 444600 of 100000000 in 2070 seconds
-Utility: -40.9009 -0.369023
-Finished iteration 445698 of 100000000 in 2075 seconds
-Utility: -60.3309 -4.15654
-Finished iteration 446794 of 100000000 in 2080 seconds
-Utility: -0.66253 -0.462442
-Finished iteration 447891 of 100000000 in 2085 seconds
-Utility: 59.3743 -15.8087
-Finished iteration 448986 of 100000000 in 2090 seconds
-Utility: 34.2657 5.52282
-Finished iteration 450079 of 100000000 in 2095 seconds
-Utility: -159.698 -101.111
-Finished iteration 451172 of 100000000 in 2100 seconds
-Utility: 1.28384 2.31225
-Finished iteration 452264 of 100000000 in 2105 seconds
-Utility: -8.80658 8.7802
-Finished iteration 453358 of 100000000 in 2110 seconds
-Utility: 4.37207 -12.6888
-Finished iteration 454449 of 100000000 in 2115 seconds
-Utility: -11.2622 69.32
-Finished iteration 455542 of 100000000 in 2120 seconds
-Utility: 18.3336 7.79358
-Finished iteration 456632 of 100000000 in 2125 seconds
-Utility: 40.6268 41.4028
-Finished iteration 457724 of 100000000 in 2130 seconds
-Utility: 36.584 4.03924
-Finished iteration 458816 of 100000000 in 2136 seconds
-Utility: 6.94666 -4.31548
-Finished iteration 459912 of 100000000 in 2141 seconds
-Utility: 6.40586 1.78686
-Finished iteration 461009 of 100000000 in 2146 seconds
-Utility: -72.9484 -0.996909
-Finished iteration 462099 of 100000000 in 2151 seconds
-Utility: 5.56216 47.0108
-Finished iteration 463192 of 100000000 in 2156 seconds
-Utility: -16.0359 42.4607
-Finished iteration 464289 of 100000000 in 2161 seconds
-Utility: 53.2454 -0.255631
-Finished iteration 465385 of 100000000 in 2166 seconds
-Utility: -10.5203 -79.3237
-Finished iteration 466479 of 100000000 in 2171 seconds
-Utility: -64.925 -30.7279
-Finished iteration 467576 of 100000000 in 2176 seconds
-Utility: -14.9269 23.0847
-Finished iteration 468670 of 100000000 in 2181 seconds
-Utility: -25.9979 5.32292
-Finished iteration 469763 of 100000000 in 2186 seconds
-Utility: 4.10513 60.2645
-Finished iteration 470867 of 100000000 in 2191 seconds
-Utility: -0.661064 -3.54553
-Finished iteration 471972 of 100000000 in 2196 seconds
-Utility: 39.1175 9.08817
-Finished iteration 473076 of 100000000 in 2201 seconds
-Utility: 78.6573 11.8981
-Finished iteration 474180 of 100000000 in 2206 seconds
-Utility: 20.1284 -2.3097
-Finished iteration 475278 of 100000000 in 2211 seconds
-Utility: -10.155 -49.6545
-Finished iteration 476374 of 100000000 in 2216 seconds
-Utility: 42.663 -44.786
-Finished iteration 477471 of 100000000 in 2221 seconds
-Utility: 61.6622 -2.27675
-Finished iteration 478574 of 100000000 in 2226 seconds
-Utility: 7.80606 47.0203
-Finished iteration 479676 of 100000000 in 2231 seconds
-Utility: -10.5628 52.1885
-Finished iteration 480772 of 100000000 in 2236 seconds
-Utility: -2.04338 14.4927
-Finished iteration 481875 of 100000000 in 2241 seconds
-Utility: 2.88523 3.61008
-Finished iteration 482971 of 100000000 in 2246 seconds
-Utility: 6.93582 175.646
-Finished iteration 484071 of 100000000 in 2251 seconds
-Utility: 6.74036 -0.776593
-Finished iteration 485170 of 100000000 in 2256 seconds
-Utility: -1.76641 18.1806
-Finished iteration 486273 of 100000000 in 2261 seconds
-Utility: 8.26797 1.14937
-Finished iteration 487360 of 100000000 in 2266 seconds
-Utility: 0.379751 -3.91473
-Finished iteration 488465 of 100000000 in 2271 seconds
-Utility: 288.342 -96.4147
-Finished iteration 489571 of 100000000 in 2276 seconds
-Utility: 13.6314 -8.4823
-Finished iteration 490677 of 100000000 in 2281 seconds
-Utility: -2.45824 133.199
-Finished iteration 491783 of 100000000 in 2286 seconds
-Utility: 11.5639 -10.8244
-Finished iteration 492888 of 100000000 in 2291 seconds
-Utility: -4.64169 -25.6908
-Finished iteration 493993 of 100000000 in 2296 seconds
-Utility: -2.66485 2.308
-Finished iteration 495094 of 100000000 in 2301 seconds
-Utility: 22.6528 6.35529
-Finished iteration 496197 of 100000000 in 2306 seconds
-Utility: 14.0406 0.927471
-Finished iteration 497314 of 100000000 in 2311 seconds
-Utility: 0.144379 -170.264
-Finished iteration 498430 of 100000000 in 2316 seconds
-Utility: -2.54621 -119.677
-Finished iteration 499547 of 100000000 in 2321 seconds
-Utility: -9.46761 72.6197
-Finished iteration 500665 of 100000000 in 2326 seconds
-Utility: -99.318 -4.65577
-Finished iteration 501784 of 100000000 in 2331 seconds
-Utility: -6.01429 238.271
-Finished iteration 502903 of 100000000 in 2336 seconds
-Utility: 27.1442 -4.35228
-Finished iteration 504018 of 100000000 in 2341 seconds
-Utility: 114.515 -130.92
-Finished iteration 505139 of 100000000 in 2346 seconds
-Utility: 123.14 23.3219
-Finished iteration 506231 of 100000000 in 2351 seconds
-Utility: -11.8654 -1.44963
-Finished iteration 507354 of 100000000 in 2356 seconds
-Utility: 2.0737 21.1513
-Finished iteration 508483 of 100000000 in 2361 seconds
-Utility: -23.4664 -16.661
-Finished iteration 509607 of 100000000 in 2366 seconds
-Utility: 1.28799 1.93855
-Finished iteration 510737 of 100000000 in 2371 seconds
-Utility: 62.356 -250.334
-Finished iteration 511865 of 100000000 in 2376 seconds
-Utility: -13.6032 -6.62385
-Finished iteration 512996 of 100000000 in 2381 seconds
-Utility: 3.93909 72.1852
-Finished iteration 514124 of 100000000 in 2386 seconds
-Utility: 3.56001 1.37004
-Finished iteration 515252 of 100000000 in 2391 seconds
-Utility: 84.3906 8.0724
-Finished iteration 516376 of 100000000 in 2396 seconds
-Utility: 108.102 24.4465
-Finished iteration 517500 of 100000000 in 2401 seconds
-Utility: -5.80255 -4.85019
-Finished iteration 518628 of 100000000 in 2406 seconds
-Utility: 14.4011 10.2803
-Finished iteration 519754 of 100000000 in 2411 seconds
-Utility: 4.75261 1.32231
-Finished iteration 520878 of 100000000 in 2416 seconds
-Utility: -19.3765 5.1305
-Finished iteration 522007 of 100000000 in 2421 seconds
-Utility: -0.240096 2.46675
-Finished iteration 523129 of 100000000 in 2426 seconds
-Utility: 5.41348 -0.466787
-Finished iteration 524261 of 100000000 in 2431 seconds
-Utility: -14.7755 -227.396
-Finished iteration 525393 of 100000000 in 2436 seconds
-Utility: -0.969032 1.04507
-Finished iteration 526527 of 100000000 in 2441 seconds
-Utility: -6.31272 -13.8343
-Finished iteration 527660 of 100000000 in 2446 seconds
-Utility: 6.52363 35.3389
-Finished iteration 528791 of 100000000 in 2451 seconds
-Utility: 108.564 -1.45409
-Finished iteration 529918 of 100000000 in 2456 seconds
-Utility: -0.766567 -16.7605
-Finished iteration 531045 of 100000000 in 2461 seconds
-Utility: 14.5459 -0.388251
-Finished iteration 532174 of 100000000 in 2466 seconds
-Utility: -0.273995 -218.494
-Finished iteration 533303 of 100000000 in 2471 seconds
-Utility: -6.73805 -27.2925
-Finished iteration 534430 of 100000000 in 2476 seconds
-Utility: -1.37534 36.3204
-Finished iteration 535557 of 100000000 in 2481 seconds
-Utility: 121.856 -22.7616
-Finished iteration 536689 of 100000000 in 2486 seconds
-Utility: 7.98833 4.58975
-Finished iteration 537837 of 100000000 in 2491 seconds
-Utility: 8.50409 3.30166
-Finished iteration 538982 of 100000000 in 2496 seconds
-Utility: -2.86982 0.933192
-Finished iteration 540128 of 100000000 in 2501 seconds
-Utility: 41.2313 -7.25946
-Finished iteration 541275 of 100000000 in 2506 seconds
-Utility: -51.2136 15.7142
-Finished iteration 542417 of 100000000 in 2511 seconds
-Utility: -1.53527 25.1407
-Finished iteration 543558 of 100000000 in 2516 seconds
-Utility: -3.92072 -5.81952
-Finished iteration 544704 of 100000000 in 2521 seconds
-Utility: -4.07979 -6.81263
-Finished iteration 545851 of 100000000 in 2526 seconds
-Utility: 5.28832 -10.83
-Finished iteration 546995 of 100000000 in 2531 seconds
-Utility: -0.874595 -61.1546
-Finished iteration 548128 of 100000000 in 2536 seconds
-Utility: -0.32408 63.4154
-Finished iteration 549268 of 100000000 in 2541 seconds
-Utility: 2.61287 -13.9867
-Finished iteration 550407 of 100000000 in 2546 seconds
-Utility: -0.26788 -8.7009
-Finished iteration 551552 of 100000000 in 2551 seconds
-Utility: 20.1507 17.0291
-Finished iteration 552696 of 100000000 in 2556 seconds
-Utility: -49.7462 16.3807
-Finished iteration 553838 of 100000000 in 2561 seconds
-Utility: 49.4458 -29.6417
-Finished iteration 554984 of 100000000 in 2566 seconds
-Utility: 14.5316 28.4328
-Finished iteration 556126 of 100000000 in 2571 seconds
-Utility: 123.618 50.3946
-Finished iteration 557268 of 100000000 in 2576 seconds
-Utility: -37.4219 -91.8268
-Finished iteration 558413 of 100000000 in 2581 seconds
-Utility: 0.075912 -13.7891
-Finished iteration 559555 of 100000000 in 2586 seconds
-Utility: -1.93374 -143.072
-Finished iteration 560704 of 100000000 in 2591 seconds
-Utility: -0.898499 22.836
-Finished iteration 561846 of 100000000 in 2596 seconds
-Utility: 0.170634 27.0058
-Finished iteration 562990 of 100000000 in 2601 seconds
-Utility: 14.4844 20.4116
-Finished iteration 564105 of 100000000 in 2606 seconds
-Utility: 5.10549 -14.1235
-Finished iteration 565214 of 100000000 in 2611 seconds
-Utility: 12.4268 -48.0018
-Finished iteration 566323 of 100000000 in 2616 seconds
-Utility: -4.88367 29.4601
-Finished iteration 567430 of 100000000 in 2621 seconds
-Utility: 0.230229 -0.20163
-Finished iteration 568538 of 100000000 in 2626 seconds
-Utility: 59.4107 -110.277
-Finished iteration 569644 of 100000000 in 2631 seconds
-Utility: -59.3227 19.9228
-Finished iteration 570751 of 100000000 in 2636 seconds
-Utility: -107.485 8.66597
-Finished iteration 571866 of 100000000 in 2641 seconds
-Utility: 0.49643 -4.50195
-Finished iteration 572979 of 100000000 in 2646 seconds
-Utility: -1.495 -4.13598
-Finished iteration 574091 of 100000000 in 2651 seconds
-Utility: -7.94261 11.0166
-Finished iteration 575197 of 100000000 in 2656 seconds
-Utility: -11.6988 0.829636
-Finished iteration 576304 of 100000000 in 2661 seconds
-Utility: -21.5975 18.6223
-Finished iteration 577416 of 100000000 in 2666 seconds
-Utility: 50.6925 -10.1307
-Finished iteration 578545 of 100000000 in 2671 seconds
-Utility: -3.50525 -85.2412
-Finished iteration 579673 of 100000000 in 2676 seconds
-Utility: 58.1311 10.0262
-Finished iteration 580802 of 100000000 in 2681 seconds
-Utility: 3.00921 -2.88709
-Finished iteration 581931 of 100000000 in 2686 seconds
-Utility: 74.0393 -26.548
-Finished iteration 583031 of 100000000 in 2691 seconds
-Utility: 3.40011 -108.857
-Finished iteration 584164 of 100000000 in 2696 seconds
-Utility: -2.93532 -72.4412
-Finished iteration 585295 of 100000000 in 2701 seconds
-Utility: 16.4343 -2.53329
-Finished iteration 586428 of 100000000 in 2706 seconds
-Utility: -38.7362 15.4361
-Finished iteration 587562 of 100000000 in 2711 seconds
-Utility: -54.2588 13.8512
-Finished iteration 588694 of 100000000 in 2716 seconds
-Utility: -29.4379 68.085
-Finished iteration 589829 of 100000000 in 2721 seconds
-Utility: -23.3365 -13.6771
-Finished iteration 590939 of 100000000 in 2726 seconds
-Utility: -1.58168 5.6115
-Finished iteration 592050 of 100000000 in 2731 seconds
-Utility: -14.7697 2.81156
-Finished iteration 593160 of 100000000 in 2736 seconds
-Utility: 29.9546 188.623
-Finished iteration 594270 of 100000000 in 2741 seconds
-Utility: 56.5217 59.3338
-Finished iteration 595380 of 100000000 in 2746 seconds
-Utility: 0.379533 50.1654
-Finished iteration 596491 of 100000000 in 2751 seconds
-Utility: 18.5502 159.626
-Finished iteration 597601 of 100000000 in 2756 seconds
-Utility: 1.52335 0.237852
-Finished iteration 598710 of 100000000 in 2761 seconds
-Utility: 0.498 -18.5961
-Finished iteration 599817 of 100000000 in 2766 seconds
-Utility: 0.671562 7.70909
-Finished iteration 600925 of 100000000 in 2771 seconds
-Utility: 0.320423 -13.4143
-Finished iteration 602032 of 100000000 in 2776 seconds
-Utility: 159.135 7.98957
-Finished iteration 603138 of 100000000 in 2781 seconds
-Utility: -17.5874 38.0955
-Finished iteration 604245 of 100000000 in 2786 seconds
-Utility: -0.151361 -31.7487
-Finished iteration 605357 of 100000000 in 2791 seconds
-Utility: -54.8415 -67.3007
-Finished iteration 606459 of 100000000 in 2796 seconds
-Utility: 2 -0.548287
-Finished iteration 607577 of 100000000 in 2801 seconds
-Utility: 6.97406 -289.817
-Finished iteration 608695 of 100000000 in 2806 seconds
-Utility: 94.1127 2.80564
-Finished iteration 609810 of 100000000 in 2811 seconds
-Utility: 10.6208 -4.16323
-Finished iteration 610927 of 100000000 in 2816 seconds
-Utility: 0.633485 -0.893557
-Finished iteration 612042 of 100000000 in 2821 seconds
-Utility: -25.8865 33.763
-Finished iteration 613160 of 100000000 in 2826 seconds
-Utility: -1.73194 69.6048
-Finished iteration 614277 of 100000000 in 2831 seconds
-Utility: 1.73778 -49.8446
-Finished iteration 615395 of 100000000 in 2836 seconds
-Utility: 49.6422 -1.8386
-Finished iteration 616511 of 100000000 in 2841 seconds
-Utility: -134.048 68.1562
-Finished iteration 617588 of 100000000 in 2846 seconds
-Utility: -43.5073 -7.37121
-Finished iteration 618659 of 100000000 in 2851 seconds
-Utility: 4.72448 122.998
-Finished iteration 619730 of 100000000 in 2856 seconds
-Utility: 4.91462 1.91039
-Finished iteration 620804 of 100000000 in 2861 seconds
-Utility: 31.9801 32.789
-Finished iteration 621872 of 100000000 in 2866 seconds
-Utility: 7.38178 -10.235
-Finished iteration 622940 of 100000000 in 2871 seconds
-Utility: 34.3301 4.82848
-Finished iteration 624013 of 100000000 in 2876 seconds
-Utility: 0.209661 133.698
-Finished iteration 625088 of 100000000 in 2881 seconds
-Utility: -348.658 -63.3843
-Finished iteration 626162 of 100000000 in 2886 seconds
-Utility: -48.2082 -10.1772
-Finished iteration 627237 of 100000000 in 2891 seconds
-Utility: -59.8207 -11.7291
-Finished iteration 628312 of 100000000 in 2896 seconds
-Utility: 104.625 11.1251
-Finished iteration 629386 of 100000000 in 2901 seconds
-Utility: 29.1039 -2.10384
-Finished iteration 630454 of 100000000 in 2906 seconds
-Utility: 3.86907 55.7724
-Finished iteration 631531 of 100000000 in 2911 seconds
-Utility: -1.79202 -0.917876
-Finished iteration 632608 of 100000000 in 2916 seconds
-Utility: -141.169 0.502282
-Finished iteration 633682 of 100000000 in 2921 seconds
-Utility: 14.0222 2.82608
-Finished iteration 634754 of 100000000 in 2926 seconds
-Utility: -3.13513 -16.9627
-Finished iteration 635828 of 100000000 in 2931 seconds
-Utility: 32.9738 7.82014
-Finished iteration 636898 of 100000000 in 2936 seconds
-Utility: -4.28893 41.7156
-Finished iteration 637970 of 100000000 in 2941 seconds
-Utility: 28.0268 -7.11855
-Finished iteration 639042 of 100000000 in 2946 seconds
-Utility: 73.2531 -8.80309
-Finished iteration 640115 of 100000000 in 2951 seconds
-Utility: 46.3725 16.7507
-Finished iteration 641185 of 100000000 in 2956 seconds
-Utility: 77.2859 -1.58945
-Finished iteration 642256 of 100000000 in 2961 seconds
-Utility: 9.75035 9.38429
-Finished iteration 643321 of 100000000 in 2966 seconds
-Utility: 34.257 242.415
-Finished iteration 644392 of 100000000 in 2971 seconds
-Utility: -16.1163 24.7349
-Finished iteration 645462 of 100000000 in 2976 seconds
-Utility: -22.5496 7.98135
-Finished iteration 646528 of 100000000 in 2981 seconds
-Utility: -93.5959 -6.82125
-Finished iteration 647602 of 100000000 in 2986 seconds
-Utility: -62.5464 -1.11514
-Finished iteration 648673 of 100000000 in 2991 seconds
-Utility: -6.7885 -60.9555
-Finished iteration 649734 of 100000000 in 2996 seconds
-Utility: 1.49404 -25.8544
-Finished iteration 650810 of 100000000 in 3001 seconds
-Utility: 2.08211 -31.2005
-Finished iteration 651874 of 100000000 in 3006 seconds
-Utility: 25.4582 6.62911
-Finished iteration 652933 of 100000000 in 3011 seconds
-Utility: -10.2106 9.25219
-Finished iteration 654059 of 100000000 in 3016 seconds
-Utility: -1.75133 8.06183
-Finished iteration 655190 of 100000000 in 3021 seconds
-Utility: -72.2581 -0.278091
-Finished iteration 656321 of 100000000 in 3026 seconds
-Utility: 24.9933 -0.263972
-Finished iteration 657410 of 100000000 in 3031 seconds
-Utility: 7.43267 -1.16213
-Finished iteration 658549 of 100000000 in 3036 seconds
-Utility: 17.414 25.4552
-Finished iteration 659689 of 100000000 in 3041 seconds
-Utility: -147.751 205.44
-Finished iteration 660830 of 100000000 in 3046 seconds
-Utility: -120.937 -29.4675
-Finished iteration 661969 of 100000000 in 3051 seconds
-Utility: 264.961 16.6187
-Finished iteration 663107 of 100000000 in 3056 seconds
-Utility: -8.86848 -2.74973
-Finished iteration 664246 of 100000000 in 3061 seconds
-Utility: -7.12367 -39.4224
-Finished iteration 665388 of 100000000 in 3066 seconds
-Utility: 47.5723 -1.67275
-Finished iteration 666536 of 100000000 in 3071 seconds
-Utility: -71.8615 -1.62466
-Finished iteration 667680 of 100000000 in 3076 seconds
-Utility: 6.86993 21.4206
-Finished iteration 668823 of 100000000 in 3081 seconds
-Utility: -14.0239 363.378
-Finished iteration 669952 of 100000000 in 3086 seconds
-Utility: 10.9356 -42.6791
-Finished iteration 671079 of 100000000 in 3091 seconds
-Utility: -4.82543 -16.5355
-Finished iteration 672209 of 100000000 in 3096 seconds
-Utility: 3.26974 -0.810989
-Finished iteration 673336 of 100000000 in 3101 seconds
-Utility: -1.56109 -1.37877
-Finished iteration 674438 of 100000000 in 3106 seconds
-Utility: -2.60431 -1
-Finished iteration 675421 of 100000000 in 3111 seconds
-Utility: 18.8183 36.3908
-Finished iteration 676403 of 100000000 in 3116 seconds
-Utility: 15.5624 -31.5982
-Finished iteration 677385 of 100000000 in 3121 seconds
-Utility: -7.21103 -11.2591
-Finished iteration 678357 of 100000000 in 3126 seconds
-Utility: -3.5632 -0.430485
-Finished iteration 679373 of 100000000 in 3131 seconds
-Utility: 10.1316 146.142
-Finished iteration 680500 of 100000000 in 3136 seconds
-Utility: -0.911885 -14.5513
-Finished iteration 681630 of 100000000 in 3141 seconds
-Utility: -64.7406 4.7213
-Finished iteration 682760 of 100000000 in 3146 seconds
-Utility: 25.4715 -49.7911
-Finished iteration 683890 of 100000000 in 3151 seconds
-Utility: -48.611 1.19094
-Finished iteration 685017 of 100000000 in 3156 seconds
-Utility: -0.222858 0.732613
-Finished iteration 686144 of 100000000 in 3161 seconds
-Utility: 0.330597 20.5677
-Finished iteration 687258 of 100000000 in 3166 seconds
-Utility: 24.5755 0.837079
-Finished iteration 688383 of 100000000 in 3171 seconds
-Utility: -1.75334 49.1048
-Finished iteration 689507 of 100000000 in 3176 seconds
-Utility: 129.709 -4.02907
-Finished iteration 690629 of 100000000 in 3181 seconds
-Utility: -0.457246 3.58431
-Finished iteration 691749 of 100000000 in 3186 seconds
-Utility: -3.17582 -38.4613
-Finished iteration 692873 of 100000000 in 3191 seconds
-Utility: 6.09421 -5.43289
-Finished iteration 693995 of 100000000 in 3196 seconds
-Utility: -55.4584 -46.5596
-Finished iteration 695117 of 100000000 in 3201 seconds
-Utility: 6.08355 9.43752
-Finished iteration 696235 of 100000000 in 3206 seconds
-Utility: 19.5239 -0.381556
-Finished iteration 697358 of 100000000 in 3211 seconds
-Utility: -34.9792 -3.15327
-Finished iteration 698482 of 100000000 in 3216 seconds
-Utility: 2.01918 69.2064
-Finished iteration 699606 of 100000000 in 3221 seconds
-Utility: 2.19355 -1.15221
-Finished iteration 700730 of 100000000 in 3226 seconds
-Utility: 2 -26.4643
-Finished iteration 701853 of 100000000 in 3231 seconds
-Utility: 71.3884 15.1178
-Finished iteration 702978 of 100000000 in 3236 seconds
-Utility: 64.2007 -0.594795
-Finished iteration 704107 of 100000000 in 3241 seconds
-Utility: 26.792 18.1195
-Finished iteration 705233 of 100000000 in 3246 seconds
-Utility: -3.3602 0.855798
-Finished iteration 706359 of 100000000 in 3251 seconds
-Utility: -3.87012 -5.07486
-Finished iteration 707483 of 100000000 in 3256 seconds
-Utility: 39.9854 210.476
-Finished iteration 708614 of 100000000 in 3261 seconds
-Utility: 19.0268 -89.7629
-Finished iteration 709739 of 100000000 in 3266 seconds
-Utility: -49.9162 28.8499
-Finished iteration 710870 of 100000000 in 3271 seconds
-Utility: 2.847 73.5271
-Finished iteration 712000 of 100000000 in 3276 seconds
-Utility: -23.1303 -0.353698
-Finished iteration 713126 of 100000000 in 3281 seconds
-Utility: -122.856 10.4783
-Finished iteration 714255 of 100000000 in 3286 seconds
-Utility: 10.8842 7.14167
-Finished iteration 715381 of 100000000 in 3291 seconds
-Utility: 55.4983 13.4712
-Finished iteration 716508 of 100000000 in 3296 seconds
-Utility: 62.463 0.9439
-Finished iteration 717639 of 100000000 in 3301 seconds
-Utility: -10.1972 58.7495
-Finished iteration 718769 of 100000000 in 3306 seconds
-Utility: -1.27581 -1.57528
-Finished iteration 719897 of 100000000 in 3311 seconds
-Utility: 2.12706 -6.58011
-Finished iteration 720941 of 100000000 in 3316 seconds
-Utility: 19.0999 19.5275
-Finished iteration 722032 of 100000000 in 3321 seconds
-Utility: -0.473208 3.80559
-Finished iteration 723120 of 100000000 in 3326 seconds
-Utility: 0.0326506 30.0567
-Finished iteration 724228 of 100000000 in 3331 seconds
-Utility: -17.2647 -0.615742
-Finished iteration 725340 of 100000000 in 3336 seconds
-Utility: 1.32744 8.20353
-Finished iteration 726451 of 100000000 in 3341 seconds
-Utility: -9.28859 42.6699
-Finished iteration 727562 of 100000000 in 3346 seconds
-Utility: -3.20251 -34.0674
-Finished iteration 728674 of 100000000 in 3351 seconds
-Utility: 53.3006 7.15065
-Finished iteration 729781 of 100000000 in 3356 seconds
-Utility: -1.34935 -3.06341
-Finished iteration 730894 of 100000000 in 3361 seconds
-Utility: -15.6918 -1.23483
-Finished iteration 732007 of 100000000 in 3366 seconds
-Utility: -1.48204 -0.885125
-Finished iteration 733112 of 100000000 in 3371 seconds
-Utility: 12.5053 -130.632
-Finished iteration 734218 of 100000000 in 3376 seconds
-Utility: -0.962042 2.6611
-Finished iteration 735324 of 100000000 in 3381 seconds
-Utility: -10.2308 -1.94256
-Finished iteration 736417 of 100000000 in 3386 seconds
-Utility: 0.921922 -0.736442
-Finished iteration 737510 of 100000000 in 3391 seconds
-Utility: -3.99107 -104.487
-Finished iteration 738606 of 100000000 in 3396 seconds
-Utility: 10.8033 -47.7426
-Finished iteration 739702 of 100000000 in 3401 seconds
-Utility: -11.6969 24.4116
-Finished iteration 740796 of 100000000 in 3406 seconds
-Utility: -9.03401 16.2282
-Finished iteration 741891 of 100000000 in 3411 seconds
-Utility: -0.966353 88.1636
-Finished iteration 742986 of 100000000 in 3416 seconds
-Utility: 24.2668 0.95492
-Finished iteration 744081 of 100000000 in 3421 seconds
-Utility: -84.5395 -18.7462
-Finished iteration 745173 of 100000000 in 3426 seconds
-Utility: 12.3094 -1.03821
-Finished iteration 746266 of 100000000 in 3431 seconds
-Utility: 0.284737 0.448354
-Finished iteration 747360 of 100000000 in 3436 seconds
-Utility: 63.0995 1.53327
-Finished iteration 748453 of 100000000 in 3441 seconds
-Utility: 22.9988 6.55318
-Finished iteration 749552 of 100000000 in 3446 seconds
-Utility: -31.5083 0.115001
-Finished iteration 750659 of 100000000 in 3451 seconds
-Utility: 39.7657 -1.10704
-Finished iteration 751768 of 100000000 in 3456 seconds
-Utility: -1.43371 38.9793
-Finished iteration 752878 of 100000000 in 3461 seconds
-Utility: 5.2015 0.445697
-Finished iteration 753989 of 100000000 in 3466 seconds
-Utility: -54.7326 -0.859618
-Finished iteration 755101 of 100000000 in 3471 seconds
-Utility: -1.37586 37.6767
-Finished iteration 756210 of 100000000 in 3476 seconds
-Utility: -32.3145 -1.37643
-Finished iteration 757321 of 100000000 in 3481 seconds
-Utility: -11.5244 1.07928
-Finished iteration 758432 of 100000000 in 3486 seconds
-Utility: 0.190488 -1.94207
-Finished iteration 759543 of 100000000 in 3491 seconds
-Utility: 1.65998 -72.1363
-Finished iteration 760654 of 100000000 in 3496 seconds
-Utility: -142.498 7.4322
-Finished iteration 761763 of 100000000 in 3501 seconds
-Utility: -13.1178 -12.433
-Finished iteration 762847 of 100000000 in 3506 seconds
-Utility: -7.35113 0.19355
-Finished iteration 763936 of 100000000 in 3511 seconds
-Utility: -20.034 5.06522
-Finished iteration 765028 of 100000000 in 3516 seconds
-Utility: -0.479201 -50.896
-Finished iteration 766115 of 100000000 in 3521 seconds
-Utility: 0.310466 67.3773
-Finished iteration 767206 of 100000000 in 3526 seconds
-Utility: 11.9839 -0.595448
-Finished iteration 768297 of 100000000 in 3531 seconds
-Utility: 14.5183 5.68785
-Finished iteration 769386 of 100000000 in 3536 seconds
-Utility: 213.381 -46.7677
-Finished iteration 770479 of 100000000 in 3541 seconds
-Utility: -1.04059 2.27151
-Finished iteration 771564 of 100000000 in 3546 seconds
-Utility: -142.794 -166.93
-Finished iteration 772650 of 100000000 in 3551 seconds
-Utility: 2.55318 -2.46444
-Finished iteration 773738 of 100000000 in 3556 seconds
-Utility: -74.3358 -206.303
-Finished iteration 774826 of 100000000 in 3561 seconds
-Utility: 24.7722 -1.76161
-Finished iteration 775907 of 100000000 in 3566 seconds
-Utility: -34.846 -42.2291
-Finished iteration 776999 of 100000000 in 3571 seconds
-Utility: -5.54153 2.77091
-Finished iteration 778083 of 100000000 in 3576 seconds
-Utility: -16.511 49.9537
-Finished iteration 779170 of 100000000 in 3581 seconds
-Utility: -0.546713 80.8652
-Finished iteration 780263 of 100000000 in 3586 seconds
-Utility: 1.0613 -1.34814
-Finished iteration 781350 of 100000000 in 3591 seconds
-Utility: 0.163598 -28.8476
-Finished iteration 782438 of 100000000 in 3596 seconds
-Utility: 15.8368 -40.1822
-Saving checkpoint at iteration 783161
-Finished iteration 783489 of 100000000 in 3601 seconds
-Utility: -19.1534 -12.7083
-Finished iteration 784587 of 100000000 in 3606 seconds
-Utility: -0.640438 7.29454
-Finished iteration 785672 of 100000000 in 3611 seconds
-Utility: -5.8934 -37.1955
-Finished iteration 786760 of 100000000 in 3616 seconds
-Utility: 0.257389 -7.26456
-Finished iteration 787852 of 100000000 in 3621 seconds
-Utility: 5.18851 -5.73281
-Finished iteration 788938 of 100000000 in 3626 seconds
-Utility: 0.590488 49.1199
-Finished iteration 790030 of 100000000 in 3631 seconds
-Utility: -20.3254 149.746
-Finished iteration 791119 of 100000000 in 3636 seconds
-Utility: 0.0563278 31.5356
-Finished iteration 792209 of 100000000 in 3641 seconds
-Utility: -0.584328 -11.7367
-Finished iteration 793301 of 100000000 in 3646 seconds
-Utility: -81.8076 -67.914
-Finished iteration 794393 of 100000000 in 3651 seconds
-Utility: -3.00857 0.402041
-Finished iteration 795487 of 100000000 in 3656 seconds
-Utility: -7.69824 1.1016
-Finished iteration 796580 of 100000000 in 3661 seconds
-Utility: -2.60901 -7.0946
-Finished iteration 797674 of 100000000 in 3666 seconds
-Utility: -1.58973 -4.45979
-Finished iteration 798766 of 100000000 in 3671 seconds
-Utility: -0.726526 16.0112
-Finished iteration 799862 of 100000000 in 3676 seconds
-Utility: 12.5768 9.65974
-Finished iteration 800957 of 100000000 in 3681 seconds
-Utility: -19.6285 9.72547
-Finished iteration 802054 of 100000000 in 3686 seconds
-Utility: -1.04897 -1.42657
-Finished iteration 803156 of 100000000 in 3691 seconds
-Utility: 0.226829 20.849
-Finished iteration 804253 of 100000000 in 3696 seconds
-Utility: -14.1104 -66.124
-Finished iteration 805351 of 100000000 in 3701 seconds
-Utility: 1.3481 -22.893
-Finished iteration 806446 of 100000000 in 3706 seconds
-Utility: 7.36238 1.67539
-Finished iteration 807547 of 100000000 in 3711 seconds
-Utility: -28.427 -1.80391
-Finished iteration 808644 of 100000000 in 3716 seconds
-Utility: -3.96063 222.422
-Finished iteration 809741 of 100000000 in 3721 seconds
-Utility: 3.9669 49.5768
-Finished iteration 810843 of 100000000 in 3726 seconds
-Utility: 4.21323 23.4392
-Finished iteration 811943 of 100000000 in 3731 seconds
-Utility: 10.9908 -9.7582
-Finished iteration 813043 of 100000000 in 3736 seconds
-Utility: 100.043 -6.71509
-Finished iteration 814145 of 100000000 in 3741 seconds
-Utility: 10.3868 13.922
-Finished iteration 815216 of 100000000 in 3746 seconds
-Utility: -0.915646 -0.864856
-Finished iteration 816319 of 100000000 in 3751 seconds
-Utility: 81.2245 -235.331
-Finished iteration 817425 of 100000000 in 3756 seconds
-Utility: 100.366 1.63117
-Finished iteration 818533 of 100000000 in 3761 seconds
-Utility: 2.76772 -22.9788
-Finished iteration 819641 of 100000000 in 3766 seconds
-Utility: -0.403639 40.5039
-Finished iteration 820747 of 100000000 in 3771 seconds
-Utility: -233.794 41.5798
-Finished iteration 821850 of 100000000 in 3776 seconds
-Utility: -0.515092 -4.32335
-Finished iteration 822956 of 100000000 in 3781 seconds
-Utility: -0.617198 203.255
-Finished iteration 824062 of 100000000 in 3786 seconds
-Utility: 0.719352 6.70246
-Finished iteration 825169 of 100000000 in 3791 seconds
-Utility: -0.89451 -0.358102
-Finished iteration 826274 of 100000000 in 3796 seconds
-Utility: -0.938497 9.39655
-Finished iteration 827378 of 100000000 in 3801 seconds
-Utility: -2.82887 -1.91766
-Finished iteration 828478 of 100000000 in 3806 seconds
-Utility: 1.71229 4.01471
-Finished iteration 829582 of 100000000 in 3811 seconds
-Utility: 14.4124 -346.395
-Finished iteration 830684 of 100000000 in 3816 seconds
-Utility: 4.88513 -13.8272
-Finished iteration 831786 of 100000000 in 3821 seconds
-Utility: -15.3633 -6.73064
-Finished iteration 832891 of 100000000 in 3826 seconds
-Utility: 51.4285 -0.012577
-Finished iteration 833998 of 100000000 in 3831 seconds
-Utility: -1.69634 65.7031
-Finished iteration 835103 of 100000000 in 3836 seconds
-Utility: -43.815 -19.1628
-Finished iteration 836213 of 100000000 in 3841 seconds
-Utility: -124.555 -4.7149
-Finished iteration 837318 of 100000000 in 3846 seconds
-Utility: 30.1268 -59.7804
-Finished iteration 838423 of 100000000 in 3851 seconds
-Utility: 3.03777 -2.34051
-Finished iteration 839528 of 100000000 in 3856 seconds
-Utility: -19.9102 -23.4621
-Finished iteration 840635 of 100000000 in 3861 seconds
-Utility: -0.741023 -39.5048
-Finished iteration 841743 of 100000000 in 3866 seconds
-Utility: 0.333641 41.6636
-Finished iteration 842863 of 100000000 in 3871 seconds
-Utility: -1.67628 -2.6663
-Finished iteration 843984 of 100000000 in 3876 seconds
-Utility: -5.20085 39.7212
-Finished iteration 845107 of 100000000 in 3881 seconds
-Utility: -2.19937 27.2324
-Finished iteration 846228 of 100000000 in 3886 seconds
-Utility: -63.7822 -9.79556
-Finished iteration 847346 of 100000000 in 3891 seconds
-Utility: 21.9367 4.39772
-Finished iteration 848462 of 100000000 in 3896 seconds
-Utility: 42.8719 -0.193074
-Finished iteration 849580 of 100000000 in 3901 seconds
-Utility: -0.240783 -5.3333
-Finished iteration 850702 of 100000000 in 3906 seconds
-Utility: -3.93571 -3.31763
-Finished iteration 851822 of 100000000 in 3911 seconds
-Utility: 175.016 120.873
-Finished iteration 852940 of 100000000 in 3916 seconds
-Utility: -7.67212 -1.53596
-Finished iteration 854055 of 100000000 in 3921 seconds
-Utility: 35.4066 -9.8557
-Finished iteration 855163 of 100000000 in 3926 seconds
-Utility: 24.8759 9.30117
-Finished iteration 856279 of 100000000 in 3931 seconds
-Utility: 70.6498 -20.5709
-Finished iteration 857392 of 100000000 in 3936 seconds
-Utility: -1.80015 -17.4752
-Finished iteration 858507 of 100000000 in 3941 seconds
-Utility: -343.645 4.18685
+86 242
+243 753
+754 2226
+2227 6231
+6232 16347
+16348 40206
+40207 87816
+87817 159114
+159115 232824
+232825 281037
+281038 298524
+298525 301161
+Finished iteration 461 of 100000000 in 5 seconds
+Utility: -91.4387
+Finished iteration 921 of 100000000 in 10 seconds
+Utility: 6.94997
+Finished iteration 1381 of 100000000 in 15 seconds
+Utility: 184.765
+Finished iteration 1842 of 100000000 in 20 seconds
+Utility: -43.5096
+Finished iteration 2304 of 100000000 in 25 seconds
+Utility: 54.4214
+Finished iteration 2765 of 100000000 in 30 seconds
+Utility: 0.908469
+Finished iteration 3228 of 100000000 in 35 seconds
+Utility: -19.4765
+Finished iteration 3690 of 100000000 in 40 seconds
+Utility: -28.0638
+Finished iteration 4152 of 100000000 in 45 seconds
+Utility: -41.7778
+Finished iteration 4614 of 100000000 in 50 seconds
+Utility: -44.5071
+Finished iteration 5077 of 100000000 in 55 seconds
+Utility: 2.38585
+Finished iteration 5538 of 100000000 in 60 seconds
+Utility: 95.3285
+Finished iteration 6001 of 100000000 in 65 seconds
+Utility: -26.6424
+Finished iteration 6464 of 100000000 in 70 seconds
+Utility: 27.0433
+Finished iteration 6925 of 100000000 in 75 seconds
+Utility: -141.939
+Finished iteration 7387 of 100000000 in 80 seconds
+Utility: -19.9958
+Finished iteration 7849 of 100000000 in 85 seconds
+Utility: 6.43845
+Finished iteration 8311 of 100000000 in 90 seconds
+Utility: -192.784
+Finished iteration 8775 of 100000000 in 95 seconds
+Utility: 116.357
+Finished iteration 9237 of 100000000 in 100 seconds
+Utility: 7.69146
+Finished iteration 9700 of 100000000 in 105 seconds
+Utility: 3.38747
+Finished iteration 10162 of 100000000 in 110 seconds
+Utility: 134.777
+Finished iteration 10625 of 100000000 in 115 seconds
+Utility: 3.12093
+Finished iteration 11086 of 100000000 in 120 seconds
+Utility: 2
+Finished iteration 11548 of 100000000 in 125 seconds
+Utility: 9.09547
+Finished iteration 12010 of 100000000 in 130 seconds
+Utility: -8.94487
+Finished iteration 12472 of 100000000 in 135 seconds
+Utility: -51.5893
+Finished iteration 12934 of 100000000 in 140 seconds
+Utility: -120.695
+Finished iteration 13397 of 100000000 in 145 seconds
+Utility: 14.7682
+Finished iteration 13858 of 100000000 in 150 seconds
+Utility: -126.369
+Finished iteration 14321 of 100000000 in 155 seconds
+Utility: 313.87
+Finished iteration 14783 of 100000000 in 160 seconds
+Utility: -177.253
+Finished iteration 15245 of 100000000 in 165 seconds
+Utility: 14.7408
+Finished iteration 15708 of 100000000 in 170 seconds
+Utility: 67.7022
+Finished iteration 16169 of 100000000 in 175 seconds
+Utility: -132.525
+Finished iteration 16628 of 100000000 in 180 seconds
+Utility: 70.4811
+Finished iteration 17090 of 100000000 in 185 seconds
+Utility: 3.99954
+Finished iteration 17552 of 100000000 in 190 seconds
+Utility: -18.9746
+Finished iteration 18014 of 100000000 in 195 seconds
+Utility: -152.476
+Finished iteration 18476 of 100000000 in 200 seconds
+Utility: -33.1058
+Finished iteration 18938 of 100000000 in 205 seconds
+Utility: -0.921716
+Finished iteration 19399 of 100000000 in 210 seconds
+Utility: 82.1676
+Finished iteration 19862 of 100000000 in 215 seconds
+Utility: -55.0534
+Finished iteration 20324 of 100000000 in 220 seconds
+Utility: -116.291
+Finished iteration 20785 of 100000000 in 225 seconds
+Utility: 217.444
+Finished iteration 21247 of 100000000 in 230 seconds
+Utility: 31.2519
+Finished iteration 21710 of 100000000 in 235 seconds
+Utility: 20.1433
+Finished iteration 22172 of 100000000 in 240 seconds
+Utility: 15.3022
+Finished iteration 22634 of 100000000 in 245 seconds
+Utility: 4.76383
+Finished iteration 23096 of 100000000 in 250 seconds
+Utility: 135.697
+Finished iteration 23558 of 100000000 in 255 seconds
+Utility: -26.5734
+Finished iteration 24019 of 100000000 in 260 seconds
+Utility: 27.8455
+Finished iteration 24481 of 100000000 in 265 seconds
+Utility: -253.662
+Finished iteration 24942 of 100000000 in 270 seconds
+Utility: 98.2867
+Finished iteration 25405 of 100000000 in 275 seconds
+Utility: -182.2
+Finished iteration 25867 of 100000000 in 280 seconds
+Utility: 71.5516
+Finished iteration 26330 of 100000000 in 285 seconds
+Utility: -79.3566
+Finished iteration 26793 of 100000000 in 290 seconds
+Utility: -159.531
+Finished iteration 27256 of 100000000 in 295 seconds
+Utility: 28.1051
+Finished iteration 27712 of 100000000 in 300 seconds
+Utility: 33.1506
+Finished iteration 28165 of 100000000 in 305 seconds
+Utility: -11.7117
+Finished iteration 28620 of 100000000 in 310 seconds
+Utility: 16.1852
+Finished iteration 29073 of 100000000 in 315 seconds
+Utility: 10.9754
+Finished iteration 29522 of 100000000 in 320 seconds
+Utility: -39.5616
+Finished iteration 29973 of 100000000 in 325 seconds
+Utility: 3.07747
+Finished iteration 30423 of 100000000 in 330 seconds
+Utility: 117.419
+Finished iteration 30873 of 100000000 in 335 seconds
+Utility: -35.9002
+Finished iteration 31323 of 100000000 in 340 seconds
+Utility: 112.643
+Finished iteration 31773 of 100000000 in 345 seconds
+Utility: -45.5809
+Finished iteration 32227 of 100000000 in 350 seconds
+Utility: 362.447
+Finished iteration 32681 of 100000000 in 355 seconds
+Utility: -0.577409
+Finished iteration 33132 of 100000000 in 360 seconds
+Utility: 18.9452
+Finished iteration 33584 of 100000000 in 365 seconds
+Utility: 2
+Finished iteration 34037 of 100000000 in 370 seconds
+Utility: -54.6669
+Finished iteration 34488 of 100000000 in 375 seconds
+Utility: 2.84696
+Finished iteration 34937 of 100000000 in 380 seconds
+Utility: -2.77337
+Finished iteration 35389 of 100000000 in 385 seconds
+Utility: 253.28
+Finished iteration 35839 of 100000000 in 390 seconds
+Utility: 129.278
+Finished iteration 36288 of 100000000 in 395 seconds
+Utility: 55.5011
+Finished iteration 36728 of 100000000 in 400 seconds
+Utility: -37.4008
+Finished iteration 37179 of 100000000 in 405 seconds
+Utility: 12.0272
+Finished iteration 37632 of 100000000 in 410 seconds
+Utility: -8.10391
+Finished iteration 38084 of 100000000 in 415 seconds
+Utility: -130.679
+Finished iteration 38533 of 100000000 in 420 seconds
+Utility: 16.6938
+Finished iteration 38984 of 100000000 in 425 seconds
+Utility: -21.3749
+Finished iteration 39436 of 100000000 in 430 seconds
+Utility: -1.44039
+Finished iteration 39885 of 100000000 in 435 seconds
+Utility: 0.857585
+Finished iteration 40335 of 100000000 in 440 seconds
+Utility: -34.4499
+Finished iteration 40795 of 100000000 in 445 seconds
+Utility: 10.4506
+Finished iteration 41243 of 100000000 in 450 seconds
+Utility: -19.1176
+Finished iteration 41677 of 100000000 in 455 seconds
+Utility: -3.69811
+Finished iteration 42112 of 100000000 in 460 seconds
+Utility: 31.6094
+Finished iteration 42538 of 100000000 in 465 seconds
+Utility: -24.2967
+Finished iteration 42974 of 100000000 in 470 seconds
+Utility: 30.453
+Finished iteration 43408 of 100000000 in 475 seconds
+Utility: 28.8923
+Finished iteration 43842 of 100000000 in 480 seconds
+Utility: 264.831
+Finished iteration 44277 of 100000000 in 485 seconds
+Utility: -22.1439
+Finished iteration 44712 of 100000000 in 490 seconds
+Utility: -16.7628
+Finished iteration 45148 of 100000000 in 495 seconds
+Utility: -12.6491
+Finished iteration 45581 of 100000000 in 500 seconds
+Utility: -2.60704
+Finished iteration 46015 of 100000000 in 505 seconds
+Utility: -87.693
+Finished iteration 46450 of 100000000 in 510 seconds
+Utility: 43.5085
+Finished iteration 46885 of 100000000 in 515 seconds
+Utility: 280.508
+Finished iteration 47321 of 100000000 in 520 seconds
+Utility: -19.6466
+Finished iteration 47755 of 100000000 in 525 seconds
+Utility: 0.531153
+Finished iteration 48190 of 100000000 in 530 seconds
+Utility: -14.0236
+Finished iteration 48625 of 100000000 in 535 seconds
+Utility: -93.182
+Finished iteration 49058 of 100000000 in 540 seconds
+Utility: -78.9149
+Finished iteration 49493 of 100000000 in 545 seconds
+Utility: -59.1038
+Finished iteration 49928 of 100000000 in 550 seconds
+Utility: -31.732
+Finished iteration 50364 of 100000000 in 555 seconds
+Utility: 3.99985
+Finished iteration 50798 of 100000000 in 560 seconds
+Utility: -87.6495
+Finished iteration 51233 of 100000000 in 565 seconds
+Utility: 73.4893
+Finished iteration 51667 of 100000000 in 570 seconds
+Utility: -35.6455
+Finished iteration 52103 of 100000000 in 575 seconds
+Utility: 249.365
+Finished iteration 52538 of 100000000 in 580 seconds
+Utility: -36.1823
+Finished iteration 52972 of 100000000 in 585 seconds
+Utility: 104.767
+Finished iteration 53408 of 100000000 in 590 seconds
+Utility: 26.6681
+Finished iteration 53842 of 100000000 in 595 seconds
+Utility: -19.5087
+Finished iteration 54276 of 100000000 in 600 seconds
+Utility: 12.2184
+Finished iteration 54711 of 100000000 in 605 seconds
+Utility: 307.757
+Finished iteration 55146 of 100000000 in 610 seconds
+Utility: 110.59
+Finished iteration 55581 of 100000000 in 615 seconds
+Utility: 4.71833
+Finished iteration 56013 of 100000000 in 620 seconds
+Utility: -3.03631
+Finished iteration 56448 of 100000000 in 625 seconds
+Utility: 239.704
+Finished iteration 56882 of 100000000 in 630 seconds
+Utility: 32.6432
+Finished iteration 57317 of 100000000 in 635 seconds
+Utility: 0.629129
+Finished iteration 57753 of 100000000 in 640 seconds
+Utility: -0.0789855
+Finished iteration 58188 of 100000000 in 645 seconds
+Utility: 99.9673
+Finished iteration 58623 of 100000000 in 650 seconds
+Utility: 42.6163
+Finished iteration 59070 of 100000000 in 655 seconds
+Utility: -1.53005
+Finished iteration 59519 of 100000000 in 660 seconds
+Utility: 188.359
+Finished iteration 59978 of 100000000 in 665 seconds
+Utility: 215.554
+Finished iteration 60440 of 100000000 in 670 seconds
+Utility: 89.5569
+Finished iteration 60902 of 100000000 in 675 seconds
+Utility: 1.54907
+Finished iteration 61361 of 100000000 in 680 seconds
+Utility: -63.475
+Finished iteration 61822 of 100000000 in 685 seconds
+Utility: -34.5528
+Finished iteration 62283 of 100000000 in 690 seconds
+Utility: 93.6737
+Finished iteration 62744 of 100000000 in 695 seconds
+Utility: 47.0394
+Finished iteration 63206 of 100000000 in 700 seconds
+Utility: -6.54166
+Finished iteration 63667 of 100000000 in 705 seconds
+Utility: -18.5542
+Finished iteration 64128 of 100000000 in 710 seconds
+Utility: -17.81
+Finished iteration 64589 of 100000000 in 715 seconds
+Utility: -3.66406
+Finished iteration 65049 of 100000000 in 720 seconds
+Utility: 103.589
+Finished iteration 65511 of 100000000 in 725 seconds
+Utility: -116.438
+Finished iteration 65973 of 100000000 in 730 seconds
+Utility: -210.798
+Finished iteration 66435 of 100000000 in 735 seconds
+Utility: 21.8731
+Finished iteration 66895 of 100000000 in 740 seconds
+Utility: -124.282
+Finished iteration 67357 of 100000000 in 745 seconds
+Utility: 94.8353
+Finished iteration 67818 of 100000000 in 750 seconds
+Utility: 57.2073
+Finished iteration 68280 of 100000000 in 755 seconds
+Utility: -90.7612
+Finished iteration 68742 of 100000000 in 760 seconds
+Utility: 0.502833
+Finished iteration 69205 of 100000000 in 765 seconds
+Utility: -35.7638
+Finished iteration 69666 of 100000000 in 770 seconds
+Utility: -139.585
+Finished iteration 70127 of 100000000 in 775 seconds
+Utility: -15.9956
+Finished iteration 70587 of 100000000 in 780 seconds
+Utility: -57.2327
+Finished iteration 71048 of 100000000 in 785 seconds
+Utility: -320.295
+Finished iteration 71510 of 100000000 in 790 seconds
+Utility: -27.3383
+Finished iteration 71972 of 100000000 in 795 seconds
+Utility: 102.843
+Finished iteration 72432 of 100000000 in 800 seconds
+Utility: -12.3496
+Finished iteration 72894 of 100000000 in 805 seconds
+Utility: -3.23036
+Finished iteration 73355 of 100000000 in 810 seconds
+Utility: 48.3494
+Finished iteration 73815 of 100000000 in 815 seconds
+Utility: 16.2222
+Finished iteration 74277 of 100000000 in 820 seconds
+Utility: -123.731
+Finished iteration 74737 of 100000000 in 825 seconds
+Utility: -9.28979
+Finished iteration 75198 of 100000000 in 830 seconds
+Utility: -6.4221
+Finished iteration 75660 of 100000000 in 835 seconds
+Utility: 59.9637
+Finished iteration 76120 of 100000000 in 840 seconds
+Utility: 9.63112
+Finished iteration 76582 of 100000000 in 845 seconds
+Utility: 4.4611
+Finished iteration 77045 of 100000000 in 850 seconds
+Utility: -44.6819
+Finished iteration 77506 of 100000000 in 855 seconds
+Utility: 195.996
+Finished iteration 77966 of 100000000 in 860 seconds
+Utility: -18.7258
+Finished iteration 78428 of 100000000 in 865 seconds
+Utility: 17.165
+Finished iteration 78890 of 100000000 in 870 seconds
+Utility: 28.1448
+Finished iteration 79352 of 100000000 in 875 seconds
+Utility: -5.7452
+Finished iteration 79814 of 100000000 in 880 seconds
+Utility: -280.912
+Finished iteration 80270 of 100000000 in 885 seconds
+Utility: -42.542
+Finished iteration 80718 of 100000000 in 890 seconds
+Utility: -8.23977
+Finished iteration 81169 of 100000000 in 895 seconds
+Utility: -0.471775
+Finished iteration 81618 of 100000000 in 900 seconds
+Utility: 47.5469
+Finished iteration 82070 of 100000000 in 905 seconds
+Utility: -126.653
+Finished iteration 82521 of 100000000 in 910 seconds
+Utility: -141.752
+Finished iteration 82972 of 100000000 in 915 seconds
+Utility: -1.1057
+Finished iteration 83418 of 100000000 in 920 seconds
+Utility: -69.1123
+Finished iteration 83873 of 100000000 in 925 seconds
+Utility: -12.4792
+Finished iteration 84334 of 100000000 in 930 seconds
+Utility: 14.5199
+Finished iteration 84795 of 100000000 in 935 seconds
+Utility: 0.615589
+Finished iteration 85255 of 100000000 in 941 seconds
+Utility: -54.8616
+Finished iteration 85705 of 100000000 in 946 seconds
+Utility: 6.62585
+Finished iteration 86152 of 100000000 in 951 seconds
+Utility: 6.94805
+Finished iteration 86589 of 100000000 in 956 seconds
+Utility: -60.7563
+Finished iteration 87010 of 100000000 in 961 seconds
+Utility: -0.609844
+Finished iteration 87436 of 100000000 in 966 seconds
+Utility: -2.85039
+Finished iteration 87862 of 100000000 in 971 seconds
+Utility: 13.2436
+Finished iteration 88287 of 100000000 in 976 seconds
+Utility: 7.08406
+Finished iteration 88714 of 100000000 in 981 seconds
+Utility: 4.25014
+Finished iteration 89149 of 100000000 in 986 seconds
+Utility: -60.0717
+Finished iteration 89583 of 100000000 in 991 seconds
+Utility: 0.906231
+Finished iteration 90018 of 100000000 in 996 seconds
+Utility: 1.3195
+Finished iteration 90454 of 100000000 in 1001 seconds
+Utility: -55.0946
+Finished iteration 90889 of 100000000 in 1006 seconds
+Utility: 150.815
+Finished iteration 91323 of 100000000 in 1011 seconds
+Utility: -49.1467
+Finished iteration 91757 of 100000000 in 1016 seconds
+Utility: -27.9948
+Finished iteration 92191 of 100000000 in 1021 seconds
+Utility: -30.5931
+Finished iteration 92627 of 100000000 in 1026 seconds
+Utility: 41.6932
+Finished iteration 93062 of 100000000 in 1031 seconds
+Utility: -3.04952
+Finished iteration 93497 of 100000000 in 1036 seconds
+Utility: 71.6366
+Finished iteration 93930 of 100000000 in 1041 seconds
+Utility: -201.318
+Finished iteration 94364 of 100000000 in 1046 seconds
+Utility: 42.9022
+Finished iteration 94798 of 100000000 in 1051 seconds
+Utility: -65.833
+Finished iteration 95233 of 100000000 in 1056 seconds
+Utility: 34.6533
+Finished iteration 95669 of 100000000 in 1061 seconds
+Utility: -64.4231
+Finished iteration 96105 of 100000000 in 1066 seconds
+Utility: -24.5874
+Finished iteration 96539 of 100000000 in 1071 seconds
+Utility: 47.68
+Finished iteration 96974 of 100000000 in 1076 seconds
+Utility: 142.176
+Finished iteration 97407 of 100000000 in 1081 seconds
+Utility: 3.2092
+Finished iteration 97842 of 100000000 in 1086 seconds
+Utility: -87.2249
+Finished iteration 98278 of 100000000 in 1091 seconds
+Utility: -19.5393
+Finished iteration 98713 of 100000000 in 1096 seconds
+Utility: -6.12112
+Finished iteration 99146 of 100000000 in 1101 seconds
+Utility: -39.933
+Finished iteration 99580 of 100000000 in 1106 seconds
+Utility: 48.9993
+Finished iteration 100014 of 100000000 in 1111 seconds
+Utility: 3.55757
+Finished iteration 100449 of 100000000 in 1116 seconds
+Utility: 25.8233
+Finished iteration 100884 of 100000000 in 1121 seconds
+Utility: -311.387
+Finished iteration 101319 of 100000000 in 1126 seconds
+Utility: 167.353
+Finished iteration 101754 of 100000000 in 1131 seconds
+Utility: -17.4915
+Finished iteration 102187 of 100000000 in 1136 seconds
+Utility: 64.2747
+Finished iteration 102620 of 100000000 in 1141 seconds
+Utility: -67.9839
+Finished iteration 103054 of 100000000 in 1146 seconds
+Utility: -240.569
+Finished iteration 103489 of 100000000 in 1151 seconds
+Utility: -293.219
+Finished iteration 103925 of 100000000 in 1156 seconds
+Utility: 17.1101
+Finished iteration 104358 of 100000000 in 1161 seconds
+Utility: -41.102
+Finished iteration 104792 of 100000000 in 1166 seconds
+Utility: 46.6516
+Finished iteration 105225 of 100000000 in 1171 seconds
+Utility: 1.30156
+Finished iteration 105661 of 100000000 in 1176 seconds
+Utility: -40.7478
+Finished iteration 106096 of 100000000 in 1181 seconds
+Utility: 19.6924
+Finished iteration 106532 of 100000000 in 1186 seconds
+Utility: 20.1138
+Finished iteration 106967 of 100000000 in 1191 seconds
+Utility: -147.93
+Finished iteration 107401 of 100000000 in 1196 seconds
+Utility: 9.3087
+Finished iteration 107835 of 100000000 in 1201 seconds
+Utility: -26.1634
+Finished iteration 108271 of 100000000 in 1206 seconds
+Utility: 17.7071
+Finished iteration 108706 of 100000000 in 1211 seconds
+Utility: 29.8592
+Finished iteration 109141 of 100000000 in 1216 seconds
+Utility: -64.0887
+Finished iteration 109574 of 100000000 in 1221 seconds
+Utility: 11.756
+Finished iteration 110009 of 100000000 in 1226 seconds
+Utility: -6.22407
+Finished iteration 110443 of 100000000 in 1231 seconds
+Utility: -42.7406
+Finished iteration 110878 of 100000000 in 1236 seconds
+Utility: 11.7053
+Finished iteration 111314 of 100000000 in 1241 seconds
+Utility: 98.2233
+Finished iteration 111758 of 100000000 in 1246 seconds
+Utility: -49.662
+Finished iteration 112207 of 100000000 in 1251 seconds
+Utility: -2.60784
+Finished iteration 112664 of 100000000 in 1256 seconds
+Utility: -13.7976
+Finished iteration 113124 of 100000000 in 1261 seconds
+Utility: 13.266
+Finished iteration 113586 of 100000000 in 1266 seconds
+Utility: 156.577
+Finished iteration 114047 of 100000000 in 1271 seconds
+Utility: 0.469745
+Finished iteration 114510 of 100000000 in 1276 seconds
+Utility: 27.6659
+Finished iteration 114970 of 100000000 in 1281 seconds
+Utility: 65.1746
+Finished iteration 115431 of 100000000 in 1286 seconds
+Utility: 11.914
+Finished iteration 115893 of 100000000 in 1291 seconds
+Utility: -5.89022
+Finished iteration 116355 of 100000000 in 1296 seconds
+Utility: 33.6103
+Finished iteration 116817 of 100000000 in 1301 seconds
+Utility: 0.0637551
+Finished iteration 117279 of 100000000 in 1306 seconds
+Utility: -33.4688
+Finished iteration 117741 of 100000000 in 1311 seconds
+Utility: 4.44832
+Finished iteration 118202 of 100000000 in 1316 seconds
+Utility: 67.9117
+Finished iteration 118661 of 100000000 in 1321 seconds
+Utility: 7.07177
+Finished iteration 119122 of 100000000 in 1326 seconds
+Utility: -37.7322
+Finished iteration 119584 of 100000000 in 1331 seconds
+Utility: -20.6331
+Finished iteration 120046 of 100000000 in 1336 seconds
+Utility: 3.66234
+Finished iteration 120506 of 100000000 in 1341 seconds
+Utility: 3.62053
+Finished iteration 120967 of 100000000 in 1346 seconds
+Utility: -20.4912
+Finished iteration 121429 of 100000000 in 1351 seconds
+Utility: -0.810905
+Finished iteration 121891 of 100000000 in 1356 seconds
+Utility: 38.4937
+Finished iteration 122353 of 100000000 in 1361 seconds
+Utility: -125.32
+Finished iteration 122815 of 100000000 in 1366 seconds
+Utility: 8.13398
+Finished iteration 123277 of 100000000 in 1371 seconds
+Utility: -30.5616
+Finished iteration 123737 of 100000000 in 1376 seconds
+Utility: 7.3751
+Finished iteration 124198 of 100000000 in 1381 seconds
+Utility: -25.7204
+Finished iteration 124660 of 100000000 in 1386 seconds
+Utility: -2.49144
+Finished iteration 125122 of 100000000 in 1391 seconds
+Utility: 61.6643
+Finished iteration 125583 of 100000000 in 1396 seconds
+Utility: -29.2627
+Finished iteration 126042 of 100000000 in 1401 seconds
+Utility: -70.031
+Finished iteration 126504 of 100000000 in 1406 seconds
+Utility: 43.615
+Finished iteration 126964 of 100000000 in 1411 seconds
+Utility: -88.6613
+Finished iteration 127426 of 100000000 in 1416 seconds
+Utility: 77.4768
+Finished iteration 127886 of 100000000 in 1421 seconds
+Utility: 32.2334
+Finished iteration 128347 of 100000000 in 1426 seconds
+Utility: -5.00543
+Finished iteration 128808 of 100000000 in 1431 seconds
+Utility: 169.198
+Finished iteration 129268 of 100000000 in 1436 seconds
+Utility: -68.3064
+Finished iteration 129728 of 100000000 in 1441 seconds
+Utility: -4.90882
+Finished iteration 130189 of 100000000 in 1446 seconds
+Utility: -1.06696
+Finished iteration 130650 of 100000000 in 1451 seconds
+Utility: -0.648824
+Finished iteration 131111 of 100000000 in 1456 seconds
+Utility: -51.8308
+Finished iteration 131572 of 100000000 in 1461 seconds
+Utility: -0.765557
+Finished iteration 132033 of 100000000 in 1466 seconds
+Utility: 60.1835
+Finished iteration 132494 of 100000000 in 1471 seconds
+Utility: -5.60939
+Finished iteration 132956 of 100000000 in 1476 seconds
+Utility: 51.2836
+Finished iteration 133418 of 100000000 in 1481 seconds
+Utility: -34.4698
+Finished iteration 133880 of 100000000 in 1486 seconds
+Utility: 31.0175
+Finished iteration 134340 of 100000000 in 1491 seconds
+Utility: 30.6165
+Finished iteration 134801 of 100000000 in 1496 seconds
+Utility: 5.75381
+Finished iteration 135260 of 100000000 in 1501 seconds
+Utility: -100.601
+Finished iteration 135722 of 100000000 in 1506 seconds
+Utility: -97.6318
+Finished iteration 136183 of 100000000 in 1511 seconds
+Utility: 82.3149
+Finished iteration 136645 of 100000000 in 1516 seconds
+Utility: 23.421
+Finished iteration 137107 of 100000000 in 1521 seconds
+Utility: -6.52857
+Finished iteration 137569 of 100000000 in 1526 seconds
+Utility: -82.723
+Finished iteration 138030 of 100000000 in 1531 seconds
+Utility: -38.8188
+Finished iteration 138491 of 100000000 in 1536 seconds
+Utility: -32.7064
+Finished iteration 138952 of 100000000 in 1541 seconds
+Utility: 133.715
+Finished iteration 139413 of 100000000 in 1546 seconds
+Utility: -3.02922
+Finished iteration 139875 of 100000000 in 1551 seconds
+Utility: -32.9329
+Finished iteration 140336 of 100000000 in 1556 seconds
+Utility: 61.5841
+Finished iteration 140796 of 100000000 in 1561 seconds
+Utility: -99.3103
+Finished iteration 141253 of 100000000 in 1566 seconds
+Utility: -2.90995
+Finished iteration 141715 of 100000000 in 1571 seconds
+Utility: -22.8405
+Finished iteration 142175 of 100000000 in 1576 seconds
+Utility: 4.8348
+Finished iteration 142636 of 100000000 in 1581 seconds
+Utility: -1.46551
+Finished iteration 143098 of 100000000 in 1586 seconds
+Utility: -11.8022
+Finished iteration 143559 of 100000000 in 1591 seconds
+Utility: 56.5128
+Finished iteration 144022 of 100000000 in 1596 seconds
+Utility: 23.1119
+Finished iteration 144484 of 100000000 in 1601 seconds
+Utility: -37.1676
+Finished iteration 144945 of 100000000 in 1606 seconds
+Utility: 55.7748
+Finished iteration 145407 of 100000000 in 1611 seconds
+Utility: 29.2111
+Finished iteration 145868 of 100000000 in 1616 seconds
+Utility: -0.475933
+Finished iteration 146327 of 100000000 in 1621 seconds
+Utility: 14.2824
+Finished iteration 146788 of 100000000 in 1626 seconds
+Utility: -158.528
+Finished iteration 147249 of 100000000 in 1631 seconds
+Utility: -64.9612
+Finished iteration 147709 of 100000000 in 1636 seconds
+Utility: 15.8958
+Finished iteration 148170 of 100000000 in 1641 seconds
+Utility: -0.943111
+Finished iteration 148631 of 100000000 in 1646 seconds
+Utility: -1.64692
+Finished iteration 149092 of 100000000 in 1651 seconds
+Utility: 1.28081
+Finished iteration 149553 of 100000000 in 1656 seconds
+Utility: -7.01799
+Finished iteration 150015 of 100000000 in 1661 seconds
+Utility: 11.4557
+Finished iteration 150476 of 100000000 in 1666 seconds
+Utility: -4.86916
+Finished iteration 150938 of 100000000 in 1671 seconds
+Utility: 57.9402
+Finished iteration 151382 of 100000000 in 1676 seconds
+Utility: 10.3679
+Finished iteration 151822 of 100000000 in 1681 seconds
+Utility: -4.14665
+Finished iteration 152272 of 100000000 in 1686 seconds
+Utility: -8.64681
+Finished iteration 152725 of 100000000 in 1691 seconds
+Utility: 9.75936
+Finished iteration 153177 of 100000000 in 1696 seconds
+Utility: -60.9619
+Finished iteration 153638 of 100000000 in 1701 seconds
+Utility: -63.033
+Finished iteration 154100 of 100000000 in 1706 seconds
+Utility: -23.1028
+Finished iteration 154560 of 100000000 in 1711 seconds
+Utility: 2
+Finished iteration 155022 of 100000000 in 1716 seconds
+Utility: 8.38598
+Finished iteration 155485 of 100000000 in 1721 seconds
+Utility: -73.3949
+Finished iteration 155946 of 100000000 in 1726 seconds
+Utility: -1.23148
+Finished iteration 156407 of 100000000 in 1731 seconds
+Utility: 77.2067
+Finished iteration 156867 of 100000000 in 1736 seconds
+Utility: -17.4344
+Finished iteration 157327 of 100000000 in 1741 seconds
+Utility: 46.5151
+Finished iteration 157788 of 100000000 in 1746 seconds
+Utility: 24.1024
+Finished iteration 158251 of 100000000 in 1751 seconds
+Utility: -55.2584
+Finished iteration 158711 of 100000000 in 1756 seconds
+Utility: -0.539443
+Finished iteration 159173 of 100000000 in 1761 seconds
+Utility: -2.4823
+Finished iteration 159635 of 100000000 in 1766 seconds
+Utility: -8.41503
+Finished iteration 160096 of 100000000 in 1771 seconds
+Utility: -17.1272
+Finished iteration 160557 of 100000000 in 1776 seconds
+Utility: 71.9879
+Finished iteration 161018 of 100000000 in 1781 seconds
+Utility: -29.9731
+Finished iteration 161480 of 100000000 in 1786 seconds
+Utility: -48.071
+Finished iteration 161942 of 100000000 in 1791 seconds
+Utility: -25.6182
+Finished iteration 162402 of 100000000 in 1796 seconds
+Utility: -5.00449
+Saving checkpoint at iteration 162690
+Finished iteration 162839 of 100000000 in 1801 seconds
+Utility: -25.7513
+Finished iteration 163300 of 100000000 in 1806 seconds
+Utility: -3.32235
+Finished iteration 163761 of 100000000 in 1811 seconds
+Utility: -6.1391
+Finished iteration 164223 of 100000000 in 1816 seconds
+Utility: -1.02972
+Finished iteration 164685 of 100000000 in 1821 seconds
+Utility: -72.4848
+Finished iteration 165147 of 100000000 in 1826 seconds
+Utility: 178.775
+Finished iteration 165608 of 100000000 in 1831 seconds
+Utility: 6.42703
+Finished iteration 166069 of 100000000 in 1836 seconds
+Utility: -15.5073
+Finished iteration 166530 of 100000000 in 1841 seconds
+Utility: -25.3504
+Finished iteration 166991 of 100000000 in 1846 seconds
+Utility: 10.405
+Finished iteration 167453 of 100000000 in 1851 seconds
+Utility: -36.5154
+Finished iteration 167914 of 100000000 in 1856 seconds
+Utility: 87.5499
+Finished iteration 168372 of 100000000 in 1861 seconds
+Utility: 6.93839
+Finished iteration 168834 of 100000000 in 1866 seconds
+Utility: 37.6189
+Finished iteration 169295 of 100000000 in 1871 seconds
+Utility: -90.7764
+Finished iteration 169755 of 100000000 in 1876 seconds
+Utility: 125.787
+Finished iteration 170217 of 100000000 in 1881 seconds
+Utility: -57.9893
+Finished iteration 170678 of 100000000 in 1886 seconds
+Utility: -46.9003
+Finished iteration 171138 of 100000000 in 1891 seconds
+Utility: -0.959012
+Finished iteration 171600 of 100000000 in 1896 seconds
+Utility: -84.7332
+Finished iteration 172061 of 100000000 in 1901 seconds
+Utility: 10.629
+Finished iteration 172522 of 100000000 in 1906 seconds
+Utility: 5.40121
+Finished iteration 172983 of 100000000 in 1911 seconds
+Utility: 80.6864
+Finished iteration 173443 of 100000000 in 1916 seconds
+Utility: 1.39169
+Finished iteration 173901 of 100000000 in 1921 seconds
+Utility: 28.2759
+Finished iteration 174363 of 100000000 in 1926 seconds
+Utility: -5.43669
+Finished iteration 174824 of 100000000 in 1932 seconds
+Utility: -8.5202
+Finished iteration 175285 of 100000000 in 1937 seconds
+Utility: -16.3544
+Finished iteration 175747 of 100000000 in 1942 seconds
+Utility: 51.4278
+Finished iteration 176208 of 100000000 in 1947 seconds
+Utility: -0.361325
+Finished iteration 176669 of 100000000 in 1952 seconds
+Utility: 39.2578
+Finished iteration 177130 of 100000000 in 1957 seconds
+Utility: -15.2791
+Finished iteration 177591 of 100000000 in 1962 seconds
+Utility: 28.1351
+Finished iteration 178053 of 100000000 in 1967 seconds
+Utility: -107.589
+Finished iteration 178514 of 100000000 in 1972 seconds
+Utility: 54.0795
+Finished iteration 178974 of 100000000 in 1977 seconds
+Utility: -70.8557
+Finished iteration 179433 of 100000000 in 1982 seconds
+Utility: -65.5593
+Finished iteration 179895 of 100000000 in 1987 seconds
+Utility: -62.4578
+Finished iteration 180357 of 100000000 in 1992 seconds
+Utility: -8.3727
+Finished iteration 180817 of 100000000 in 1997 seconds
+Utility: 1.94176
+Finished iteration 181279 of 100000000 in 2002 seconds
+Utility: -30.9036
+Finished iteration 181741 of 100000000 in 2007 seconds
+Utility: -15.2614
+Finished iteration 182202 of 100000000 in 2012 seconds
+Utility: -20.7472
+Finished iteration 182665 of 100000000 in 2017 seconds
+Utility: -89.8395
+Finished iteration 183127 of 100000000 in 2022 seconds
+Utility: -23.059
+Finished iteration 183589 of 100000000 in 2027 seconds
+Utility: -166.44
+Finished iteration 184050 of 100000000 in 2032 seconds
+Utility: 31.744
+Finished iteration 184511 of 100000000 in 2037 seconds
+Utility: 16.2362
+Finished iteration 184971 of 100000000 in 2042 seconds
+Utility: 7.19684
+Finished iteration 185432 of 100000000 in 2047 seconds
+Utility: 221.948
+Finished iteration 185894 of 100000000 in 2052 seconds
+Utility: -19.4936
+Finished iteration 186355 of 100000000 in 2057 seconds
+Utility: 18.6669
+Finished iteration 186816 of 100000000 in 2062 seconds
+Utility: -12.4764
+Finished iteration 187277 of 100000000 in 2067 seconds
+Utility: -8.15213
+Finished iteration 187737 of 100000000 in 2072 seconds
+Utility: -5.75649
+Finished iteration 188199 of 100000000 in 2077 seconds
+Utility: -23.3726
+Finished iteration 188660 of 100000000 in 2082 seconds
+Utility: -42.2782
+Finished iteration 189122 of 100000000 in 2087 seconds
+Utility: 3.65251
+Finished iteration 189583 of 100000000 in 2092 seconds
+Utility: 62.0268
+Finished iteration 190044 of 100000000 in 2097 seconds
+Utility: -18.2311
+Finished iteration 190505 of 100000000 in 2102 seconds
+Utility: -3.9803
+Finished iteration 190966 of 100000000 in 2107 seconds
+Utility: -11.6015
+Finished iteration 191429 of 100000000 in 2112 seconds
+Utility: -0.68204
+Finished iteration 191890 of 100000000 in 2117 seconds
+Utility: 6.40311
+Finished iteration 192352 of 100000000 in 2122 seconds
+Utility: -278.188
+Finished iteration 192812 of 100000000 in 2127 seconds
+Utility: 1.90538
+Finished iteration 193273 of 100000000 in 2132 seconds
+Utility: -26.8974
+Finished iteration 193734 of 100000000 in 2137 seconds
+Utility: -95.7097
+Finished iteration 194195 of 100000000 in 2142 seconds
+Utility: -96.1527
+Finished iteration 194656 of 100000000 in 2147 seconds
+Utility: 103.704
+Finished iteration 195118 of 100000000 in 2152 seconds
+Utility: 41.147
+Finished iteration 195577 of 100000000 in 2157 seconds
+Utility: 12.3629
+Finished iteration 196038 of 100000000 in 2162 seconds
+Utility: -31.9761
+Finished iteration 196499 of 100000000 in 2167 seconds
+Utility: -22.1325
+Finished iteration 196961 of 100000000 in 2172 seconds
+Utility: -16.4538
+Finished iteration 197422 of 100000000 in 2177 seconds
+Utility: -34.4485
+Finished iteration 197884 of 100000000 in 2182 seconds
+Utility: 54.8708
+Finished iteration 198345 of 100000000 in 2187 seconds
+Utility: 81.8228
+Finished iteration 198806 of 100000000 in 2192 seconds
+Utility: 273.091
+Finished iteration 199268 of 100000000 in 2197 seconds
+Utility: -155.179
+Finished iteration 199729 of 100000000 in 2202 seconds
+Utility: -20.4247
+Finished iteration 200190 of 100000000 in 2207 seconds
+Utility: -61.2866
+Finished iteration 200652 of 100000000 in 2212 seconds
+Utility: -3.00798
+Finished iteration 201111 of 100000000 in 2217 seconds
+Utility: -197.534
+Finished iteration 201572 of 100000000 in 2222 seconds
+Utility: 133.95
+Finished iteration 202032 of 100000000 in 2227 seconds
+Utility: 55.7713
+Finished iteration 202494 of 100000000 in 2232 seconds
+Utility: 21.6234
+Finished iteration 202954 of 100000000 in 2237 seconds
+Utility: 10.804
+Finished iteration 203416 of 100000000 in 2242 seconds
+Utility: 83.3458
+Finished iteration 203878 of 100000000 in 2247 seconds
+Utility: -147.217
+Finished iteration 204338 of 100000000 in 2252 seconds
+Utility: 23.0299
+Finished iteration 204800 of 100000000 in 2257 seconds
+Utility: -13.2832
+Finished iteration 205262 of 100000000 in 2262 seconds
+Utility: 22.9868
+Finished iteration 205724 of 100000000 in 2267 seconds
+Utility: 1.48755
+Finished iteration 206164 of 100000000 in 2272 seconds
+Utility: 106.49
+Finished iteration 206603 of 100000000 in 2277 seconds
+Utility: 193.07
+Finished iteration 207049 of 100000000 in 2282 seconds
+Utility: 145.601
+Finished iteration 207466 of 100000000 in 2287 seconds
+Utility: 10.3121
+Finished iteration 207890 of 100000000 in 2292 seconds
+Utility: -1.03161
+Finished iteration 208326 of 100000000 in 2297 seconds
+Utility: -0.972326
+Finished iteration 208746 of 100000000 in 2302 seconds
+Utility: 9.64562
+Finished iteration 209168 of 100000000 in 2307 seconds
+Utility: -32.1613
+Finished iteration 209595 of 100000000 in 2312 seconds
+Utility: -188.512
+Finished iteration 210017 of 100000000 in 2317 seconds
+Utility: -43.7229
+Finished iteration 210436 of 100000000 in 2322 seconds
+Utility: -12.9095
+Finished iteration 210857 of 100000000 in 2327 seconds
+Utility: -161.187
+Finished iteration 211278 of 100000000 in 2332 seconds
+Utility: 1.66912
+Finished iteration 211703 of 100000000 in 2337 seconds
+Utility: -0.192143
+Finished iteration 212140 of 100000000 in 2342 seconds
+Utility: 26.6205
+Finished iteration 212559 of 100000000 in 2347 seconds
+Utility: 23.4168
+Finished iteration 212985 of 100000000 in 2352 seconds
+Utility: 0.32534
+Finished iteration 213404 of 100000000 in 2357 seconds
+Utility: -1.46672
+Finished iteration 213826 of 100000000 in 2362 seconds
+Utility: 2.94983
+Finished iteration 214245 of 100000000 in 2367 seconds
+Utility: -61.1749
+Finished iteration 214673 of 100000000 in 2372 seconds
+Utility: -54.5675
+Finished iteration 215112 of 100000000 in 2377 seconds
+Utility: -26.5004
+Finished iteration 215542 of 100000000 in 2382 seconds
+Utility: -3.98897
+Finished iteration 215965 of 100000000 in 2387 seconds
+Utility: 49.7701
+Finished iteration 216405 of 100000000 in 2392 seconds
+Utility: -57.7984
+Finished iteration 216829 of 100000000 in 2397 seconds
+Utility: -29.387
+Finished iteration 217257 of 100000000 in 2402 seconds
+Utility: -0.0926286
+Finished iteration 217675 of 100000000 in 2407 seconds
+Utility: -32.9774
+Finished iteration 218097 of 100000000 in 2412 seconds
+Utility: 54.3967
+Finished iteration 218535 of 100000000 in 2417 seconds
+Utility: -90.4395
+Finished iteration 218961 of 100000000 in 2422 seconds
+Utility: -30.1554
+Finished iteration 219393 of 100000000 in 2427 seconds
+Utility: 45.3874
+Finished iteration 219812 of 100000000 in 2432 seconds
+Utility: -146.451
+Finished iteration 220229 of 100000000 in 2437 seconds
+Utility: -9.40209
+Finished iteration 220674 of 100000000 in 2442 seconds
+Utility: -30.7759
+Finished iteration 221100 of 100000000 in 2447 seconds
+Utility: 4.60317
+Finished iteration 221535 of 100000000 in 2452 seconds
+Utility: 94.7409
+Finished iteration 221967 of 100000000 in 2457 seconds
+Utility: 45.0389
+Finished iteration 222388 of 100000000 in 2462 seconds
+Utility: 68.8602
+Finished iteration 222843 of 100000000 in 2467 seconds
+Utility: -2.34301
+Finished iteration 223300 of 100000000 in 2472 seconds
+Utility: 199.258
+Finished iteration 223760 of 100000000 in 2477 seconds
+Utility: 61.4063
+Finished iteration 224222 of 100000000 in 2482 seconds
+Utility: 2.21239
+Finished iteration 224683 of 100000000 in 2487 seconds
+Utility: -0.471941
+Finished iteration 225145 of 100000000 in 2492 seconds
+Utility: 35.4327
+Finished iteration 225607 of 100000000 in 2497 seconds
+Utility: -5.15228
+Finished iteration 226067 of 100000000 in 2502 seconds
+Utility: -51.0986
+Finished iteration 226528 of 100000000 in 2507 seconds
+Utility: 2.66552
+Finished iteration 226990 of 100000000 in 2512 seconds
+Utility: -9.01619
+Finished iteration 227450 of 100000000 in 2517 seconds
+Utility: 11.4454
+Finished iteration 227911 of 100000000 in 2522 seconds
+Utility: -66.436
+Finished iteration 228372 of 100000000 in 2527 seconds
+Utility: -4.19252
+Finished iteration 228832 of 100000000 in 2532 seconds
+Utility: 48.6725
+Finished iteration 229291 of 100000000 in 2537 seconds
+Utility: 24.6813
+Finished iteration 229753 of 100000000 in 2542 seconds
+Utility: -90.6934
+Finished iteration 230214 of 100000000 in 2547 seconds
+Utility: 31.2978
+Finished iteration 230675 of 100000000 in 2552 seconds
+Utility: -79.2173
+Finished iteration 231136 of 100000000 in 2557 seconds
+Utility: -1.39295
+Finished iteration 231598 of 100000000 in 2562 seconds
+Utility: 72.7554
+Finished iteration 232060 of 100000000 in 2567 seconds
+Utility: 40.8922
+Finished iteration 232522 of 100000000 in 2572 seconds
+Utility: -186.689
+Finished iteration 232981 of 100000000 in 2577 seconds
+Utility: 7.33024
+Finished iteration 233437 of 100000000 in 2582 seconds
+Utility: 170.984
+Finished iteration 233888 of 100000000 in 2587 seconds
+Utility: -8.70062
+Finished iteration 234345 of 100000000 in 2592 seconds
+Utility: -117.499
+Finished iteration 234800 of 100000000 in 2597 seconds
+Utility: 5.18583
+Finished iteration 235236 of 100000000 in 2602 seconds
+Utility: 4.96461
+Finished iteration 235670 of 100000000 in 2607 seconds
+Utility: 328.467
+Finished iteration 236105 of 100000000 in 2612 seconds
+Utility: -38.5338
+Finished iteration 236540 of 100000000 in 2617 seconds
+Utility: -17.8483
+Finished iteration 236985 of 100000000 in 2622 seconds
+Utility: 19.6895
+Finished iteration 237444 of 100000000 in 2627 seconds
+Utility: -1.25258
+Finished iteration 237904 of 100000000 in 2632 seconds
+Utility: -160.018
+Finished iteration 238364 of 100000000 in 2637 seconds
+Utility: 103.677
+Finished iteration 238825 of 100000000 in 2642 seconds
+Utility: 10.3843
+Finished iteration 239287 of 100000000 in 2647 seconds
+Utility: 24.4057
+Finished iteration 239747 of 100000000 in 2652 seconds
+Utility: 5.37244
+Finished iteration 240205 of 100000000 in 2657 seconds
+Utility: 11.4972
+Finished iteration 240667 of 100000000 in 2662 seconds
+Utility: 16.7264
+Finished iteration 241126 of 100000000 in 2667 seconds
+Utility: -83.4114
+Finished iteration 241588 of 100000000 in 2672 seconds
+Utility: 10.2214
+Finished iteration 242050 of 100000000 in 2677 seconds
+Utility: -57.5169
+Finished iteration 242512 of 100000000 in 2682 seconds
+Utility: 108.47
+Finished iteration 242974 of 100000000 in 2687 seconds
+Utility: -0.773896
+Finished iteration 243434 of 100000000 in 2692 seconds
+Utility: 8.83065
+Finished iteration 243893 of 100000000 in 2697 seconds
+Utility: 0.0577899
+Finished iteration 244354 of 100000000 in 2702 seconds
+Utility: -290.251
+Finished iteration 244816 of 100000000 in 2707 seconds
+Utility: -4.15016
+Finished iteration 245276 of 100000000 in 2712 seconds
+Utility: 68.3833
+Finished iteration 245736 of 100000000 in 2717 seconds
+Utility: -3.27002
+Finished iteration 246197 of 100000000 in 2722 seconds
+Utility: -6.79843
+Finished iteration 246658 of 100000000 in 2727 seconds
+Utility: 5.21454
+Finished iteration 247120 of 100000000 in 2732 seconds
+Utility: 0.0644807
+Finished iteration 247581 of 100000000 in 2737 seconds
+Utility: 24.6628
+Finished iteration 248043 of 100000000 in 2742 seconds
+Utility: 49.5843
+Finished iteration 248504 of 100000000 in 2747 seconds
+Utility: -183.928
+Finished iteration 248966 of 100000000 in 2752 seconds
+Utility: -40.2491
+Finished iteration 249425 of 100000000 in 2757 seconds
+Utility: -2.80923
+Finished iteration 249886 of 100000000 in 2762 seconds
+Utility: -2.51717
+Finished iteration 250347 of 100000000 in 2767 seconds
+Utility: -10.425
+Finished iteration 250807 of 100000000 in 2772 seconds
+Utility: -7.60353
+Finished iteration 251266 of 100000000 in 2777 seconds
+Utility: 36.1437
+Finished iteration 251727 of 100000000 in 2782 seconds
+Utility: -83.1908
+Finished iteration 252188 of 100000000 in 2787 seconds
+Utility: -41.2999
+Finished iteration 252649 of 100000000 in 2792 seconds
+Utility: -30.3281
+Finished iteration 253111 of 100000000 in 2797 seconds
+Utility: -21.5643
+Finished iteration 253572 of 100000000 in 2802 seconds
+Utility: 57.7681
+Finished iteration 254033 of 100000000 in 2808 seconds
+Utility: 0.820056
+Finished iteration 254496 of 100000000 in 2813 seconds
+Utility: -2.62662
+Finished iteration 254957 of 100000000 in 2818 seconds
+Utility: -43.9779
+Finished iteration 255417 of 100000000 in 2823 seconds
+Utility: -112.816
+Finished iteration 255878 of 100000000 in 2828 seconds
+Utility: 23.3916
+Finished iteration 256338 of 100000000 in 2833 seconds
+Utility: -5.52428
+Finished iteration 256799 of 100000000 in 2838 seconds
+Utility: -114.36
+Finished iteration 257261 of 100000000 in 2843 seconds
+Utility: 14.1418
+Finished iteration 257721 of 100000000 in 2848 seconds
+Utility: -36.478
+Finished iteration 258181 of 100000000 in 2853 seconds
+Utility: -32.6934
+Finished iteration 258641 of 100000000 in 2858 seconds
+Utility: 111.982
+Finished iteration 259103 of 100000000 in 2863 seconds
+Utility: -43.288
+Finished iteration 259564 of 100000000 in 2868 seconds
+Utility: -33.5529
+Finished iteration 260027 of 100000000 in 2873 seconds
+Utility: -44.3219
+Finished iteration 260462 of 100000000 in 2878 seconds
+Utility: -7.37558
+Finished iteration 260898 of 100000000 in 2883 seconds
+Utility: -52.4273
+Finished iteration 261347 of 100000000 in 2888 seconds
+Utility: -10.1396
+Finished iteration 261799 of 100000000 in 2893 seconds
+Utility: -81.3973
+Finished iteration 262261 of 100000000 in 2898 seconds
+Utility: 75.4077
+Finished iteration 262723 of 100000000 in 2903 seconds
+Utility: -9.54664
+Finished iteration 263184 of 100000000 in 2908 seconds
+Utility: 70.3017
+Finished iteration 263645 of 100000000 in 2913 seconds
+Utility: -48.225
+Finished iteration 264107 of 100000000 in 2918 seconds
+Utility: -58.63
+Finished iteration 264569 of 100000000 in 2923 seconds
+Utility: 6.47138
+Finished iteration 265030 of 100000000 in 2928 seconds
+Utility: 4.52994
+Finished iteration 265493 of 100000000 in 2933 seconds
+Utility: 1.1591
+Finished iteration 265953 of 100000000 in 2938 seconds
+Utility: 8.19544
+Finished iteration 266415 of 100000000 in 2943 seconds
+Utility: 41.4856
+Finished iteration 266877 of 100000000 in 2948 seconds
+Utility: -1.23789
+Finished iteration 267338 of 100000000 in 2953 seconds
+Utility: 22.9881
+Finished iteration 267797 of 100000000 in 2958 seconds
+Utility: 9.28344
+Finished iteration 268258 of 100000000 in 2963 seconds
+Utility: 4.41485
+Finished iteration 268719 of 100000000 in 2968 seconds
+Utility: -2.30339
+Finished iteration 269180 of 100000000 in 2973 seconds
+Utility: 28.1793
+Finished iteration 269642 of 100000000 in 2978 seconds
+Utility: 68.0526
+Finished iteration 270103 of 100000000 in 2983 seconds
+Utility: -5.68243
+Finished iteration 270564 of 100000000 in 2988 seconds
+Utility: -8.36401
+Finished iteration 271026 of 100000000 in 2993 seconds
+Utility: -0.144901
+Finished iteration 271485 of 100000000 in 2998 seconds
+Utility: -0.872825
+Finished iteration 271947 of 100000000 in 3003 seconds
+Utility: 56.9849
+Finished iteration 272409 of 100000000 in 3008 seconds
+Utility: 9.51643
+Finished iteration 272872 of 100000000 in 3013 seconds
+Utility: -18.1362
+Finished iteration 273333 of 100000000 in 3018 seconds
+Utility: 92.6814
+Finished iteration 273794 of 100000000 in 3023 seconds
+Utility: 19.0624
+Finished iteration 274254 of 100000000 in 3028 seconds
+Utility: -54.3899
+Finished iteration 274715 of 100000000 in 3033 seconds
+Utility: -67.4794
+Finished iteration 275176 of 100000000 in 3038 seconds
+Utility: 0.338631
+Finished iteration 275638 of 100000000 in 3043 seconds
+Utility: -2.75109
+Finished iteration 276098 of 100000000 in 3048 seconds
+Utility: -5.9367
+Finished iteration 276559 of 100000000 in 3053 seconds
+Utility: -4.27926
+Finished iteration 277019 of 100000000 in 3058 seconds
+Utility: -183.995
+Finished iteration 277480 of 100000000 in 3063 seconds
+Utility: -91.8189
+Finished iteration 277941 of 100000000 in 3068 seconds
+Utility: 29.2119
+Finished iteration 278402 of 100000000 in 3073 seconds
+Utility: 114.398
+Finished iteration 278862 of 100000000 in 3078 seconds
+Utility: 76.8851
+Finished iteration 279323 of 100000000 in 3083 seconds
+Utility: 41.4004
+Finished iteration 279784 of 100000000 in 3088 seconds
+Utility: 0.798687
+Finished iteration 280245 of 100000000 in 3093 seconds
+Utility: -19.0603
+Finished iteration 280707 of 100000000 in 3098 seconds
+Utility: 31.9667
+Finished iteration 281169 of 100000000 in 3103 seconds
+Utility: 61.7216
+Finished iteration 281631 of 100000000 in 3108 seconds
+Utility: 81.7884
+Finished iteration 282092 of 100000000 in 3113 seconds
+Utility: 58.3324
+Finished iteration 282552 of 100000000 in 3118 seconds
+Utility: -2.41095
+Finished iteration 283013 of 100000000 in 3123 seconds
+Utility: 7.38212
+Finished iteration 283474 of 100000000 in 3128 seconds
+Utility: -9.03007
+Finished iteration 283936 of 100000000 in 3133 seconds
+Utility: 6.73154
+Finished iteration 284395 of 100000000 in 3138 seconds
+Utility: 34.5394
+Finished iteration 284856 of 100000000 in 3143 seconds
+Utility: -64.5847
+Finished iteration 285318 of 100000000 in 3148 seconds
+Utility: -55.6131
+Finished iteration 285780 of 100000000 in 3153 seconds
+Utility: -25.6541
+Finished iteration 286243 of 100000000 in 3158 seconds
+Utility: 123.951
+Finished iteration 286705 of 100000000 in 3163 seconds
+Utility: 15.6303
+Finished iteration 287167 of 100000000 in 3168 seconds
+Utility: 58.0009
+Finished iteration 287628 of 100000000 in 3173 seconds
+Utility: 1.30038
+Finished iteration 288087 of 100000000 in 3178 seconds
+Utility: 1.92273
+Finished iteration 288549 of 100000000 in 3183 seconds
+Utility: 11.1763
+Finished iteration 289010 of 100000000 in 3188 seconds
+Utility: 33.182
+Finished iteration 289473 of 100000000 in 3193 seconds
+Utility: -2.77759
+Finished iteration 289932 of 100000000 in 3198 seconds
+Utility: -3.09897
+Finished iteration 290394 of 100000000 in 3203 seconds
+Utility: -157.212
+Finished iteration 290856 of 100000000 in 3208 seconds
+Utility: 134.272
+Finished iteration 291317 of 100000000 in 3213 seconds
+Utility: -95.3443
+Finished iteration 291778 of 100000000 in 3218 seconds
+Utility: -13.732
+Finished iteration 292239 of 100000000 in 3223 seconds
+Utility: 15.971
+Finished iteration 292701 of 100000000 in 3228 seconds
+Utility: -49.0007
+Finished iteration 293162 of 100000000 in 3233 seconds
+Utility: -59.3306
+Finished iteration 293622 of 100000000 in 3238 seconds
+Utility: -3.71515
+Finished iteration 294083 of 100000000 in 3243 seconds
+Utility: 76.3054
+Finished iteration 294544 of 100000000 in 3248 seconds
+Utility: -3.56148
+Finished iteration 295006 of 100000000 in 3253 seconds
+Utility: 167.123
+Finished iteration 295465 of 100000000 in 3258 seconds
+Utility: 20.2754
+Finished iteration 295927 of 100000000 in 3263 seconds
+Utility: -1.54173
+Finished iteration 296387 of 100000000 in 3268 seconds
+Utility: 236.694
+Finished iteration 296849 of 100000000 in 3273 seconds
+Utility: 164.237
+Finished iteration 297311 of 100000000 in 3278 seconds
+Utility: 46.7428
+Finished iteration 297773 of 100000000 in 3283 seconds
+Utility: -9.4274
+Finished iteration 298234 of 100000000 in 3288 seconds
+Utility: 4.83899
+Finished iteration 298696 of 100000000 in 3293 seconds
+Utility: -108.501
+Finished iteration 299156 of 100000000 in 3298 seconds
+Utility: -22.2804
+Finished iteration 299617 of 100000000 in 3303 seconds
+Utility: 5.80018
+Finished iteration 300079 of 100000000 in 3308 seconds
+Utility: 37.4375
+Finished iteration 300540 of 100000000 in 3313 seconds
+Utility: 0.101832
+Finished iteration 300999 of 100000000 in 3318 seconds
+Utility: 40.0015
+Finished iteration 301462 of 100000000 in 3323 seconds
+Utility: -42.4948
+Finished iteration 301923 of 100000000 in 3328 seconds
+Utility: 71.2106
+Finished iteration 302384 of 100000000 in 3333 seconds
+Utility: 22.8903
+Finished iteration 302846 of 100000000 in 3338 seconds
+Utility: -82.6115
+Finished iteration 303307 of 100000000 in 3343 seconds
+Utility: 52.5647
+Finished iteration 303769 of 100000000 in 3348 seconds
+Utility: -25.9419
+Finished iteration 304231 of 100000000 in 3353 seconds
+Utility: -4.0856
+Finished iteration 304692 of 100000000 in 3358 seconds
+Utility: 2.01323
+Finished iteration 305153 of 100000000 in 3363 seconds
+Utility: 13.0016
+Finished iteration 305615 of 100000000 in 3368 seconds
+Utility: -99.1023
+Finished iteration 306078 of 100000000 in 3373 seconds
+Utility: -58.5376
+Finished iteration 306534 of 100000000 in 3378 seconds
+Utility: -19.8167
+Finished iteration 306995 of 100000000 in 3383 seconds
+Utility: -167.228
+Finished iteration 307456 of 100000000 in 3388 seconds
+Utility: 24.1794
+Finished iteration 307918 of 100000000 in 3393 seconds
+Utility: -5.74266
+Finished iteration 308380 of 100000000 in 3398 seconds
+Utility: 2.26842
+Finished iteration 308840 of 100000000 in 3403 seconds
+Utility: -216.289
+Finished iteration 309281 of 100000000 in 3408 seconds
+Utility: 0.92883
+Finished iteration 309727 of 100000000 in 3413 seconds
+Utility: -16.5851
+Finished iteration 310185 of 100000000 in 3418 seconds
+Utility: -3.43029
+Finished iteration 310646 of 100000000 in 3423 seconds
+Utility: -0.758512
+Finished iteration 311106 of 100000000 in 3428 seconds
+Utility: 9.07391
+Finished iteration 311568 of 100000000 in 3433 seconds
+Utility: -25.6134
+Finished iteration 312028 of 100000000 in 3438 seconds
+Utility: -36.0094
+Finished iteration 312490 of 100000000 in 3443 seconds
+Utility: 2.50321
+Finished iteration 312951 of 100000000 in 3448 seconds
+Utility: -88.3257
+Finished iteration 313413 of 100000000 in 3453 seconds
+Utility: 347.686
+Finished iteration 313875 of 100000000 in 3458 seconds
+Utility: -2.26126
+Finished iteration 314336 of 100000000 in 3463 seconds
+Utility: 44.3826
+Finished iteration 314797 of 100000000 in 3468 seconds
+Utility: -1.66387
+Finished iteration 315253 of 100000000 in 3473 seconds
+Utility: 4.21195
+Finished iteration 315679 of 100000000 in 3478 seconds
+Utility: -94.6167
+Finished iteration 316094 of 100000000 in 3483 seconds
+Utility: -7.50944
+Finished iteration 316535 of 100000000 in 3488 seconds
+Utility: 26.7227
+Finished iteration 316978 of 100000000 in 3493 seconds
+Utility: 75.5786
+Finished iteration 317420 of 100000000 in 3498 seconds
+Utility: -72.1889
+Finished iteration 317866 of 100000000 in 3503 seconds
+Utility: 12.8057
+Finished iteration 318314 of 100000000 in 3508 seconds
+Utility: 36.9138
+Finished iteration 318756 of 100000000 in 3513 seconds
+Utility: 53.8415
+Finished iteration 319201 of 100000000 in 3518 seconds
+Utility: 77.5943
+Finished iteration 319627 of 100000000 in 3523 seconds
+Utility: -1.56406
+Finished iteration 320063 of 100000000 in 3528 seconds
+Utility: -6.13093
+Finished iteration 320498 of 100000000 in 3533 seconds
+Utility: 11.8295
+Finished iteration 320931 of 100000000 in 3538 seconds
+Utility: -4.10575
+Finished iteration 321366 of 100000000 in 3543 seconds
+Utility: -65.9244
+Finished iteration 321801 of 100000000 in 3548 seconds
+Utility: -3.06826
+Finished iteration 322237 of 100000000 in 3553 seconds
+Utility: -7.56555
+Finished iteration 322670 of 100000000 in 3558 seconds
+Utility: -39.5592
+Finished iteration 323105 of 100000000 in 3563 seconds
+Utility: -5.11653
+Finished iteration 323540 of 100000000 in 3568 seconds
+Utility: -9.66313
+Finished iteration 323975 of 100000000 in 3573 seconds
+Utility: -66.9858
+Finished iteration 324409 of 100000000 in 3578 seconds
+Utility: 109.06
+Finished iteration 324844 of 100000000 in 3583 seconds
+Utility: -14.6919
+Finished iteration 325279 of 100000000 in 3588 seconds
+Utility: -163.024
+Finished iteration 325714 of 100000000 in 3593 seconds
+Utility: 1.51209
+Finished iteration 326148 of 100000000 in 3598 seconds
+Utility: 14.7183
+Saving checkpoint at iteration 326246
+Finished iteration 326562 of 100000000 in 3603 seconds
+Utility: -48.9158
+Finished iteration 326998 of 100000000 in 3608 seconds
+Utility: -38.7087
+Finished iteration 327433 of 100000000 in 3613 seconds
+Utility: 0.557765
+Finished iteration 327867 of 100000000 in 3618 seconds
+Utility: -4.04442
+Finished iteration 328302 of 100000000 in 3623 seconds
+Utility: -45.3063
+Finished iteration 328737 of 100000000 in 3628 seconds
+Utility: 178.988
+Finished iteration 329171 of 100000000 in 3633 seconds
+Utility: -38.7384
+Finished iteration 329606 of 100000000 in 3638 seconds
+Utility: -15.0456
+Finished iteration 330042 of 100000000 in 3643 seconds
+Utility: 4.36797
+Finished iteration 330478 of 100000000 in 3648 seconds
+Utility: -45.8298
+Finished iteration 330913 of 100000000 in 3653 seconds
+Utility: -60.9606
+Finished iteration 331346 of 100000000 in 3658 seconds
+Utility: 1.42088
+Finished iteration 331781 of 100000000 in 3663 seconds
+Utility: -4.24607
+Finished iteration 332216 of 100000000 in 3668 seconds
+Utility: 157.264
+Finished iteration 332651 of 100000000 in 3673 seconds
+Utility: -17.5652
+Finished iteration 333084 of 100000000 in 3678 seconds
+Utility: -14.5231
+Finished iteration 333519 of 100000000 in 3683 seconds
+Utility: 40.2127
+Finished iteration 333954 of 100000000 in 3689 seconds
+Utility: -9.55511
+Finished iteration 334390 of 100000000 in 3694 seconds
+Utility: -8.026
+Finished iteration 334826 of 100000000 in 3699 seconds
+Utility: 10.1822
+Finished iteration 335261 of 100000000 in 3704 seconds
+Utility: 4.85323
+Finished iteration 335696 of 100000000 in 3709 seconds
+Utility: 28.2375
+Finished iteration 336131 of 100000000 in 3714 seconds
+Utility: -2.66348
+Finished iteration 336565 of 100000000 in 3719 seconds
+Utility: 7.47268
+Finished iteration 337001 of 100000000 in 3724 seconds
+Utility: 1.40696
+Finished iteration 337437 of 100000000 in 3729 seconds
+Utility: -61.4644
+Finished iteration 337872 of 100000000 in 3734 seconds
+Utility: 0.876785
+Finished iteration 338306 of 100000000 in 3739 seconds
+Utility: 32.1588
+Finished iteration 338740 of 100000000 in 3744 seconds
+Utility: -23.599
+Finished iteration 339175 of 100000000 in 3749 seconds
+Utility: 6.24717
+Finished iteration 339611 of 100000000 in 3754 seconds
+Utility: 57.6127
+Finished iteration 340046 of 100000000 in 3759 seconds
+Utility: 2.21309
+Finished iteration 340482 of 100000000 in 3764 seconds
+Utility: 2.95627
+Finished iteration 340918 of 100000000 in 3769 seconds
+Utility: -12.8122
+Finished iteration 341355 of 100000000 in 3774 seconds
+Utility: 37.6617
+Finished iteration 341789 of 100000000 in 3779 seconds
+Utility: -3.27459
+Finished iteration 342225 of 100000000 in 3784 seconds
+Utility: 62.8212
+Finished iteration 342661 of 100000000 in 3789 seconds
+Utility: -9.30471
+Finished iteration 343096 of 100000000 in 3794 seconds
+Utility: 10.075
+Finished iteration 343529 of 100000000 in 3799 seconds
+Utility: 20.2856
+Finished iteration 343964 of 100000000 in 3804 seconds
+Utility: 4.00992
+Finished iteration 344400 of 100000000 in 3809 seconds
+Utility: -60.8302
+Finished iteration 344843 of 100000000 in 3814 seconds
+Utility: -63.9354
+Finished iteration 345292 of 100000000 in 3819 seconds
+Utility: 4.9903
+Finished iteration 345751 of 100000000 in 3824 seconds
+Utility: 23.5716
+Finished iteration 346213 of 100000000 in 3829 seconds
+Utility: 6.29282
+Finished iteration 346675 of 100000000 in 3834 seconds
+Utility: -34.8029
+Finished iteration 347134 of 100000000 in 3839 seconds
+Utility: -2.27606
+Finished iteration 347595 of 100000000 in 3844 seconds
+Utility: -22.9615
+Finished iteration 348057 of 100000000 in 3849 seconds
+Utility: 43.8777
+Finished iteration 348518 of 100000000 in 3854 seconds
+Utility: 28.2934
+Finished iteration 348978 of 100000000 in 3859 seconds
+Utility: -19.3054
+Finished iteration 349439 of 100000000 in 3864 seconds
+Utility: -50.3178
+Finished iteration 349900 of 100000000 in 3869 seconds
+Utility: 213.444
+Finished iteration 350362 of 100000000 in 3874 seconds
+Utility: -96.5941
+Finished iteration 350824 of 100000000 in 3879 seconds
+Utility: -30.7887
+Finished iteration 351286 of 100000000 in 3884 seconds
+Utility: 43.1697
+Finished iteration 351748 of 100000000 in 3889 seconds
+Utility: 32.7691
+Finished iteration 352210 of 100000000 in 3894 seconds
+Utility: -48.9043
+Finished iteration 352670 of 100000000 in 3899 seconds
+Utility: 3.89597
+Finished iteration 353132 of 100000000 in 3904 seconds
+Utility: 2.13195
+Finished iteration 353595 of 100000000 in 3909 seconds
+Utility: -87.8605
+Finished iteration 354057 of 100000000 in 3914 seconds
+Utility: -183.229
+Finished iteration 354517 of 100000000 in 3919 seconds
+Utility: -2.22903
+Finished iteration 354980 of 100000000 in 3924 seconds
+Utility: 91.5369
+Finished iteration 355440 of 100000000 in 3929 seconds
+Utility: 5.94938
+Finished iteration 355901 of 100000000 in 3934 seconds
+Utility: 35.3446
+Finished iteration 356363 of 100000000 in 3939 seconds
+Utility: -99.5948
+Finished iteration 356825 of 100000000 in 3944 seconds
+Utility: 3.89096
+Finished iteration 357287 of 100000000 in 3949 seconds
+Utility: 22.9719
+Finished iteration 357749 of 100000000 in 3954 seconds
+Utility: -47.6613
+Finished iteration 358209 of 100000000 in 3959 seconds
+Utility: -6.51936
+Finished iteration 358671 of 100000000 in 3964 seconds
+Utility: 49.6135
+Finished iteration 359133 of 100000000 in 3969 seconds
+Utility: 4.73386
+Finished iteration 359594 of 100000000 in 3974 seconds
+Utility: 1.57734
+Finished iteration 360054 of 100000000 in 3979 seconds
+Utility: 69.3514
+Finished iteration 360516 of 100000000 in 3984 seconds
+Utility: 4.64807
+Finished iteration 360976 of 100000000 in 3989 seconds
+Utility: -56.6655
+Finished iteration 361438 of 100000000 in 3994 seconds
+Utility: -13.8266
+Finished iteration 361900 of 100000000 in 3999 seconds
+Utility: -4.82518
+Finished iteration 362361 of 100000000 in 4004 seconds
+Utility: -46.753
+Finished iteration 362822 of 100000000 in 4009 seconds
+Utility: 0.481649
+Finished iteration 363284 of 100000000 in 4014 seconds
+Utility: -17.5472
+Finished iteration 363744 of 100000000 in 4019 seconds
+Utility: 64.438
+Finished iteration 364205 of 100000000 in 4024 seconds
+Utility: -5.93165
+Finished iteration 364668 of 100000000 in 4029 seconds
+Utility: -1.00399
+Finished iteration 365129 of 100000000 in 4034 seconds
+Utility: -0.00955311
+Finished iteration 365590 of 100000000 in 4039 seconds
+Utility: 74.2015
+Finished iteration 366051 of 100000000 in 4044 seconds
+Utility: 0.151679
+Finished iteration 366511 of 100000000 in 4049 seconds
+Utility: 112.847
+Finished iteration 366972 of 100000000 in 4054 seconds
+Utility: -36.5141
+Finished iteration 367433 of 100000000 in 4059 seconds
+Utility: 5.24981
+Finished iteration 367895 of 100000000 in 4064 seconds
+Utility: -158.86
+Finished iteration 368356 of 100000000 in 4069 seconds
+Utility: 8.18665
+Finished iteration 368817 of 100000000 in 4074 seconds
+Utility: 52.2685
+Finished iteration 369276 of 100000000 in 4079 seconds
+Utility: -64.4938
+Finished iteration 369737 of 100000000 in 4084 seconds
+Utility: -3.07292
+Finished iteration 370197 of 100000000 in 4089 seconds
+Utility: 148.341
+Finished iteration 370658 of 100000000 in 4094 seconds
+Utility: 0.533726
+Finished iteration 371119 of 100000000 in 4099 seconds
+Utility: -0.575888
+Finished iteration 371581 of 100000000 in 4104 seconds
+Utility: -279.343
+Finished iteration 372040 of 100000000 in 4109 seconds
+Utility: 219.375
+Finished iteration 372501 of 100000000 in 4114 seconds
+Utility: -2.00049
+Finished iteration 372962 of 100000000 in 4119 seconds
+Utility: 68.5603
+Finished iteration 373423 of 100000000 in 4124 seconds
+Utility: -6.63652
+Finished iteration 373885 of 100000000 in 4129 seconds
+Utility: 4.85223
+Finished iteration 374347 of 100000000 in 4134 seconds
+Utility: 17.499
+Finished iteration 374807 of 100000000 in 4139 seconds
+Utility: -223.442
+Finished iteration 375269 of 100000000 in 4144 seconds
+Utility: 29.8417
+Finished iteration 375731 of 100000000 in 4149 seconds
+Utility: -33.7281
+Finished iteration 376192 of 100000000 in 4154 seconds
+Utility: 31.5091
+Finished iteration 376652 of 100000000 in 4159 seconds
+Utility: 0.515419
+Finished iteration 377114 of 100000000 in 4164 seconds
+Utility: 60.3661
+Finished iteration 377574 of 100000000 in 4169 seconds
+Utility: -2.03838
+Finished iteration 378036 of 100000000 in 4174 seconds
+Utility: -14.0535
+Finished iteration 378498 of 100000000 in 4179 seconds
+Utility: -0.549012
+Finished iteration 378960 of 100000000 in 4184 seconds
+Utility: 0.776941
+Finished iteration 379422 of 100000000 in 4189 seconds
+Utility: 197.245
+Finished iteration 379884 of 100000000 in 4194 seconds
+Utility: -8.88482
+Finished iteration 380343 of 100000000 in 4199 seconds
+Utility: -0.570506
+Finished iteration 380804 of 100000000 in 4204 seconds
+Utility: 30.4047
+Finished iteration 381265 of 100000000 in 4209 seconds
+Utility: 18.5787
+Finished iteration 381726 of 100000000 in 4214 seconds
+Utility: -40.3698
+Finished iteration 382186 of 100000000 in 4219 seconds
+Utility: 35.2339
+Finished iteration 382648 of 100000000 in 4224 seconds
+Utility: -49.388
+Finished iteration 383107 of 100000000 in 4229 seconds
+Utility: -64.4232
+Finished iteration 383568 of 100000000 in 4234 seconds
+Utility: -0.152137
+Finished iteration 384029 of 100000000 in 4239 seconds
+Utility: 76.6837
+Finished iteration 384491 of 100000000 in 4244 seconds
+Utility: -30.0826
+Finished iteration 384954 of 100000000 in 4249 seconds
+Utility: 11.441
+Finished iteration 385416 of 100000000 in 4254 seconds
+Utility: 1.7212
+Finished iteration 385877 of 100000000 in 4259 seconds
+Utility: -99.6533
+Finished iteration 386338 of 100000000 in 4264 seconds
+Utility: -54.8692
+Finished iteration 386800 of 100000000 in 4269 seconds
+Utility: 92.4078
+Finished iteration 387261 of 100000000 in 4274 seconds
+Utility: 0.226941
+Finished iteration 387721 of 100000000 in 4279 seconds
+Utility: -2.88147
+Finished iteration 388183 of 100000000 in 4284 seconds
+Utility: 3.43858
+Finished iteration 388644 of 100000000 in 4289 seconds
+Utility: 14.5615
+Finished iteration 389106 of 100000000 in 4294 seconds
+Utility: -5.97092
+Finished iteration 389568 of 100000000 in 4299 seconds
+Utility: 26.0269
+Finished iteration 390030 of 100000000 in 4304 seconds
+Utility: -14.5346
+Finished iteration 390492 of 100000000 in 4309 seconds
+Utility: 21.6243
+Finished iteration 390954 of 100000000 in 4314 seconds
+Utility: -5.72205
+Finished iteration 391413 of 100000000 in 4319 seconds
+Utility: -4.15383
+Finished iteration 391875 of 100000000 in 4324 seconds
+Utility: 11.6238
+Finished iteration 392337 of 100000000 in 4329 seconds
+Utility: -5.51363
+Finished iteration 392799 of 100000000 in 4334 seconds
+Utility: -7.66963
+Finished iteration 393260 of 100000000 in 4339 seconds
+Utility: -3.38358
+Finished iteration 393722 of 100000000 in 4344 seconds
+Utility: -15.0115
+Finished iteration 394182 of 100000000 in 4349 seconds
+Utility: 57.8173
+Finished iteration 394643 of 100000000 in 4354 seconds
+Utility: 31.6188
+Finished iteration 395104 of 100000000 in 4359 seconds
+Utility: -0.900379
+Finished iteration 395566 of 100000000 in 4364 seconds
+Utility: 28.8558
+Finished iteration 396028 of 100000000 in 4369 seconds
+Utility: 91.454
+Finished iteration 396490 of 100000000 in 4374 seconds
+Utility: -2.2691
+Finished iteration 396951 of 100000000 in 4379 seconds
+Utility: -84.519
+Finished iteration 397412 of 100000000 in 4384 seconds
+Utility: 10.3893
+Finished iteration 397874 of 100000000 in 4389 seconds
+Utility: -3.19109
+Finished iteration 398335 of 100000000 in 4394 seconds
+Utility: 124.214
+Finished iteration 398797 of 100000000 in 4399 seconds
+Utility: -94.8458
+Finished iteration 399258 of 100000000 in 4404 seconds
+Utility: 47.1007
+Finished iteration 399719 of 100000000 in 4409 seconds
+Utility: 189.132
+Finished iteration 400180 of 100000000 in 4414 seconds
+Utility: 125.519
+Finished iteration 400642 of 100000000 in 4419 seconds
+Utility: -0.73497
+Finished iteration 401104 of 100000000 in 4424 seconds
+Utility: -13.9962
+Finished iteration 401565 of 100000000 in 4429 seconds
+Utility: 23.2092
+Finished iteration 402027 of 100000000 in 4434 seconds
+Utility: -22.3001
+Finished iteration 402487 of 100000000 in 4439 seconds
+Utility: 3.73332
+Finished iteration 402949 of 100000000 in 4444 seconds
+Utility: -2.47824
+Finished iteration 403411 of 100000000 in 4449 seconds
+Utility: 171.074
+Finished iteration 403871 of 100000000 in 4454 seconds
+Utility: -5.36447
+Finished iteration 404332 of 100000000 in 4459 seconds
+Utility: 10.0758
+Finished iteration 404794 of 100000000 in 4464 seconds
+Utility: -11.9891
+Finished iteration 405255 of 100000000 in 4469 seconds
+Utility: 9.66653
+Finished iteration 405716 of 100000000 in 4474 seconds
+Utility: 26.236
+Finished iteration 406178 of 100000000 in 4479 seconds
+Utility: -53.2596
+Finished iteration 406638 of 100000000 in 4484 seconds
+Utility: -1.13743
+Finished iteration 407100 of 100000000 in 4489 seconds
+Utility: -205.73
+Finished iteration 407561 of 100000000 in 4494 seconds
+Utility: 5.50546
+Finished iteration 408021 of 100000000 in 4499 seconds
+Utility: -1.8196
+Finished iteration 408483 of 100000000 in 4504 seconds
+Utility: -11.8549
+Finished iteration 408944 of 100000000 in 4509 seconds
+Utility: 13.171
+Finished iteration 409406 of 100000000 in 4514 seconds
+Utility: 67.7227
+Finished iteration 409867 of 100000000 in 4519 seconds
+Utility: -23.0224
+Finished iteration 410328 of 100000000 in 4524 seconds
+Utility: 73.1019
+Finished iteration 410790 of 100000000 in 4529 seconds
+Utility: 10.7174
+Finished iteration 411250 of 100000000 in 4534 seconds
+Utility: -38.0513
+Finished iteration 411711 of 100000000 in 4539 seconds
+Utility: -32.5965
+Finished iteration 412173 of 100000000 in 4544 seconds
+Utility: -10.9099
+Finished iteration 412635 of 100000000 in 4549 seconds
+Utility: 68.7515
+Finished iteration 413096 of 100000000 in 4554 seconds
+Utility: 32.9983
+Finished iteration 413556 of 100000000 in 4559 seconds
+Utility: 8.11878
+Finished iteration 414018 of 100000000 in 4564 seconds
+Utility: -3.33628
+Finished iteration 414480 of 100000000 in 4569 seconds
+Utility: -10.2186
+Finished iteration 414940 of 100000000 in 4574 seconds
+Utility: -0.195749
+Finished iteration 415401 of 100000000 in 4579 seconds
+Utility: 0.174317
+Finished iteration 415863 of 100000000 in 4585 seconds
+Utility: -23.9591
+Finished iteration 416324 of 100000000 in 4590 seconds
+Utility: 33.0934
+Finished iteration 416784 of 100000000 in 4595 seconds
+Utility: 9.86849
+Finished iteration 417246 of 100000000 in 4600 seconds
+Utility: -0.853141
+Finished iteration 417708 of 100000000 in 4605 seconds
+Utility: -5.39374
+Finished iteration 418169 of 100000000 in 4610 seconds
+Utility: 22.1753
+Finished iteration 418630 of 100000000 in 4615 seconds
+Utility: -51.2461
+Finished iteration 419090 of 100000000 in 4620 seconds
+Utility: -8.98295
+Finished iteration 419551 of 100000000 in 4625 seconds
+Utility: -9.70082
+Finished iteration 420013 of 100000000 in 4630 seconds
+Utility: 11.7734
+Finished iteration 420474 of 100000000 in 4635 seconds
+Utility: -13.8481
+Finished iteration 420930 of 100000000 in 4640 seconds
+Utility: 122.303
+Finished iteration 421380 of 100000000 in 4645 seconds
+Utility: -7.45772
+Finished iteration 421816 of 100000000 in 4650 seconds
+Utility: 15.4361
+Finished iteration 422250 of 100000000 in 4655 seconds
+Utility: 50.9874
+Finished iteration 422685 of 100000000 in 4660 seconds
+Utility: 105.285
+Finished iteration 423121 of 100000000 in 4665 seconds
+Utility: -3.456
+Finished iteration 423566 of 100000000 in 4670 seconds
+Utility: 15.9347
+Finished iteration 424026 of 100000000 in 4675 seconds
+Utility: -30.0134
+Finished iteration 424484 of 100000000 in 4680 seconds
+Utility: -114.865
+Finished iteration 424946 of 100000000 in 4685 seconds
+Utility: -2.59009
+Finished iteration 425408 of 100000000 in 4690 seconds
+Utility: -32.553
+Finished iteration 425868 of 100000000 in 4695 seconds
+Utility: 89.6256
+Finished iteration 426329 of 100000000 in 4700 seconds
+Utility: -18.8589
+Finished iteration 426790 of 100000000 in 4705 seconds
+Utility: 18.3834
+Finished iteration 427251 of 100000000 in 4710 seconds
+Utility: -35.599
+Finished iteration 427711 of 100000000 in 4715 seconds
+Utility: 8.81795
+Finished iteration 428172 of 100000000 in 4720 seconds
+Utility: 3.3518
+Finished iteration 428633 of 100000000 in 4725 seconds
+Utility: 11.2189
+Finished iteration 429094 of 100000000 in 4730 seconds
+Utility: 5.12735
+Finished iteration 429556 of 100000000 in 4735 seconds
+Utility: -54.1136
+Finished iteration 430016 of 100000000 in 4740 seconds
+Utility: 7.57732
+Finished iteration 430478 of 100000000 in 4745 seconds
+Utility: -17.3598
+Finished iteration 430939 of 100000000 in 4750 seconds
+Utility: 21.6188
+Finished iteration 431400 of 100000000 in 4755 seconds
+Utility: -174.374
+Finished iteration 431861 of 100000000 in 4760 seconds
+Utility: -42.4155
+Finished iteration 432322 of 100000000 in 4765 seconds
+Utility: -5.72816
+Finished iteration 432782 of 100000000 in 4770 seconds
+Utility: -6.09435
+Finished iteration 433242 of 100000000 in 4775 seconds
+Utility: 4.48881
+Finished iteration 433703 of 100000000 in 4780 seconds
+Utility: -7.1515
+Finished iteration 434165 of 100000000 in 4785 seconds
+Utility: 45.3501
+Finished iteration 434628 of 100000000 in 4790 seconds
+Utility: 16.1457
+Finished iteration 435089 of 100000000 in 4795 seconds
+Utility: 20.5739
+Finished iteration 435549 of 100000000 in 4800 seconds
+Utility: -40.159
+Finished iteration 436011 of 100000000 in 4805 seconds
+Utility: 27.6051
+Finished iteration 436473 of 100000000 in 4810 seconds
+Utility: -0.455666
+Finished iteration 436934 of 100000000 in 4815 seconds
+Utility: 66.914
+Finished iteration 437395 of 100000000 in 4820 seconds
+Utility: -1.87795
+Finished iteration 437856 of 100000000 in 4825 seconds
+Utility: 0.00426626
+Finished iteration 438318 of 100000000 in 4830 seconds
+Utility: -106.236
+Finished iteration 438780 of 100000000 in 4835 seconds
+Utility: -56.5255
+Finished iteration 439239 of 100000000 in 4840 seconds
+Utility: 9.3274
+Finished iteration 439700 of 100000000 in 4845 seconds
+Utility: -75.9084
+Finished iteration 440161 of 100000000 in 4850 seconds
+Utility: 4.76109
+Finished iteration 440624 of 100000000 in 4855 seconds
+Utility: 95.6755
+Finished iteration 441084 of 100000000 in 4860 seconds
+Utility: 76.4807
+Finished iteration 441546 of 100000000 in 4865 seconds
+Utility: -3.72142
+Finished iteration 442009 of 100000000 in 4870 seconds
+Utility: 105.835
+Finished iteration 442470 of 100000000 in 4875 seconds
+Utility: -40.639
+Finished iteration 442930 of 100000000 in 4880 seconds
+Utility: -10.7978
+Finished iteration 443392 of 100000000 in 4885 seconds
+Utility: 16.7347
+Finished iteration 443855 of 100000000 in 4890 seconds
+Utility: 10.0546
+Finished iteration 444317 of 100000000 in 4895 seconds
+Utility: 3.397
+Finished iteration 444777 of 100000000 in 4900 seconds
+Utility: 29.0855
+Finished iteration 445239 of 100000000 in 4905 seconds
+Utility: 65.2117
+Finished iteration 445702 of 100000000 in 4910 seconds
+Utility: -2.46487
+Finished iteration 446164 of 100000000 in 4915 seconds
+Utility: -21.5271
+Finished iteration 446625 of 100000000 in 4920 seconds
+Utility: 65.3335
+Finished iteration 447088 of 100000000 in 4925 seconds
+Utility: -6.59393
+Finished iteration 447550 of 100000000 in 4930 seconds
+Utility: 29.5881
+Finished iteration 448012 of 100000000 in 4935 seconds
+Utility: -1.9525
+Finished iteration 448473 of 100000000 in 4940 seconds
+Utility: -6.14518
+Finished iteration 448934 of 100000000 in 4945 seconds
+Utility: -1.61086
+Finished iteration 449395 of 100000000 in 4950 seconds
+Utility: 0.122075
+Finished iteration 449856 of 100000000 in 4955 seconds
+Utility: 26.5057
+Finished iteration 450317 of 100000000 in 4960 seconds
+Utility: 0.803033
+Finished iteration 450778 of 100000000 in 4965 seconds
+Utility: -5.02757
+Finished iteration 451240 of 100000000 in 4970 seconds
+Utility: 21.319
+Finished iteration 451701 of 100000000 in 4975 seconds
+Utility: -97.69
+Finished iteration 452161 of 100000000 in 4980 seconds
+Utility: -0.530343
+Finished iteration 452622 of 100000000 in 4985 seconds
+Utility: -12.9686
+Finished iteration 453083 of 100000000 in 4990 seconds
+Utility: -10.915
+Finished iteration 453543 of 100000000 in 4995 seconds
+Utility: -51.5283
+Finished iteration 454003 of 100000000 in 5000 seconds
+Utility: 17.7489
+Finished iteration 454464 of 100000000 in 5005 seconds
+Utility: 32.7904
+Finished iteration 454925 of 100000000 in 5010 seconds
+Utility: 36.0607
+Finished iteration 455386 of 100000000 in 5015 seconds
+Utility: -4.65211
+Finished iteration 455847 of 100000000 in 5020 seconds
+Utility: 185.772
+Finished iteration 456309 of 100000000 in 5025 seconds
+Utility: 2.65525
+Finished iteration 456771 of 100000000 in 5030 seconds
+Utility: -67.5342
+Finished iteration 457233 of 100000000 in 5035 seconds
+Utility: 114.346
+Finished iteration 457692 of 100000000 in 5040 seconds
+Utility: -6.89451
+Finished iteration 458153 of 100000000 in 5045 seconds
+Utility: 0.655911
+Finished iteration 458616 of 100000000 in 5050 seconds
+Utility: -14.3059
+Finished iteration 459077 of 100000000 in 5055 seconds
+Utility: -2.27866
+Finished iteration 459538 of 100000000 in 5060 seconds
+Utility: 2.24829
+Finished iteration 460000 of 100000000 in 5065 seconds
+Utility: -18.9431
+Finished iteration 460460 of 100000000 in 5070 seconds
+Utility: -9.31599
+Finished iteration 460922 of 100000000 in 5075 seconds
+Utility: 47.297
+Finished iteration 461383 of 100000000 in 5080 seconds
+Utility: -8.88796
+Finished iteration 461844 of 100000000 in 5085 seconds
+Utility: -98.5789
+Finished iteration 462306 of 100000000 in 5090 seconds
+Utility: 59.7392
+Finished iteration 462767 of 100000000 in 5095 seconds
+Utility: -27.2866
+Finished iteration 463227 of 100000000 in 5100 seconds
+Utility: -24.1248
+Finished iteration 463689 of 100000000 in 5105 seconds
+Utility: 51.7282
+Finished iteration 464151 of 100000000 in 5110 seconds
+Utility: 3.55164
+Finished iteration 464612 of 100000000 in 5115 seconds
+Utility: -49.6372
+Finished iteration 465072 of 100000000 in 5120 seconds
+Utility: -0.179688
+Finished iteration 465533 of 100000000 in 5125 seconds
+Utility: 161.469
+Finished iteration 465994 of 100000000 in 5130 seconds
+Utility: 11.4857
+Finished iteration 466456 of 100000000 in 5135 seconds
+Utility: 10.1554
+Finished iteration 466917 of 100000000 in 5140 seconds
+Utility: -145.404
+Finished iteration 467379 of 100000000 in 5145 seconds
+Utility: -25.9173
+Finished iteration 467840 of 100000000 in 5150 seconds
+Utility: 29.011
+Finished iteration 468302 of 100000000 in 5155 seconds
+Utility: -45.067
+Finished iteration 468760 of 100000000 in 5160 seconds
+Utility: -43.9209
+Finished iteration 469222 of 100000000 in 5165 seconds
+Utility: 103.811
+Finished iteration 469684 of 100000000 in 5170 seconds
+Utility: 29.1575
+Finished iteration 470146 of 100000000 in 5175 seconds
+Utility: 4.45278
+Finished iteration 470607 of 100000000 in 5180 seconds
+Utility: 27.4121
+Finished iteration 471068 of 100000000 in 5185 seconds
+Utility: 214.629
+Finished iteration 471525 of 100000000 in 5190 seconds
+Utility: 72.3919
+Finished iteration 471985 of 100000000 in 5195 seconds
+Utility: -1.11944
+Finished iteration 472446 of 100000000 in 5200 seconds
+Utility: -16.996
+Finished iteration 472908 of 100000000 in 5205 seconds
+Utility: -2.22117
+Finished iteration 473370 of 100000000 in 5210 seconds
+Utility: -3.63764
+Finished iteration 473831 of 100000000 in 5215 seconds
+Utility: 48.9424
+Finished iteration 474291 of 100000000 in 5220 seconds
+Utility: -91.6699
+Finished iteration 474752 of 100000000 in 5225 seconds
+Utility: -6.6851
+Finished iteration 475214 of 100000000 in 5230 seconds
+Utility: -71.0816
+Finished iteration 475675 of 100000000 in 5235 seconds
+Utility: 3.69761
+Finished iteration 476136 of 100000000 in 5240 seconds
+Utility: 1.35356
+Finished iteration 476597 of 100000000 in 5245 seconds
+Utility: -16.4722
+Finished iteration 477058 of 100000000 in 5250 seconds
+Utility: 48.6744
+Finished iteration 477519 of 100000000 in 5255 seconds
+Utility: -16.8631
+Finished iteration 477980 of 100000000 in 5260 seconds
+Utility: 37.5265
+Finished iteration 478441 of 100000000 in 5265 seconds
+Utility: -5.92973
+Finished iteration 478903 of 100000000 in 5270 seconds
+Utility: 0.619039
+Finished iteration 479356 of 100000000 in 5275 seconds
+Utility: -39.4518
+Finished iteration 479796 of 100000000 in 5280 seconds
+Utility: 14.1205
+Finished iteration 480248 of 100000000 in 5285 seconds
+Utility: 23.8703
+Finished iteration 480709 of 100000000 in 5290 seconds
+Utility: 94.2034
+Finished iteration 481168 of 100000000 in 5295 seconds
+Utility: 64.5456
+Finished iteration 481619 of 100000000 in 5300 seconds
+Utility: -71.7816
+Finished iteration 482072 of 100000000 in 5305 seconds
+Utility: 3.24115
+Finished iteration 482533 of 100000000 in 5310 seconds
+Utility: -11.1496
+Finished iteration 482994 of 100000000 in 5315 seconds
+Utility: 70.9487
+Finished iteration 483455 of 100000000 in 5320 seconds
+Utility: 11.0786
+Finished iteration 483916 of 100000000 in 5325 seconds
+Utility: 0.0503379
+Finished iteration 484376 of 100000000 in 5330 seconds
+Utility: -2.36958
+Finished iteration 484838 of 100000000 in 5335 seconds
+Utility: 6.19613
+Finished iteration 485299 of 100000000 in 5340 seconds
+Utility: 15.7424
+Finished iteration 485760 of 100000000 in 5345 seconds
+Utility: -14.4393
+Finished iteration 486222 of 100000000 in 5350 seconds
+Utility: 48.9943
+Finished iteration 486683 of 100000000 in 5355 seconds
+Utility: 15.0242
+Finished iteration 487144 of 100000000 in 5360 seconds
+Utility: -167.653
+Finished iteration 487606 of 100000000 in 5365 seconds
+Utility: -6.39391
+Finished iteration 488067 of 100000000 in 5370 seconds
+Utility: 54.5517
+Finished iteration 488528 of 100000000 in 5375 seconds
+Utility: -32.2271
+Finished iteration 488990 of 100000000 in 5380 seconds
+Utility: 38.5807
+Finished iteration 489450 of 100000000 in 5385 seconds
+Utility: -10.0937
+Finished iteration 489913 of 100000000 in 5390 seconds
+Utility: -13.0477
+Finished iteration 490376 of 100000000 in 5395 seconds
+Utility: -9.75121
+Saving checkpoint at iteration 490753
+Finished iteration 490812 of 100000000 in 5400 seconds
+Utility: -0.845844
+Finished iteration 491273 of 100000000 in 5405 seconds
+Utility: -41.3741
+Finished iteration 491736 of 100000000 in 5410 seconds
+Utility: -0.871755
+Finished iteration 492197 of 100000000 in 5415 seconds
+Utility: 84.4374
+Finished iteration 492657 of 100000000 in 5420 seconds
+Utility: 18.9596
+Finished iteration 493118 of 100000000 in 5425 seconds
+Utility: -17.6976
+Finished iteration 493578 of 100000000 in 5430 seconds
+Utility: -23.9205
+Finished iteration 494040 of 100000000 in 5435 seconds
+Utility: -6.88137
+Finished iteration 494501 of 100000000 in 5440 seconds
+Utility: -109.681
+Finished iteration 494962 of 100000000 in 5445 seconds
+Utility: 104.048
+Finished iteration 495423 of 100000000 in 5450 seconds
+Utility: 87.1625
+Finished iteration 495885 of 100000000 in 5455 seconds
+Utility: 9.73799
+Finished iteration 496345 of 100000000 in 5460 seconds
+Utility: 0.317023
+Finished iteration 496807 of 100000000 in 5465 seconds
+Utility: 1.4421
+Finished iteration 497268 of 100000000 in 5470 seconds
+Utility: 57.2329
+Finished iteration 497728 of 100000000 in 5475 seconds
+Utility: -95.7325
+Finished iteration 498189 of 100000000 in 5480 seconds
+Utility: 2.96881
+Finished iteration 498650 of 100000000 in 5485 seconds
+Utility: -2.10187
+Finished iteration 499110 of 100000000 in 5490 seconds
+Utility: 99.9617
+Finished iteration 499571 of 100000000 in 5495 seconds
+Utility: 0.57568
+Finished iteration 500032 of 100000000 in 5501 seconds
+Utility: -12.0819
+Finished iteration 500493 of 100000000 in 5506 seconds
+Utility: -45.5759
+Finished iteration 500954 of 100000000 in 5511 seconds
+Utility: 41.3955
+Finished iteration 501415 of 100000000 in 5516 seconds
+Utility: -222.111
+Finished iteration 501874 of 100000000 in 5521 seconds
+Utility: -5.79809
+Finished iteration 502336 of 100000000 in 5526 seconds
+Utility: -1.63294
+Finished iteration 502797 of 100000000 in 5531 seconds
+Utility: 89.1746
+Finished iteration 503258 of 100000000 in 5536 seconds
+Utility: 64.5522
+Finished iteration 503719 of 100000000 in 5541 seconds
+Utility: -7.33272
+Finished iteration 504180 of 100000000 in 5546 seconds
+Utility: -33.4918
+Finished iteration 504640 of 100000000 in 5551 seconds
+Utility: 113.152
+Finished iteration 505101 of 100000000 in 5556 seconds
+Utility: 48.2756
+Finished iteration 505562 of 100000000 in 5561 seconds
+Utility: -3.21943
+Finished iteration 506022 of 100000000 in 5566 seconds
+Utility: -22.0445
+Finished iteration 506484 of 100000000 in 5571 seconds
+Utility: 1.99435
+Finished iteration 506945 of 100000000 in 5576 seconds
+Utility: -11.4905
+Finished iteration 507404 of 100000000 in 5581 seconds
+Utility: -120.542
+Finished iteration 507865 of 100000000 in 5586 seconds
+Utility: 35.2374
+Finished iteration 508327 of 100000000 in 5591 seconds
+Utility: 6.13219
+Finished iteration 508789 of 100000000 in 5596 seconds
+Utility: -26.7902
+Finished iteration 509250 of 100000000 in 5601 seconds
+Utility: -35.7775
+Finished iteration 509713 of 100000000 in 5606 seconds
+Utility: -33.6978
+Finished iteration 510174 of 100000000 in 5611 seconds
+Utility: 4.28649
+Finished iteration 510635 of 100000000 in 5616 seconds
+Utility: -11.8759
+Finished iteration 511096 of 100000000 in 5621 seconds
+Utility: -13.8711
+Finished iteration 511557 of 100000000 in 5626 seconds
+Utility: -48.2823
+Finished iteration 512019 of 100000000 in 5631 seconds
+Utility: 28.8005
+Finished iteration 512481 of 100000000 in 5636 seconds
+Utility: 129.663
+Finished iteration 512942 of 100000000 in 5641 seconds
+Utility: -0.919585
+Finished iteration 513403 of 100000000 in 5646 seconds
+Utility: -22.6612
+Finished iteration 513865 of 100000000 in 5651 seconds
+Utility: 45.3299
+Finished iteration 514326 of 100000000 in 5656 seconds
+Utility: -4.44575
+Finished iteration 514786 of 100000000 in 5661 seconds
+Utility: 0.864758
+Finished iteration 515247 of 100000000 in 5666 seconds
+Utility: 0.937656
+Finished iteration 515705 of 100000000 in 5671 seconds
+Utility: 1.39906
+Finished iteration 516144 of 100000000 in 5676 seconds
+Utility: 14.2472
+Finished iteration 516579 of 100000000 in 5681 seconds
+Utility: 6.20474
+Finished iteration 517013 of 100000000 in 5686 seconds
+Utility: 14.4601
+Finished iteration 517448 of 100000000 in 5691 seconds
+Utility: -52.789
+Finished iteration 517896 of 100000000 in 5696 seconds
+Utility: -0.35175
+Finished iteration 518341 of 100000000 in 5701 seconds
+Utility: -39.5264
+Finished iteration 518733 of 100000000 in 5706 seconds
+Utility: -10.195
+Finished iteration 519177 of 100000000 in 5711 seconds
+Utility: 13.3656
+Finished iteration 519638 of 100000000 in 5716 seconds
+Utility: 71.0138
+Finished iteration 520099 of 100000000 in 5721 seconds
+Utility: -7.31689
+Finished iteration 520560 of 100000000 in 5726 seconds
+Utility: 0.0517867
+Finished iteration 521022 of 100000000 in 5731 seconds
+Utility: 0.766811
+Finished iteration 521484 of 100000000 in 5736 seconds
+Utility: -5.92885
+Finished iteration 521946 of 100000000 in 5741 seconds
+Utility: -5.60246
+Finished iteration 522407 of 100000000 in 5746 seconds
+Utility: 4.52844
+Finished iteration 522868 of 100000000 in 5751 seconds
+Utility: -37.4699
+Finished iteration 523330 of 100000000 in 5756 seconds
+Utility: -16.1431
+Finished iteration 523790 of 100000000 in 5761 seconds
+Utility: -19.6318
+Finished iteration 524252 of 100000000 in 5766 seconds
+Utility: 75.4892
+Finished iteration 524714 of 100000000 in 5771 seconds
+Utility: -24.2507
+Finished iteration 525177 of 100000000 in 5776 seconds
+Utility: -0.575533
+Finished iteration 525637 of 100000000 in 5781 seconds
+Utility: 4.08175
+Finished iteration 526099 of 100000000 in 5786 seconds
+Utility: 7.92693
+Finished iteration 526560 of 100000000 in 5791 seconds
+Utility: -9.50772
+Finished iteration 527021 of 100000000 in 5796 seconds
+Utility: 0.518827
+Finished iteration 527483 of 100000000 in 5801 seconds
+Utility: -37.1895
+Finished iteration 527945 of 100000000 in 5806 seconds
+Utility: 87.9903
+Finished iteration 528406 of 100000000 in 5811 seconds
+Utility: -1.6282
+Finished iteration 528867 of 100000000 in 5816 seconds
+Utility: -11.5712
+Finished iteration 529328 of 100000000 in 5821 seconds
+Utility: -37.0429
+Finished iteration 529789 of 100000000 in 5826 seconds
+Utility: 2.90458
+Finished iteration 530250 of 100000000 in 5831 seconds
+Utility: 13.3898
+Finished iteration 530711 of 100000000 in 5836 seconds
+Utility: 9.07127
+Finished iteration 531172 of 100000000 in 5841 seconds
+Utility: 4.41285
+Finished iteration 531633 of 100000000 in 5846 seconds
+Utility: -1.04632
+Finished iteration 532093 of 100000000 in 5851 seconds
+Utility: 80.7955
+Finished iteration 532555 of 100000000 in 5856 seconds
+Utility: -0.802031
+Finished iteration 533016 of 100000000 in 5861 seconds
+Utility: 16.167
+Finished iteration 533477 of 100000000 in 5866 seconds
+Utility: -36.656
+Finished iteration 533938 of 100000000 in 5871 seconds
+Utility: -111.192
+Finished iteration 534399 of 100000000 in 5876 seconds
+Utility: -15.7708
+Finished iteration 534859 of 100000000 in 5881 seconds
+Utility: 46.2964
+Finished iteration 535319 of 100000000 in 5886 seconds
+Utility: -107.966
+Finished iteration 535781 of 100000000 in 5891 seconds
+Utility: -89.2208
+Finished iteration 536243 of 100000000 in 5896 seconds
+Utility: -85.2005
+Finished iteration 536704 of 100000000 in 5901 seconds
+Utility: -169.433
+Finished iteration 537167 of 100000000 in 5906 seconds
+Utility: 6.17057
+Finished iteration 537558 of 100000000 in 5911 seconds
+Utility: 0.412712
+Finished iteration 537981 of 100000000 in 5916 seconds
+Utility: -0.126655
+Finished iteration 538425 of 100000000 in 5921 seconds
+Utility: 2.11798
+Finished iteration 538867 of 100000000 in 5926 seconds
+Utility: -17.1734
+Finished iteration 539311 of 100000000 in 5931 seconds
+Utility: 22.489
+Finished iteration 539772 of 100000000 in 5936 seconds
+Utility: 55.8041
+Finished iteration 540231 of 100000000 in 5941 seconds
+Utility: -2.04822
+Finished iteration 540691 of 100000000 in 5946 seconds
+Utility: 8.36693
+Finished iteration 541150 of 100000000 in 5951 seconds
+Utility: 30.2547
+Finished iteration 541608 of 100000000 in 5956 seconds
+Utility: -19.6171
+Finished iteration 542066 of 100000000 in 5961 seconds
+Utility: 198.209
+Finished iteration 542527 of 100000000 in 5966 seconds
+Utility: 199.824
+Finished iteration 542988 of 100000000 in 5971 seconds
+Utility: -14.3208
+Finished iteration 543450 of 100000000 in 5976 seconds
+Utility: 170.334
+Finished iteration 543912 of 100000000 in 5981 seconds
+Utility: 118.14
+Finished iteration 544374 of 100000000 in 5986 seconds
+Utility: -37.5638
+Finished iteration 544835 of 100000000 in 5991 seconds
+Utility: -1.82426
+Finished iteration 545297 of 100000000 in 5996 seconds
+Utility: -11.4965
+Finished iteration 545757 of 100000000 in 6001 seconds
+Utility: 44.9517
+Finished iteration 546218 of 100000000 in 6006 seconds
+Utility: -7.47666
+Finished iteration 546679 of 100000000 in 6011 seconds
+Utility: 0.814517
+Finished iteration 547140 of 100000000 in 6016 seconds
+Utility: 91.7001
+Finished iteration 547601 of 100000000 in 6021 seconds
+Utility: -3.2113
+Finished iteration 548062 of 100000000 in 6026 seconds
+Utility: -0.0294516
+Finished iteration 548522 of 100000000 in 6031 seconds
+Utility: 1.5276
+Finished iteration 548983 of 100000000 in 6036 seconds
+Utility: 50.3772
+Finished iteration 549444 of 100000000 in 6041 seconds
+Utility: -0.0918919
+Finished iteration 549906 of 100000000 in 6046 seconds
+Utility: -3.61914
+Finished iteration 550366 of 100000000 in 6051 seconds
+Utility: -0.525112
+Finished iteration 550824 of 100000000 in 6056 seconds
+Utility: -11.8672
+Finished iteration 551283 of 100000000 in 6061 seconds
+Utility: -54.6779
+Finished iteration 551744 of 100000000 in 6066 seconds
+Utility: 33.9847
+Finished iteration 552205 of 100000000 in 6071 seconds
+Utility: 16.7045
+Finished iteration 552666 of 100000000 in 6076 seconds
+Utility: -0.438186
+Finished iteration 553128 of 100000000 in 6081 seconds
+Utility: -2.04319
+Finished iteration 553589 of 100000000 in 6086 seconds
+Utility: 4.89868
+Finished iteration 554050 of 100000000 in 6091 seconds
+Utility: 2.26551
+Finished iteration 554511 of 100000000 in 6096 seconds
+Utility: 56.5327
+Finished iteration 554972 of 100000000 in 6101 seconds
+Utility: 7.32588
+Finished iteration 555434 of 100000000 in 6106 seconds
+Utility: 26.1008
+Finished iteration 555896 of 100000000 in 6111 seconds
+Utility: -8.30548
+Finished iteration 556358 of 100000000 in 6116 seconds
+Utility: 1.6905
+Finished iteration 556819 of 100000000 in 6121 seconds
+Utility: -7.72978
+Finished iteration 557281 of 100000000 in 6126 seconds
+Utility: 130.586
+Finished iteration 557742 of 100000000 in 6131 seconds
+Utility: -26.6335
+Finished iteration 558202 of 100000000 in 6136 seconds
+Utility: -22.4186
+Finished iteration 558664 of 100000000 in 6141 seconds
+Utility: 39.4277
+Finished iteration 559112 of 100000000 in 6146 seconds
+Utility: -23.1415
+Finished iteration 559563 of 100000000 in 6151 seconds
+Utility: 2.87479
+Finished iteration 560024 of 100000000 in 6156 seconds
+Utility: -29.7776
+Finished iteration 560464 of 100000000 in 6161 seconds
+Utility: -7.39839
+Finished iteration 560907 of 100000000 in 6166 seconds
+Utility: 15.1585
+Finished iteration 561329 of 100000000 in 6171 seconds
+Utility: 4.08617
+Finished iteration 561742 of 100000000 in 6176 seconds
+Utility: 0.00420305
+Finished iteration 562182 of 100000000 in 6181 seconds
+Utility: -4.26837
+Finished iteration 562641 of 100000000 in 6186 seconds
+Utility: -2.88607
+Finished iteration 563100 of 100000000 in 6191 seconds
+Utility: -7.95227
+Finished iteration 563547 of 100000000 in 6196 seconds
+Utility: 81.8771
+Finished iteration 563971 of 100000000 in 6201 seconds
+Utility: 5.02429
+Finished iteration 564390 of 100000000 in 6206 seconds
+Utility: 6.77669
+Finished iteration 564809 of 100000000 in 6211 seconds
+Utility: 26.1265
+Finished iteration 565227 of 100000000 in 6216 seconds
+Utility: -2.74369
+Finished iteration 565651 of 100000000 in 6221 seconds
+Utility: 36.4188
+Finished iteration 566084 of 100000000 in 6226 seconds
+Utility: -37.6493
+Finished iteration 566531 of 100000000 in 6231 seconds
+Utility: -5.78763
+Finished iteration 566986 of 100000000 in 6236 seconds
+Utility: -3.30956
+Finished iteration 567446 of 100000000 in 6241 seconds
+Utility: 29.6156
+Finished iteration 567908 of 100000000 in 6246 seconds
+Utility: 23.7187
+Finished iteration 568370 of 100000000 in 6251 seconds
+Utility: 59.3181
+Finished iteration 568831 of 100000000 in 6256 seconds
+Utility: 73.0928
+Finished iteration 569292 of 100000000 in 6261 seconds
+Utility: 25.1434
+Finished iteration 569753 of 100000000 in 6266 seconds
+Utility: -22.5385
+Finished iteration 570214 of 100000000 in 6271 seconds
+Utility: -24.8716
+Finished iteration 570675 of 100000000 in 6276 seconds
+Utility: 21.007
+Finished iteration 571137 of 100000000 in 6281 seconds
+Utility: -1.91639
+Finished iteration 571599 of 100000000 in 6286 seconds
+Utility: -82.4957
+Finished iteration 572060 of 100000000 in 6291 seconds
+Utility: -134.6
+Finished iteration 572520 of 100000000 in 6296 seconds
+Utility: 13.2608
+Finished iteration 572979 of 100000000 in 6301 seconds
+Utility: -2.78057
+Finished iteration 573441 of 100000000 in 6306 seconds
+Utility: 75.4391
+Finished iteration 573877 of 100000000 in 6311 seconds
+Utility: 9.83254
+Finished iteration 574292 of 100000000 in 6316 seconds
+Utility: -36.945
+Finished iteration 574707 of 100000000 in 6321 seconds
+Utility: 49.5157
+Finished iteration 575123 of 100000000 in 6326 seconds
+Utility: -35.8189
+Finished iteration 575539 of 100000000 in 6331 seconds
+Utility: -0.0158473
+Finished iteration 575955 of 100000000 in 6336 seconds
+Utility: -38.6241
+Finished iteration 576404 of 100000000 in 6341 seconds
+Utility: 1.77561
+Finished iteration 576855 of 100000000 in 6346 seconds
+Utility: 3.2941
+Finished iteration 577318 of 100000000 in 6351 seconds
+Utility: -11.8106
+Finished iteration 577779 of 100000000 in 6356 seconds
+Utility: -55.4349
+Finished iteration 578240 of 100000000 in 6361 seconds
+Utility: -3.64614
+Finished iteration 578702 of 100000000 in 6366 seconds
+Utility: 250.346
+Finished iteration 579163 of 100000000 in 6371 seconds
+Utility: 3.14805
+Finished iteration 579623 of 100000000 in 6376 seconds
+Utility: 16.3994
+Finished iteration 580084 of 100000000 in 6381 seconds
+Utility: 22.8339
+Finished iteration 580546 of 100000000 in 6386 seconds
+Utility: 4.43127
+Finished iteration 581008 of 100000000 in 6392 seconds
+Utility: 10.9413
+Finished iteration 581469 of 100000000 in 6397 seconds
+Utility: 17.4702
+Finished iteration 581931 of 100000000 in 6402 seconds
+Utility: -105.173
+Finished iteration 582393 of 100000000 in 6407 seconds
+Utility: -78.7798
+Finished iteration 582855 of 100000000 in 6412 seconds
+Utility: 10.1459
+Finished iteration 583314 of 100000000 in 6417 seconds
+Utility: 50.3818
+Finished iteration 583774 of 100000000 in 6422 seconds
+Utility: -11.6255
+Finished iteration 584235 of 100000000 in 6427 seconds
+Utility: -58.9511
+Finished iteration 584696 of 100000000 in 6432 seconds
+Utility: -0.650899
+Finished iteration 585156 of 100000000 in 6437 seconds
+Utility: 9.37933
+Finished iteration 585617 of 100000000 in 6442 seconds
+Utility: -6.22937
+Finished iteration 586078 of 100000000 in 6447 seconds
+Utility: 190.565
+Finished iteration 586531 of 100000000 in 6452 seconds
+Utility: -70.3495
+Finished iteration 586991 of 100000000 in 6457 seconds
+Utility: 2.90739
+Finished iteration 587452 of 100000000 in 6462 seconds
+Utility: -38.3884
+Finished iteration 587913 of 100000000 in 6467 seconds
+Utility: -34.4685
+Finished iteration 588374 of 100000000 in 6472 seconds
+Utility: 64.6117
+Finished iteration 588819 of 100000000 in 6477 seconds
+Utility: 16.9128
+Finished iteration 589261 of 100000000 in 6482 seconds
+Utility: -2.25237
+Finished iteration 589701 of 100000000 in 6487 seconds
+Utility: -53.4252
+Finished iteration 590102 of 100000000 in 6492 seconds
+Utility: 322.775
+Finished iteration 590514 of 100000000 in 6497 seconds
+Utility: 81.8596
+Finished iteration 590919 of 100000000 in 6502 seconds
+Utility: 91.4118
+Finished iteration 591329 of 100000000 in 6507 seconds
+Utility: -68.4474
+Finished iteration 591747 of 100000000 in 6512 seconds
+Utility: 0.877849
+Finished iteration 592209 of 100000000 in 6517 seconds
+Utility: 29.579
+Finished iteration 592666 of 100000000 in 6522 seconds
+Utility: 14.9573
+Finished iteration 593115 of 100000000 in 6527 seconds
+Utility: -2.66128
+Finished iteration 593574 of 100000000 in 6532 seconds
+Utility: -1.1341
+Finished iteration 594034 of 100000000 in 6537 seconds
+Utility: -42.8392
+Finished iteration 594495 of 100000000 in 6542 seconds
+Utility: -14.3481
+Finished iteration 594948 of 100000000 in 6547 seconds
+Utility: -56.2202
+Finished iteration 595374 of 100000000 in 6552 seconds
+Utility: 94.4781
+Finished iteration 595810 of 100000000 in 6557 seconds
+Utility: 10.7564
+Finished iteration 596229 of 100000000 in 6562 seconds
+Utility: -7.2495
+Finished iteration 596642 of 100000000 in 6567 seconds
+Utility: -8.96776
+Finished iteration 597058 of 100000000 in 6572 seconds
+Utility: 13.1185
+Finished iteration 597472 of 100000000 in 6577 seconds
+Utility: 0.0368895
+Finished iteration 597884 of 100000000 in 6582 seconds
+Utility: 4.48798
+Finished iteration 598324 of 100000000 in 6587 seconds
+Utility: -61.4984
+Finished iteration 598769 of 100000000 in 6592 seconds
+Utility: 2.52963
+Finished iteration 599220 of 100000000 in 6597 seconds
+Utility: -27.3394
+Finished iteration 599654 of 100000000 in 6602 seconds
+Utility: -46.6973
+Finished iteration 600093 of 100000000 in 6607 seconds
+Utility: 77.322
+Finished iteration 600543 of 100000000 in 6612 seconds
+Utility: 14.4547
+Finished iteration 600990 of 100000000 in 6617 seconds
+Utility: 4.05823
+Finished iteration 601443 of 100000000 in 6622 seconds
+Utility: -1.55817
+Finished iteration 601897 of 100000000 in 6627 seconds
+Utility: 186.493
+Finished iteration 602350 of 100000000 in 6632 seconds
+Utility: -1.87131
+Finished iteration 602801 of 100000000 in 6637 seconds
+Utility: 5.58157
+Finished iteration 603253 of 100000000 in 6642 seconds
+Utility: -20.6631
+Finished iteration 603707 of 100000000 in 6647 seconds
+Utility: -144.96
+Finished iteration 604162 of 100000000 in 6652 seconds
+Utility: -0.587643
+Finished iteration 604613 of 100000000 in 6657 seconds
+Utility: -1.51803
+Finished iteration 605063 of 100000000 in 6662 seconds
+Utility: 25.9463
+Finished iteration 605513 of 100000000 in 6667 seconds
+Utility: 5.80486
+Finished iteration 605965 of 100000000 in 6672 seconds
+Utility: 6.46326
+Finished iteration 606416 of 100000000 in 6677 seconds
+Utility: -3.37918
+Finished iteration 606868 of 100000000 in 6682 seconds
+Utility: -33.048
+Finished iteration 607319 of 100000000 in 6687 seconds
+Utility: -18.7731
+Finished iteration 607774 of 100000000 in 6692 seconds
+Utility: -5.02186
+Finished iteration 608227 of 100000000 in 6697 seconds
+Utility: 4.24795
+Finished iteration 608676 of 100000000 in 6702 seconds
+Utility: 36.2384
+Finished iteration 609110 of 100000000 in 6707 seconds
+Utility: -13.6104
+Finished iteration 609544 of 100000000 in 6712 seconds
+Utility: 0.285237
+Finished iteration 609978 of 100000000 in 6717 seconds
+Utility: -21.6454
+Finished iteration 610411 of 100000000 in 6722 seconds
+Utility: -2.86272
+Finished iteration 610846 of 100000000 in 6727 seconds
+Utility: -0.0961515
+Finished iteration 611281 of 100000000 in 6732 seconds
+Utility: -0.143039
+Finished iteration 611714 of 100000000 in 6737 seconds
+Utility: -20.8999
+Finished iteration 612150 of 100000000 in 6742 seconds
+Utility: -0.415547
+Finished iteration 612586 of 100000000 in 6747 seconds
+Utility: 255.957
+Finished iteration 613021 of 100000000 in 6752 seconds
+Utility: -19.3279
+Finished iteration 613457 of 100000000 in 6757 seconds
+Utility: 58.0048
+Finished iteration 613892 of 100000000 in 6762 seconds
+Utility: 8.84691
+Finished iteration 614327 of 100000000 in 6767 seconds
+Utility: -253.82
+Finished iteration 614762 of 100000000 in 6772 seconds
+Utility: 23.0055
+Finished iteration 615196 of 100000000 in 6777 seconds
+Utility: -0.354093
+Finished iteration 615630 of 100000000 in 6782 seconds
+Utility: -1.09679
+Finished iteration 616066 of 100000000 in 6787 seconds
+Utility: 3.05845
+Finished iteration 616500 of 100000000 in 6792 seconds
+Utility: 44.2819
+Finished iteration 616934 of 100000000 in 6797 seconds
+Utility: 18.6542
+Finished iteration 617369 of 100000000 in 6802 seconds
+Utility: -32.3987
+Finished iteration 617804 of 100000000 in 6807 seconds
+Utility: -34.182
+Finished iteration 618239 of 100000000 in 6812 seconds
+Utility: 12.8639
+Finished iteration 618674 of 100000000 in 6817 seconds
+Utility: -7.23197
+Finished iteration 619109 of 100000000 in 6822 seconds
+Utility: -0.0480389
+Finished iteration 619545 of 100000000 in 6827 seconds
+Utility: 0.904884
+Finished iteration 619981 of 100000000 in 6832 seconds
+Utility: 2.19312
+Finished iteration 620414 of 100000000 in 6837 seconds
+Utility: -8.84583
+Finished iteration 620848 of 100000000 in 6842 seconds
+Utility: -6.08479
+Finished iteration 621283 of 100000000 in 6847 seconds
+Utility: 17.0238
+Finished iteration 621718 of 100000000 in 6852 seconds
+Utility: 1.24897
+Finished iteration 622151 of 100000000 in 6857 seconds
+Utility: 35.8527
+Finished iteration 622587 of 100000000 in 6862 seconds
+Utility: -42.8847
+Finished iteration 623023 of 100000000 in 6867 seconds
+Utility: -33.9608
+Finished iteration 623458 of 100000000 in 6872 seconds
+Utility: 1.78651
+Finished iteration 623894 of 100000000 in 6877 seconds
+Utility: -22.6292
+Finished iteration 624329 of 100000000 in 6882 seconds
+Utility: 0.539246
+Finished iteration 624765 of 100000000 in 6887 seconds
+Utility: 1.98359
+Finished iteration 625201 of 100000000 in 6892 seconds
+Utility: -0.10582
+Finished iteration 625635 of 100000000 in 6897 seconds
+Utility: 11.6121
+Finished iteration 626069 of 100000000 in 6902 seconds
+Utility: -98.4826
+Finished iteration 626504 of 100000000 in 6907 seconds
+Utility: -6.8423
+Finished iteration 626938 of 100000000 in 6912 seconds
+Utility: 8.49513
+Finished iteration 627371 of 100000000 in 6917 seconds
+Utility: 67.5044
+Finished iteration 627807 of 100000000 in 6922 seconds
+Utility: 36.1019
+Finished iteration 628242 of 100000000 in 6927 seconds
+Utility: 9.95065
+Finished iteration 628678 of 100000000 in 6932 seconds
+Utility: 217.085
+Finished iteration 629113 of 100000000 in 6937 seconds
+Utility: 18.9491
+Finished iteration 629549 of 100000000 in 6942 seconds
+Utility: -9.95623
+Finished iteration 629984 of 100000000 in 6947 seconds
+Utility: -18.359
+Finished iteration 630420 of 100000000 in 6952 seconds
+Utility: -21.0297
+Finished iteration 630854 of 100000000 in 6957 seconds
+Utility: -54.1238
+Finished iteration 631287 of 100000000 in 6962 seconds
+Utility: 15.5218
+Finished iteration 631722 of 100000000 in 6967 seconds
+Utility: -240.817
+Finished iteration 632157 of 100000000 in 6972 seconds
+Utility: 15.1935
+Finished iteration 632591 of 100000000 in 6977 seconds
+Utility: -1.74243
+Finished iteration 633026 of 100000000 in 6982 seconds
+Utility: -202.493
+Finished iteration 633461 of 100000000 in 6987 seconds
+Utility: 10.5345
+Finished iteration 633897 of 100000000 in 6992 seconds
+Utility: 58.6445
+Finished iteration 634334 of 100000000 in 6997 seconds
+Utility: 97.4524
+Finished iteration 634782 of 100000000 in 7002 seconds
+Utility: 46.877
+Finished iteration 635240 of 100000000 in 7007 seconds
+Utility: 0.233518
+Finished iteration 635698 of 100000000 in 7012 seconds
+Utility: 88.2146
+Finished iteration 636157 of 100000000 in 7017 seconds
+Utility: 147.473
+Finished iteration 636617 of 100000000 in 7022 seconds
+Utility: -1.64423
+Finished iteration 637078 of 100000000 in 7027 seconds
+Utility: 14.7737
+Finished iteration 637538 of 100000000 in 7032 seconds
+Utility: -17.6119
+Finished iteration 637996 of 100000000 in 7037 seconds
+Utility: -0.457118
+Finished iteration 638457 of 100000000 in 7042 seconds
+Utility: 23.4853
+Finished iteration 638918 of 100000000 in 7047 seconds
+Utility: -3.0427
+Finished iteration 639380 of 100000000 in 7052 seconds
+Utility: -6.51915
+Finished iteration 639841 of 100000000 in 7057 seconds
+Utility: -0.658523
+Finished iteration 640302 of 100000000 in 7062 seconds
+Utility: -1.97809
+Finished iteration 640761 of 100000000 in 7067 seconds
+Utility: -233.787
+Finished iteration 641197 of 100000000 in 7072 seconds
+Utility: 0.920637
+Finished iteration 641631 of 100000000 in 7077 seconds
+Utility: -0.650103
+Finished iteration 642067 of 100000000 in 7082 seconds
+Utility: -0.424353
+Finished iteration 642498 of 100000000 in 7087 seconds
+Utility: -2.31399
+Finished iteration 642932 of 100000000 in 7092 seconds
+Utility: -0.0642439
+Finished iteration 643349 of 100000000 in 7097 seconds
+Utility: -94.5748
+Finished iteration 643774 of 100000000 in 7102 seconds
+Utility: 0.280816
+Finished iteration 644208 of 100000000 in 7107 seconds
+Utility: 51.3446
+Finished iteration 644642 of 100000000 in 7112 seconds
+Utility: 36.3902
+Finished iteration 645076 of 100000000 in 7117 seconds
+Utility: -22.0194
+Finished iteration 645510 of 100000000 in 7122 seconds
+Utility: 0.537853
+Finished iteration 645946 of 100000000 in 7127 seconds
+Utility: -0.799492
+Finished iteration 646381 of 100000000 in 7132 seconds
+Utility: 72.5932
+Finished iteration 646815 of 100000000 in 7137 seconds
+Utility: 98.5665
+Finished iteration 647249 of 100000000 in 7142 seconds
+Utility: -17.7797
+Finished iteration 647683 of 100000000 in 7147 seconds
+Utility: -53.9006
+Finished iteration 648119 of 100000000 in 7152 seconds
+Utility: 5.64593
+Finished iteration 648552 of 100000000 in 7157 seconds
+Utility: 83.8527
+Finished iteration 648991 of 100000000 in 7162 seconds
+Utility: -2.65535
+Finished iteration 649446 of 100000000 in 7167 seconds
+Utility: -14.4948
+Finished iteration 649901 of 100000000 in 7172 seconds
+Utility: 43.8496
+Finished iteration 650362 of 100000000 in 7177 seconds
+Utility: -24.0535
+Finished iteration 650823 of 100000000 in 7182 seconds
+Utility: 17.1186
+Finished iteration 651284 of 100000000 in 7187 seconds
+Utility: 6.20017
+Finished iteration 651745 of 100000000 in 7192 seconds
+Utility: -0.841095
+Finished iteration 652205 of 100000000 in 7197 seconds
+Utility: 3.6556
+Saving checkpoint at iteration 652403
+Finished iteration 652642 of 100000000 in 7202 seconds
+Utility: -38.7681
+Finished iteration 653102 of 100000000 in 7207 seconds
+Utility: 109.931
+Finished iteration 653564 of 100000000 in 7212 seconds
+Utility: 20.2565
+Finished iteration 654023 of 100000000 in 7217 seconds
+Utility: -2.60103
+Finished iteration 654484 of 100000000 in 7222 seconds
+Utility: 32.7642
+Finished iteration 654945 of 100000000 in 7227 seconds
+Utility: -0.643215
+Finished iteration 655406 of 100000000 in 7232 seconds
+Utility: -0.547059
+Finished iteration 655867 of 100000000 in 7237 seconds
+Utility: -21.0033
+Finished iteration 656329 of 100000000 in 7242 seconds
+Utility: 17.7579
+Finished iteration 656790 of 100000000 in 7247 seconds
+Utility: 6.5834
+Finished iteration 657252 of 100000000 in 7252 seconds
+Utility: 65.3649
+Finished iteration 657706 of 100000000 in 7257 seconds
+Utility: -67.0591
+Finished iteration 658154 of 100000000 in 7262 seconds
+Utility: 34.7756
+Finished iteration 658611 of 100000000 in 7267 seconds
+Utility: -38.1254
+Finished iteration 659063 of 100000000 in 7272 seconds
+Utility: 1.53666
+Finished iteration 659513 of 100000000 in 7277 seconds
+Utility: 78.1812
+Finished iteration 659956 of 100000000 in 7282 seconds
+Utility: -82.6869
+Finished iteration 660385 of 100000000 in 7287 seconds
+Utility: -3.01623
+Finished iteration 660807 of 100000000 in 7292 seconds
+Utility: 5.69096
+Finished iteration 661268 of 100000000 in 7297 seconds
+Utility: -0.716718
+Finished iteration 661730 of 100000000 in 7302 seconds
+Utility: 28.2825
+Finished iteration 662187 of 100000000 in 7307 seconds
+Utility: 33.801
+Finished iteration 662648 of 100000000 in 7312 seconds
+Utility: -12.0726
+Finished iteration 663109 of 100000000 in 7317 seconds
+Utility: -8.14401
+Finished iteration 663570 of 100000000 in 7322 seconds
+Utility: -37.4376
+Finished iteration 664030 of 100000000 in 7328 seconds
+Utility: -18.2857
+Finished iteration 664492 of 100000000 in 7333 seconds
+Utility: 4.94037
+Finished iteration 664952 of 100000000 in 7338 seconds
+Utility: 117.568
+Finished iteration 665414 of 100000000 in 7343 seconds
+Utility: -1.95602
+Finished iteration 665875 of 100000000 in 7348 seconds
+Utility: 17.9251
+Finished iteration 666335 of 100000000 in 7353 seconds
+Utility: -10.6435
+Finished iteration 666797 of 100000000 in 7358 seconds
+Utility: 3.65891
+Finished iteration 667259 of 100000000 in 7363 seconds
+Utility: 14.5961
+Finished iteration 667720 of 100000000 in 7368 seconds
+Utility: 113.835
+Finished iteration 668182 of 100000000 in 7373 seconds
+Utility: 4.41139
+Finished iteration 668641 of 100000000 in 7378 seconds
+Utility: 1.37587
+Finished iteration 669102 of 100000000 in 7383 seconds
+Utility: 0.52702
+Finished iteration 669563 of 100000000 in 7388 seconds
+Utility: -3.37093
+Finished iteration 670025 of 100000000 in 7393 seconds
+Utility: 0.141353
+Finished iteration 670485 of 100000000 in 7398 seconds
+Utility: 28.2981
+Finished iteration 670948 of 100000000 in 7403 seconds
+Utility: -2.7537
+Finished iteration 671410 of 100000000 in 7408 seconds
+Utility: -0.691179
+Finished iteration 671871 of 100000000 in 7413 seconds
+Utility: -7.1569
+Finished iteration 672333 of 100000000 in 7418 seconds
+Utility: -2.02861
+Finished iteration 672794 of 100000000 in 7423 seconds
+Utility: -3.01078
+Finished iteration 673257 of 100000000 in 7428 seconds
+Utility: -18.4308
+Finished iteration 673720 of 100000000 in 7433 seconds
+Utility: 1.82449
+Finished iteration 674180 of 100000000 in 7438 seconds
+Utility: -0.953224
+Finished iteration 674641 of 100000000 in 7443 seconds
+Utility: 36.0855
+Finished iteration 675102 of 100000000 in 7448 seconds
+Utility: 3.00874
+Finished iteration 675563 of 100000000 in 7453 seconds
+Utility: 48.2073
+Finished iteration 676023 of 100000000 in 7458 seconds
+Utility: -1.28908
+Finished iteration 676485 of 100000000 in 7463 seconds
+Utility: 16.1016
+Finished iteration 676947 of 100000000 in 7468 seconds
+Utility: 5.91854
+Finished iteration 677409 of 100000000 in 7473 seconds
+Utility: -50.7826
+Finished iteration 677871 of 100000000 in 7478 seconds
+Utility: -16.4695
+Finished iteration 678332 of 100000000 in 7483 seconds
+Utility: 10.9879
+Finished iteration 678794 of 100000000 in 7488 seconds
+Utility: 12.6327
+Finished iteration 679256 of 100000000 in 7493 seconds
+Utility: -58.4577
+Finished iteration 679715 of 100000000 in 7498 seconds
+Utility: 71.1662
+Finished iteration 680176 of 100000000 in 7503 seconds
+Utility: 20.0214
+Finished iteration 680636 of 100000000 in 7508 seconds
+Utility: 7.95943
+Finished iteration 681097 of 100000000 in 7513 seconds
+Utility: 30.6063
+Finished iteration 681559 of 100000000 in 7518 seconds
+Utility: 14.3818
+Finished iteration 682020 of 100000000 in 7523 seconds
+Utility: -45.5279
+Finished iteration 682480 of 100000000 in 7528 seconds
+Utility: -3.66096
+Finished iteration 682940 of 100000000 in 7533 seconds
+Utility: -0.0180046
+Finished iteration 683401 of 100000000 in 7538 seconds
+Utility: 7.96663
+Finished iteration 683862 of 100000000 in 7543 seconds
+Utility: -0.361668
+Finished iteration 684323 of 100000000 in 7548 seconds
+Utility: 2.25622
+Finished iteration 684783 of 100000000 in 7553 seconds
+Utility: 66.2822
+Finished iteration 685242 of 100000000 in 7558 seconds
+Utility: 43.1164
+Finished iteration 685703 of 100000000 in 7563 seconds
+Utility: -1.83105
+Finished iteration 686164 of 100000000 in 7568 seconds
+Utility: 101.458
+Finished iteration 686624 of 100000000 in 7573 seconds
+Utility: 23.7293
+Finished iteration 687084 of 100000000 in 7578 seconds
+Utility: 0.385765
+Finished iteration 687545 of 100000000 in 7583 seconds
+Utility: 33.8643
+Finished iteration 688005 of 100000000 in 7588 seconds
+Utility: 16.8522
+Finished iteration 688465 of 100000000 in 7593 seconds
+Utility: 2.06038
+Finished iteration 688926 of 100000000 in 7598 seconds
+Utility: 70.2459
+Finished iteration 689387 of 100000000 in 7603 seconds
+Utility: -236.235
+Finished iteration 689848 of 100000000 in 7608 seconds
+Utility: 2.47537
+Finished iteration 690304 of 100000000 in 7613 seconds
+Utility: -2.14359
+Finished iteration 690759 of 100000000 in 7618 seconds
+Utility: 1.15912
+Finished iteration 691219 of 100000000 in 7623 seconds
+Utility: 0.204812
+Finished iteration 691680 of 100000000 in 7628 seconds
+Utility: -3.38322
+Finished iteration 692141 of 100000000 in 7633 seconds
+Utility: -13.2721
+Finished iteration 692598 of 100000000 in 7638 seconds
+Utility: 3.77126
+Finished iteration 693059 of 100000000 in 7643 seconds
+Utility: -75.3599
+Finished iteration 693519 of 100000000 in 7648 seconds
+Utility: 6.35061
+Finished iteration 693980 of 100000000 in 7653 seconds
+Utility: -46.2213
+Finished iteration 694441 of 100000000 in 7658 seconds
+Utility: -0.401705
+Finished iteration 694901 of 100000000 in 7663 seconds
+Utility: 0.75008
+Finished iteration 695363 of 100000000 in 7668 seconds
+Utility: -3.84902
+Finished iteration 695824 of 100000000 in 7673 seconds
+Utility: 9.46563
+Finished iteration 696285 of 100000000 in 7678 seconds
+Utility: 1.39639
+Finished iteration 696746 of 100000000 in 7683 seconds
+Utility: 2.14844
+Finished iteration 697206 of 100000000 in 7688 seconds
+Utility: 48.7391
+Finished iteration 697667 of 100000000 in 7693 seconds
+Utility: 0.978045
+Finished iteration 698127 of 100000000 in 7698 seconds
+Utility: 0.665272
+Finished iteration 698589 of 100000000 in 7703 seconds
+Utility: -52.7269
+Finished iteration 699050 of 100000000 in 7708 seconds
+Utility: -20.8473
+Finished iteration 699512 of 100000000 in 7713 seconds
+Utility: -0.805848
+Finished iteration 699973 of 100000000 in 7718 seconds
+Utility: -47.8918
+Finished iteration 700434 of 100000000 in 7723 seconds
+Utility: -34.296
+Finished iteration 700895 of 100000000 in 7728 seconds
+Utility: -5.8205
+Finished iteration 701355 of 100000000 in 7733 seconds
+Utility: 5.84825
+Finished iteration 701815 of 100000000 in 7738 seconds
+Utility: -18.9543
+Finished iteration 702276 of 100000000 in 7743 seconds
+Utility: -52.9787
+Finished iteration 702738 of 100000000 in 7748 seconds
+Utility: -12.724
+Finished iteration 703199 of 100000000 in 7753 seconds
+Utility: -8.78809
+Finished iteration 703659 of 100000000 in 7758 seconds
+Utility: 2.04999
+Finished iteration 704120 of 100000000 in 7763 seconds
+Utility: -0.985674
+Finished iteration 704581 of 100000000 in 7768 seconds
+Utility: -10.6287
+Finished iteration 705042 of 100000000 in 7773 seconds
+Utility: 0.0841911
+Finished iteration 705502 of 100000000 in 7778 seconds
+Utility: -37.353
+Finished iteration 705958 of 100000000 in 7783 seconds
+Utility: 64.366
+Finished iteration 706407 of 100000000 in 7788 seconds
+Utility: 18.6939
+Finished iteration 706858 of 100000000 in 7793 seconds
+Utility: 0.752443
+Finished iteration 707316 of 100000000 in 7798 seconds
+Utility: -4.50286
+Finished iteration 707760 of 100000000 in 7803 seconds
+Utility: -0.41653
+Finished iteration 708196 of 100000000 in 7808 seconds
+Utility: -17.6177
+Finished iteration 708631 of 100000000 in 7813 seconds
+Utility: 153.234
+Finished iteration 709063 of 100000000 in 7818 seconds
+Utility: -2.06166
+Finished iteration 709498 of 100000000 in 7823 seconds
+Utility: -77.2027
+Finished iteration 709933 of 100000000 in 7828 seconds
+Utility: -13.0138
+Finished iteration 710368 of 100000000 in 7833 seconds
+Utility: -8.24018
+Finished iteration 710803 of 100000000 in 7838 seconds
+Utility: 38.9821
+Finished iteration 711243 of 100000000 in 7843 seconds
+Utility: -4.86905
+Finished iteration 711701 of 100000000 in 7848 seconds
+Utility: 22.422
+Finished iteration 712160 of 100000000 in 7853 seconds
+Utility: -1.41234
+Finished iteration 712618 of 100000000 in 7858 seconds
+Utility: 1.97771
+Finished iteration 713079 of 100000000 in 7863 seconds
+Utility: -0.716294
+Finished iteration 713540 of 100000000 in 7868 seconds
+Utility: -0.37336
+Finished iteration 714001 of 100000000 in 7873 seconds
+Utility: -45.7622
+Finished iteration 714459 of 100000000 in 7878 seconds
+Utility: -111.513
+Finished iteration 714920 of 100000000 in 7883 seconds
+Utility: -7.50931
+Finished iteration 715381 of 100000000 in 7888 seconds
+Utility: -1.41075
+Finished iteration 715842 of 100000000 in 7893 seconds
+Utility: -22.755
+Finished iteration 716303 of 100000000 in 7898 seconds
+Utility: -31.3014
+Finished iteration 716764 of 100000000 in 7903 seconds
+Utility: -123.973
+Finished iteration 717226 of 100000000 in 7908 seconds
+Utility: -31.906
+Finished iteration 717688 of 100000000 in 7913 seconds
+Utility: 199.883
+Finished iteration 718148 of 100000000 in 7918 seconds
+Utility: -6.96224
+Finished iteration 718610 of 100000000 in 7923 seconds
+Utility: 53.6936
+Finished iteration 719071 of 100000000 in 7928 seconds
+Utility: 10.387
+Finished iteration 719534 of 100000000 in 7933 seconds
+Utility: -41.6598
+Finished iteration 719994 of 100000000 in 7938 seconds
+Utility: -8.23526
+Finished iteration 720455 of 100000000 in 7943 seconds
+Utility: -2.52371
+Finished iteration 720916 of 100000000 in 7948 seconds
+Utility: 135.681
+Finished iteration 721377 of 100000000 in 7953 seconds
+Utility: 75.0171
+Finished iteration 721838 of 100000000 in 7958 seconds
+Utility: 1.78746
+Finished iteration 722300 of 100000000 in 7963 seconds
+Utility: 55.6357
+Finished iteration 722760 of 100000000 in 7968 seconds
+Utility: -54.6153
+Finished iteration 723222 of 100000000 in 7973 seconds
+Utility: 139.284
+Finished iteration 723681 of 100000000 in 7978 seconds
+Utility: -3.587
+Finished iteration 724143 of 100000000 in 7983 seconds
+Utility: 4.4381
+Finished iteration 724605 of 100000000 in 7988 seconds
+Utility: 26.2666
+Finished iteration 725066 of 100000000 in 7993 seconds
+Utility: 3.72339
+Finished iteration 725526 of 100000000 in 7998 seconds
+Utility: 51.9079
+Finished iteration 725986 of 100000000 in 8003 seconds
+Utility: 0.289983
+Finished iteration 726448 of 100000000 in 8008 seconds
+Utility: 35.8063
+Finished iteration 726910 of 100000000 in 8013 seconds
+Utility: 1.13629
+Finished iteration 727371 of 100000000 in 8018 seconds
+Utility: 2.36665
+Finished iteration 727832 of 100000000 in 8023 seconds
+Utility: -87.5902
+Finished iteration 728294 of 100000000 in 8028 seconds
+Utility: -8.78059
+Finished iteration 728754 of 100000000 in 8033 seconds
+Utility: -12.5278
+Finished iteration 729214 of 100000000 in 8038 seconds
+Utility: -0.449571
+Finished iteration 729675 of 100000000 in 8043 seconds
+Utility: -19.2375
+Finished iteration 730136 of 100000000 in 8048 seconds
+Utility: 23.607
+Finished iteration 730598 of 100000000 in 8053 seconds
+Utility: 7.11498
+Finished iteration 731057 of 100000000 in 8058 seconds
+Utility: -29.6528
+Finished iteration 731519 of 100000000 in 8063 seconds
+Utility: -2.33786
+Finished iteration 731979 of 100000000 in 8068 seconds
+Utility: -10.9438
+Finished iteration 732441 of 100000000 in 8073 seconds
+Utility: 0.792394
+Finished iteration 732902 of 100000000 in 8078 seconds
+Utility: -139.09
+Finished iteration 733364 of 100000000 in 8083 seconds
+Utility: -5.24296
+Finished iteration 733826 of 100000000 in 8088 seconds
+Utility: -0.839179
+Finished iteration 734286 of 100000000 in 8093 seconds
+Utility: -1.61212
+Finished iteration 734746 of 100000000 in 8098 seconds
+Utility: 38.3272
+Finished iteration 735207 of 100000000 in 8103 seconds
+Utility: 1.80946
+Finished iteration 735668 of 100000000 in 8108 seconds
+Utility: 7.47491
+Finished iteration 736130 of 100000000 in 8113 seconds
+Utility: -42.5237
+Finished iteration 736589 of 100000000 in 8118 seconds
+Utility: 2.24879
+Finished iteration 737050 of 100000000 in 8123 seconds
+Utility: 2.65603
+Finished iteration 737510 of 100000000 in 8128 seconds
+Utility: -222.788
+Finished iteration 737972 of 100000000 in 8133 seconds
+Utility: -2.10207
+Finished iteration 738433 of 100000000 in 8138 seconds
+Utility: 0.623766
+Finished iteration 738894 of 100000000 in 8143 seconds
+Utility: 30.7218
+Finished iteration 739355 of 100000000 in 8148 seconds
+Utility: -145.046
+Finished iteration 739816 of 100000000 in 8153 seconds
+Utility: 2.28042
+Finished iteration 740275 of 100000000 in 8158 seconds
+Utility: -81.6328
+Finished iteration 740737 of 100000000 in 8163 seconds
+Utility: -143.443
+Finished iteration 741198 of 100000000 in 8168 seconds
+Utility: -8.84305
+Finished iteration 741660 of 100000000 in 8173 seconds
+Utility: -8.76051
+Finished iteration 742119 of 100000000 in 8178 seconds
+Utility: -0.54451
+Finished iteration 742580 of 100000000 in 8183 seconds
+Utility: -15.7639
+Finished iteration 743041 of 100000000 in 8188 seconds
+Utility: 10.9675
+Finished iteration 743502 of 100000000 in 8193 seconds
+Utility: -8.68702
+Finished iteration 743963 of 100000000 in 8198 seconds
+Utility: -48.8926
+Finished iteration 744424 of 100000000 in 8203 seconds
+Utility: -217.61
+Finished iteration 744885 of 100000000 in 8208 seconds
+Utility: 150.154
+Finished iteration 745346 of 100000000 in 8213 seconds
+Utility: 2.22194
+Finished iteration 745806 of 100000000 in 8218 seconds
+Utility: -94.9145
+Finished iteration 746268 of 100000000 in 8223 seconds
+Utility: 40.3528
+Finished iteration 746730 of 100000000 in 8228 seconds
+Utility: 10.8406
+Finished iteration 747192 of 100000000 in 8233 seconds
+Utility: -2.95173
+Finished iteration 747651 of 100000000 in 8238 seconds
+Utility: 1.91725
+Finished iteration 748113 of 100000000 in 8243 seconds
+Utility: 1.15376
+Finished iteration 748574 of 100000000 in 8248 seconds
+Utility: 15.2119
+Finished iteration 749036 of 100000000 in 8253 seconds
+Utility: 9.15382
+Finished iteration 749498 of 100000000 in 8258 seconds
+Utility: -19.3626
+Finished iteration 749959 of 100000000 in 8263 seconds
+Utility: -17.1986
+Finished iteration 750421 of 100000000 in 8268 seconds
+Utility: 9.46781
+Finished iteration 750878 of 100000000 in 8273 seconds
+Utility: 73.6717
+Finished iteration 751312 of 100000000 in 8278 seconds
+Utility: -25.5852
+Finished iteration 751748 of 100000000 in 8283 seconds
+Utility: -20.4136
+Finished iteration 752197 of 100000000 in 8289 seconds
+Utility: -0.507121
+Finished iteration 752656 of 100000000 in 8294 seconds
+Utility: 4.14369
+Finished iteration 753114 of 100000000 in 8299 seconds
+Utility: 3.06654
+Finished iteration 753568 of 100000000 in 8304 seconds
+Utility: 9.96156
+Finished iteration 754016 of 100000000 in 8309 seconds
+Utility: -30.3446
+Finished iteration 754467 of 100000000 in 8314 seconds
+Utility: -28.487
+Finished iteration 754928 of 100000000 in 8319 seconds
+Utility: -6.90556
+Finished iteration 755390 of 100000000 in 8324 seconds
+Utility: 106.704
+Finished iteration 755852 of 100000000 in 8329 seconds
+Utility: 0.798765
+Finished iteration 756313 of 100000000 in 8334 seconds
+Utility: 2.49462
+Finished iteration 756773 of 100000000 in 8339 seconds
+Utility: -31.932
+Finished iteration 757234 of 100000000 in 8344 seconds
+Utility: -1.81578
+Finished iteration 757695 of 100000000 in 8349 seconds
+Utility: 10.3752
+Finished iteration 758157 of 100000000 in 8354 seconds
+Utility: -6.0423
+Finished iteration 758616 of 100000000 in 8359 seconds
+Utility: 4.8639
+Finished iteration 759078 of 100000000 in 8364 seconds
+Utility: -51.9767
+Finished iteration 759539 of 100000000 in 8369 seconds
+Utility: -0.879399
+Finished iteration 760001 of 100000000 in 8374 seconds
+Utility: 0.0828991
+Finished iteration 760463 of 100000000 in 8379 seconds
+Utility: 7.22183
+Finished iteration 760925 of 100000000 in 8384 seconds
+Utility: -52.9676
+Finished iteration 761387 of 100000000 in 8389 seconds
+Utility: -12.5862
+Finished iteration 761849 of 100000000 in 8394 seconds
+Utility: -88.7688
+Finished iteration 762310 of 100000000 in 8399 seconds
+Utility: 3.67008
+Finished iteration 762772 of 100000000 in 8404 seconds
+Utility: 20.7841
+Finished iteration 763234 of 100000000 in 8409 seconds
+Utility: -7.23691
+Finished iteration 763695 of 100000000 in 8414 seconds
+Utility: -0.92893
+Finished iteration 764154 of 100000000 in 8419 seconds
+Utility: -1.98696
+Finished iteration 764615 of 100000000 in 8424 seconds
+Utility: 1.25127
+Finished iteration 765076 of 100000000 in 8429 seconds
+Utility: 18.7603
+Finished iteration 765537 of 100000000 in 8434 seconds
+Utility: -0.396876
+Finished iteration 765998 of 100000000 in 8439 seconds
+Utility: 10.2273
+Finished iteration 766460 of 100000000 in 8444 seconds
+Utility: -4.68565
+Finished iteration 766922 of 100000000 in 8449 seconds
+Utility: -55.6082
+Finished iteration 767382 of 100000000 in 8454 seconds
+Utility: -16.0088
+Finished iteration 767842 of 100000000 in 8459 seconds
+Utility: -2.04403
+Finished iteration 768304 of 100000000 in 8464 seconds
+Utility: -121.688
+Finished iteration 768765 of 100000000 in 8469 seconds
+Utility: 7.78944
+Finished iteration 769227 of 100000000 in 8474 seconds
+Utility: 17.7094
+Finished iteration 769687 of 100000000 in 8479 seconds
+Utility: -25.5427
+Finished iteration 770147 of 100000000 in 8484 seconds
+Utility: -0.777122
+Finished iteration 770608 of 100000000 in 8489 seconds
+Utility: 3.78285
+Finished iteration 771070 of 100000000 in 8494 seconds
+Utility: 53.216
+Finished iteration 771532 of 100000000 in 8499 seconds
+Utility: 0.216553
+Finished iteration 771993 of 100000000 in 8504 seconds
+Utility: -76.4847
+Finished iteration 772455 of 100000000 in 8509 seconds
+Utility: 18.3087
+Finished iteration 772916 of 100000000 in 8514 seconds
+Utility: -2.65166
+Finished iteration 773376 of 100000000 in 8519 seconds
+Utility: 17.2412
+Finished iteration 773830 of 100000000 in 8524 seconds
+Utility: -0.344415
+Finished iteration 774287 of 100000000 in 8529 seconds
+Utility: 5.03523
+Finished iteration 774745 of 100000000 in 8534 seconds
+Utility: 19.8004
+Finished iteration 775198 of 100000000 in 8539 seconds
+Utility: -0.37162
+Finished iteration 775657 of 100000000 in 8544 seconds
+Utility: 12.8954
+Finished iteration 776111 of 100000000 in 8549 seconds
+Utility: -4.81625
+Finished iteration 776567 of 100000000 in 8554 seconds
+Utility: 2.75071
+Finished iteration 777025 of 100000000 in 8559 seconds
+Utility: 0.431862
+Finished iteration 777484 of 100000000 in 8564 seconds
+Utility: -23.1186
+Finished iteration 777946 of 100000000 in 8569 seconds
+Utility: 38.7304
+Finished iteration 778408 of 100000000 in 8574 seconds
+Utility: -23.731
+Finished iteration 778860 of 100000000 in 8579 seconds
+Utility: 25.0995
+Finished iteration 779317 of 100000000 in 8584 seconds
+Utility: 0.0262612
+Finished iteration 779773 of 100000000 in 8589 seconds
+Utility: 32.6205
+Finished iteration 780228 of 100000000 in 8594 seconds
+Utility: -5.1556
+Finished iteration 780684 of 100000000 in 8599 seconds
+Utility: 102.412
+Finished iteration 781140 of 100000000 in 8604 seconds
+Utility: 66.556
+Finished iteration 781595 of 100000000 in 8609 seconds
+Utility: -26.6812
+Finished iteration 782051 of 100000000 in 8614 seconds
+Utility: -0.718849
+Finished iteration 782509 of 100000000 in 8619 seconds
+Utility: -7.40047
+Finished iteration 782966 of 100000000 in 8624 seconds
+Utility: -1.39345
+Finished iteration 783425 of 100000000 in 8629 seconds
+Utility: 0.0368554
+Finished iteration 783876 of 100000000 in 8634 seconds
+Utility: -0.787005
+Finished iteration 784335 of 100000000 in 8639 seconds
+Utility: -3.73179
+Finished iteration 784796 of 100000000 in 8644 seconds
+Utility: 6.39643
+Finished iteration 785257 of 100000000 in 8649 seconds
+Utility: -0.711919
+Finished iteration 785719 of 100000000 in 8654 seconds
+Utility: -0.564074
+Finished iteration 786178 of 100000000 in 8659 seconds
+Utility: 15.1839
+Finished iteration 786639 of 100000000 in 8664 seconds
+Utility: -12.8731
+Finished iteration 787100 of 100000000 in 8669 seconds
+Utility: -9.79728
+Finished iteration 787562 of 100000000 in 8674 seconds
+Utility: 6.14578
+Finished iteration 788022 of 100000000 in 8679 seconds
+Utility: -44.4547
+Finished iteration 788484 of 100000000 in 8684 seconds
+Utility: -6.87373
+Finished iteration 788946 of 100000000 in 8689 seconds
+Utility: 13.7617
+Finished iteration 789407 of 100000000 in 8694 seconds
+Utility: 0.896935
+Finished iteration 789868 of 100000000 in 8699 seconds
+Utility: 60.1454
