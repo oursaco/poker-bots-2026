@@ -93,11 +93,11 @@ target_link_libraries(test_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX
 add_executable(merge_turn emd_bucket_data/merge_turn.cpp)
 target_link_libraries(merge_turn PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
-add_executable(local_equities local_player/local_equities.cpp)
+add_executable(local_equities local_player/LocalEquities.cpp)
 target_link_libraries(local_equities PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)
 
 add_executable(compress_bin checkpoints/compress_bin.cpp)
 target_link_libraries(compress_bin PRIVATE pokerbots_headers omp)
 
-add_executable(local_best_response local_player/local_best_response.cpp)
+add_executable(local_best_response local_player/LocalBestResponse.cpp)
 target_link_libraries(local_best_response PRIVATE pokerbots_headers omp OpenMP::OpenMP_CXX)

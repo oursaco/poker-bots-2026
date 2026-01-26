@@ -4,15 +4,7 @@
 #include <cassert>
 #include <memory>
 #include <vector>
-
-#include "cfr/CFR.hpp"
-#include "cfr/CFRFast.hpp"
-#include "game/GameTree.hpp"
-#include "game/ThreeCard.hpp"
-#include "game/ThreeCardBucket.hpp"
-#include "game/ThreeCardState.hpp"
 #include "external/omp/Hand.h"
-#include "cfr/CFRFast.hpp"
 
 omp::HandEvaluator eval;
 

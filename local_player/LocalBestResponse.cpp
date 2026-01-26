@@ -10,8 +10,8 @@
 #include <chrono>
 #include <omp.h>
 
-#include "local_player/local_game_state.cpp"
-#include "local_player/local_equities.cpp"
+#include "local_player/LocalGameState.cpp"
+#include "local_player/LocalEquities.cpp"
 
 
 LocalAction get_best_action(LocalGameState state, DCFRPolicy& opp_policy, array<float, 22100> range, bool opp_bb, array<int, 3> hole_cards, int depth){
