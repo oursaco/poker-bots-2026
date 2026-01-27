@@ -213,6 +213,7 @@ struct ThreeCardInferenceTree {
 
     int tree_index = 0;
     array<vector<int>, 100> nodes_per_depth;
+    int pnl_clamp_left, pnl_clamp_right;
 
     int generateTree(ThreeCardGameState* root, int& sb_info_set_index, int& bb_info_set_index, int prv_new_card, bool new_cards, int depth = 0){
         if(root->turn == -1){
@@ -301,6 +302,8 @@ struct ThreeCardInferenceTree {
     void init(){
         assert(tree_index == 0);
         ThreeCardGameState root;
+        pnl_clamp_left = -400;
+        pnl_clamp_right = 400;
         vector<pair<unique_ptr<GameState>, unique_ptr<Action>>> actions = root.generateActions();
         assert(actions.size() == 1);
         int sb_info_set_index = 0;
@@ -620,6 +623,11 @@ struct ThreeCardInferenceTree {
         }
     }
 
+    void setPnlClamp(int pnl_clamp_left_, int pnl_clamp_right_){
+        pnl_clamp_left = pnl_clamp_left_;
+        pnl_clamp_right = pnl_clamp_right_;
+    }
+
     // updates the leaf utility values for each trainer
     void updateUtility(array<float, TREE_SZ> &utility){
         #pragma omp for
@@ -628,6 +636,12 @@ struct ThreeCardInferenceTree {
             int w = leaves[i].winner;
             if(w == 0) w = nodes[node_id].getWinner();
             utility[node_id] = w*(nodes[node_id].getPot()/2);
+            if(utility[node_id] < pnl_clamp_left){
+                utility[node_id] = pnl_clamp_left;
+            }
+            if(utility[node_id] > pnl_clamp_right){
+                utility[node_id] = pnl_clamp_right;
+            }
         }
     }
 
