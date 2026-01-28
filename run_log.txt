@@ -26357,3 +26357,19 @@ Finished iteration 13192904 of 100000000 in 65753 seconds
 Utility: -2.85488
 Finished iteration 13193327 of 100000000 in 65758 seconds
 Utility: 3.87475
+Finished iteration 13193621 of 100000000 in 65763 seconds
+Utility: 0.663615
+Finished iteration 13194057 of 100000000 in 65768 seconds
+Utility: 36.1373
+Finished iteration 13194496 of 100000000 in 65773 seconds
+Utility: -18.3077
+Finished iteration 13194875 of 100000000 in 65778 seconds
+Utility: -1.02307
+Finished iteration 13195300 of 100000000 in 65783 seconds
+Utility: -7.34448
+Finished iteration 13195711 of 100000000 in 65788 seconds
+Utility: 4.22351
+Finished iteration 13196100 of 100000000 in 65793 seconds
+Utility: 64.3422
+Finished iteration 13196453 of 100000000 in 65798 seconds
+Utility: -1.45233
