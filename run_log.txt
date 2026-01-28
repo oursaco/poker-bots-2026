@@ -26413,3 +26413,17 @@ Finished iteration 12769748 of 100000000 in 65898 seconds
 Utility: 2.10594
 Finished iteration 12770144 of 100000000 in 65903 seconds
 Utility: -0.0259007
+Finished iteration 12770534 of 100000000 in 65908 seconds
+Utility: 3.67776
+Finished iteration 12770921 of 100000000 in 65913 seconds
+Utility: 39.1431
+Finished iteration 12771313 of 100000000 in 65918 seconds
+Utility: 1.22824
+Finished iteration 12771712 of 100000000 in 65923 seconds
+Utility: 3.64543
+Finished iteration 12772005 of 100000000 in 65928 seconds
+Utility: 1.6289
+Finished iteration 12772389 of 100000000 in 65933 seconds
+Utility: 2.90715
+Finished iteration 12772697 of 100000000 in 65938 seconds
+Utility: 0.648411
