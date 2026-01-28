@@ -24,9 +24,13 @@ struct TrainConfig {
 
 int main() {
     TrainConfig config;
-    config.seed = (uint64_t)796281372217544198;
-    config.player0_policy = "./checkpoints/player0_652403.bin";
-    config.player1_policy = "./checkpoints/player1_652403.bin";
+<<<<<<< HEAD
+    config.seed = (uint64_t)842913506782104957;
+=======
+    config.seed = (uint64_t)582347910233456789;
+>>>>>>> fd2ef785d6d26cb66757bd116af06a0b15ca458d
+    config.player0_policy = "./checkpoints/warm_start_7561846_player0.bin";
+    config.player1_policy = "./checkpoints/warm_start_7561846_player1.bin";
     config.output_dir = "./three_card_models";
     config.iterations = 100'000'000;
 
@@ -35,6 +39,11 @@ int main() {
     bucket.init("./emd_bucket_data");
     tree.setBucket(&bucket);
     tree.init();
+<<<<<<< HEAD
+    tree.setPnlClamp(-200, 400);
+=======
+    tree.setPnlClamp(-400, 200);
+>>>>>>> fd2ef785d6d26cb66757bd116af06a0b15ca458d
     FastTrainer trainer;
     trainer.setTree(&tree);
     trainer.train(
@@ -45,7 +54,7 @@ int main() {
         config.player0_policy,
         config.player1_policy,
         config.output_dir,
-	652403);
+	7561846);
 
     return 0;
 }
