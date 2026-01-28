@@ -468,8 +468,8 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("checkpoints/test.bin");
-    trainer.players[1].loadPolicy("checkpoints/test.bin");
+    trainer.players[0].loadPolicy("checkpoints/player0_7729319.bin");
+    trainer.players[1].loadPolicy("checkpoints/player0_7729319.bin");
     // trainer.players[0].loadPolicy("./final_model/player.bin");
     // trainer.players[1].loadPolicy("./final_model/player.bin");
 
@@ -483,7 +483,7 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     cout << "\n";
     node_id_counter = 0;
     ThreeCardGameState root = ThreeCardGameState();
-    visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 7);
+    visualizeStrategyDepthLimited(&root, &tree, trainer.players, "", 0, 3);
     // visualizeStrategyHighProbability(&root, &tree, trainer.players, "", 0, 1.0f, false);
     for(int i = 0; i < 10; i++) cout << trainer.players[0].strategy_sum[i] << " ";
     cout << endl;
