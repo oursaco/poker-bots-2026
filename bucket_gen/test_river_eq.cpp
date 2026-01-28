@@ -36,10 +36,10 @@ int main(){
     cout << equity.size() << endl;
 
     // Hand board = Hand::empty() + Hand(48) + Hand(49) + Hand(1) + Hand(3) + Hand(6) + Hand(10); // As, Ah, 2h, 2d, 3c, 4c
-    Hand board = Hand::empty() + Hand(getCardId("4c")) + Hand(getCardId("5h")) + Hand(getCardId("Ad")) + Hand(getCardId("8s")) + Hand(getCardId("9c")) + Hand(getCardId("Td"));
+    Hand board = Hand::empty() + Hand(getCardId("7s")) + Hand(getCardId("Js")) + Hand(getCardId("8c")) + Hand(getCardId("3h")) + Hand(getCardId("Jh")) + Hand(getCardId("4s"));
     cout << board.count() << " " << eval.evaluate(board)<< endl;
-    int c1 = getCardId("2s");
-    int c2 = getCardId("3s");
+    int c1 = getCardId("As");
+    int c2 = getCardId("Ah");
     int s1 = c1 % 4;
     int s2 = c2 % 4;
     int board_id = encoding_map[encoding::encodeRiverBoard(board, s1, s2)];

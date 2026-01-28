@@ -98,3 +98,9 @@ target_link_libraries(best_response PRIVATE pokerbots_headers omp OpenMP::OpenMP
 
 add_executable(compress_bin checkpoints/compress_bin.cpp)
 target_link_libraries(compress_bin PRIVATE pokerbots_headers omp)
+
+add_executable(compress_bins emd_bucket_data/compress_bins.cpp)
+target_link_libraries(compress_bins PRIVATE pokerbots_headers omp)
+
+add_executable(readjust_weights tools/readjust_weights.cpp)
+target_link_libraries(readjust_weights PRIVATE pokerbots_headers omp)

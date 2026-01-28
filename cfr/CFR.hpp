@@ -145,6 +145,21 @@ struct DCFRPolicy : CFRPolicy {
         }
         inf.close();
     }
+
+    void addPolicy(string path){
+        ifstream inf(path, ios::binary);
+        int info_set_count_, state_count_;
+        inf.read(reinterpret_cast<char*>(&info_set_count_), sizeof(int));
+        inf.read(reinterpret_cast<char*>(&state_count_), sizeof(int));
+        assert(info_set_count_ == info_set_count);
+        assert(state_count_ == state_count);
+        for(int i = 0; i < POLICY_SZ; i++){
+            float value;
+            inf.read(reinterpret_cast<char*>(&value), sizeof(float));
+            strategy_sum[i] += value;
+        }
+        inf.close();
+    }
 };
 
 // NOTE: This project uses `tools/best_response.cpp` as a header-style include (see tools/nash_distance.cpp).
