@@ -213,10 +213,10 @@ bool buildAveragedDeltaPolicy(const vector<string>& checkpoint_paths,
         for(int idx = 0; idx < output.state_count; ++idx){
             float diff = curr.strategy_sum[idx] - prev.strategy_sum[idx];
             assert(diff >= 0.0f);
-            output.strategy_sum[idx] += static_cast<float>(diff*diff);
+            output.strategy_sum[idx] += double(diff)*diff;
         }
     }
-    float denom = static_cast<float>(last);
+    double denom = last;
     for(int idx = 0; idx < output.state_count; ++idx){
         output.strategy_sum[idx] /= denom;
     }

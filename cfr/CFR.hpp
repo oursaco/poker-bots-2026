@@ -255,9 +255,6 @@ struct DCFRPolicyDouble : CFRPolicy {
         for(int i = 0; i < POLICY_SZ; i++){
             ouf.write(reinterpret_cast<char*>(&strategy_sum[i]), sizeof(double));
         }
-        for(int i = 0; i < POLICY_SZ; i++){
-            ouf.write(reinterpret_cast<char*>(&regret_sum[i]), sizeof(double));
-        }
         ouf.close();
     }
 
@@ -270,9 +267,6 @@ struct DCFRPolicyDouble : CFRPolicy {
         assert(state_count_ == state_count);
         for(int i = 0; i < POLICY_SZ; i++){
             inf.read(reinterpret_cast<char*>(&strategy_sum[i]), sizeof(double));
-        }
-        for(int i = 0; i < POLICY_SZ; i++){
-            inf.read(reinterpret_cast<char*>(&regret_sum[i]), sizeof(double));
         }
         inf.close();
     }
