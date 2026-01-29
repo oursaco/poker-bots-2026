@@ -468,10 +468,12 @@ void visualizeThreeCardStrategy(const StrategyOptions& options){
     trainer.setTree(&tree);
     trainer.players[0].initPolicy(&tree);
     trainer.players[1].initPolicy(&tree);
-    trainer.players[0].loadPolicy("checkpoints/player1_30400452.bin");
-    trainer.players[1].loadPolicy("checkpoints/player1_30400452.bin");
-    // trainer.players[0].addPolicy("checkpoints/player1_30400452.bin");
-    // trainer.players[1].addPolicy("checkpoints/player1_30400452.bin");
+    trainer.players[0].loadPolicy("./checkpoints/player0_30400452.bin");
+    trainer.players[1].loadPolicy("./checkpoints/player1_30400452.bin");
+    // trainer.players[0].loadPolicy("checkpoints/merged_big_player0.bin");
+    // trainer.players[1].loadPolicy("checkpoints/merged_big_player0.bin");
+    // trainer.players[0].addPolicy("checkpoints/merged_player1.bin");
+    // trainer.players[1].addPolicy("checkpoints/merged_player1.bin");
     // trainer.players[0].loadPolicy("./final_model/player.bin");
     // trainer.players[1].loadPolicy("./final_model/player.bin");
 

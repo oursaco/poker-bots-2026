@@ -135,11 +135,14 @@ struct DCFRPolicy : CFRPolicy {
         int info_set_count_, state_count_;
         inf.read(reinterpret_cast<char*>(&info_set_count_), sizeof(int));
         inf.read(reinterpret_cast<char*>(&state_count_), sizeof(int));
+        float mx_value = 0.0f;
         assert(info_set_count_ == info_set_count);
         assert(state_count_ == state_count);
         for(int i = 0; i < POLICY_SZ; i++){
             inf.read(reinterpret_cast<char*>(&strategy_sum[i]), sizeof(float));
+            mx_value = max(mx_value, strategy_sum[i]);
         }
+        cout << "mx_value: " << mx_value << endl;
         for(int i = 0; i < POLICY_SZ; i++){
             inf.read(reinterpret_cast<char*>(&regret_sum[i]), sizeof(float));
         }
@@ -156,6 +159,134 @@ struct DCFRPolicy : CFRPolicy {
         for(int i = 0; i < POLICY_SZ; i++){
             float value;
             inf.read(reinterpret_cast<char*>(&value), sizeof(float));
+            strategy_sum[i] += value;
+        }
+        inf.close();
+    }
+};
+
+struct DCFRPolicyDouble : CFRPolicy {
+
+    // regret of moving to node i from the parent of i
+    // each index is encoded as move_count*info_set_count + info_set
+    array<double, POLICY_SZ> regret_sum;
+    array<int, POLICY_SZ> info_set_utils;
+    array<double, POLICY_SZ> strategy_sum;
+    array<int, POLICY_SZ> moves_per_info_set;
+    int info_set_count;
+    int state_count;
+    int log_state_count; // ceil log2 of state_count
+    int state_mask; // mask of states (2^log_state_count - 1)
+
+    void initPolicy(GameTree* tree){
+        state_count = 0;
+        info_set_count = tree->infoSetCount();
+        tree->fillMovesPerInfoSet(moves_per_info_set);
+        for(int i = 0; i < info_set_count; i++){
+            info_set_utils[i] = state_count;
+            for(int j = 0; j < moves_per_info_set[i]; j++){
+                regret_sum[state_count] = 0.0;
+                strategy_sum[state_count] = 0.0;
+                state_count++;
+            }
+        }
+        log_state_count = 0;
+        while((1 << log_state_count) <= state_count){
+            log_state_count++;
+        }
+        state_mask = (1 << log_state_count) - 1;
+        for(int i = 0; i < info_set_count; i++){
+            info_set_utils[i] += moves_per_info_set[i] << log_state_count;
+        }
+    }
+
+    int getState(int info_set, int move_id) const{
+        return (info_set_utils[info_set] & state_mask) + move_id;
+    }
+
+    int getMoveCount(int info_set) const{
+        return info_set_utils[info_set] >> log_state_count;
+    }
+
+    void decayRegret(double alpha, double beta, double gamma){
+        for(int i = 0; i < state_count; i++){
+            regret_sum[i] *= (regret_sum[i] > 0.0 ? alpha : beta);
+            strategy_sum[i] *= gamma;
+        }
+    }
+
+    // returns probability of moving to node_id from the parent of node_id given info_set
+    double getProb(int info_set, int move_id) const{
+        assert(info_set < info_set_count);
+        double sum = 0.0;
+        int st = getState(info_set, 0);
+        int move_count = getMoveCount(info_set);
+        for(unsigned i = st; i < st + move_count; i++) sum += max(0.0, regret_sum[i]);
+        if(sum > 0.0) return max(0.0, regret_sum[st + move_id])/sum;
+        return 1.0/move_count;
+    }
+
+    double getAvgProb(int info_set, int move_id) const{
+        assert(info_set < info_set_count);
+        double sum = 0.0;
+        int st = getState(info_set, 0);
+        int move_count = getMoveCount(info_set);
+        for(unsigned i = st; i < st + move_count; i++) sum += strategy_sum[i];
+        if(sum > 0.0f) return strategy_sum[st + move_id]/sum;
+        return 1.0f/move_count;
+    }
+
+    void updateRegret(int info_set, int move_id, double dif){
+        int st = getState(info_set, move_id);
+        assert(move_id < getMoveCount(info_set));
+        regret_sum[st] += dif;
+    }
+
+    void updateStrategy(int info_set, int move_id, double prob){
+        int st = getState(info_set, move_id);
+        assert(move_id < getMoveCount(info_set));
+        strategy_sum[st] += prob;
+    }
+
+    void savePolicy(string path){
+        ofstream ouf(path, ios::binary);
+        ouf.write(reinterpret_cast<char*>(&info_set_count), sizeof(int));
+        ouf.write(reinterpret_cast<char*>(&state_count), sizeof(int));
+        for(int i = 0; i < POLICY_SZ; i++){
+            ouf.write(reinterpret_cast<char*>(&strategy_sum[i]), sizeof(double));
+        }
+        for(int i = 0; i < POLICY_SZ; i++){
+            ouf.write(reinterpret_cast<char*>(&regret_sum[i]), sizeof(double));
+        }
+        ouf.close();
+    }
+
+    void loadPolicy(string path){
+        ifstream inf(path, ios::binary);
+        int info_set_count_, state_count_;
+        inf.read(reinterpret_cast<char*>(&info_set_count_), sizeof(int));
+        inf.read(reinterpret_cast<char*>(&state_count_), sizeof(int));
+        assert(info_set_count_ == info_set_count);
+        assert(state_count_ == state_count);
+        for(int i = 0; i < POLICY_SZ; i++){
+            inf.read(reinterpret_cast<char*>(&strategy_sum[i]), sizeof(double));
+        }
+        for(int i = 0; i < POLICY_SZ; i++){
+            inf.read(reinterpret_cast<char*>(&regret_sum[i]), sizeof(double));
+        }
+        inf.close();
+    }
+
+    void addPolicy(string path){
+        ifstream inf(path, ios::binary);
+        int info_set_count_, state_count_;
+        inf.read(reinterpret_cast<char*>(&info_set_count_), sizeof(int));
+        inf.read(reinterpret_cast<char*>(&state_count_), sizeof(int));
+        assert(info_set_count_ == info_set_count);
+        assert(state_count_ == state_count);
+        for(int i = 0; i < POLICY_SZ; i++){
+            double value;
+            inf.read(reinterpret_cast<char*>(&value), sizeof(double));
             strategy_sum[i] += value;
         }
         inf.close();

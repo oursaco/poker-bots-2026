@@ -189,15 +189,15 @@ bool gatherCheckpointPaths(const fs::path& directory, CheckpointPaths& result, s
     return true;
 }
 
-void resetPolicy(DCFRPolicy& policy){
+void resetPolicy(DCFRPolicyDouble& policy){
     for(int i = 0; i < POLICY_SZ; ++i){
-        policy.strategy_sum[i] = 0.0f;
-        policy.regret_sum[i] = 0.0f;
+        policy.strategy_sum[i] = 0.0;
+        policy.regret_sum[i] = 0.0;
     }
 }
 
 bool buildAveragedDeltaPolicy(const vector<string>& checkpoint_paths,
-                              DCFRPolicy& output,
+                              DCFRPolicyDouble& output,
                               DCFRPolicy& prev,
                               DCFRPolicy& curr,
                               string& error){
@@ -260,8 +260,8 @@ int main(int argc, char* argv[]){
     tree.setBucket(&bucket);
     tree.init();
 
-    DCFRPolicy output0;
-    DCFRPolicy output1;
+    DCFRPolicyDouble output0;
+    DCFRPolicyDouble output1;
     DCFRPolicy prev;
     DCFRPolicy curr;
     output0.initPolicy(&tree);
