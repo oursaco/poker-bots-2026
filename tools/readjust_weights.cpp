@@ -207,7 +207,7 @@ bool buildAveragedDeltaPolicy(const vector<string>& checkpoint_paths,
     }
     resetPolicy(output);
     const size_t last = checkpoint_paths.size() - 1;
-    for(size_t i = 0; i < last; ++i){
+    for(size_t i = last/2; i < last; ++i){
         prev.loadPolicy(checkpoint_paths[i]);
         curr.loadPolicy(checkpoint_paths[i + 1]);
         for(int idx = 0; idx < output.state_count; ++idx){
